@@ -1,4 +1,5 @@
-% When prompt comes up, enter in full file path to Run_Master_Allocate file
+% Brian was here yay
+%When prompt comes up, enter in full file path to Run_Master_Allocate file
 % The string entered for the prompt is usually the path and file for
 % Run_Master_allocate.dss for the given circuit. 
 % You may need to update the path reference in the Run_Master_allocate.dss
