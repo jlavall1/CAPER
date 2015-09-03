@@ -1,0 +1,24 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   01_Sept_Code/GUI_openDSS_Locations.m
+#	modified:   01_Sept_Code/Plotting_Circuits.m
+#	modified:   01_Sept_Code/getLineInfo_Currents.m
+#	deleted:    Characteristics.m
+#	deleted:    Circuit_Trace.m
+#	deleted:    Zone_List_Comparison.m
+#
+# Untracked files:
+#	01_Sept_Code/Characteristics.m
+#	01_Sept_Code/Circuit_Trace.m
+#	01_Sept_Code/Plotting_Circuits.asv
+#	01_Sept_Code/Zone_List_Comparison.m
+#	01_Sept_Code/getLineInfo_Currents.asv
+#	03_OpenDSS_Circuits/EPRI_ckt7/DISTANCE.mat
+#	03_OpenDSS_Circuits/EPRI_ckt7/PVloadshape_Central.txt
+#
+

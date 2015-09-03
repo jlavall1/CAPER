@@ -3,10 +3,10 @@ function STRING = GUI_openDSS_Locations()
 
 %This function will prompt the user where they are working.
 
-comp_choice=menu('What Location are you working from?','Box@Home','Home Desktop (R:/)','Joe''s Laptop (C:/)','RTPIS_7','RTPIS_9');
+comp_choice=menu('What Location are you working from?','JML Home Desktop','JML Laptop','Brians Laptop','RTPIS_7','RTPIS_9');
 
 while comp_choice<1
-    comp_choice=menu('What Location are you working from?','Box@Home','Home Desktop (R:/)','Joe''s Laptop (C:/)','RTPIS_7','RTPIS_9');
+    comp_choice=menu('What Location are you working from?','JML Home Desktop','JML Laptop','Brians Laptop','RTPIS_7','RTPIS_9');
 end
 
 cat_choice=menu('What Category of circuit are you working on?','DEC','DEP','EPRI','IEEE','other');
@@ -18,12 +18,16 @@ end
 
 %Update main directory to folder w/ circuits:
 if comp_choice==1
-    s1 = 'C:\Users\jlavall\Box Sync\00_Research\00_CAPER\00_2015_Fall\03_OpenDSS Circuits';
+    %JML Home Desktop
+    s1 = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
 elseif comp_choice==2
-    s1 = 'R:\03_OpenDSS_Circuits';
+    %JML Laptop
+    s1 = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
 elseif comp_choice==3
-    s1 = 'C:\Users\jlavall\Documents\03_openDSS_Circuits';
+    %Brians Comp
+    s1 = 'C:\Users\';
 elseif comp_choice==4
+    %RTPIS_7
     s1 = 'C:';
 elseif comp_choice==5
     s1 = 'C:';

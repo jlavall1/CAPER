@@ -89,10 +89,7 @@ while ii<length(Buses)
             %}
             %
             %Obtain Current & P.U. & select maximum of scenerio:
-            %   Use this if you want to speed the process up:
             Lines = getLineInfo_Currents(DSSCircObj);
-            %   OR THIS if you want to see what is available:
-            %Lines = getLineInfo(DSSCircObj);
             fDR_LD(1,1) = Lines(2,1).bus1PowerReal;
             fDR_LD(1,2) = Lines(ii,1).bus1PowerReal;
             kk = 4;
@@ -151,7 +148,6 @@ end
 %This is to print the feeder
 %figure(1);
 %plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');
-load DISTANCE.mat
-
+ 
       
 

@@ -168,12 +168,12 @@ for ii=1:length(Lines)
         warning('Error with line.%s.  \nNumber of phases does not match the number of phases on the attached bus.  \nUse circuitCheck to diagnose the circuit.  \nRun warnSt=circuitCheck(DSSCircObj); and look at warnSt.InvalidLineBusName for more information.  \nInvalid data returned.\n',Lines(ii).name);
     end
     Lines(ii).bus1PhasePowerReal = bus1PhasePowerReal;
-    Lines(ii).bus1PhasePowerReactive = bus1PhasePowerReactive;
+    %Lines(ii).bus1PhasePowerReactive = bus1PhasePowerReactive;
     %Lines(ii).bus2PhasePowerReal = bus2PhasePowerReal;
     %Lines(ii).bus2PhasePowerReactive = bus2PhasePowerReactive;
     
-    Lines(ii).bus1PowerReal = sum(power(1,1:DSSCircuit.ActiveCktElement.NumPhases));
-    Lines(ii).bus1PowerReactive = sum(power(2,1:DSSCircuit.ActiveCktElement.NumPhases));
+    %Lines(ii).bus1PowerReal = sum(power(1,1:DSSCircuit.ActiveCktElement.NumPhases));
+    %Lines(ii).bus1PowerReactive = sum(power(2,1:DSSCircuit.ActiveCktElement.NumPhases));
     %Lines(ii).bus2PowerReal = sum(power(1,DSSCircuit.ActiveCktElement.NumConductors+1:DSSCircuit.ActiveCktElement.NumConductors+DSSCircuit.ActiveCktElement.NumPhases));
     %Lines(ii).bus2PowerReactive = sum(power(2,DSSCircuit.ActiveCktElement.NumConductors+1:DSSCircuit.ActiveCktElement.NumConductors+DSSCircuit.ActiveCktElement.NumPhases));
     
