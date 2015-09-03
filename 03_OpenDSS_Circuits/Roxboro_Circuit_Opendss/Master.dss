@@ -1,0 +1,60 @@
+! ---------------------------------
+!! Converted from CYME 
+! DATE=May 26, 2015 at 10:38:55
+! CYME_VERSION=5.04
+! CYMDIST_REVISION=02
+! ---------------------------------
+! 
+Clear    ! Always start the Master with a Clear command
+! 
+! Define the Circuit
+! 
+New Circuit.T5240B12 Bus1=T5240B12_1
+~ BasekV= 22.87  pu= 1.03323131817761  angle= 0 
+~ Z1=[ 0.078336 ,  1.86336 ] ! Actual ohms
+~ Z2=[ 0.041472 ,  3.483072 ]
+~ Z0=[ 0 ,  13.642787 ]
+Redirect SourceRegulator.dss
+! 
+! Library Data
+! 
+Redirect Wiredata.dss
+Redirect linespacing.dss
+Redirect CNLineCodes.dss
+! 
+! Circuit Element Data
+! 
+Redirect UGLines.dss
+Redirect LinesByPhase.dss
+Redirect Regulators.dss
+Redirect Loads.dss
+Redirect Capacitors.dss
+Redirect SwtControls.dss
+Redirect Reclosers.dss
+Redirect BreakerSettings.dss
+Redirect SectionalizerSettings.DSS
+Redirect FuseSettings.dss
+! 
+! Set the voltage bases
+! 
+Set voltagebases = [ 22.87 0.480, 0.208, 0.24, 0.12]
+CalcVoltageBases
+! 
+! Define the bus coordinates
+! 
+Buscoords Buscoords.CSV
+! 
+! Some command templates (commented out)
+! 
+/***** Begin Block Comment ******
+plot circuit Power max=2000 n n C1=$00FF0000
+plot circuit Voltage Max=2000 dots=n labels=n subs=y C1=$00FF0000
+plot profile
+!----------
+Interpolate  ! this will pick up buses added for regulators
+ClearBusMarkers
+AddBusMarker Bus=..... Code=5  color=Lime  size=3
+!----------
+Set Markcapacitor=yes 
+Set MarkRegulators=yes RegMarkerCode=17 RegMarkerSize=7
+*** End Block Comment  *****/

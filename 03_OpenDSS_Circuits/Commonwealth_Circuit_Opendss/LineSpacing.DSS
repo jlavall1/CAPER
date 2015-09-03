@@ -1,0 +1,9 @@
+// **************************************
+// Converted from CYME Equipment database
+// *********************8****************
+New LineSpacing.8'-ARM-NON-CENTER-POST-3PH Nconds= 4  Nphases= 3  x=[-1.127760 0.304800 1.127760 0.000000 ] h=[10.363200 10.363200 10.363200 7.924800 ] units=m
+New LineSpacing.8'-ARM-STANDARD-2PH Nconds= 3  Nphases= 2  x=[-1.127760 1.127760 0.000000 ] h=[10.363200 10.363200 7.924800 ] units=m
+New LineSpacing.8'-ARM-STANDARD-3PH Nconds= 4  Nphases= 3  x=[-1.127760 0.000000 1.127760 0.000000 ] h=[10.363200 10.668000 10.363200 7.924800 ] units=m
+New LineSpacing.NEUTRAL-ON-ARM-1PH Nconds= 2  Nphases= 1  x=[-1.127760 1.127760 ] h=[10.363200 10.363200 ] units=m
+New LineSpacing.VERTICAL-1-PH-104-1PH Nconds= 2  Nphases= 1  x=[0.000000 0.000000 ] h=[10.768614 7.924800 ] units=m
+New LineSpacing.VERTICAL-1-PH-60-1PH Nconds= 2  Nphases= 1  x=[0.000000 0.000000 ] h=[10.668000 8.839200 ] units=m

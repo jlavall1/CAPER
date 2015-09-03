@@ -1,0 +1,21 @@
+New SwtControl.471228024 SwitchedObj=Line.471228024 SwitchedTerm=1 Action=Closed Lock=no
+New SwtControl.264504387 SwitchedObj=Line.264504387 SwitchedTerm=1 Action=Open Lock=no
+New SwtControl.469544353 SwitchedObj=Line.469544353 SwitchedTerm=1 Action=Closed Lock=no
+New SwtControl.264494225 SwitchedObj=Line.264494225 SwitchedTerm=1 Action=Closed Lock=no
+New Line.264494209 Bus1=258840067 Bus2=264494211 Switch=T
+New SwtControl.264494209 SwitchedObj=Line.264494209 SwitchedTerm=1 Action=Open Lock=no
+New SwtControl.264494188 SwitchedObj=Line.264494188 SwitchedTerm=1 Action=Closed Lock=no
+New SwtControl.472684297 SwitchedObj=Line.472684297 SwitchedTerm=2 Action=Open Lock=no
+New SwtControl.288683091 SwitchedObj=Line.288683091 SwitchedTerm=1 Action=Closed Lock=no
+New SwtControl.264516152 SwitchedObj=Line.264516152 SwitchedTerm=1 Action=Closed Lock=no
+New SwtControl.264259411 SwitchedObj=Line.264259411 SwitchedTerm=2 Action=Open Lock=no
+New SwtControl.264494179 SwitchedObj=Line.264494179 SwitchedTerm=1 Action=Closed Lock=no
+New SwtControl.264494216 SwitchedObj=Line.264494216 SwitchedTerm=1 Action=Closed Lock=no
+New SwtControl.264567406 SwitchedObj=Line.264567406 SwitchedTerm=1 Action=Closed Lock=no
+New SwtControl.264494197 SwitchedObj=Line.264494197 SwitchedTerm=1 Action=Closed Lock=no
+New SwtControl.264254785 SwitchedObj=Line.264254785 SwitchedTerm=2 Action=Open Lock=no
+New SwtControl.264341149 SwitchedObj=Line.264341149 SwitchedTerm=2 Action=Open Lock=no
+New SwtControl.264275003 SwitchedObj=Line.264275003 SwitchedTerm=2 Action=Open Lock=no
+New SwtControl.264530184 SwitchedObj=Line.264530184 SwitchedTerm=1 Action=Closed Lock=no
+New SwtControl.264279388 SwitchedObj=Line.264279388 SwitchedTerm=2 Action=Open Lock=no
+New SwtControl.472683988 SwitchedObj=Line.472683988 SwitchedTerm=2 Action=Open Lock=no

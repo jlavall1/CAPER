@@ -1,0 +1,5 @@
+// *****************************
+// NOTE: This file is not complete
+// *****************************
+New Line.U397BH__103450993 Bus1=103136819 Bus2=103136820 Switch=T
+!New Recloser.U397BH__103450993 MonitoredObj=Line.U397BH__103450993 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  

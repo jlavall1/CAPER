@@ -1,0 +1,6 @@
+New Transformer.T4795B23_1_1 Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[T4795B23_1.1 T4795B23_1_reg.1] kVs=[ 13.2040006563667   13.2040006563667 ]
+New RegControl.T4795B23_1_1 Transformer=T4795B23_1_1 Winding=2 Vreg= 123.987758181313  Band= 0.5 PTratio= 110  CTPrim= 100  R= 0  X= 0 
+New Transformer.T4795B23_1_2 Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[T4795B23_1.2 T4795B23_1_reg.2] kVs=[ 13.2040006563667   13.2040006563667 ]
+New RegControl.T4795B23_1_2 Transformer=T4795B23_1_2 Winding=2 Vreg= 123.987758181313  Band= 0.5 PTratio= 110  CTPrim= 100  R= 0  X= 0 
+New Transformer.T4795B23_1_3 Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[T4795B23_1.3 T4795B23_1_reg.3] kVs=[ 13.2040006563667   13.2040006563667 ]
+New RegControl.T4795B23_1_3 Transformer=T4795B23_1_3 Winding=2 Vreg= 123.987758181313  Band= 0.5 PTratio= 110  CTPrim= 100  R= 0  X= 0 

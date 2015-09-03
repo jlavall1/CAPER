@@ -1,0 +1,8 @@
+New Line.GS83BK__2868704 Bus1=1765896 Bus2=25028592 Switch=T
+New Fuse.GS83BK__2868704 MonitoredObj=Line.GS83BK__2868704 MonitoredTerm=1 SwitchedObj=Line.GS83BK__2868704 SwitchedTerm=1 RatedCurrent= 1  enable=F
+New Line.GS80BK__2876680 Bus1=1992588 Bus2=1992589 Switch=T
+New Fuse.GS80BK__2876680 MonitoredObj=Line.GS80BK__2876680 MonitoredTerm=1 SwitchedObj=Line.GS80BK__2876680 SwitchedTerm=1 RatedCurrent= 65  enable=F
+New Line.GS90BK__103013462 Bus1=1992558 Bus2=103004824 Switch=T
+New Fuse.GS90BK__103013462 MonitoredObj=Line.GS90BK__103013462 MonitoredTerm=1 SwitchedObj=Line.GS90BK__103013462 SwitchedTerm=1 RatedCurrent= 1  enable=F
+New Line.REC47__2842711 Bus1=1765890 Bus2=25113875 Switch=T
+New Fuse.REC47__2842711 MonitoredObj=Line.REC47__2842711 MonitoredTerm=1 SwitchedObj=Line.REC47__2842711 SwitchedTerm=1 RatedCurrent= 1  enable=F

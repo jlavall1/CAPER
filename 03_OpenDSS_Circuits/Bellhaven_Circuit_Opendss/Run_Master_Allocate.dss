@@ -1,0 +1,35 @@
+! ---------------------------------
+!! Converted from CYME 
+! DATE=June 04, 2015 at 12:43:37
+! CYME_VERSION=7.10
+! CYMDIST_REVISION=05
+! ---------------------------------
+! 
+clear
+Compile 'D:\NCSU Research\Duke Circuits\bellhaven_new\Master.DSS' 
+! 
+! Recommendation: Add an energymeter here to first line in feeder
+New EnergyMeter.CircuitMeter LINE.258839833 terminal=1 option=R PhaseVoltageReport=yes
+EnergyMeter.CircuitMeter.peakcurrent=[  424.489787369243   385.714277946091   446.938766508963  ] 
+! 
+! Disable Capacitors for load allocation
+Disable Capacitor.*
+! 
+AllocateLoad
+AllocateLoad
+AllocateLoad
+Dump AllocationFactors
+! 
+! Enable capacitors before solving
+Enable Capacitor.*
+! 
+Solve
+! 
+Show V LN Node
+! Some Optional commands
+/***** Begin Block Comment ******
+plot circuit Power    max=2000 n n C1=$00FF0000  1ph=3
+plot circuit Voltage Max=2000 dots=n labels=n subs=y C1=$00FF0000
+! 
+plot profile phases=all    ' Requires an energymeter
+*** End Block Comment  *****/
