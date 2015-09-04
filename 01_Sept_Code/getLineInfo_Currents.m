@@ -144,8 +144,8 @@ for ii=1:length(Lines)
     currents = reshape(currents,2,[]); %two rows for real and reactive
     currents = hypot(currents(1,:),currents(2,:)); %magnitude
     
-    %bus1PhasePowerReal = zeros(1,3);
-    %bus1PhasePowerReactive = zeros(1,3);
+    bus1PhasePowerReal = zeros(1,3);
+    bus1PhasePowerReactive = zeros(1,3);
     %bus2PhasePowerReal = zeros(1,3);
     %bus2PhasePowerReactive = zeros(1,3);
     bus1PhaseCurrent = zeros(1,3);

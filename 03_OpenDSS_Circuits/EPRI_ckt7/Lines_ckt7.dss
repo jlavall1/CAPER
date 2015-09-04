@@ -15,7 +15,7 @@ New Line.157128 bus1=165461.1.2.3 bus2=165463.1.2.3 length=82.59031 linecode=186
 New Line.157129 bus1=165463.1.2.3 bus2=165462.1.2.3 length=100.9004 linecode=186 units=m enabled=True Phases=3
 New Line.157130 bus1=165465.1.2.3 bus2=165463.1.2.3 length=17.38006 linecode=186 units=m enabled=True Phases=3
 New Line.157131 bus1=165461.1.2.3 bus2=165466.1.2.3 length=173.2906 linecode=186 units=m enabled=True Phases=3
-New Line.157132 bus1=165451.1.2.3 bus2=165467.1.2.3 length=51.53019 linecode=40 units=m enabled=True Phases=3
+New Line.157132 bus1=165451.1.2.3 bus2=165467.1.2.3 length=51.53019 linecode=45 units=m enabled=True Phases=3
 New Line.157133 bus1=165467.1.2.3 bus2=165468.1.2.3 length=28.48011 linecode=45 units=m enabled=True Phases=3
 New Line.157136 bus1=165475.1.2.3 bus2=165476.1.2.3 length=7.630028 linecode=99 units=m enabled=True Phases=3
 New Line.157137 bus1=165477.1.2.3 bus2=165476.1.2.3 length=34.38013 linecode=186 units=m enabled=True Phases=3
@@ -40,7 +40,7 @@ New Line.157160 bus1=165487.1.2.3 bus2=283952.1.2.3 length=51.7402 linecode=45 u
 New Line.157163 bus1=165500.1.2.3 bus2=165501.1.2.3 length=7.470027 linecode=99 units=m enabled=True Phases=3
 New Line.157165 bus1=165495.1.2.3 bus2=165500.1.2.3 length=12.82005 linecode=40 units=m enabled=True Phases=3
 New Line.157167 bus1=165501.1.2.3 bus2=165503.1.2.3 length=54.6002 linecode=186 units=m enabled=True Phases=3
-New Line.157168 bus1=165495.1.2.3 bus2=165504.1.2.3 length=292.5211 linecode=40 units=m enabled=True Phases=3
+New Line.157168 bus1=165495.1.2.3 bus2=165504.1.2.3 length=292.5211 linecode=45 units=m enabled=True Phases=3
 New Line.174945 bus1=181883.1.2.3 bus2=158676.1.2.3 length=574.9122 linecode=45 units=m enabled=True Phases=3
 New Line.174947 bus1=181889.1.2.3 bus2=181890.1.2.3 length=8.000031 linecode=99 units=m enabled=True Phases=3
 New Line.174948 bus1=181891.1.2.3 bus2=181892.1.2.3 length=7.530029 linecode=99 units=m enabled=True Phases=3
