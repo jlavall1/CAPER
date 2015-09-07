@@ -92,7 +92,7 @@ jj = 1;
 RESULTS = zeros(11000,10);%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 2
 L_Currents = zeros(length(Lines_Base(:,1)),100);
 %Bus Loop.
-while ii< length(Buses)
+while ii< 6%length(Buses)
     %Skip BUS if not 3-ph & connected to 12.47:
     if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
         %Connect PV to Bus:
@@ -103,7 +103,7 @@ while ii< length(Buses)
         %Search & obtain Line where PV is located on.
         s1 = Buses(ii,1).name;
         s2 = '.1.2.3';
-        s = strcat(s1,'.1.2.3');
+        s = strcat(s1,s2);
         for iii=1:1:length(Lines_Base)
             if strcmp(Lines_Base(iii,1).bus1,s) == 1 %Bus name matches:
                 if Lines_Base(iii,1).numPhases == 3
