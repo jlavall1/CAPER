@@ -25,7 +25,7 @@ elseif comp_choice==2
     s1 = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
 elseif comp_choice==3
     %Brians Comp
-    s1 = 'C:\Users\';
+    s1 = 'C:\Users\Brian\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
 elseif comp_choice==4
     %RTPIS_7
     s1 = 'C:';
