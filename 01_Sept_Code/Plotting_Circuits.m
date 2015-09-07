@@ -10,6 +10,7 @@ mainFile = GUI_openDSS_Locations();
 master = 'Master_ckt7.dss';
 basecaseFile = strcat(mainFile,master);
 DSSText.command = ['Compile "',basecaseFile];
+%DSSEnergyMeters = DSSCircuit.Meters;
 %%
 %}
 %Compile the circuit
@@ -92,7 +93,7 @@ jj = 1;
 RESULTS = zeros(11000,10);%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 2
 L_Currents = zeros(length(Lines_Base(:,1)),100);
 %Bus Loop.
-while ii< length(Buses)
+while ii< 7%length(Buses) %length(Buses)
     %Skip BUS if not 3-ph & connected to 12.47:
     if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
         %Connect PV to Bus:
@@ -220,20 +221,8 @@ end
 %This is to print the feeder
 figure(1);
 plotCircuitLines(DSSCircObj,'Coloring','lineLoading','PVMarker','on','MappingBackground','none');
-%%
-load DISTANCE.mat
-figure(2);
-colors = {'r-','b-','k-','r--','b--'};
-n = 1;
 
-plot(DISTANCE(1:1157,1),L_Currents(1:1157,n),'r--');
-hold on
-n = n + 1;
-plot(DISTANCE(1:1157,1),L_Currents(1:1157,n),'b-');
-hold on
-n = n + 1;
-plot(DISTANCE(1:1157,1),L_Currents(1:1157,n),'k-*');
-hold on
+
 
 
       
