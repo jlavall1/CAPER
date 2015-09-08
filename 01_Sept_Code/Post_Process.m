@@ -31,24 +31,28 @@ load config_XFMRNAMES.mat
 %Transformers = getTransformerInfo(DSSCircObj);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 2
+%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 
 
-n = 100;
-m = 1;
-sort_Results = sort(RESULTS);
+%sort_Results = sortrows(RESULTS(1:10000,1:6),1);
+sort_Results = xlsread('RESULTS_SORTED.xlsx');
 
 %%
 n = 0;
 DONE = 0;
 jj = 1;
-ii=1000;
-while ii<length(RESULTS)-200
+ii=1;
+while ii<length(sort_Results)-200
     while n < 5100
         if RESULTS(ii,1) == n && DONE == 0
+            %Obtain group of 201simresults:
             SM.(['PU_',num2str(n)]) = sort_Results(ii:ii+200,3);
             SM.(['THRM_',num2str(n)]) = sort_Results(ii:ii+200,4);
-            %disp('hit1');
-            n = 5100;
+            %Now lets sort by desired field.
+            SM.(['PU_',num2str(n)]) = sort(SM.(['PU_',num2str(n)])(:,1));
+            SM.(['THRM_',num2str(n)]) = sort(SM.(['THRM_',num2str(n)])(:,1));
+            
+            %Force kick out of while loop:
+            n = 5100; 
             DONE = 1;
             %SM.(pv_size{n+1,1}).A(m,1) = sort_RESULTS(ii,4);
         end
@@ -64,7 +68,7 @@ end
 %The object of this while loop is to calculate the interquat
 %
 %Worker variables:
-n = 0;
+n = 100;
 i = 1;
 m = 1;
 ii = 1;
@@ -78,8 +82,9 @@ Q_Vv = zeros(51,10);
 Q_Ii = zeros(51,10);
 nn = 200; %samples
 PERC = [0,0.05,0.10,0.25,0.5,0.75,0.9,0.95,1];
+
 while n < 5100
-    %
+    %{
     %aggregate each set of ALL locations under same PV_kw:
     while m < 201
         
@@ -88,17 +93,20 @@ while n < 5100
 
         m = m + 1;
     end
-    %
+    %}
     %Voltage Profiles:
     for j=1:1:9
         index = nn*PERC(1,j);
         if index == 0
             index = 1;
         end
-        Q_V(i,j) = SM.(['PU_',num2str(n)])(index,1);
-        Q_I(i,j) = SM.(['THRM_',num2str(n)])(index,1);
+        Q_V(i,j) = sort(SM.(['PU_',num2str(n)])(index,1));
+        Q_I(i,j) = sort(SM.(['THRM_',num2str(n)])(index,1));
     end
-    %
+    Q_V(i,10) = mean(SM.(['PU_',num2str(n)])(:,1));
+    Q_I(i,10) = mean(SM.(['THRM_',num2str(n)])(:,1));
+    
+    %{
     %Changes in values for Area Chart:
     Q_Vv(i,1) = Q_V(i,1);
     Q_Ii(i,1) = Q_I(i,1);
@@ -106,14 +114,17 @@ while n < 5100
         Q_Vv(i,j) = Q_V(i,j) - Q_V(i,j-1);
         Q_Ii(i,j) = Q_I(i,j) - Q_I(i,j-1);
     end
-    %
+    %}
     %refresh variables:
-    agg = 0;
-    agg1 = 0;
+    %agg = 0;
+    %agg1 = 0;
     m = 1;
     n = n + 100;
     i = i + 1;
 end
+
+
+
 %%
 %Visualize the results:
 % PLOT!!!
@@ -144,11 +155,11 @@ fig = 1;
 figure(fig);
 
 C = zeros(3,1);
-for j=1:1:6
-    C = COLOR(j,:);
-    y = Q_V(2:51,j);
-    
-    plot(pv_size(2:51,1),y,'Color',C);
+for j=1:1:9
+    %C = COLOR(j,:);
+    %y = Q_V(2:51,j);
+    scatter(pv_size(1:51,j),Q_V(1:51,j))
+    %plot(pv_size(2:51,1),y,'Color',C);
     hold on
 end
 
@@ -230,7 +241,7 @@ h2 = fill(x,y1,'g','EdgeColor','none');
 %}
 
 %h2 = fill(x(index([1 1:end end])),y2(index([1 1:end end])),'g','EdgeColor','none');
-%%
+%{
 %plot(x(index),baseLine.*ones(size(index)),'r');  %# Plot the red line
 x=0:0.01:2*pi;                  %#initialize x array
 y1=sin(x);                      %#create first curve
@@ -238,3 +249,14 @@ y2=sin(x)+.5;                   %#create second curve
 X=[x,fliplr(x)];                %#create continuous x value array for plotting
 Y=[y1,fliplr(y2)];              %#create y values for out and then back
 fill(X,Y,'b');                  %#plot filled area
+%}
+
+%%
+%testing: %Thermal Rating --
+fig = fig + 1;
+figure(fig);
+for j=1:1:9
+    scatter(pv_size(1:51,j),Q_I(1:51,j))
+    hold on
+end
+

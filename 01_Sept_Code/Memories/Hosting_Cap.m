@@ -121,23 +121,36 @@ while ii< 7%length(Buses) %length(Buses)
             DSSText.command = 'Set mode=snapshot';
             DSSText.command = 'Set controlmode = static';
             DSSText.command = 'solve';
+            
+            %{
+            DSSText.command = 'Set mode=duty number=10  hour=1  h=1 sec=0';
+            DSSText.Command = 'Set Controlmode=Static'; %take control actions immediately without delays
+            DSSText.command = 'solve';
+            %}
+            %{
+            %Run simulations every 1-minute and find max/min voltages
+            simulationResolution = 60; %in seconds
+            simulationSteps = 24*60*7;
+            DSSText.Command = sprintf('Set mode=duty number=1  hour=0  h=%i sec=0',simulationResolution);
+            DSSText.Command = 'Set Controlmode=TIME';
+            %}
             %
             %Obtain Current & P.U. & select maximum of scenerio:
+            %   Use this if you want to speed the process up:
             Lines = getLineInfo_Currents(DSSCircObj);
-            %
-            %Obtain Select Measurements:
-            %	Feeder 3ph KW
-            fDR_LD(1,1) = Lines(2,1).bus1PowerReal;
-            %   Central-PV KW
-            fDR_LD(1,2) = Lines(PV_LOC,1).bus1PowerReal;
+            %   OR THIS if you want to see what is available:
+            %Lines = getLineInfo(DSSCircObj);
+
+            %Feeder kW MEAS:
+                fDR_LD(1,1) = Lines(2,1).bus1PowerReal;
+            %PV kW MEAS:
+                fDR_LD(1,2) = Lines(PV_LOC,1).bus1PowerReal;
             
-            
-            %
-            %Calculate  %%ThermalRating  &  MAX(Phase Voltages in P.U.)
             max_C = zeros(10,2);
             max_V = [0,0];
-
-            kk = 4; %Starting at 4 to skip buses within substation.
+            %
+            %Calculate %ThermalRating  &  MAX(Phase Voltages in P.U.)
+            kk = 4;
             while kk<length(thermal)
                 %Find last Sim's phase vltgs:
                 ansi84(kk,1) = max(Lines(kk,1).bus1PhaseVoltagesPU);
@@ -180,9 +193,8 @@ while ii< 7%length(Buses) %length(Buses)
             %fprintf('\nFeeder Real Power = %3.4f kW\n',fDR_LD(1,1));
             %fprintf('---------------\n\n');
             %Save results for this iteration:
-            %RESULTS = zeros(200,4);%PV_size | Active PV bus | max
-            %P.U.|max
-            RESULTS(jj,1:6)=[PV_size,fDR_LD(1,2),max_V(1,1),max_C(1,1),max_C(2,1),PV_LOC];
+            %RESULTS = zeros(200,4);%PV_size | Active PV bus | max P.U. | max %thermal Bus Loop.
+            RESULTS(jj,1:6)=[PV_size,fDR_LD(1,2),max_V(1,1),max_C(1,1),max_C(2,1),max_C(3,1)];
             %Now increment the solar site:
             PV_size = PV_size + 100; %kW
             n = n + 1;
