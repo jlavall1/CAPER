@@ -3,22 +3,22 @@ clear
 clc
 %Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
-%%
+%
 %Find directory of Circuit:
 mainFile = GUI_openDSS_Locations();
 %Declare name of basecase .dss file:
-master = 'Master_ckt7.dss';
+master = 'Master.dss';
 basecaseFile = strcat(mainFile,master);
 DSSText.command = ['Compile "',basecaseFile];
 %DSSEnergyMeters = DSSCircuit.Meters;
-%%
-%}
+%
+%{
 %Compile the circuit
 %DSSText.command = 'Compile R:\00_CAPER_SYSTEM\05_OpenDSS_Circuits\Roxboro_Circuit_Opendss\Master.DSS'; 
 %DSSText.command = ['Compile "', gridpvPath,'ExampleCircuit\master_Ckt24.dss"'];
-%%
+%
 %Solve basecase:
-%{
+
 DSSText.command = 'Set mode=duty number=10  hour=1  h=1 sec=0';
 DSSText.Command = 'Set Controlmode=Static'; %take control actions immediately without delays
 DSSText.command = 'solve';
@@ -45,8 +45,13 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 %5) Obtain Component Structs:
 Buses = getBusInfo(DSSCircObj);
 Loads = getLoadInfo(DSSCircObj);
-% Step through every load & scale it down:
+%Trace the circuit all the way back to the substation
+%UpstreamBuses = findUpstreamBuses(DSSCircObj, MYBUS);
 
+% Step through every load & scale it down:
+%Get Capacitor Information
+Capacitors = getCapacitorInfo(DSSCircObj);
+%Enable/Disable capacitor
 %%
 
 % Initiate PV Central station:

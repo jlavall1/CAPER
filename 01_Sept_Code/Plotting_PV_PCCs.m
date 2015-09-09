@@ -58,17 +58,32 @@ mainFile = GUI_openDSS_Locations();
 master = 'Master_ckt7.dss';
 basecaseFile = strcat(mainFile,master);
 DSSText.command = ['Compile "',basecaseFile];
+
+
+%Capacitors(1,1).enable
+%DSSText.command = 'edit capacitor.cp-nr-613 switching=0';
+DSSText.command = 'edit capacitor.cp-85w-900 enable=0';
+
 DSSText.command = 'Set mode=snapshot';
 DSSText.command = 'Set controlmode = static';
 DSSText.command = 'solve';
+%Get Capacitor Information
+Capacitors = getCapacitorInfo(DSSCircObj);
 
+%Enable/Disable capacitor
+
+%
 %"PLOT BASE CASE (to see that I am wrong ha.ha."
 figure(1);
 %plotKWProfile(DSSCircObj,'Only3Phase','on');
 %plotVoltageProfile(DSSCircObj,'SecondarySystem','off');
-plotAmpProfile(DSSCircObj,'157345');
+%plotAmpProfile(DSSCircObj,'157345');
+plotKVARProfile(DSSCircObj,'Only3Phase','on');
+
+
+
 Buses =getBusInfo(DSSCircObj);
-%Import desired Buses:
+%Import desired Buses based on user selection:
 load config_LEGALBUSES.mat
 load config_LEGALDISTANCE.mat %legal_distances
 j = 1;
