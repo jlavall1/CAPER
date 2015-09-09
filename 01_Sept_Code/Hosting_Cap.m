@@ -205,16 +205,16 @@ end
 %%
 %After Simulation, Lets show where all the locations were w/ distance from
 %substation.
-
-%Add this part of script if you don't want to run sim"
 %{
+%Add this part of script if you don't want to run sim"
+
 %Setup the COM server:
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 
 %Find directory of Circuit:
 mainFile = GUI_openDSS_Locations();
 %Declare name of basecase .dss file:
-master = 'Master_ckt7.dss';
+master = 'Master.dss';
 basecaseFile = strcat(mainFile,master);
 DSSText.command = ['Compile "',basecaseFile];
 DSSText.command = 'Set mode=snapshot';
@@ -223,8 +223,8 @@ DSSText.command = 'solve';
 %Import desired Buses:
 load config_LEGALBUSES.mat
 %}
-%{
 
+%{
 %This is to print the feeder
 figure(1);
 %plotCircuitLines(DSSCircObj,'Coloring','lineLoading','PVMarker','on','MappingBackground','none');

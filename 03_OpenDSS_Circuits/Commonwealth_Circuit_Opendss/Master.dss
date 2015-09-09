@@ -38,6 +38,10 @@ Redirect FuseSettings.dss
 ! 
 Set voltagebases = [ 12.47 0.480, 0.208, 0.24, 0.12]
 CalcVoltageBases
+!
+! Define Energymeter
+!
+!New Energymeter.25608 element=line.260762272 terminal=1 peakcurrent=[347.0, 364.0, 293.0]
 ! 
 ! Define the bus coordinates
 ! 
