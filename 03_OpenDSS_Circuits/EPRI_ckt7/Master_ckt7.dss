@@ -32,7 +32,8 @@ CalcVoltageBases
 !
 ! Define an energy meter -- needed for plot profile and yearly simulations
 !
-New Energymeter.25607 element=line.333 terminal=1 peakcurrent=[272.4, 243.4, 272.0]
+!New Energymeter.25607 element=line.333 terminal=1 peakcurrent=[272.4, 243.4, 272.0]
+New Energymeter.25607 element=line.333 terminal=1 peakcurrent=[136.2, 121.7, 136.0]
 
 !
 ! Define the bus coordinates

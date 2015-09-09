@@ -92,10 +92,10 @@ PV_size = 100;
 PV_LOC = 3;
 fDR_LD = zeros(1,3);
 jj = 1;
-RESULTS = zeros(11000,10);%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 2
+RESULTS = zeros(21000,10);%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 2
 L_Currents = zeros(length(Lines_Base(:,1)),100);
 %Bus Loop.
-while ii< 7%length(Buses) %length(Buses)
+while ii< length(Buses) %length(Buses)
     %Skip BUS if not 3-ph & connected to 12.47:
     if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
         %Connect PV to Bus:
@@ -116,7 +116,7 @@ while ii< 7%length(Buses) %length(Buses)
         end
         
         %Iterate PV's kW:
-        while PV_size < 5100
+        while PV_size < 10100
             %
             %Run powerflow at Bus location:
             DSSText.command = sprintf('edit generator.PV kW=%s',num2str(PV_size));
@@ -175,7 +175,7 @@ while ii< 7%length(Buses) %length(Buses)
         
             %fprintf('Max %%thermalrating is %3.3f %%, located at:  %s\n',max_C(1,1),Lines(max_C(1,2),1).name);  
             %fprintf('\nMax P.U. voltage is %3.3f, located at:  %s\n',max_V(1,1),Lines(max_V(1,2),1).name);
-            if mod(PV_size,1000) == 0
+            if mod(PV_size,2000) == 0
                 fprintf('\tSIZE: %3.1f kW\n',PV_size);
             end
             %fprintf('\t\tMEAS: %3.3f kW\n',fDR_LD(1,2));
@@ -218,7 +218,7 @@ DSSText.command = 'solve';
 %Import desired Buses:
 load config_LEGALBUSES.mat
 %}
-
+%{
 
 %This is to print the feeder
 figure(1);
@@ -235,4 +235,4 @@ BusesCoords = reshape([Bus2add.coordinates],2,[])';
 %   copies of A are arranged in each dimension
 busHandle = plot(repmat(BusesCoords(:,2)',2,1),repmat(BusesCoords(:,1)',2,1),'ko','MarkerSize',10,'MarkerFaceColor','c','LineStyle','none','DisplayName','Bottleneck');
 legend([Handles.legendHandles,busHandle'],[Handles.legendText,'PV_{PCC} Locations'] )
-
+%}
