@@ -30,6 +30,7 @@ DSSText.command = 'solve';
 
 
 Lines_Base = getLineInfo(DSSCircObj);
+Buses_Base = getBusInfo(DSSCircObj);
 thermal = zeros(length(Lines_Base),3); %LINE_RATING | MAX sim PHASE CURRENT | %%THERMAL
 ansi84 = zeros(length(Lines_Base),1);  %MAX sim PHASE VOLTAGE
 jj = 1;
@@ -53,6 +54,7 @@ Loads = getLoadInfo(DSSCircObj);
 
 DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=12.47 kW=100 pf=1.00 enabled=false',Buses(3,1).name);
 DSSText.command = 'solve';
+
 %fprintf(fid,'new generator.PV%s bus1=%s phases=%1.0f kv=%2.2f kw=%2.2f pf=1 duty=PV_Loadshape\n',Transformers(ii).bus1,Transformers(ii).bus1,Transformers(ii).numPhases,Transformers(ii).bus1Voltage/1000,kva(ii)/totalSystemSize*totalPVSize);
 % Set it as the active element and view its bus information
 
@@ -195,17 +197,42 @@ while ii< 7%length(Buses) %length(Buses)
     %Increment Position:
     ii = ii + 1;
 end
-    
+%%
+%After Simulation, Lets show where all the locations were w/ distance from
+%substation.
 
+%Add this part of script if you don't want to run sim"
+%{
+%Setup the COM server:
+[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 
-
-
-
-
-
-
+%Find directory of Circuit:
+mainFile = GUI_openDSS_Locations();
+%Declare name of basecase .dss file:
+master = 'Master_ckt7.dss';
+basecaseFile = strcat(mainFile,master);
+DSSText.command = ['Compile "',basecaseFile];
+DSSText.command = 'Set mode=snapshot';
+DSSText.command = 'Set controlmode = static';
+DSSText.command = 'solve';
+%Import desired Buses:
+load config_LEGALBUSES.mat
+%}
 
 
 %This is to print the feeder
 figure(1);
-plotCircuitLines(DSSCircObj,'Coloring','lineLoading','PVMarker','on','MappingBackground','none');
+%plotCircuitLines(DSSCircObj,'Coloring','lineLoading','PVMarker','on','MappingBackground','none');
+Handles=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');
+
+
+%PV_PCC buses
+addBuses = [legal_buses];
+Bus2add =getBusInfo(DSSCircObj,addBuses,1);
+BusesCoords = reshape([Bus2add.coordinates],2,[])';
+%now lets add onto plot:
+%   B = repmat(A,r1,r2): specs a list of scalars (rN) that describes how
+%   copies of A are arranged in each dimension
+busHandle = plot(repmat(BusesCoords(:,2)',2,1),repmat(BusesCoords(:,1)',2,1),'ko','MarkerSize',10,'MarkerFaceColor','c','LineStyle','none','DisplayName','Bottleneck');
+legend([Handles.legendHandles,busHandle'],[Handles.legendText,'PV_{PCC} Locations'] )
+
