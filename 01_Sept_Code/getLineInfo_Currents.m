@@ -97,7 +97,7 @@ for ii=1:length(allFields)
     eval([allFields{ii}, ' = ', 'p.Results.',allFields{ii},';']);
 end
 
-try    
+%try    
 %% Define the circuit
 DSSCircuit = DSSCircObj.ActiveCircuit;
 
@@ -113,8 +113,8 @@ if strcmp(lineNames,'NONE')
 end
 
 % Get voltage bases
-kVBases = DSSCircuit.Settings.VoltageBases;
-kVBases = [kVBases kVBases/sqrt(3)]; % kvBases are only LL, adding LN
+%kVBases = DSSCircuit.Settings.VoltageBases;
+%kVBases = [kVBases kVBases/sqrt(3)]; % kvBases are only LL, adding LN
 
 %% Get all info
 for ii=1:length(Lines)
@@ -137,74 +137,50 @@ for ii=1:length(Lines)
         phases = [true true true];
     end
     
-    power = DSSCircuit.ActiveCktElement.Powers; %complex
-    power = reshape(power,2,[]); %two rows for real and reactive
-    
     currents = DSSCircuit.ActiveCktElement.Currents; %complex currents
     currents = reshape(currents,2,[]); %two rows for real and reactive
     currents = hypot(currents(1,:),currents(2,:)); %magnitude
     
-    bus1PhasePowerReal = zeros(1,3);
-    bus1PhasePowerReactive = zeros(1,3);
-    %bus2PhasePowerReal = zeros(1,3);
-    %bus2PhasePowerReactive = zeros(1,3);
+
     bus1PhaseCurrent = zeros(1,3);
-    bus2PhaseCurrent = zeros(1,3);
-    
+
     if sum(phases) == DSSCircuit.ActiveCktElement.NumPhases %assignment does not work if the bus phases does not match the line phases
-        bus1PhasePowerReal(phases) = power(1,1:DSSCircuit.ActiveCktElement.NumPhases);
-        bus1PhasePowerReactive(phases) = power(2,1:DSSCircuit.ActiveCktElement.NumPhases);
-        %bus2PhasePowerReal(phases) = power(1,DSSCircuit.ActiveCktElement.NumConductors+1:DSSCircuit.ActiveCktElement.NumConductors+DSSCircuit.ActiveCktElement.NumPhases);
-        %bus2PhasePowerReactive(phases) = power(2,DSSCircuit.ActiveCktElement.NumConductors+1:DSSCircuit.ActiveCktElement.NumConductors+DSSCircuit.ActiveCktElement.NumPhases);
         bus1PhaseCurrent(phases) = currents(1:DSSCircuit.ActiveCktElement.NumPhases);
-        bus2PhaseCurrent(phases) = currents(DSSCircuit.ActiveCktElement.NumConductors+1:DSSCircuit.ActiveCktElement.NumConductors+DSSCircuit.ActiveCktElement.NumPhases);
+        
     else %fill with data on the first phases, but return warning
-        bus1PhasePowerReal(1:DSSCircuit.ActiveCktElement.NumPhases) = power(1,1:DSSCircuit.ActiveCktElement.NumPhases);
-        bus1PhasePowerReactive(1:DSSCircuit.ActiveCktElement.NumPhases) = power(2,1:DSSCircuit.ActiveCktElement.NumPhases);
-        %bus2PhasePowerReal(1:DSSCircuit.ActiveCktElement.NumPhases) = power(1,1:DSSCircuit.ActiveCktElement.NumPhases);
-        %bus2PhasePowerReal(1:DSSCircuit.ActiveCktElement.NumPhases) = power(2,1:DSSCircuit.ActiveCktElement.NumPhases);
         bus1PhaseCurrent(1:DSSCircuit.ActiveCktElement.NumPhases) = currents(1:DSSCircuit.ActiveCktElement.NumPhases);
-        bus2PhaseCurrent(1:DSSCircuit.ActiveCktElement.NumPhases) = currents(DSSCircuit.ActiveCktElement.NumConductors+1:DSSCircuit.ActiveCktElement.NumConductors+DSSCircuit.ActiveCktElement.NumPhases);
         warning('Error with line.%s.  \nNumber of phases does not match the number of phases on the attached bus.  \nUse circuitCheck to diagnose the circuit.  \nRun warnSt=circuitCheck(DSSCircObj); and look at warnSt.InvalidLineBusName for more information.  \nInvalid data returned.\n',Lines(ii).name);
     end
-    Lines(ii).bus1PhasePowerReal = bus1PhasePowerReal;
-    Lines(ii).bus1PhasePowerReactive = bus1PhasePowerReactive;
-    %Lines(ii).bus2PhasePowerReal = bus2PhasePowerReal;
-    %Lines(ii).bus2PhasePowerReactive = bus2PhasePowerReactive;
-    
-    Lines(ii).bus1PowerReal = sum(power(1,1:DSSCircuit.ActiveCktElement.NumPhases));
-    Lines(ii).bus1PowerReactive = sum(power(2,1:DSSCircuit.ActiveCktElement.NumPhases));
-    %Lines(ii).bus2PowerReal = sum(power(1,DSSCircuit.ActiveCktElement.NumConductors+1:DSSCircuit.ActiveCktElement.NumConductors+DSSCircuit.ActiveCktElement.NumPhases));
-    %Lines(ii).bus2PowerReactive = sum(power(2,DSSCircuit.ActiveCktElement.NumConductors+1:DSSCircuit.ActiveCktElement.NumConductors+DSSCircuit.ActiveCktElement.NumPhases));
-    
-    Lines(ii).bus1Current = mean(currents(1:DSSCircuit.ActiveCktElement.NumPhases));
-    %Lines(ii).bus2Current = mean(currents(DSSCircuit.ActiveCktElement.NumConductors+1:DSSCircuit.ActiveCktElement.NumConductors+DSSCircuit.ActiveCktElement.NumPhases));
+    %
+    %Save phase currents calculated for export:
     Lines(ii).bus1PhaseCurrent = bus1PhaseCurrent;
-    Lines(ii).bus2PhaseCurrent = bus2PhaseCurrent;
-    
+    Lines(ii).lineRating = DSSCircuit.ActiveElement.NormalAmps;
     %numPhases = DSSCircuit.ActiveElement.NumPhases;
     %Lines(ii).numPhases = numPhases;
-    %Lines(ii).numConductors = DSSCircuit.ActiveElement.NumConductors;
+    %
+    %nodes = DSSCircuit.ActiveElement.nodeOrder;
+    %numCond = DSSCircuit.ActiveElement.numConductors; % get numConductors for 2 element fields
+    %nodes1 = nodes(1:numCond);
+    %nodes1 = nodes1(nodes1~=0);
+    %busPhaseVoltages = zeros(1,3);
+    %phaseVoltages = zeros(1,3);
     
-    Lines(ii).lineRating = DSSCircuit.ActiveElement.NormalAmps;
-    %{
-    losses = DSSCircuit.ActiveCktElement.Losses;
-    Lines(ii).losses = losses(1)/1000 + 1i*losses(2)/1000;
+    voltages = DSSCircuit.ActiveBus.Voltages; %complex voltages
+    %compVoltages =  voltages(1:2:end) + 1j*voltages(2:2:end);
+    voltages = reshape(voltages,2,[]); %two rows for real and reactive
+    %refAngle = [0,-2*pi/3,2*pi/3,zeros(1,50)];
+    %Lines(ii).bus1VoltageAngle = mean(refAngle(DSSCircuit.ActiveBus.Nodes) - angle(voltages(1,:)+1i*voltages(2,:)));
+    voltages = hypot(voltages(1,:),voltages(2,:)); %voltage magnitude
     
-    losses = DSSCircuit.ActiveCktElement.PhaseLosses;
-    losses = reshape(losses,2,[]);
-    Lines(ii).phaseLosses = losses(1,:) + 1i*losses(2,:);
-    %}
-    nodes = DSSCircuit.ActiveElement.nodeOrder;
-    numCond = DSSCircuit.ActiveElement.numConductors; % get numConductors for 2 element fields
-    nodes1 = nodes(1:numCond);
-    nodes1 = nodes1(nodes1~=0);
-    nodes2 = nodes(numCond+1:numCond*2);
-    nodes2 = nodes2(nodes2~=0);
-    %{
-    Lines(ii).bus1NodeOrder = nodes1;
-    Lines(ii).bus2NodeOrder = nodes2;
-    %}
+    
+    %Lines(ii).bus1Voltage = mean(voltages(1:DSSCircuit.ActiveBus.NumNodes));
+    Lines(ii).bus1Voltage = max(voltages);
+    
+    %busPhaseVoltages(DSSCircuit.ActiveBus.Nodes) = voltages;
+    %phaseVoltages(nodes1) = busPhaseVoltages(nodes1);
+    %Export:
+    %Lines(ii).bus1PhaseVoltages = phaseVoltages;
+    %%
     % bus 1
     DSSCircuit.SetActiveBus(Lines(ii).bus1);
     if isempty(DSSCircuit.ActiveBus.Name)
@@ -214,174 +190,15 @@ for ii=1:length(Lines)
     if isempty(DSSCircuit.ActiveBus.Name)
         error('busName:notfound',sprintf('Bus ''%s'' of Line ''%s'' is not found in the circuit.  Check that this is a bus in the compiled circuit.',Lines(ii).bus1, Lines(ii).name))
     end
-    %{
-    Lines(ii).bus1Coordinates = [DSSCircuit.ActiveBus.y, DSSCircuit.ActiveBus.x];
-    Lines(ii).bus1Distance = DSSCircuit.ActiveBus.Distance;
-    Lines(ii).bus1CoordDefined = DSSCircuit.ActiveBus.Coorddefined;
-    %}
-    voltages = DSSCircuit.ActiveBus.Voltages; %complex voltages
-    %compVoltages =  voltages(1:2:end) + 1j*voltages(2:2:end);
-    voltages = reshape(voltages,2,[]); %two rows for real and reactive
-    %refAngle = [0,-2*pi/3,2*pi/3,zeros(1,50)];
-    %Lines(ii).bus1VoltageAngle = mean(refAngle(DSSCircuit.ActiveBus.Nodes) - angle(voltages(1,:)+1i*voltages(2,:)));
     
-    voltages = hypot(voltages(1,:),voltages(2,:)); %voltage magnitude
-    Lines(ii).bus1Voltage = mean(voltages(1:DSSCircuit.ActiveBus.NumNodes));
-    %New addition:
-    Lines(ii).bus2Voltage = Lines(ii).bus1Voltage;
-    %}
-    
-    %Only need bus1PhaseVoltagesPU (JML 9/2/2015)
-    voltagesPU = DSSCircuit.ActiveBus.puVoltages; %complex voltages
-    voltagesPU = reshape(voltagesPU,2,[]); %two rows for real and reactive
-    voltagesPU = hypot(voltagesPU(1,:),voltagesPU(2,:)); %voltage magnitude
-    %{
-    compVoltagesPU =  voltagesPU(1:2:end) + 1j*voltagesPU(2:2:end);
-    Lines(ii).bus1VoltagePU = mean(voltagesPU(1:DSSCircuit.ActiveBus.NumNodes));
-    %}
-    %busPhaseVoltages = zeros(1,3);
-    phaseVoltages = zeros(1,3);
-    busPhaseVoltagesPU = zeros(1,3);
-    phaseVoltagesPU = zeros(1,3);
-    %busPhaseVoltagePhasors = zeros(1,3);
-    %phaseVoltagePhasors = zeros(1,3);
-    %busPhaseVoltagePhasorsPU = zeros(1,3);
-    %phaseVoltagePhasorsPU = zeros(1,3);
-    %{
-    
-    busPhaseVoltages(DSSCircuit.ActiveBus.Nodes) = voltages;
-    phaseVoltages(nodes1) = busPhaseVoltages(nodes1);
-    %}
-    busPhaseVoltagesPU(DSSCircuit.ActiveBus.Nodes) = voltagesPU;
-    phaseVoltagesPU(nodes1) = busPhaseVoltagesPU(nodes1);
-    %busPhaseVoltagePhasors(DSSCircuit.ActiveBus.Nodes) = compVoltages;
-    %phaseVoltagePhasors(nodes1) = busPhaseVoltagePhasors(nodes1);
-    %busPhaseVoltagePhasorsPU(DSSCircuit.ActiveBus.Nodes) = compVoltagesPU;
-    %phaseVoltagePhasorsPU(nodes1) = busPhaseVoltagePhasorsPU(nodes1);
-    
-    Lines(ii).bus1PhaseVoltages = phaseVoltages;
-    Lines(ii).bus1PhaseVoltagesPU = phaseVoltagesPU;
-    
-    %Lines(ii).bus1PhaseVoltagePhasors = phaseVoltagePhasors;
-    %Lines(ii).bus1PhaseVoltagePhasorsPU = phaseVoltagePhasorsPU;
-    %{
-    phaseVoltagesLN = abs(phaseVoltagePhasors);
-    sngPhBus = sum(phaseVoltagesLN~=0, 2) == 1;
-    phaseVoltagesLL = phaseVoltagesLN;
-    if ~sngPhBus
-        phaseVoltagesLL = abs([phaseVoltagePhasors(1) - phaseVoltagePhasors(2), ...
-            phaseVoltagePhasors(2) - phaseVoltagePhasors(3), phaseVoltagePhasors(3) - phaseVoltagePhasors(1)] .* ...
-            [phaseVoltagesLN(1) & phaseVoltagesLN(2), phaseVoltagesLN(2) & phaseVoltagesLN(3)...
-            phaseVoltagesLN(3) & phaseVoltagesLN(1)]);
-    end
-    
-    Lines(ii).bus1PhaseVoltagesLL = phaseVoltagesLL;
-    %}
-    % get pu
-    %{
-    phaseVoltagesLLAvg = sum(phaseVoltagesLL)./sum(phaseVoltagesLL~=0);
-    baseDiff = kVBases - phaseVoltagesLLAvg/1000;
-    [~, ind] = min(abs(baseDiff), [], 2);
-    phaseVoltagesLLPU = phaseVoltagesLL./kVBases(ind)' / 1000;
-    Lines(ii).bus1PhaseVoltagesLLPU = phaseVoltagesLLPU;
-    
-    % avg line to line voltages
-    Lines(ii).bus1VoltageLL = phaseVoltagesLLAvg;
-    Lines(ii).bus1VoltageLLPU = phaseVoltagesLLAvg/kVBases(ind)' / 1000;
-    
-    Lines(ii).bus1kVBase = DSSCircuit.ActiveBus.kVBase;
-    %}
-    %Lines(ii).bus1Zsc1 = DSSCircuit.ActiveBus.Zsc1;
-    %Lines(ii).bus1Zsc0 = DSSCircuit.ActiveBus.Zsc0;
-    
-    % bus 2
-    %{
-    DSSCircuit.SetActiveBus(Lines(ii).bus2);
-    if isempty(DSSCircuit.ActiveBus.Name)
-        generalName = regexprep(Lines(ii).bus2,'(\.[0-9]+)',''); %take out the phase numbers on buses if they have them
-        DSSCircuit.SetActiveBus(generalName);
-    end
-    if isempty(DSSCircuit.ActiveBus.Name)
-        error('busName:notfound',sprintf('Bus ''%s'' of Line ''%s'' is not found in the circuit.  Check that this is a bus in the compiled circuit.',Lines(ii).bus2, Lines(ii).name))
-    end
-    Lines(ii).bus2Coordinates = [DSSCircuit.ActiveBus.y, DSSCircuit.ActiveBus.x];
-    Lines(ii).bus2Distance = DSSCircuit.ActiveBus.Distance;
-    Lines(ii).bus2CoordDefined = DSSCircuit.ActiveBus.Coorddefined;
-    
-    voltages = DSSCircuit.ActiveBus.Voltages; %complex voltages
-    compVoltages = voltages(1:2:end) + 1j*voltages(2:2:end);
-    voltages = reshape(voltages,2,[]); %two rows for real and reactive
-    Lines(ii).bus2VoltageAngle = mean(refAngle(DSSCircuit.ActiveBus.Nodes) - angle(voltages(1,:)+1i*voltages(2,:)));
-    voltages = hypot(voltages(1,:),voltages(2,:)); %voltage magnitude
-    Lines(ii).bus2Voltage = mean(voltages(1:DSSCircuit.ActiveBus.NumNodes));
-    
-    voltagesPU = DSSCircuit.ActiveBus.puVoltages; %complex voltages
-    compVoltagesPU =  voltagesPU(1:2:end) + 1j*voltagesPU(2:2:end);
-    voltagesPU = reshape(voltagesPU,2,[]); %two rows for real and reactive
-    voltagesPU = hypot(voltagesPU(1,:),voltagesPU(2,:)); %voltage magnitude
-    Lines(ii).bus2VoltagePU = mean(voltagesPU(1:DSSCircuit.ActiveBus.NumNodes));
-    
-    busPhaseVoltages = zeros(1,3);
-    phaseVoltages = zeros(1,3);
-    busPhaseVoltagesPU = zeros(1,3);
-    phaseVoltagesPU = zeros(1,3);
-    busPhaseVoltagePhasors = zeros(1,3);
-    phaseVoltagePhasors = zeros(1,3);
-    busPhaseVoltagePhasorsPU = zeros(1,3);
-    phaseVoltagePhasorsPU = zeros(1,3);
-    
-    busPhaseVoltages(DSSCircuit.ActiveBus.Nodes) = voltages;
-    phaseVoltages(nodes2) = busPhaseVoltages(nodes2);
-    busPhaseVoltagesPU(DSSCircuit.ActiveBus.Nodes) = voltagesPU;
-    phaseVoltagesPU(nodes2) = busPhaseVoltagesPU(nodes2);
-    busPhaseVoltagePhasors(DSSCircuit.ActiveBus.Nodes) = compVoltages;
-    phaseVoltagePhasors(nodes2) = busPhaseVoltagePhasors(nodes2);
-    busPhaseVoltagePhasorsPU(DSSCircuit.ActiveBus.Nodes) = compVoltagesPU;
-    phaseVoltagePhasorsPU(nodes2) = busPhaseVoltagePhasorsPU(nodes2);
-    
-    Lines(ii).bus2PhaseVoltages = phaseVoltages;
-    Lines(ii).bus2PhaseVoltagesPU = phaseVoltagesPU;
-    Lines(ii).bus2PhaseVoltagePhasors = phaseVoltagePhasors;
-    Lines(ii).bus2PhaseVoltagePhasorsPU = phaseVoltagePhasorsPU;
-    
-    phaseVoltagesLN = abs(phaseVoltagePhasors);
-    sngPhBus = sum(phaseVoltagesLN~=0, 2) == 1;
-    
-    phaseVoltagesLL = phaseVoltagesLN;
-    if ~sngPhBus
-        phaseVoltagesLL = abs([phaseVoltagePhasors(1) - phaseVoltagePhasors(2), ...
-            phaseVoltagePhasors(2) - phaseVoltagePhasors(3), phaseVoltagePhasors(3) - phaseVoltagePhasors(1)] .* ...
-            [phaseVoltagesLN(1) & phaseVoltagesLN(2), phaseVoltagesLN(2) & phaseVoltagesLN(3)...
-            phaseVoltagesLN(3) & phaseVoltagesLN(1)]);
-    end
-    
-    Lines(ii).bus2PhaseVoltagesLL = phaseVoltagesLL;
-    %}
-    % get pu
-    %{
-    phaseVoltagesLLAvg = sum(phaseVoltagesLL)./sum(phaseVoltagesLL~=0);
-    baseDiff = kVBases - phaseVoltagesLLAvg/1000;
-    [~, ind] = min(abs(baseDiff), [], 2);
-    phaseVoltagesLLPU = phaseVoltagesLL./kVBases(ind)' / 1000;
-    Lines(ii).bus2PhaseVoltagesLLPU = phaseVoltagesLLPU;
-    
-    % avg line to line voltages
-    Lines(ii).bus2VoltageLL = phaseVoltagesLLAvg;
-    Lines(ii).bus2VoltageLLPU = phaseVoltagesLLAvg/kVBases(ind)' / 1000;
-    
-    Lines(ii).bus2kVBase = DSSCircuit.ActiveBus.kVBase;
-    
-    Lines(ii).bus2Zsc1 = DSSCircuit.ActiveBus.Zsc1;
-    Lines(ii).bus2Zsc0 = DSSCircuit.ActiveBus.Zsc0;
-    %}
-    
+
     % find parent (upstream) object from current active line
     DSSCircuit.ParentPDElement; %move cursor to upstream parent
     Lines(ii).parentObject = get(DSSCircuit.ActiveDSSElement,'Name');
     
 end
 
-
+%{
 %% Remove lines that are not enabled if no names were input to the function
 condition = [Lines.enabled]==0;
 if ~isempty(varargin) && any(condition) %if the user specified the line names, return warning for that line not being enabled
@@ -390,40 +207,6 @@ else
     Lines = Lines(~condition);
 end
 
-
-%% Get the line parameters
-%{
-for ii=1:length(Lines)
-    DSSCircuit.Lines.name = Lines(ii).name;
-    Lines(ii).lineCode = get(DSSCircuit.Lines, 'LineCode');
-    Lines(ii).length = get(DSSCircuit.Lines, 'Length');
-    Lines(ii).R1 = get(DSSCircuit.Lines, 'R1');
-    Lines(ii).X1 = get(DSSCircuit.Lines, 'X1');
-    Lines(ii).R0 = get(DSSCircuit.Lines, 'R0');
-    Lines(ii).X0 = get(DSSCircuit.Lines, 'X0');
-    Lines(ii).C1 = get(DSSCircuit.Lines, 'C1');
-    Lines(ii).C0 = get(DSSCircuit.Lines, 'C0');
-    Lines(ii).Rmatrix = get(DSSCircuit.Lines, 'Rmatrix');
-    Lines(ii).Xmatrix = get(DSSCircuit.Lines, 'Xmatrix');
-    Lines(ii).Cmatrix = get(DSSCircuit.Lines, 'Cmatrix');
-    Lines(ii).emergAmps = get(DSSCircuit.Lines, 'EmergAmps');
-    Lines(ii).geometry = get(DSSCircuit.Lines, 'Geometry');
-    Lines(ii).Rg = get(DSSCircuit.Lines, 'Rg');
-    Lines(ii).Xg = get(DSSCircuit.Lines, 'Xg');
-    Lines(ii).Rho = get(DSSCircuit.Lines, 'Rho');
-    Lines(ii).Yprim = get(DSSCircuit.Lines, 'Yprim');
-    Lines(ii).numCust = get(DSSCircuit.Lines, 'NumCust');
-    Lines(ii).totalCust = get(DSSCircuit.Lines, 'TotalCust');
-    Lines(ii).spacing = get(DSSCircuit.Lines, 'Spacing');
-    units = {'mi','kft','km','m','ft','in','cm'};
-    unitIndex = get(DSSCircuit.Lines, 'Units');
-    if unitIndex
-        Lines(ii).units = units{unitIndex};
-    else
-        Lines(ii).units = '';
-    end
-end
-%}
 
 %% As long as you are not in faultstudy mode, remove all lines that have zero volts on either side (not disabled but are isolated from the circuit)
 if ~isempty(Lines) && isempty(varargin) && ~strcmp(DSSCircuit.Solution.ModeID,'Faultstudy')
@@ -445,6 +228,7 @@ catch err
         assignin('base','warnSt',warnSt);
     end
     rethrow(err);
-end
+%}
+%end
 
-end
+%end

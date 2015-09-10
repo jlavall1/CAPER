@@ -1,6 +1,8 @@
 %4.4] Plotting Tutorial:
 clear
 clc
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
+load reference_CKT7_Vpu.mat
 %Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 %
@@ -32,14 +34,16 @@ DSSText.command = 'solve';
 
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
+%{
 thermal = zeros(length(Lines_Base),3); %LINE_RATING | MAX sim PHASE CURRENT | %%THERMAL
 ansi84 = zeros(length(Lines_Base),1);  %MAX sim PHASE VOLTAGE
+%Obtain thermal rating:
 jj = 1;
 while jj<length(thermal)
     thermal(jj,1) = Lines_Base(jj,1).lineRating;
     jj = jj + 1;
 end
-
+%}
 
 %3) Setup a pointer of the active circuit:
 DSSCircuit = DSSCircObj.ActiveCircuit;
@@ -48,14 +52,16 @@ Buses = getBusInfo(DSSCircObj);
 Loads = getLoadInfo(DSSCircObj);
 %Trace the circuit all the way back to the substation
 %UpstreamBuses = findUpstreamBuses(DSSCircObj, MYBUS);
-Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
+%Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
+%Voltages=Voltages'; %Transpose
 %Buses_Names=DSSCircObj.ActiveCircuit.AllBusnames;
-Voltages=Voltages';
+
 % Step through every load & scale it down:
 %Get Capacitor Information
 Capacitors = getCapacitorInfo(DSSCircObj);
 %Enable/Disable capacitor
 
+%{
 %Create a matrix with
 ref_busVpu = cell(2452,2);
 ii = 1; %Index for ref_busVpu
@@ -95,25 +101,31 @@ while jj<length(Buses)+1
     end
     jj = jj + 1;
 end
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%}
+%
+%{
+% %Obtain V & I results from latest scenerio:        
+% tic
+% Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
+% Voltages=Voltages';
+% max_V = zeros(2,2); %[3ph_mx,index;1ph_mx,index]
+% for i=1:1:length(Voltages)
+%     if strcmp('1',ref_busVpu{i,2})==0 %This means that the voltage is on a 3ph bus:
+%         if Voltages(i,1) > max_V(2,1);
+%             max_V(2,1) = Voltages(i,1);
+%             max_V(2,2) = i;
+%         end
+%     elseif strcmp('3',ref_busVpu{i,2})==0
+%         if Voltages(i,1) > max_V(1,1);
+%             max_V(1,1) = Voltages(i,1);
+%             max_V(1,2) = i;
+%         end
+%     end   
+% end       
+% fDR_LD=DSSCircObj.ActiveCircuit.TotalPower;
+% Lines = getLineInfo_Currents(DSSCircObj);
+% toc
+%}
 
 %%
 
@@ -121,7 +133,8 @@ end
 % SOLVES THE HOSTING CAP!
 % Initiate PV Central station:
 %DSSText.command = 'new loadshape.PV_Loadshape npts=1 sinterval=60 csvfile="PVloadshape_Central.txt" Pbase=0.10 action=normalize';
-
+%PV_in = getPVInfo(DSSCircObj);
+%Gen_in = getGeneratorInfo(DSSCircObj);
 DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=12.47 kW=100 pf=1.00 enabled=false',Buses(3,1).name);
 DSSText.command = 'solve';
 
@@ -162,17 +175,19 @@ PV_size = 100;
 PV_LOC = 3;
 fDR_LD = zeros(1,3);
 jj = 1;
+COUNT = 0;
 RESULTS = zeros(21000,10);%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 2
-L_Currents = zeros(length(Lines_Base(:,1)),100);
+%L_Currents = zeros(length(Lines_Base(:,1)),100);
 %Bus Loop.
-while ii< length(Buses) %length(Buses)
+while ii< 6%length(Buses) %length(Buses)
     %Skip BUS if not 3-ph & connected to 12.47:
     if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
+        % ~~~~~~~~~~~~~~~~~
         %Connect PV to Bus:
         DSSText.command = sprintf('edit generator.PV bus1=%s kW=%s',Buses(ii,1).name,num2str(PV_size));
         fprintf('%1.1f) SolarGEN located: %s\n',m,Buses(ii,1).name);
-        %PV_in = getPVInfo(DSSCircObj);
-        %Gen_in = getGeneratorInfo(DSSCircObj);
+        % ~~~~~~~~~~~~~~~~~
+        %
         %Search & obtain Line where PV is located on.
         s1 = Buses(ii,1).name;
         s2 = '.1.2.3';
@@ -184,52 +199,105 @@ while ii< length(Buses) %length(Buses)
                 end
             end
         end
-        
+        % ~~~~~~~~~~~~~~~~~
         %Iterate PV's kW:
+        tic
         while PV_size < 10100
+            
             %
             %Run powerflow at Bus location:
+            %tic
             DSSText.command = sprintf('edit generator.PV kW=%s',num2str(PV_size));
             DSSText.command = 'Set mode=snapshot';
             DSSText.command = 'Set controlmode = static';
             DSSText.command = 'solve';
-            %
+            %toc
+            %fprintf('Power Flow complete\n');
+            %{
             %Obtain Current & P.U. & select maximum of scenerio:
             Lines = getLineInfo_Currents(DSSCircObj);
-            %
+            Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
+            Voltages=Voltages'; %Transpose
             %Obtain Select Measurements:
             %	Feeder 3ph KW
             fDR_LD(1,1) = Lines(2,1).bus1PowerReal;
             %   Central-PV KW
             fDR_LD(1,2) = Lines(PV_LOC,1).bus1PowerReal;
-            
-            
+            %}
+            % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            %Obtain V & I results from latest scenerio:        
+            %tic
+            Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
+            Voltages=Voltages';
+            max_V = zeros(2,2); %[3ph_mx,index;1ph_mx,index]
+            for i=1:1:length(Voltages)
+                if strcmp('1',ref_busVpu{i,2})==0 %This means that the voltage is on a 3ph bus:
+                    if Voltages(i,1) > max_V(2,1);
+                        max_V(2,1) = Voltages(i,1);
+                        max_V(2,2) = i;
+                    end
+                elseif strcmp('3',ref_busVpu{i,2})==0
+                    if Voltages(i,1) > max_V(1,1);
+                        max_V(1,1) = Voltages(i,1);
+                        max_V(1,2) = i;
+                    end
+                end   
+            end       
+            fDR_LD=DSSCircObj.ActiveCircuit.TotalPower;
+            Lines = getLineInfo_Currents(DSSCircObj);
+            Capacitors = getCapacitorInfo(DSSCircObj);
+            %toc
+            %fprintf('Solution extracted\n');
+            % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             %
+            %tic
             %Calculate  %%ThermalRating  &  MAX(Phase Voltages in P.U.)
-            max_C = zeros(10,2);
-            max_V = [0,0];
-
+            if COUNT==0
+                %Obtain thermal rating:
+                thermal = zeros(length(Lines),3); %LINE_RATING | MAX sim PHASE CURRENT | %%THERMAL
+                
+                for i=1:1:length(thermal)
+                    if Lines(i,1).enabled == 0
+                        thermal(i,1) = 1;
+                    else
+                        thermal(i,1) = Lines(i,1).lineRating;
+                    end
+                end
+                COUNT=1; %to not grab linerating again
+            end
+            
+            max_C = zeros(10,2); %reset max currents
+            % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            %
+            %Calculate %THERMAL
             kk = 4; %Starting at 4 to skip buses within substation.
             while kk<length(thermal)
                 %Find last Sim's phase vltgs:
-                ansi84(kk,1) = max(Lines(kk,1).bus1PhaseVoltagesPU);
+                %ansi84(kk,1) = max(Lines(kk,1).bus1PhaseVoltagesPU);
                 %Find last Sim's line currents:
-                thermal(kk,2) = max(Lines(kk,1).bus1PhaseCurrent);
-                thermal(kk,3) = (thermal(kk,2)/thermal(kk,1))*100;
+                
+                
+                if Lines(kk,1).enabled == 1
+                    thermal(kk,2) = max(Lines(kk,1).bus1PhaseCurrent);
+                    thermal(kk,3) = (thermal(kk,2)/thermal(kk,1))*100;
+                else
+                    thermal(kk,3) = 0;
+                end
+                %Filter out 120V/240/480 Lines:
                 
                 if Lines(kk,1).bus1Voltage < 6000
                     %We are only concerned about the primary lines:
                     thermal(kk,3) = 0;
                 end
-                
+%{                
                 %NOW lets check for Voltage Profile
-                if ansi84(kk,1) > max_V(1,1)
-                    max_V(1,1) = ansi84(kk,1);
-                    max_V(1,2) = kk;
-                end
+%                 if ansi84(kk,1) > max_V(1,1)
+%                     max_V(1,1) = ansi84(kk,1);
+%                     max_V(1,2) = kk;
+%                 end
                 %Pull line power flows:
-                L_Currents(kk,n)=Lines(kk,1).bus1PowerReal;
-
+                %L_Currents(kk,n)=Lines(kk,1).bus1PowerReal;
+%}
                 kk = kk + 1;
             end
             %Pull top 10 thermal(:,3) & store in max_C:
@@ -254,12 +322,15 @@ while ii< length(Buses) %length(Buses)
             %Save results for this iteration:
             %RESULTS = zeros(200,4);%PV_size | Active PV bus | max
             %P.U.|max
-            RESULTS(jj,1:6)=[PV_size,fDR_LD(1,2),max_V(1,1),max_C(1,1),max_C(2,1),PV_LOC];
+            RESULTS(jj,1:8)=[PV_size,max_V(1,1),max_V(2,1),max_C(1,1),max_C(2,1),PV_LOC,Capacitors(1,1).powerReactive,Capacitors(2,1).powerReactive]; %|PV_KW|maxV_3ph|maxV_1ph|maxC1|maxC2|bus_name|kVAR_CAP1|kVAR_CAP2
             %Now increment the solar site:
             PV_size = PV_size + 100; %kW
             n = n + 1;
-            jj = jj + 1;    
+            jj = jj + 1;
+            %toc
+            %fprintf('Next Iteration\n');
         end
+        toc
         m = m + 1;
     end
     %Reset size of PV system & move to next bus:
