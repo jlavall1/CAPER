@@ -11,8 +11,6 @@ Compile 'D:\NCSU Research\Duke Circuits\commonwealth\Master.DSS'
 ! New EnergyMeter.M1 LINE.____ 1  
 ! 
 Solve
-
-
 ! 
 !Show V LN Node
 ! Some Optional commands

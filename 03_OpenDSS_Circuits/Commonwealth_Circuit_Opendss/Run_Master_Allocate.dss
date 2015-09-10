@@ -6,13 +6,14 @@
 ! ---------------------------------
 ! 
 clear
-Compile 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Master.DSS' 
+Compile 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Master.DSS'
+!  JUST COMMENT OUT the directory to your own while working on the circuit.
+
+ 
 ! 
 ! Recommendation: Add an energymeter here to first line in feeder
 New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
 EnergyMeter.CircuitMeter.peakcurrent=[  345.492818586166   362.418979727275   291.727365549702  ] 
-
-
 ! 
 ! Disable Capacitors for load allocation
 Disable Capacitor.*
@@ -20,10 +21,18 @@ Disable Capacitor.*
 AllocateLoad
 AllocateLoad
 AllocateLoad
-Dump AllocationFactors
+!Dump AllocationFactors
 ! 
 ! Enable capacitors before solving
 Enable Capacitor.*
 ! 
 Solve
-
+! 
+!Show V LN Node
+! Some Optional commands
+/***** Begin Block Comment ******
+plot circuit Power    max=2000 n n C1=$00FF0000  1ph=3
+plot circuit Voltage Max=2000 dots=n labels=n subs=y C1=$00FF0000
+! 
+plot profile phases=all    ' Requires an energymeter
+*** End Block Comment  *****/

@@ -31,7 +31,7 @@ Redirect Loads.dss
 Redirect Capacitors.dss
 Redirect SwtControls.dss
 Redirect Reclosers.dss
-!Redirect SectionalizerSettings.DSS
+Redirect SectionalizerSettings.DSS
 Redirect FuseSettings.dss
 ! 
 ! Set the voltage bases
@@ -42,11 +42,6 @@ CalcVoltageBases
 ! Define the bus coordinates
 ! 
 Buscoords Buscoords.CSV
-
-
-
-
-
 ! 
 ! Some command templates (commented out)
 ! 
