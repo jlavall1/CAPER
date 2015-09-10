@@ -3,7 +3,8 @@
 clear
 clc
 %Load results and information about the circuit-
-load RESULTS_9_3_2015.mat
+%load RESULTS_9_3_2015.mat
+load RESULTS_9_10_2015.mat
 load DISTANCE.mat
 %
 %1) Setup the COM server
@@ -34,7 +35,7 @@ load config_XFMRNAMES.mat
 %PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 
 
 %sort_Results = sortrows(RESULTS(1:10000,1:6),1);
-sort_Results = xlsread('RESULTS_SORTED.xlsx');
+sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
 
 %%
 n = 0;
@@ -42,7 +43,7 @@ DONE = 0;
 jj = 1;
 ii=1;
 while ii<length(sort_Results)-200
-    while n < 5100
+    while n < 10100
         if RESULTS(ii,1) == n && DONE == 0
             %Obtain group of 201simresults:
             SM.(['PU_',num2str(n)]) = sort_Results(ii:ii+200,3);
@@ -52,7 +53,7 @@ while ii<length(sort_Results)-200
             SM.(['THRM_',num2str(n)]) = sort(SM.(['THRM_',num2str(n)])(:,1));
             
             %Force kick out of while loop:
-            n = 5100; 
+            n = 10100; 
             DONE = 1;
             %SM.(pv_size{n+1,1}).A(m,1) = sort_RESULTS(ii,4);
         end
@@ -76,14 +77,14 @@ ii = 1;
 agg = 0;
 agg1 = 0;
 index = 0;
-Q_V = zeros(51,10);
-Q_I = zeros(51,10);
-Q_Vv = zeros(51,10);
-Q_Ii = zeros(51,10);
+Q_V = zeros(101,10);
+Q_I = zeros(101,10);
+%Q_Vv = zeros(51,10);
+%Q_Ii = zeros(51,10);
 nn = 200; %samples
 PERC = [0,0.05,0.10,0.25,0.5,0.75,0.9,0.95,1];
 
-while n < 5100
+while n < 10100
     %{
     %aggregate each set of ALL locations under same PV_kw:
     while m < 201
@@ -97,28 +98,16 @@ while n < 5100
     %Voltage Profiles:
     for j=1:1:9
         index = nn*PERC(1,j);
-        if index == 0
+        if index == 0 %This is the bottom of Q1
             index = 1;
         end
-        Q_V(i,j) = sort(SM.(['PU_',num2str(n)])(index,1));
-        Q_I(i,j) = sort(SM.(['THRM_',num2str(n)])(index,1));
+        Q_V(i,j) = SM.(['PU_',num2str(n)])(index,1);
+        Q_I(i,j) = SM.(['THRM_',num2str(n)])(index,1);
     end
     Q_V(i,10) = mean(SM.(['PU_',num2str(n)])(:,1));
     Q_I(i,10) = mean(SM.(['THRM_',num2str(n)])(:,1));
     
-    %{
-    %Changes in values for Area Chart:
-    Q_Vv(i,1) = Q_V(i,1);
-    Q_Ii(i,1) = Q_I(i,1);
-    for j=2:1:9
-        Q_Vv(i,j) = Q_V(i,j) - Q_V(i,j-1);
-        Q_Ii(i,j) = Q_I(i,j) - Q_I(i,j-1);
-    end
-    %}
-    %refresh variables:
-    %agg = 0;
-    %agg1 = 0;
-    m = 1;
+    %Refresh Variables:
     n = n + 100;
     i = i + 1;
 end
@@ -128,11 +117,11 @@ end
 %%
 %Visualize the results:
 % PLOT!!!
-pv_size = zeros(51,9);
+pv_size = zeros(101,9);
 n = 0;
 m = 1;
-sort_Results = sort(RESULTS);
-while n<5100
+%sort_Results = sort(RESULTS);
+while n<10100
     for k=1:1:9
         pv_size(m,k) = n;
     end
@@ -146,8 +135,8 @@ COLOR(1,:) = [0.0 1.0 1.0];
 COLOR(2,:) = [0.0 0.8 1.0];
 COLOR(3,:) = [0.0 0.6 1.0];
 COLOR(4,:) = [0.0 0.0 0.4]; %inner quartile
-COLOR(4,:) = [0.0 0.0 0.4];
-COLOR(3,:) = [0.0 0.6 1.0];
+COLOR(5,:) = [0.0 0.0 0.4];
+COLOR(6,:) = [0.0 0.6 1.0];
 
 %%
 % "Effect of PV Size on max BUS VOLTAGE under 50% Load"
@@ -158,7 +147,7 @@ C = zeros(3,1);
 for j=1:1:9
     %C = COLOR(j,:);
     %y = Q_V(2:51,j);
-    scatter(pv_size(1:51,j),Q_V(1:51,j))
+    scatter(pv_size(1:101,j),Q_V(1:101,j))
     %plot(pv_size(2:51,1),y,'Color',C);
     hold on
 end
@@ -171,7 +160,7 @@ axis([0 5000 1.01 1.05]);
 % 
 fig = fig + 1;
 figure(fig);
-x = pv_size(2:51,1);
+x = pv_size(2:101,1);
 % 5th & below percentile:
 
 % 

@@ -179,7 +179,7 @@ COUNT = 0;
 RESULTS = zeros(21000,10);%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 2
 %L_Currents = zeros(length(Lines_Base(:,1)),100);
 %Bus Loop.
-while ii< 6%length(Buses) %length(Buses)
+while ii< length(Buses) %length(Buses)
     %Skip BUS if not 3-ph & connected to 12.47:
     if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
         % ~~~~~~~~~~~~~~~~~
