@@ -45,7 +45,7 @@ if cat_choice==1
     if ckt_choice == 1
         s2 = '\Bellhaven_Circuit_Opendss\';
     elseif ckt_choice == 2
-        s2 = '\Commonwealth_Circuit_Opendss\';
+        s2 = '\Commonwealth_Circuit_Opendss\Run_Master_Allocate.dss';
     elseif ckt_choice == 3
         s2 = '\Flay_Circuit_Opendss\';
     end
@@ -73,9 +73,9 @@ elseif cat_choice==3
     if ckt_choice == 1
         s2 = '\EPRI_ckt5\';
     elseif ckt_choice == 2
-        s2 = '\EPRI_ckt7\';
+        s2 = '\EPRI_ckt7\Master.dss';
     elseif ckt_choice == 3
-        s2 = '\EPRI_ckt24\';
+        s2 = '\EPRI_ckt24\Master.dss';
     end
     STRING = strcat(s1,s2);
 elseif cat_choice==4

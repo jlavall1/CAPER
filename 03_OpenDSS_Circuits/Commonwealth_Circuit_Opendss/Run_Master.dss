@@ -11,8 +11,10 @@ Compile 'D:\NCSU Research\Duke Circuits\commonwealth\Master.DSS'
 ! New EnergyMeter.M1 LINE.____ 1  
 ! 
 Solve
+
+
 ! 
-Show V LN Node
+!Show V LN Node
 ! Some Optional commands
 /***** Begin Block Comment ******
 plot circuit Power    max=2000 n n C1=$00FF0000  1ph=3

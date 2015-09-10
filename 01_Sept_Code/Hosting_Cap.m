@@ -6,10 +6,11 @@ clc
 %
 %Find directory of Circuit:
 mainFile = GUI_openDSS_Locations();
+DSSText.command = ['Compile "',mainFile];
+
 %Declare name of basecase .dss file:
-master = 'Master.dss';
-basecaseFile = strcat(mainFile,master);
-DSSText.command = ['Compile "',basecaseFile];
+%master = 'Run_Master_Allocate.dss';
+%basecaseFile = strcat(mainFile,master);
 %DSSEnergyMeters = DSSCircuit.Meters;
 %
 %{
@@ -47,13 +48,77 @@ Buses = getBusInfo(DSSCircObj);
 Loads = getLoadInfo(DSSCircObj);
 %Trace the circuit all the way back to the substation
 %UpstreamBuses = findUpstreamBuses(DSSCircObj, MYBUS);
-
+Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
+%Buses_Names=DSSCircObj.ActiveCircuit.AllBusnames;
+Voltages=Voltages';
 % Step through every load & scale it down:
 %Get Capacitor Information
 Capacitors = getCapacitorInfo(DSSCircObj);
 %Enable/Disable capacitor
+
+%Create a matrix with
+ref_busVpu = cell(2452,2);
+ii = 1; %Index for ref_busVpu
+jj = 1;
+while jj<length(Buses)+1
+    %Buses.name
+    %Buses.node
+    if length(Buses(jj,1).nodes)==3 %3phase bus (easy)
+        %Phase A:
+        ref_busVpu{ii,1}=Buses(jj,1).name;
+        ref_busVpu{ii,2}=num2str(1);
+        ii = ii + 1;
+        %Phase B;
+        ref_busVpu{ii,1}=Buses(jj,1).name;
+        ref_busVpu{ii,2}=num2str(2);
+        ii = ii + 1;
+        %Phase C;
+        ref_busVpu{ii,1}=Buses(jj,1).name;
+        ref_busVpu{ii,2}=num2str(3);
+        ii = ii + 1;
+        %fprintf('3ph Hit at %1.1f\n',jj);
+    elseif length(Buses(jj,1).nodes)==1
+        ref_busVpu{ii,1}=Buses(jj,1).name;
+        ref_busVpu{ii,2}=num2str(Buses(jj,1).nodes);
+        ii = ii + 1;
+    elseif length(Buses(jj,1).nodes)==2
+        %fprintf('This is 2ph @ %1.1f\n',jj);
+        %Phase B;
+        ref_busVpu{ii,1}=Buses(jj,1).name;
+        ref_busVpu{ii,2}=num2str(Buses(jj,1).nodes(1,1));
+        ii = ii + 1;
+        %Phase C;
+        ref_busVpu{ii,1}=Buses(jj,1).name;
+        ref_busVpu{ii,2}=num2str(Buses(jj,1).nodes(1,2));
+        ii = ii + 1;
+    
+    end
+    jj = jj + 1;
+end
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %%
 
+
+% SOLVES THE HOSTING CAP!
 % Initiate PV Central station:
 %DSSText.command = 'new loadshape.PV_Loadshape npts=1 sinterval=60 csvfile="PVloadshape_Central.txt" Pbase=0.10 action=normalize';
 
