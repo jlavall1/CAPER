@@ -4,7 +4,8 @@ clear
 clc
 %Load results and information about the circuit-
 %load RESULTS_9_3_2015.mat
-load RESULTS_9_10_2015.mat
+%load RESULTS_9_10_2015.mat
+load RESULTS_9_11_2015.mat
 load DISTANCE.mat
 %
 %1) Setup the COM server
@@ -35,7 +36,8 @@ load config_XFMRNAMES.mat
 %PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 
 
 %sort_Results = sortrows(RESULTS(1:10000,1:6),1);
-sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
+%sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
+sort_Results = xlsread('RESULTS_SORTED.xlsx','9_11');
 
 %
 n = 100;
@@ -348,16 +350,18 @@ X(1:200,1)=[x;x2];
 %~~~~~~~~~~~~~~~~~~~~~~~
 
 %Now lets fill inbetween Lines:
-%2) y1 & y2:
-Y(1:200,1)=[y1;flipud(y2)];
-C = COLOR(2,:);
-h(4)=fill(X(1:200,1),Y(1:200,1),C,'EdgeColor','none','LineWidth',2);
-hold on
 %1) y & y1:
 Y(1:200,1)=[y;flipud(y1)];
 C = COLOR(1,:);
 h(2)=fill(X(1:200,1),Y(1:200,1),C,'EdgeColor','none','LineWidth',5);
 hold on
+
+%2) y1 & y2:
+Y(1:200,1)=[y1;flipud(y2)];
+C = COLOR(2,:);
+h(4)=fill(X(1:200,1),Y(1:200,1),C,'EdgeColor','none','LineWidth',2);
+hold on
+
 
 %3) y2 & y3:
 Y(1:200,1)=[y2;flipud(y3)];
