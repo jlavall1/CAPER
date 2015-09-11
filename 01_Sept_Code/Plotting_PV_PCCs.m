@@ -53,13 +53,14 @@ end
 %Setup the COM server:
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 %Find directory of Circuit:
-%{
+
 mainFile = GUI_openDSS_Locations();
 %Declare name of basecase .dss file:
-master = 'Master_ckt7.dss';
-basecaseFile = strcat(mainFile,master);
-%}
-basecaseFile = 'R:\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Run_Master_Allocate.dss';
+%master = 'Master_ckt7.dss';
+%basecaseFile = strcat(mainFile,master);
+basecaseFile=mainFile;
+
+%basecaseFile = 'R:\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Run_Master_Allocate.dss';
 DSSText.command = ['Compile "',basecaseFile];
 
 
@@ -105,7 +106,7 @@ for i=1:1:length(legal_buses);
 end
 
 %addBuses = [legal_buses];
-%{
+
 
 if plot_choice == 1
     titlestring=sprintf('PV-PCC''s DISTANCE range from SUB: %1.2f to %1.2f km ',user_def(1,1),user_def(1,2));
@@ -114,7 +115,7 @@ elseif plot_choice == 2
 end
 
 %This is to print the feeder
-figure(1);
+figure(2);
 
 %plotCircuitLines(DSSCircObj,'Coloring','lineLoading','PVMarker','on','MappingBackground','none');
 gcf=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');
@@ -130,7 +131,7 @@ BusesCoords = reshape([Bus2add.coordinates],2,[])';
 busHandle = plot(repmat(BusesCoords(:,2)',2,1),repmat(BusesCoords(:,1)',2,1),'ko','MarkerSize',10,'MarkerFaceColor','c','LineStyle','none','DisplayName','Bottleneck');
 legend([gcf.legendHandles,busHandle'],[gcf.legendText,'PV_{PCC} Locations'] )
 %set(gcf.name,'CKT 7');
- %}       
+%}
     
     
     
