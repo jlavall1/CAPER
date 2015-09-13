@@ -232,7 +232,8 @@ while ii< length(Buses) %length(Buses)
             Voltages=Voltages';
             max_V = zeros(2,2); %[3ph_mx,index;1ph_mx,index]
             for i=1:1:length(Voltages)
-                if strcmp('1',ref_busVpu{i,2})==0 %This means that the voltage is on a 3ph bus:
+                %Obtain peak 1-ph max Bus Voltage:
+                if strcmp('1',ref_busVpu{i,2})==0 %This means that the voltage is on a 1ph bus:
                     if Voltages(i,1) > max_V(2,1);
                         max_V(2,1) = Voltages(i,1);
                         max_V(2,2) = i;
@@ -258,7 +259,7 @@ while ii< length(Buses) %length(Buses)
                 end
             end
             %fDR_LD=DSSCircObj.ActiveCircuit.TotalPower;
-            %tic
+            %This is to measure the feeder active load:
             DSSCircuit.SetActiveElement('Line.333');
             %power = DSSCircuit.ActiveDSSElement.Powers; %complex
             power = DSSCircuit.ActiveCktElement.Powers;
