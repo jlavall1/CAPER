@@ -39,23 +39,23 @@ load config_XFMRNAMES.mat
 %sort_Results = sortrows(RESULTS(1:10000,1:6),1);
 %sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
 %sort_Results = xlsread('RESULTS_SORTED.xlsx','9_11');
-sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14');
+sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14_1');
 %
 n = 100;
 DONE = 0;
 jj = 1;
 ii=1;
 %while ii<length(sort_Results)-200
-while ii < length(sort_Results)
+while ii < length(sort_Results)-1
     %Obtain group of 201simresults:
-    SM.(['PU_',num2str(n)]) = sort_Results(ii:ii+199,2); %1:200 then 201:400
-    SM.(['THRM_',num2str(n)]) = sort_Results(ii:ii+199,4);
+    SM.(['PU_',num2str(n)]) = sort_Results(ii:ii+198,2); %1:200 then 201:400
+    SM.(['THRM_',num2str(n)]) = sort_Results(ii:ii+198,4);
     %
     %Now lets sort by desired field.
     SM.(['PU_',num2str(n)]) = sort(SM.(['PU_',num2str(n)])(:,1));
     SM.(['THRM_',num2str(n)]) = sort(SM.(['THRM_',num2str(n)])(:,1));
     %fprintf('hit!!\n');
-    ii = ii + 200;
+    ii = ii + 199;
     n = n + 100;
     %SM.(pv_size{n+1,1}).A(m,1) = sort_RESULTS(ii,4);
 end
@@ -76,7 +76,7 @@ Q_V = zeros(101,10);
 Q_I = zeros(101,10);
 %Q_Vv = zeros(51,10);
 %Q_Ii = zeros(51,10);
-nn = 200; %samples
+nn = 199; %samples
 PERC = [0,0.05,0.10,0.25,0.5,0.75,0.9,0.95,1];
 
 while n < 10100
@@ -92,7 +92,7 @@ while n < 10100
     %}
     %Voltage Profiles:
     for j=1:1:9
-        index = nn*PERC(1,j);
+        index = round(nn*PERC(1,j))
         if index == 0 %This is the bottom of Q1
             index = 1;
         end
@@ -256,7 +256,7 @@ ansi(:,1)=0:100:10000;
 ansi(:,2)=ones(101,1).*1.05;
 plot(ansi(:,1),ansi(:,2),'k--','LineWidth',4);
 
-axis([0 10 1.02 1.10]);
+axis([0 10 1.03 1.11]);
 grid on
 legend([h(9),h(18),h(16),h(14),h(10),h(10),h(6),h(4),h(2)],{'Median','95th & up','90th to 95th','75th to 90th','50th to 75th','25th to 50','10th to 25th','5th to 10th','5th and below'},'Location','NorthWest');
 ylabel('Max Bus Voltage in Each Scenario(PU)','FontWeight','bold');
@@ -349,7 +349,7 @@ j = j + 1;
 x2 = flipud(x);
 X(1:200,1)=[x;x2];
 %~~~~~~~~~~~~~~~~~~~~~~~
-%{
+
 %Now lets fill inbetween Lines:
 %1) y & y1:
 Y(1:200,1)=[y;flipud(y1)];

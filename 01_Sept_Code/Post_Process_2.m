@@ -9,10 +9,12 @@ clc
 
 % "PV size & distance effect on max bus voltage under 50% load"
 %load RESULTS_9_3_2015.mat
-load RESULTS_9_10_2015.mat
+%load RESULTS_9_10_2015.mat
+load RESULTS_9_14_2015.mat
 
 %sort_Results = xlsread('RESULTS_SORTED.xlsx');
-sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
+%sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
+sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14_1');
 load DISTANCE.mat
 load config_LOADNAMES.mat
 load config_LINENAMES.mat
@@ -50,8 +52,8 @@ end
 %Add a distance from SUB column vector to RESULTS:
 j = 1;
 m = 1;
-n = 1;
-for i=1:1:20000
+n = 2; %skip bus in sub.
+for i=102:1:20001
     RESULTS(i,9) = legal_distances(n,1);
     if m == 100
         %move onto next bus:
@@ -64,11 +66,11 @@ end
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 %Sort in ascending order in respect to BUS VOLT:
-VS_RESULTS = zeros(length(RESULTS),9);
+VS_RESULTS = zeros(length(RESULTS(102:20001,1)),9);
 
-[VS_RESULTS(:,2),I]=sort(RESULTS(:,2),1,'descend');
+[VS_RESULTS(:,2),I]=sort(RESULTS(102:20001,2),1,'descend');
 for i=1:1:length(VS_RESULTS)
-    for j=1:1:length(RESULTS)
+    for j=102:1:20001%length(RESULTS)
         if j==I(i,1) %if the index matches:
             VS_RESULTS(i,1)=RESULTS(j,1);
             VS_RESULTS(i,3)=RESULTS(j,3);
@@ -144,19 +146,19 @@ c = colorbar('location','eastoutside');
 %p = [x,y,width]
 % pos1(1,1) = pos1(1,1);
 % set(c,'position',pos1);
-
+%%
 %Edit title string:
 set(get(c,'title'),'string','PV Size (MW)','Rotation',90.0,'FontWeight','bold');
 pos = get(get(c,'title'),'position');
-pos(1,1) = pos(1,1)+2.5;
-pos(1,2) = pos(1,2)*0.5;
+pos(1,1) = pos(1,1)+50.5;
+pos(1,2) = pos(1,2)+120;
 set(get(c,'title'),'position',pos);
 
 
 %Other params:
 xlabel('PV Distance (km)','FontWeight','bold');
 ylabel('Max Bus Voltage in Each Scenerio(pu)','FontWeight','bold');
-axis([0 4.25 1.02 1.1]);
+axis([0 4.25 1.03 1.11]);
 grid on
 set(gca,'FontWeight','bold');
 %%
