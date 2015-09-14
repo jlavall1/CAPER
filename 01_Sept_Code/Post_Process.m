@@ -5,7 +5,8 @@ clc
 %Load results and information about the circuit-
 %load RESULTS_9_3_2015.mat
 %load RESULTS_9_10_2015.mat
-load RESULTS_9_11_2015.mat
+%load RESULTS_9_11_2015.mat
+load RESULTS_9_14_2015.mat
 load DISTANCE.mat
 %
 %1) Setup the COM server
@@ -37,8 +38,8 @@ load config_XFMRNAMES.mat
 
 %sort_Results = sortrows(RESULTS(1:10000,1:6),1);
 %sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
-sort_Results = xlsread('RESULTS_SORTED.xlsx','9_11');
-
+%sort_Results = xlsread('RESULTS_SORTED.xlsx','9_11');
+sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14');
 %
 n = 100;
 DONE = 0;
@@ -348,21 +349,18 @@ j = j + 1;
 x2 = flipud(x);
 X(1:200,1)=[x;x2];
 %~~~~~~~~~~~~~~~~~~~~~~~
-
+%{
 %Now lets fill inbetween Lines:
 %1) y & y1:
 Y(1:200,1)=[y;flipud(y1)];
 C = COLOR(1,:);
-h(2)=fill(X(1:200,1),Y(1:200,1),C,'EdgeColor','none','LineWidth',5);
+h(2)=fill(X(1:200,1),Y(1:200,1),C,'EdgeColor','none');
 hold on
-
 %2) y1 & y2:
 Y(1:200,1)=[y1;flipud(y2)];
 C = COLOR(2,:);
-h(4)=fill(X(1:200,1),Y(1:200,1),C,'EdgeColor','none','LineWidth',2);
+h(4)=fill(X(1:200,1),Y(1:200,1),C,'EdgeColor','none');
 hold on
-
-
 %3) y2 & y3:
 Y(1:200,1)=[y2;flipud(y3)];
 C = COLOR(3,:);
@@ -392,8 +390,8 @@ hold on
 C = COLOR(5,:);
 plot(x,y4,'Color',C,'LineWidth',3);
 hold on
-
-%Voltage ANSI Limit:
+%}
+%Thermal Rating:
 ansi(:,1)=0:100:10000;
 ansi(:,2)=ones(101,1).*100;
 plot(ansi(:,1),ansi(:,2),'k--','LineWidth',4);
@@ -414,4 +412,19 @@ for j=1:1:9
     scatter(pv_size(1:51,j),Q_I(1:51,j))
     hold on
 end
+%}
+%{
+pull=sort_Results(2801:3801,1:8);
+fig = fig + 1;
+figure(fig);
+x1=pull(:,1);
+y1=pull(:,8); %kVAR of CAP2
+y2=pull(:,2); %max Bus Voltage
+line(x1,y1,'Color','r');
+ax1 = gca;
+set(ax1,'XColor','r');
+set(ax1,'YColor','r');
+ax1_pos = get(gca,'Position');
+ax2 = axes('Position',ax1_pos,'XAxisLocation','top','YAxisLocation','right','Color','none');
+line(x1,y2);
 %}
