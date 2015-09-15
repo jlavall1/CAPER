@@ -24,10 +24,11 @@ load config_LINESBASE.mat
 load config_LEGALBUSES.mat
 load config_LEGALDISTANCE.mat
 %Find where bus hits legal bus & distance from substation:
-%j = 1;
+%{
+j = 1;
 %PV_LOC = zeros(202,2);
 %ii = 5;
-%{
+
 while ii< length(Buses) %length(Buses)
     s1 = Buses(ii,1).name;
     s2 = '.1.2.3';
@@ -48,7 +49,7 @@ while ii< length(Buses) %length(Buses)
     ii = ii + 1;
 end
 %}
-%
+
 %Add a distance from SUB column vector to RESULTS:
 j = 1;
 m = 1;
@@ -64,7 +65,7 @@ for i=102:1:20001
     end  
 end
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+%
 %Sort in ascending order in respect to BUS VOLT:
 VS_RESULTS = zeros(length(RESULTS(102:20001,1)),9);
 
@@ -72,10 +73,10 @@ VS_RESULTS = zeros(length(RESULTS(102:20001,1)),9);
 for i=1:1:length(VS_RESULTS)
     for j=102:1:20001%length(RESULTS)
         if j==I(i,1) %if the index matches:
-            VS_RESULTS(i,1)=RESULTS(j,1);
-            VS_RESULTS(i,3)=RESULTS(j,3);
-            VS_RESULTS(i,6)=RESULTS(j,6);
-            VS_RESULTS(i,9)=RESULTS(j,9);
+            VS_RESULTS(i,1)=RESULTS(j,1); %PV_KW
+            VS_RESULTS(i,3)=RESULTS(j,3); %max_BusV
+            VS_RESULTS(i,6)=RESULTS(j,6); %max_%thermal
+            VS_RESULTS(i,9)=RESULTS(j,9); %
         end
     end
 end
@@ -146,7 +147,7 @@ c = colorbar('location','eastoutside');
 %p = [x,y,width]
 % pos1(1,1) = pos1(1,1);
 % set(c,'position',pos1);
-%%
+%
 %Edit title string:
 set(get(c,'title'),'string','PV Size (MW)','Rotation',90.0,'FontWeight','bold');
 pos = get(get(c,'title'),'position');
@@ -164,7 +165,51 @@ set(gca,'FontWeight','bold');
 %%
 %
 %
-%Figure 6.
+%Figure 8 "Max Allowed PV size at a single bus under 50% Load"
+num_loc = 199;
+num_kws = 10e3/100;
+max_PVkw = zeros(199,4);
+i = 102; %skip bus3 b/c distance to sub = 0km
+n = 1;
+while i < 20002
+    location = RESULTS(i:i+99,1:9);
+    j = 1;
+    while j < 101
+        if location(j,2) > 1.05
+            max_PVkw(n,1) = location(j,1); %PV_KW
+            max_PVkw(n,2) = str2double(cell2mat(legal_buses(n+1,1))); %BUS#
+            %Store voltage of violation:
+            max_PVkw(n,3) = location(j,2); %max3phV
+            max_PVkw(n,4) = location(j,9); %km
+            
+            %Reset Variables;
+            n = n + 1;
+            j = 202;
+        elseif location(j,4) > 100
+            max_PVkw(n,1) = location(j,1); %PV_KW
+            max_PVkw(n,2) = str2double(cell2mat(legal_buses(n+1,1))); %BUS#
+            %max_PVkw(n,2) = legal_buses(n+1,1); %BUS#
+            %Store voltage of violation:
+            max_PVkw(n,3) = location(j,4); %max%THERM
+            max_PVkw(n,4) = location(j,9); %km
+            %Reset Variables;
+            n = n + 1;
+            j = 202;
+        elseif j == 100
+            max_PVkw(n,1) = location(j,1); %PV_KW
+            max_PVkw(n,2) = str2double(cell2mat(legal_buses(n+1,1))); %BUS#
+            %max_PVkw(n,2) = legal_buses(n+1,1); %BUS#
+            max_PVkw(n,4) = location(j,9); %km
+            n = n + 1;
+        end
+        j = j + 1;
+    end
+    i = i + 100;
+end
+fig = fig + 1;
+figure(fig);
+scatter(max_PVkw(:,4),max_PVkw(:,1)) %distance VS maxKW
+axis([0 4 0 14000]);
     
     
     
