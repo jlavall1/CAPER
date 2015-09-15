@@ -428,3 +428,45 @@ ax1_pos = get(gca,'Position');
 ax2 = axes('Position',ax1_pos,'XAxisLocation','top','YAxisLocation','right','Color','none');
 line(x1,y2);
 %}
+%%
+%Create Fig. 7 by calc. the %violations out of all locations:
+count_v = 0;
+count_i = 0;
+n = 100;
+m = 1;
+violations = zeros(100,4); %totalV | V_vio | I_vio | PV_KW
+while n < 10100
+    %Voltage Profiles:
+    for j=1:1:199
+        if SM.(['PU_',num2str(n)])(j,1) > 1.05
+            count_v = count_v + 1;
+        end
+        
+        if SM.(['THRM_',num2str(n)])(j,1) > 100
+            count_i = count_i + 1;
+        end
+    end
+    
+    violations(m,1) = 100*(count_v+count_i)/(199*2); %total violations
+    violations(m,2) = 100*(count_v/199); %voltage violations
+    violations(m,3) = 100*(count_i/199); %current violations
+    violations(m,4) = n;
+     
+    %Refresh Variables:
+    n = n + 100;
+    m = m + 1;
+    count_v = 0;
+    count_i = 0;
+end
+fig = fig + 1;
+figure(fig)
+h(1) = plot(violations(:,4),violations(:,2),'b.','LineWidth',4);
+hold on
+h(2) = plot(violations(:,4),violations(:,2),'b-','LineWidth',1);
+hold on
+h(3) = plot(violations(:,4),violations(:,3),'go','LineWidth',4);
+hold on
+h(4) = plot(interp(violations(:,4),20),interp(violations(:,3),20),'g.','LineWidth',0.5);
+
+legend([h(1),h(3)],'Voltage Violations','Line Loading Violations');
+axis([0 10000 0 100]);
