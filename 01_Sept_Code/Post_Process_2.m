@@ -4,6 +4,8 @@
 %%
 clear
 clc
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
 %import numpy as np
 %import matplotlib.pyplot as plt
 
@@ -16,13 +18,13 @@ load RESULTS_9_14_2015.mat
 %sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
 sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14_1');
 load DISTANCE.mat
-load config_LOADNAMES.mat
-load config_LINENAMES.mat
-load config_XFMRNAMES.mat
-load config_BUSNAMES.mat
-load config_LINESBASE.mat
-load config_LEGALBUSES.mat
-load config_LEGALDISTANCE.mat
+load config_LOADNAMES_CKT7.mat
+load config_LINENAMES_CKT7.mat
+load config_XFMRNAMES_CKT7.mat
+load config_BUSNAMES_CKT7.mat
+load config_LINESBASE_CKT7.mat
+load config_LEGALBUSES_CKT7.mat
+load config_LEGALDISTANCE_CKT7.mat
 %Find where bus hits legal bus & distance from substation:
 %{
 j = 1;

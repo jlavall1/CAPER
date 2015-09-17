@@ -1,21 +1,30 @@
-function STRING = GUI_openDSS_Locations()
+function STRING_0 = GUI_openDSS_Locations()
 
-
+UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
+set(0, 'DefaultUIControlFontSize', 18);
 %This function will prompt the user where they are working.
 
 comp_choice=menu('What Location are you working from?','JML Home Desktop','JML Laptop','Brians Laptop','RTPIS_7','RTPIS_9');
-
+%set(0, 'DefaultUIControlFontSize', UIControl_FontSize_bak);
 while comp_choice<1
     comp_choice=menu('What Location are you working from?','JML Home Desktop','JML Laptop','Brians Laptop','RTPIS_7','RTPIS_9');
+    %set(0, 'DefaultUIControlFontSize', UIControl_FontSize_bak);
 end
 
 cat_choice=menu('What Category of circuit are you working on?','DEC','DEP','EPRI','IEEE','other');
+%set(0, 'DefaultUIControlFontSize', UIControl_FontSize_bak);
 while cat_choice<1
     cat_choice=menu('What Category of circuit are you working on?','DEC','DEP','EPRI','IEEE','other');
 end
 
 
 
+
+
+%scen_cat=menu
+
+%%
+% -- Now respond to user info --
 %Update main directory to folder w/ circuits:
 if comp_choice==1
     %JML Home Desktop
@@ -44,10 +53,13 @@ if cat_choice==1
     end
     if ckt_choice == 1
         s2 = '\Bellhaven_Circuit_Opendss\';
+        ckt_num = 0;
     elseif ckt_choice == 2
         s2 = '\Commonwealth_Circuit_Opendss\Run_Master_Allocate.dss';
+        ckt_num = 1;
     elseif ckt_choice == 3
         s2 = '\Flay_Circuit_Opendss\';
+        ckt_num = 2;
     end
     STRING = strcat(s1,s2);
 elseif cat_choice==2
@@ -57,11 +69,14 @@ elseif cat_choice==2
         ckt_choice=menu('Name of Circuit:','Roxboro','HollySprings','ERaleigh');
     end
     if ckt_choice == 1
-        s2 = '\Roxboro_Circuit_Opendss\';
+        s2 = '\Roxboro_Circuit_Opendss\Run_Master_Allocate.dss';
+        ckt_num = 3;
     elseif ckt_choice == 2
         s2 = '\HollySprings_Circuit_Opendss\';
+        ckt_num = 4;
     elseif ckt_choice == 3
         s2 = '\ERaleigh_Circuit_Opendss\';
+        ckt_num = 5;
     end
     STRING = strcat(s1,s2);
 elseif cat_choice==3
@@ -72,10 +87,13 @@ elseif cat_choice==3
     end
     if ckt_choice == 1
         s2 = '\EPRI_ckt5\';
+        ckt_num = 6;
     elseif ckt_choice == 2
         s2 = '\EPRI_ckt7\Master.dss';
+        ckt_num = 7;
     elseif ckt_choice == 3
         s2 = '\EPRI_ckt24\Master.dss';
+        ckt_num = 8;
     end
     STRING = strcat(s1,s2);
 elseif cat_choice==4
@@ -86,14 +104,60 @@ elseif cat_choice==4
     end
     if ckt_choice == 1
         s2 = '\123Bus\';
+        ckt_num = 9;
     elseif ckt_choice == 2
         s2 = '\8500-Node\';
+        ckt_num = 10;
     end
     STRING = strcat(s1,s2);
 elseif cat_choice==5
     %other:
 end
 
+%Now lets ask about what kind of simulation they want to run:
+sim_cat=menu('Scenerio:','VREG_DEVICES','Ramping Factors');
+%set(0, 'DefaultUIControlFontSize', UIControl_FontSize_bak);
+while sim_cat<1
+    sim_cat=menu('Scenerio:','VREG_DEVICES','Ramping Factors');
+    %set(0, 'DefaultUIControlFontSize', UIControl_FontSize_bak);
+end
+
+if sim_cat == 1
+    sim_type=menu('Specifics:','TOP of acceptable band','BOT of acceptable band');
+    while sim_type<1
+        sim_type=menu('Scenerio:','VREG_DEVICES','Ramping Factors');
+    end
+    if sim_type == 1
+        scenerio = 1;
+    elseif sim_type == 2
+        scenerio = 2;
+    end
+elseif sim_cat == 2
+    sim_type=menu('Specifics:','NO RAMPING - steadstate','UP RAMP','DOWN RAMP');
+    while sim_type<1
+        sim_type=menu('Specifics:','NO RAMPING - steadstate','UP RAMP','DOWN RAMP');
+    end
+    if sim_type == 1
+        scenerio = 3;
+    elseif sim_type == 2
+        scenerio = 4;
+    elseif sim_type == 3
+        scenerio = 5;
+    end
+end
+
+
+
+
+
+
+
+
+
+    %STRING_0 = cell{1,2};
+    STRING_0{1,1} = STRING;
+    STRING_0{1,2} = ckt_num;
+    STRING_0{1,3} = scenerio;
 
 end
     

@@ -22,9 +22,9 @@ load DISTANCE.mat
 %4) Obtain Component Names:
 %xfmrNames = DSSCircuit.Transformers.AllNames;
 %lineNames = DSSCircuit.Lines.AllNames;
-load config_LOADNAMES.mat
-load config_LINENAMES.mat
-load config_XFMRNAMES.mat
+load config_LOADNAMES_CKT7.mat
+load config_LINENAMES_CKT7.mat
+load config_XFMRNAMES_CKT7.mat
 %loadNames = DSSCircuit.Loads.AllNames;
 %busNames = DSSCircuit.Buses.AllNames;
 %5) Obtain Component Structs:
