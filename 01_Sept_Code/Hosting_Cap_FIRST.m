@@ -1,7 +1,6 @@
-%4.4] Plotting Tutorial:
 clear
 clc
-addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
+%addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
 
 %Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
@@ -12,10 +11,14 @@ gui_response = GUI_openDSS_Locations();
 mainFile = gui_response{1,1};
 feeder_NUM = gui_response{1,2};
 scenerio_NUM = gui_response{1,3}; %1=VREG-top ; 2=VREG-bot ; 3=steadystate ; 4=RR_up ; 5=RR_down
+base_path = gui_response{1,4};
 
 
 % 1. Load background files:
-
+path = strcat(base_path,'\01_Sept_Code');
+addpath(path);
+path = strcat(base_path,'\04_DSCADA');
+addpath(path);
 
 % 2. Compile the user selected circuit:
 DSSText.command = ['Compile "',mainFile];
@@ -63,13 +66,17 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 
 % 7. Setup Capacitors for control/switching:
 Capacitors = getCapacitorInfo(DSSCircObj);
-%Enable/Disable capacitor:
+%Set Voltage Regulating Devices:
 if scenerio_NUM == 1
+    %UPPER VOLTAGE BAND
     cap_on = 0;
-    tap = 16;
+    %tap = 8;
+    vreg = 125;
 elseif scenerio_NUM == 2
+    %LOWER VOLTAGE BAND
     cap_on = 1;
-    tap = -16;
+    %tap = -8;
+    vreg = 118;
 end
 for jj=1:1:length(Capacitors)
     DSSText.command = sprintf('edit capacitor.%s state=%s',Capacitors(jj,1).name,num2str(cap_on));
@@ -83,7 +90,7 @@ Capacitors = getCapacitorInfo(DSSCircObj);
 Transformers = getTransformerInfo(DSSCircObj);
 XfmrTaps = struct();
 xfmrName=DSSCircuit.Transformers.AllNames;
-Regulators = DSSCircuit.RegControls;    % Assign a Variable to the RegControls interface
+
 %{
 % cycle through all the regulators using First .. Next
 iReg = Regulators.First;
@@ -100,19 +107,27 @@ end
     Vreg=125            Band=2.000000
     wdg2minTap=0.9      wdg2maxTap=1.1
     maxnumTaps=32
-%}  
-tic
-for jj=4:1:length(xfmrName) %starts at 4 to skip the LTC
-    %send:
-    XfmrTaps(jj,1).names = xfmrName{jj,1};
-    DSSText.Command = sprintf('RegControl.%s.TapNum=5',char(xfmrName(jj)));
-    %Check:
-    DSSText.command = sprintf('? RegControl.%s.TapNum',char(xfmrName(jj)));
-    VREG_tap = DSSText.Result;
-    XfmrTaps(jj,1).Init_tap = str2double(VREG_tap);
-    
+%} 
+if feeder_NUM == 3 %Do only for feeders w/ line VREGs
+    tic
+    Regulators = DSSCircuit.RegControls;    % Assign a Variable to the RegControls interface
+    for jj=4:1:length(xfmrName) %starts at 4 to skip the LTC
+        %send:
+        XfmrTaps(jj,1).names = xfmrName{jj,1};
+        %DSSText.Command = sprintf('RegControl.%s.TapNum=5',char(xfmrName(jj)));
+        DSSText.Command = sprintf('RegControl.%s.Vreg=%s',char(xfmrName(jj)),num2str(vreg));
+        %Check:
+        DSSText.command = sprintf('? RegControl.%s.TapNum',char(xfmrName(jj)));
+        VREG_tap = DSSText.Result;
+        DSSText.command = sprintf('? RegControl.%s.vreg',char(xfmrName(jj)));
+        VREG_pt = DSSText.Result;
+        %Save results:
+        XfmrTaps(jj,1).Init_tap = str2double(VREG_tap);
+        XfmrTaps(jj,1).vreg_setting = str2double(VREG_pt);
+
+    end
+    toc
 end
-toc
 
 
 % 9. Initiate PV Central station:
@@ -121,7 +136,16 @@ toc
 %PV_in = getPVInfo(DSSCircObj);
 %Gen_in = getGeneratorInfo(DSSCircObj);
 %}
-DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=12.47 kW=100 pf=1.00 enabled=false',Buses(3,1).name);
+ii = 1;
+while ii < length(Buses)
+    if Buses(ii,1).distance > 1e-4
+        bus_init = ii;
+        ii = length(Buses);
+    end
+    ii = ii + 1;
+end
+
+DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=12.47 kW=100 pf=1.00 enabled=false',Buses(bus_init,1).name);
 %DSSText.command = 'solve';
 DSSText.command = 'solve loadmult=0.5';
 Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
@@ -252,7 +276,7 @@ RESULTS(1,1:8)=[0,max_V(1,1),max_V(2,1),max_C(1,1),max_C(2,1),0,Capacitors(1,1).
 m = 1;
 n = 1;
 DSSCircuit.Enable('generator.PV');
-ii = 5;
+ii = bus_init;
 PV_size = 100;
 PV_LOC = 3;
 %fDR_LD;
@@ -260,7 +284,7 @@ PV_VOLT= zeros(1,3); %Va Vb Vc
 jj = 2; %skip jj=1 for basecase results:
 COUNT = 0;
 %Bus Loop.
-while ii< length(Buses) %length(Buses)
+while ii< 7%length(Buses) %length(Buses)
     %Skip BUS if not 3-ph & connected to 12.47:
     if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
         % ~~~~~~~~~~~~~~~~~
@@ -277,8 +301,16 @@ while ii< length(Buses) %length(Buses)
             if strcmp(Lines_Base(iii,1).bus1,s) == 1 %Bus name matches:
                 if Lines_Base(iii,1).numPhases == 3
                     B1 = Lines_Base(iii,1).bus1;
-                    
-                    PV_LOC = iii;
+                    %take off node #'s (.1.2.3):
+                    B2 = regexprep({B1},'(\.[0-9]+)','');
+                    for jjj=1:1:length(Buses)
+                        if strcmp(B2,Buses(jjj,1).name)==1 %match!
+                            if Buses(jjj,1).distance > 1e-4
+                                %Check to see if NOT in substation.
+                                PV_LOC = iii;
+                            end
+                        end
+                    end
                 end
             end
         end

@@ -29,12 +29,15 @@ end
 if comp_choice==1
     %JML Home Desktop
     s1 = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+    s_b = 'C:\Users\jlavall\Documents\GitHub\CAPER';
 elseif comp_choice==2
     %JML Laptop
     s1 = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+    s_b = 'C:\Users\jlavall\Documents\GitHub\CAPER';
 elseif comp_choice==3
     %Brians Comp
     s1 = 'C:\Users\Brian\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+    s_b = 'C:\Users\Brian\Documents\GitHub\CAPER';
 elseif comp_choice==4
     %RTPIS_7
     s1 = 'C:';
@@ -158,6 +161,7 @@ end
     STRING_0{1,1} = STRING;
     STRING_0{1,2} = ckt_num;
     STRING_0{1,3} = scenerio;
+    STRING_0{1,4} = s_b;
 
 end
     
