@@ -54,23 +54,24 @@ end
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 %Find directory of Circuit:
 
-mainFile = GUI_openDSS_Locations();
+gui_response = GUI_openDSS_Locations();
 %Declare name of basecase .dss file:
 %master = 'Master_ckt7.dss';
 %basecaseFile = strcat(mainFile,master);
-basecaseFile=mainFile;
-
+%basecaseFile=mainFile;
+mainFile = gui_response{1,1};
+ckt_num = gui_response{1,2};
 %basecaseFile = 'R:\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Run_Master_Allocate.dss';
-DSSText.command = ['Compile "',basecaseFile];
+DSSText.command = ['Compile "',mainFile];
 
 
 %Capacitors(1,1).enable
 %DSSText.command = 'edit capacitor.cp-nr-613 switching=0';
-%DSSText.command = 'edit capacitor.cp-85w-900 enable=0';
-
-DSSText.command = 'Set mode=snapshot';
-DSSText.command = 'Set controlmode = static';
-DSSText.command = 'solve';
+%DSSText.command = 'edit capacitor.cp-85w-900 enable=0'; 
+DSSText.command ='solve loadmult=0.5';
+%DSSText.command = 'Set mode=snapshot';
+%DSSText.command = 'Set controlmode = static';
+%DSSText.command = 'solve';
 %Get Capacitor Information
 Capacitors = getCapacitorInfo(DSSCircObj);
 
@@ -79,7 +80,7 @@ Capacitors = getCapacitorInfo(DSSCircObj);
 %
 %"PLOT BASE CASE (to see that I am wrong ha.ha."
 figure(1);
-plotKWProfile(DSSCircObj);
+%plotKWProfile(DSSCircObj);
 %plotVoltageProfile(DSSCircObj,'SecondarySystem','off');
 %plotAmpProfile(DSSCircObj,'157345');
 %plotKVARProfile(DSSCircObj,'Only3Phase','on');
@@ -88,8 +89,13 @@ plotKWProfile(DSSCircObj);
 
 Buses =getBusInfo(DSSCircObj);
 %Import desired Buses based on user selection:
-load config_LEGALBUSES.mat
-load config_LEGALDISTANCE.mat %legal_distances
+if ckt_num == 1 %commonwealth
+    load config_LEGALBUSES_CMNWLTH.mat
+    load config_LEGALDISTANCE_CMNWLTH.mat %legal_distances
+elseif ckt_num == 7 %EPRI-7
+    load config_LEGALBUSES_CKT7.mat
+    load config_LEGALDISTANCE_CKT7.mat
+end
 j = 1;
 for i=1:1:length(legal_buses);
     %BY Distance:
@@ -247,17 +253,29 @@ elseif plot_choice == 3
     %mTextBox = uicontrol('style','text');
     %set(mTextBox,'String','hi','Position',[0.714,0.81,0.175,0.086*4]);
     %%
-    x = 0.714;
-    y = 0.71;
-    w = 0.19;
-    h = 0.06;
-    annotation('textbox',[x,y,w,h],'String','0.0MW : 3.0MW','Color',COLOR(1,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
-    annotation('textbox',[x,y-h,w,h],'String','3.0MW : 3.5MW','Color',COLOR(2,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
-    annotation('textbox',[x,y-2*h,w,h],'String','3.5MW : 4.0MW','Color',COLOR(3,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
-    annotation('textbox',[x,y-3*h,w,h],'String','4.0MW : 4.5MW','Color',COLOR(4,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
-    annotation('textbox',[x,y-4*h,w,h],'String','4.5MW : 6.0MW','Color',COLOR(5,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
-    annotation('textbox',[x,y-5*h,w,h],'String','6.0MW : 10MW','Color',COLOR(6,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);    
-    
+    if ckt_num == 7
+        x = 0.714;
+        y = 0.71;
+        w = 0.19;
+        h = 0.06;
+        annotation('textbox',[x,y,w,h],'String','0.0MW : 3.0MW','Color',COLOR(1,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+        annotation('textbox',[x,y-h,w,h],'String','3.0MW : 3.5MW','Color',COLOR(2,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+        annotation('textbox',[x,y-2*h,w,h],'String','3.5MW : 4.0MW','Color',COLOR(3,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+        annotation('textbox',[x,y-3*h,w,h],'String','4.0MW : 4.5MW','Color',COLOR(4,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+        annotation('textbox',[x,y-4*h,w,h],'String','4.5MW : 6.0MW','Color',COLOR(5,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+        annotation('textbox',[x,y-5*h,w,h],'String','6.0MW : 10MW','Color',COLOR(6,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);    
+    elseif ckt_num == 1
+        x = 0.714;
+        y = 0.42;
+        w = 0.19;
+        h = 0.06;
+        annotation('textbox',[x,y,w,h],'String','0.0MW : 3.0MW','Color',COLOR(1,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+        annotation('textbox',[x,y-h,w,h],'String','3.0MW : 3.5MW','Color',COLOR(2,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+        annotation('textbox',[x,y-2*h,w,h],'String','3.5MW : 4.0MW','Color',COLOR(3,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+        annotation('textbox',[x,y-3*h,w,h],'String','4.0MW : 4.5MW','Color',COLOR(4,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+        annotation('textbox',[x,y-4*h,w,h],'String','4.5MW : 6.0MW','Color',COLOR(5,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+        annotation('textbox',[x,y-5*h,w,h],'String','6.0MW : 10MW','Color',COLOR(6,:),'FontSize',9,'BackgroundColor',[0.8,0.8,0.8]);
+    end
     %legend([gcf.legendHandles],[gcf.legendText,'PV_{PCC} Locations'] )
     %legend([gcf.legendHandles,h(1)'],[gcf.legendText,[h(1),h(2),h(3),h(4),h(5),h(6),],'0MW - 1MW','1MW-2MW','2MW-3MW','4MW-5MW','5MW-10MW'])
     %l_handle2 = legend([h(1),h(2),h(3),h(4),h(5),h(6)],'0-1','1-2','2-3','3-4','4-5','5-');

@@ -6,11 +6,7 @@
 ! ---------------------------------
 ! 
 clear
-Compile 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Master.DSS'
-
-!  JUST COMMENT OUT the directory to your own while working on the circuit.
-
- 
+Compile 'Master.DSS'
 ! 
 ! Recommendation: Add an energymeter here to first line in feeder
 New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes

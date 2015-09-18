@@ -118,36 +118,33 @@ elseif cat_choice==5
 end
 
 %Now lets ask about what kind of simulation they want to run:
+%{
 sim_cat=menu('Scenerio:','VREG_DEVICES','Ramping Factors');
 %set(0, 'DefaultUIControlFontSize', UIControl_FontSize_bak);
 while sim_cat<1
     sim_cat=menu('Scenerio:','VREG_DEVICES','Ramping Factors');
     %set(0, 'DefaultUIControlFontSize', UIControl_FontSize_bak);
 end
+%}
+sim_type=menu('Specifics:','1]TOP of acceptable Vband','2]BOT of acceptable Vband','3]Steady State','4]pv UP ramping','5]pv DOWN ramping');
+while sim_type<1
+    sim_type=menu('Specifics:','1]TOP of acceptable Vband','2]BOT of acceptable Vband','3]Steady State','4]pv UP ramping','5]pv DOWN ramping');
+end
 
-if sim_cat == 1
-    sim_type=menu('Specifics:','TOP of acceptable band','BOT of acceptable band');
-    while sim_type<1
-        sim_type=menu('Scenerio:','VREG_DEVICES','Ramping Factors');
-    end
+    %{
     if sim_type == 1
         scenerio = 1;
     elseif sim_type == 2
         scenerio = 2;
-    end
-elseif sim_cat == 2
-    sim_type=menu('Specifics:','NO RAMPING - steadstate','UP RAMP','DOWN RAMP');
-    while sim_type<1
-        sim_type=menu('Specifics:','NO RAMPING - steadstate','UP RAMP','DOWN RAMP');
-    end
-    if sim_type == 1
-        scenerio = 3;
-    elseif sim_type == 2
-        scenerio = 4;
     elseif sim_type == 3
+        scenerio = 3;
+    elseif sim_type == 4
+        scenerio = 4;
+    elseif sim_type == 5
         scenerio = 5;
     end
-end
+    %}
+
 
 
 
@@ -160,7 +157,7 @@ end
     %STRING_0 = cell{1,2};
     STRING_0{1,1} = STRING;
     STRING_0{1,2} = ckt_num;
-    STRING_0{1,3} = scenerio;
+    STRING_0{1,3} = sim_type;
     STRING_0{1,4} = s_b;
 
 end

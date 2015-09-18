@@ -1,10 +1,10 @@
 clear
 clc
-%addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
 
 %Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
-%
+DSSCircuit = DSSCircObj.ActiveCircuit;
 %Find directory of Circuit:
 % 1. Obtain user's choice of simulation:
 gui_response = GUI_openDSS_Locations();
@@ -47,12 +47,18 @@ DSSText.command = 'Set controlmode = static';
 DSSText.command = 'solve';
 %}
 % 4. Adjust simulation feeder load:
-DSSText.command ='solve loadmult=1.0';
+DSSText.command ='solve loadmult=0.5';
 % 5. Obtain all line & bus information used as reference:
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
 Buses = getBusInfo(DSSCircObj);
 Loads = getLoadInfo(DSSCircObj);
+%Extras:
+xfmrNames = DSSCircuit.Transformers.AllNames;
+lineNames = DSSCircuit.Lines.AllNames;
+loadNames = DSSCircuit.Loads.AllNames;
+%BusNames = DSSCircuit.Buses.AllNames;
+
 %{
 %Trace the circuit all the way back to the substation
 %UpstreamBuses = findUpstreamBuses(DSSCircObj, MYBUS);
@@ -77,11 +83,16 @@ elseif scenerio_NUM == 2
     cap_on = 1;
     %tap = -8;
     vreg = 118;
+elseif scenerio_NUM == 3
+    %SteadyState
+    cap_on = 0;
+    vreg = 125;
 end
+
 for jj=1:1:length(Capacitors)
     DSSText.command = sprintf('edit capacitor.%s state=%s',Capacitors(jj,1).name,num2str(cap_on));
 end
-DSSText.command ='solve loadmult=1.0';
+DSSText.command ='solve loadmult=0.5';
 Capacitors = getCapacitorInfo(DSSCircObj);
 %DSSText.command = 'edit capacitor.cp-nr-613 state=0';
 
@@ -155,35 +166,24 @@ MAT_FILE_LOAD %generates 'ref_busVpu'
 % Set it as the active element and view its bus information
 
 %DSSCircuit.SetActiveElement('generator.pv');
-%{
+
 %---------------------------------------------
 %Iterate PV bus1 location throughout EPRI Circuit
 
 %STEP 1] Find legal buses & save names:
-legal_buses = cell(200,1);
+%legal_buses = cell(200,1);
 ii = 5;
 j = 1;
 while ii<length(Buses)
     if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
         legal_buses{j,1} = Buses(ii,1).name;
+        legal_distances{j,1} = Buses(ii,1).distance;
         j = j + 1;
     end
     ii =ii + 1;
 end
 %{
-ii = 5;
-while ii<length(Loads)
-    if strcmp(Loads(ii,1).busName,'s_1001577-da1') == 1
-        fprintf('\nProblem Child.\n');
-        Loads(ii,1).allocationFactor
-        Loads(ii,1).Idx
-    end
-    ii = ii + 1;
-end
-%}
-
-RESULTS = zeros(21000,13);%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 2
-
+RESULTS = zeros(40000,16);%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 2
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 %Obtain V & I results from BASE CASE (0kW PVgen):        
 %tic
@@ -281,10 +281,11 @@ PV_size = 100;
 PV_LOC = 3;
 %fDR_LD;
 PV_VOLT= zeros(1,3); %Va Vb Vc
+%RESULTS = zeros(
 jj = 2; %skip jj=1 for basecase results:
 COUNT = 0;
 %Bus Loop.
-while ii< 7%length(Buses) %length(Buses)
+while ii< length(Buses) %length(Buses)
     %Skip BUS if not 3-ph & connected to 12.47:
     if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
         % ~~~~~~~~~~~~~~~~~
@@ -308,6 +309,7 @@ while ii< 7%length(Buses) %length(Buses)
                             if Buses(jjj,1).distance > 1e-4
                                 %Check to see if NOT in substation.
                                 PV_LOC = iii;
+                                
                             end
                         end
                     end
@@ -461,8 +463,17 @@ while ii< 7%length(Buses) %length(Buses)
             end
             %
             %Save results for this iteration:
-            RESULTS(jj,1:8)=[PV_size,max(max_V(:,1)),max_V(2,1),max_C(1,1),max_C(2,1),PV_LOC,Capacitors(1,1).powerReactive,Capacitors(2,1).powerReactive]; %|PV_KW|maxV_3ph|maxV_1ph|maxC1|maxC2|bus_name|kVAR_CAP1|kVAR_CAP2
-            %*** leave Columns 9,10 blank for post_Process.m ***
+            RESULTS(jj,1:6)=[PV_size,max(max_V(:,1)),max_V(2,1),max_C(1,1),max_C(2,1),PV_LOC]; %|PV_KW|maxV_3ph|maxV_1ph|maxC1|maxC2|bus_name|kVAR_CAP1|kVAR_CAP2
+            if length(Capacitors) == 2
+                RESULTS(jj,7)=Capacitors(1,1).powerReactive;
+                RESULTS(jj,8)=Capacitors(2,1).powerReactive;
+            elseif length(Capacitors)== 3
+                RESULTS(jj,7)=Capacitors(1,1).powerReactive;
+                RESULTS(jj,8)=Capacitors(2,1).powerReactive;
+                RESULTS(jj,10)=Capacitors(3,1).powerReactive;
+            end
+            
+            %*** leave Columns 9,10 blank for post_Process_2.m ***
             RESULTS(jj,11)=fDR_LD; %Feeder 3phase load in kW
             RESULTS(jj,12)=max(PV_VOLT(1,1:3)); %Maximum voltage voltage
             R_PV=(3*(RESULTS(jj,12)*((12.47e3)/sqrt(3)))^2)/(PV_size*1e3);
