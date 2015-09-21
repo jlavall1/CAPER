@@ -22,7 +22,8 @@ elseif ckt_num == 2
     load config_LOADNAMES_CMNWLTH.mat
     load config_LINENAMES_CMNWLTH.mat
     load config_XFMRNAMES_CMNWLTH.mat
-    sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_18');
+    %sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_18');
+    sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_19');
 end
 %1) Setup the COM server
 %[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
