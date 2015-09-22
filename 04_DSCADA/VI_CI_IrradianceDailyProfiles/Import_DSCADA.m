@@ -2,7 +2,7 @@
 
 clear
 clc
-addpath('C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA')
+addpath('C:\Users\Brian\Documents\GitHub\CAPER\04_DSCADA')
 
 
 % Import data from Excel file
@@ -47,7 +47,7 @@ for i = 1:1:n
        MIN = 0;
        H=H+1;           % increment hour every 60 mins
        if H==24
-           H=1;
+           H=0;
            D=D+1;       % increment day every 24 hours
            if D>months(M);
                D=1;
@@ -69,5 +69,8 @@ for i=1:1:length(ROX.PI_time);
     ROX.excel_time{i,1} = cellstr(str(i,1:20));
     ROX.NUM_time(i,1) = datenum(ROX.excel_time{i,1});
     ROX.ref_time{i,1} = datestr(ref(i,5));
+    if (ROX.NUM_time(i,1) ~= ref(i,5))
+        diff(i) = ROX.NUM_time(i,1) - ref(i,5);
+    end
 end
 
