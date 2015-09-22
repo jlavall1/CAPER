@@ -98,7 +98,7 @@ hr = 0;
 i = 1;
 %-----------
 %End Results:
-Solar_Constants_TAYLOR = zeros(365,5); %DoY | Month | DoM | VI | CI
+Solar_C_TAYLOR = zeros(365,5); %DoY | Month | DoM | VI | CI
 Top = 0;
 Bot = 0;
 MEAS = 0;
@@ -132,19 +132,19 @@ while MNTH < 13
         hr = 0;
         %Obtain results:
         day_num = M_TAYLOR(MNTH).DAY(time2int(DAY,hr,min),6);
-        Solar_Constants_TAYLOR(day_num,1) = day_num;
-        Solar_Constants_TAYLOR(day_num,2) = MNTH;
-        Solar_Constants_TAYLOR(day_num,3) = DAY;
+        Solar_C_TAYLOR(day_num,1) = day_num;
+        Solar_C_TAYLOR(day_num,2) = MNTH;
+        Solar_C_TAYLOR(day_num,3) = DAY;
         
         %VI:
         VI = Top/Bot;
-        Solar_Constants_TAYLOR(day_num,4) = VI;
+        Solar_C_TAYLOR(day_num,4) = VI;
             Top = 0;
             Bot = 0;
             VI = 0;
         %CI:
         CI = MEAS/CALC;
-        Solar_Constants_TAYLOR(day_num,5) = CI;
+        Solar_C_TAYLOR(day_num,5) = CI;
             MEAS = 0;
             CALC = 0;
             CI = 0;
@@ -159,7 +159,7 @@ end
 figure(1);
 
 %subplot(2,1,1);
-plot(Solar_Constants_TAYLOR(:,4),Solar_Constants_TAYLOR(:,5),'bo');
+plot(Solar_C_TAYLOR(:,4),Solar_C_TAYLOR(:,5),'bo');
 %subplot(2,1,2);
 %plot(
 
@@ -216,7 +216,7 @@ SAMPLES_T = zeros(2,20);
 HOLD(1,1) = 100;
 while n < 26
     while i < 366
-        TARGET = Solar_Constants_TAYLOR(i,4); %VI of i_th Day.
+        TARGET = Solar_C_TAYLOR(i,4); %VI of i_th Day.
         DIFF = abs(TARGET - n);
 
         if DIFF < HOLD(1,1) %meaning the new value is closer to desired value.
@@ -227,8 +227,8 @@ while n < 26
         i = i + 1;
     end
     %Save results:
-    SAMPLES_T(1,n) = Solar_Constants_TAYLOR(HOLD(1,2),2); %Hold Month.
-    SAMPLES_T(2,n) = Solar_Constants_TAYLOR(HOLD(1,2),3); %Hold DAY.
+    SAMPLES_T(1,n) = Solar_C_TAYLOR(HOLD(1,2),2); %Hold Month.
+    SAMPLES_T(2,n) = Solar_C_TAYLOR(HOLD(1,2),3); %Hold DAY.
     %Reset Vars:
     DIFF = 10;
     i = 1;
@@ -251,7 +251,7 @@ while n < 21
     MNTH = SAMPLES_T(1,n);
     D_S = SAMPLES_T(2,n);
     DoY = M_TAYLOR(MNTH).DAY(time2int(D_S,0,0),6);
-    CI = Solar_Constants_TAYLOR(DoY,5);   %DoY | Month | DoM | VI | CI
+    CI = Solar_C_TAYLOR(DoY,5);   %DoY | Month | DoM | VI | CI
     %Global Measurements:
     plot(M_TAYLOR(MNTH).DAY(time2int(D_S,0,0):time2int(D_S,23,59),1),'b-');
     hold on

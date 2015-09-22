@@ -89,7 +89,7 @@ elseif cat_choice==3
         ckt_choice=menu('Name of Circuit:','ckt5','ckt7','ckt24');
     end
     if ckt_choice == 1
-        s2 = '\EPRI_ckt5\';
+        s2 = '\EPRI_ckt5\Master.dss';
         ckt_num = 6;
     elseif ckt_choice == 2
         s2 = '\EPRI_ckt7\Master.dss';

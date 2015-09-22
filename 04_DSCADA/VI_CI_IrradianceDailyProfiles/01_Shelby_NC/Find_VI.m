@@ -1,6 +1,29 @@
 clear
 clc
 FIG = 1;
+%Import Dynamic Datasets:
+%Ask user which site do they want?
+USER_DEF = GUI_PV_Locations();
+sim_type = USER_DEF(1,1);
+PV_Site = USER_DEF(1,2);
+
+if sim_type == 1
+    if PV_Site == 1
+        PV_Site_path1 = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\01_Shelby_NC';
+        addpath(PV_Site_path1);
+        load M_SHELBY.mat
+        M_PVSITE = M_SHELBY;
+    elseif PV_Site == 2
+        PV_Site_path2 = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\02_Murphy_NC';
+        addpath(PV_Site_path2);
+        load M_MURPHY.mat
+        M_PVSITE = M_MURPHY;
+    end
+elseif sim_type == 2
+
+end
+%load M_SHELBY.mat       %W/m^2;   kW_out; TEMP;   ELEV;   AZIM;    DOY;
+
 %-----------
 %Site Specs:
 ALT = 265; %[m] Shelby,NC
@@ -15,9 +38,9 @@ b = 0.664 + 0.163/f_h1;
 I_sc = 1367; %W/m^2
 T_L = 3; %(original Linke Constant)
 %-----------
-%Import Datasets:
+%Import Static Datasets:
 load TIME_INT.mat       %MONTH;   DAY;    HOUR;   MIN;    DOY;
-load M_SHELBY.mat       %W/m^2;   kW_out; TEMP;   ELEV;   AZIM;    DOY;
+
 %GHI_k = zeros(24*60,4); %B_ncI;   G_hcI;      
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 %-----------
@@ -102,7 +125,7 @@ Top = 0;
 Bot = 0;
 MEAS = 0;
 CALC = 0;
-
+SUM_DARR = 0;
 while MNTH < 13
     while DAY < MTH_LN(1,MNTH)+1
         while hr < 24
@@ -121,6 +144,8 @@ while MNTH < 13
                     %Find CI:
                     MEAS = MEAS + GHI_k; %B_n (Direct Irradiance Profile.
                     CALC = CALC + B_nck;
+                    %Find DARR:
+                    SUM_DARR = SUM_DARR + abs(GHI_k - GHI_k1)/1000;
                 end
                 
                 min = min + 1;
@@ -147,6 +172,12 @@ while MNTH < 13
             MEAS = 0;
             CALC = 0;
             CI = 0;
+        %DARR:
+        DARR = SUM_DARR;
+        Solar_Constants(day_num,6) = DARR;
+            SUM_DARR = 0;
+            DARR = 0;
+        
         
         DAY = DAY + 1;
     end

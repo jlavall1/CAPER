@@ -2,8 +2,26 @@
 %and PV output variability.
 clear
 clc
+
+USER_DEF = GUI_PV_Locations();
+sim_type = USER_DEF(1,1);
+PV_Site = USER_DEF(1,2);
+
+if sim_type == 1
+    if PV_Site == 1
+        PV_Site_path1 = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\01_Shelby_NC';
+        addpath(PV_Site_path1);
+        [GHI_K,Date,~] = xlsread('Shelby_1MW.xlsx','Shelby'); %Horiz_Irrad ; Power ; A.Temp ; Elevation ; Azimuth
+    elseif PV_Site == 2
+        PV_Site_path2 = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\02_Murphy_NC';
+        addpath(PV_Site_path2);
+        [GHI_K,Date,~] = xlsread('Murphy_1MW.xlsx','Murphy'); %Horiz_Irrad ; Power ; A.Temp ; Elevation ; Azimuth
+    end
+elseif sim_type == 2
+
+end
 %[EIB_9_5,txt7,~] = xlsread('PV_Power.xlsx','9_5_EIB');
-[GHI_K,Date,~] = xlsread('Shelby_1MW.xlsx','Shelby');
+%[GHI_K,Date,~] = xlsread('Shelby_1MW.xlsx',);
 %GHI_K = [100;-10000;-10000;150;105;104;103;102;-1000;100];
 
 %Preprocess of Date & Time:
@@ -125,8 +143,10 @@ i = 1;
 j = 1;
 while j < 13
     L = MTH(1,j)*24*60;
-    M_SHELBY(j).DAY(:,1:5) = GHI_K(i:i+L,1:5);
-    M_SHELBY(j).DAY(:,6) = TIME_INT(i:i+L,5);
+    M_PVSITE(j).DAY(:,1:5) = GHI_K(i:i+L,1:5);
+    M_PVSITE(j).DAY(:,6) = TIME_INT(i:i+L,5);
+    M_PVSITE(j).kW(:,1) = GHI_K(i:i+L,2); %PV kw generation output
+    M_PVSITE(j).Ctemp(:,1) = GHI_K(i:i+L,3);
     
     
     %Reset/Change Variables:
@@ -136,5 +156,19 @@ while j < 13
     
     j = j + 1; %will go to 12
 end
-
+%%
+%Output Results:
+if sim_type == 1
+    if PV_Site == 1
+        %Shelby,NC
+        M_SHELBY = M_PVSITE;
+        filename = strcat(PV_Site_path1,'\M_SHELBY.mat');
+        save(filename);
+    elseif PV_Site == 2
+        %Murphy,NC
+        M_MURPHY = M_PVSITE;
+        filename = strcat(PV_Site_path1,'\M_MURPHY.mat');
+        save(filename);
+    end
+end
 
