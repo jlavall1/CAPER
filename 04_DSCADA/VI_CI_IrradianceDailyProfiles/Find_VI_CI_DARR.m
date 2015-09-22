@@ -22,6 +22,7 @@ if sim_type == 1
 elseif sim_type == 2
 
 end
+%%
 %load M_SHELBY.mat       %W/m^2;   kW_out; TEMP;   ELEV;   AZIM;    DOY;
 tic
 %-----------
