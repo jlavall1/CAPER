@@ -6,11 +6,12 @@ time2int.m
 Data Processing Algorithms:
 1) Create_IrradianceMeasurements_Datafile.m
 	OUTPUT:
-		M_NAME.mat (Struct)
-		TIME_INT.mat (Array)
-2) Find_VI.m:
-	>Change ALT
-	
+		M_PVSITE.mat (Struct with .DAY .kW  .Ctemp)
+		TIME_INT.mat (Reference array with DOY;MNTH;HR;MIN)
+2) Find_VI_CI_DARR.m:
 	OUTPUT:
-		SOLAR_CONSTANTS_NAME (Array)
-3) STATS_SITE.m
+		M_PVSITE.mat (Struct with .DAY .kW  .Ctemp  .GHI  .RR_1MIN)
+		M_PVSITE_SC.mat (Matrix with DOY  MNTH  DAY  VI  CI  DARR)
+3) Pre_PV_Ramping.m:
+	OUTPUT:
+		M_PVSITE_SC.mat (Matrix with DOY  MNTH  DAY  VI  CI  DARR  RR_avg  RR_95th  RR_99th)

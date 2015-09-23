@@ -14,10 +14,19 @@ function STRING_0 = GUI_PV_Locations()
             PV_Site=menu('Choose Site:','Shelby,NC (King''s Mtn','Murphy,NC (western tip)');
         end
         
-        plot_type=menu('Now what plots?','VI vs. CI','VI=1:1:20 Sampled Days','1&2','Irradiances','NONE');
+        plot_type=menu('Now what plots?','VI vs. CI','VI=1:1:20 Sampled Days','1&2','Irradiances','NONE','Correlation between daily VI & DARR','Irradiance Changes vs. VI','6 & 7');
         while plot_type<1
-            plot_type=menu('Now what plots?','VI vs. CI','VI=1:1:20 Sampled Days','1&2','Irradiances','NONE');
+            plot_type=menu('Now what plots?','VI vs. CI','VI=1:1:20 Sampled Days','1&2','Irradiances','NONE','Correlation between daily VI & DARR','Irradiance Changes vs. VI','6 & 7');
         end
+        %Plot #:
+        %1  :VI vs CI
+        %2  :VI=1:1:20 Sampled Days
+        %3  :1 & 2
+        %4  :Irradiances
+        %5  :NONE
+        %6  :Correlation between daily VI & DARR
+        %7  :Irradiance Changes vs. VI
+        %8  :6 & 7
         
     elseif sim_type == 2
         PV_Site=menu('Choose Site:','5.0MW - Mocksville Farm','3.5MW - Ararat Rock 3.5MW','1.5MW - Old Dominion','1.0MW - Mayberry Farm');

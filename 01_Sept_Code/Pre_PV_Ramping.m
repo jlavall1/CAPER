@@ -49,9 +49,14 @@ m = 1;
 n = 1;
 COUNT = 0;
 for i=1:1:length(M_PVSITE_SC)
+    %Obtain dynamic variables:
     DARR = PV1_MW.DARR(i,1);
     CI = PV1_MW.CI(i,1);
     TIME = PV1_MW.DATE(i,1:3);
+    
+    %Categorize DARR Days:
+    %
+    %Category 1 -
     if DARR < 3 && DARR ~= 0
         if CI > 0.2
             PV1_MW.RR_distrib.Cat1(j,1:3) = TIME;
@@ -64,21 +69,25 @@ for i=1:1:length(M_PVSITE_SC)
             ii = ii + 1;
             COUNT = COUNT + 1;
         end
+    %Category 2 -
     elseif DARR >= 3 && DARR < 13
         PV1_MW.RR_distrib.Cat2(k,1:3) = TIME;
         PV1_MW.RR_distrib.Cat2(k,4) = DARR;
         k = k + 1;
         COUNT = COUNT + 1;
+    %Category 2 -
     elseif DARR >= 13 && DARR < 23
         PV1_MW.RR_distrib.Cat3(l,1:3) = TIME;
         PV1_MW.RR_distrib.Cat3(l,4) = DARR;
         l = l + 1;
         COUNT = COUNT + 1;
+    %Category 3 -
     elseif DARR >= 23 && DARR < 33
         PV1_MW.RR_distrib.Cat4(m,1:3) = TIME;
         PV1_MW.RR_distrib.Cat4(m,4) = DARR;
         m = m + 1;
         COUNT = COUNT + 1;
+    %Category 4 -
     elseif DARR >= 33
         PV1_MW.RR_distrib.Cat5(n,1:3) = TIME;
         PV1_MW.RR_distrib.Cat5(n,4) = DARR;
@@ -87,43 +96,133 @@ for i=1:1:length(M_PVSITE_SC)
         COUNT = COUNT + 1;
     end
 end
+%The COUNT Variables tells us how many days we have data for the yr 2014.
+fprintf('\t %s\n\n',sprintf('%0.1f MW Farm in %s,NC',PV1_MW.kW/1e3,PV1_MW.name));
+%fprintf('Capacity in MW_{ac}:\t %0.1f\n',PV1_MW.kW/1e3);
+fprintf('Category 1 clearsky:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat1(:,1))/COUNT)*100);
+fprintf('Category 1 overcast:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat1_O(:,1))/COUNT)*100);
+fprintf('Category 2:\t\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat2(:,1))/COUNT)*100);
+fprintf('Category 3:\t\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat3(:,1))/COUNT)*100);
+fprintf('Category 4:\t\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat4(:,1))/COUNT)*100);
+fprintf('Category 5:\t\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat5(:,1))/COUNT)*100);
+fprintf('Total Days:\t\t\t %0.0f\n',COUNT);
 
-fprintf('Capacity in MW_{ac}:\t %0.1f\n',PV1_MW.kW/1e3);
-fprintf('Category 1 clearsky:\t %0.2f\n',(length(PV1_MW.RR_distrib.Cat1(:,1))/COUNT)*100);
-fprintf('Category 1 overcast:\t %0.2f\n',(length(PV1_MW.RR_distrib.Cat1_O(:,1))/COUNT)*100);
-fprintf('Category 2:\t\t\t\t %0.2f\n',(length(PV1_MW.RR_distrib.Cat2(:,1))/COUNT)*100);
-fprintf('Category 3:\t\t\t\t %0.2f\n',(length(PV1_MW.RR_distrib.Cat3(:,1))/COUNT)*100);
-fprintf('Category 4:\t\t\t\t %0.2f\n',(length(PV1_MW.RR_distrib.Cat4(:,1))/COUNT)*100);
-fprintf('Category 5:\t\t\t\t %0.2f\n',(length(PV1_MW.RR_distrib.Cat5(:,1))/COUNT)*100);
-fprintf('Total Days:\t\t\t\t %0.0f\n',COUNT);
-
-
-
-
+%%
 %Pull from DOY, MONTH, & DAY ---    PV1_1MW.RR_distrib.Cat5(n,1:3)
+%Ramp Rates were calculted already and located here: M_PVSITE
+%M_PVSITE(MNTH).DAY(time2int(D_S,0,0):time2int(D_S,23,59),1),'b-');
 RR_max = 0;
+RR_min = 0;
 for S_DAY=1:1:length(PV1_MW.RR_distrib.Cat5(:,1))
-   MNTH = PV1_MW.RR_distrib.Cat5(S_DAY,2);
-   %M_PVSITE(MNTH).GHI; 
-    
-    
+    %Obtain MNTH, DAY of category 5 DARR:
+    MNTH = PV1_MW.RR_distrib.Cat5(S_DAY,2);
+    D_S = PV1_MW.RR_distrib.Cat5(S_DAY,3);
+    %Now find maximum "up-Ramp" RR for that day:
+    RR_max = max(M_PVSITE(MNTH).RR_1MIN(time2int(D_S,0,0):time2int(D_S,23,59),1));
+    %Now find maximum "down-Ramp" RR for that day:
+    RR_min = min(M_PVSITE(MNTH).RR_1MIN(time2int(D_S,0,0):time2int(D_S,23,59),1));
+    %Save in struct:
+    PV1_MW.RR_distrib.Cat5(S_DAY,6) = RR_max/PV1_MW.kW; %Now in P.U.
+    PV1_MW.RR_distrib.Cat5(S_DAY,7) = RR_min/PV1_MW.kW; %Now in P.U.
+    %M_PVSITE(MNTH).GHI; 
+end
+%%
+%Lets create daily RR avg ; RR 95% ; RR 99% % Place in M_PVSITE_SC
+MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
+MNTH = 1;
+DAY = 1;
+DOY = 1;
+hr = 0;
+min = 1;
+COUNT = 0;
+RR_Sigma = 0;
+while MNTH < 13
+    while DAY < MTH_LN(1,MNTH)+1
+        %Find RR Summation & Count:
+        while hr < 24
+            while min < 60
+                %Filter any datapoint when sun was not over horizon
+                if M_PVSITE(MNTH).DAY(time2int(DAY,hr,min),4) > 0
+                    RR = M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),1);
+                    RR_Sigma = RR_Sigma + abs(RR)/1000;
+                    COUNT = COUNT + 1;
+                end
+                min = min + 1;
+            end
+            min = 1;
+            hr = hr + 1;
+        end
+        %Calculate & save RR_avg:
+        M_PVSITE_SC(DOY,7) = RR_Sigma/COUNT;
+        %Reset Variables --
+            RR_Sigma = 0;
+            COUNT = 0;
+            hr = 0;
+            min = 1;
+                    
+        %Obtain 95th & 99th percentiles of 1min RRs:
+        x = M_PVSITE(MNTH).RR_1MIN(time2int(DAY,0,0):time2int(DAY,23,59),1);
+        M_PVSITE_SC(DOY,8) = quantile(x,0.95)/1000;
+        M_PVSITE_SC(DOY,9) = quantile(x,0.99)/1000;
+        
+        %Increment Day:
+        DAY = DAY + 1;
+        DOY = DOY + 1;
+    end
+    MNTH = MNTH + 1;
+    DAY = 1;
 end
 
 %%
 %Plotting
-fig = 1;
-figure(fig);
-plot(PV1_MW.VI,PV1_MW.DARR,'bo');
-hold on
-X=0:.1:30;
-plot(X,3,'r--','LineWidth',3);
-hold on
-plot(X,13,'r-','LineWidth',5);
-hold on
-plot(X,23,'r-','LineWidth',7);
-hold on
-plot(X,33,'r-','LineWidth',10);
-hold off
+if FIG_type == 6 || FIG_type == 8
+    fig = 1;
+    figure(fig);
+    plot(PV1_MW.VI,PV1_MW.DARR,'bo');
+    hold on
+    X=0:.1:30;
+    plot(X,3,'r--','LineWidth',3);
+    hold on
+    plot(X,13,'r-','LineWidth',5);
+    hold on
+    plot(X,23,'r-','LineWidth',7);
+    hold on
+    plot(X,33,'r-','LineWidth',10);
+    hold off
+    xlabel('Variability Index (VI)','FontSize',14,'FontWeight','bold');
+    ylabel('Daily Aggregate Ramp Rate (DARR)','FontSize',14,'FontWeight','bold');
+    title(sprintf('Correlation between daily VI & DARR at %s',PV1_MW.name),'FontSize',14,'FontWeight','bold');
+    set(gca,'FontWeight','bold');
+end
+if FIG_type == 7 || FIG_type == 8
+    %Plot (2):
+    fig = fig + 1;
+    figure(fig);
+    h(1) = plot(M_PVSITE_SC(:,4),M_PVSITE_SC(:,7),'bo');
+    hold on
+    h(3) = plot(M_PVSITE_SC(:,4),M_PVSITE_SC(:,8),'go');
+    hold on
+    h(5) = plot(M_PVSITE_SC(:,4),M_PVSITE_SC(:,9),'ro');
+    %plot Settings:
+    xlabel('VI','FontSize',14,'FontWeight','bold');
+    ylabel('1-min PV-Farm Ramp Rate (P.U.)','FontSize',14,'FontWeight','bold');
+    title(sprintf('Irradiance Changes vs. VI at %s',PV1_MW.name),'FontSize',14,'FontWeight','bold');
+    legend('Mean Irradiance Change','95% Irradiance Change','99% Irradiance Change');
+    axis([0 30 0 1]);
+    set(gca,'FontWeight','bold');
+    
+end
+
+
+
+
+
+
+
+
+
+
+
 %%
 %{
 fig = fig + 1;
