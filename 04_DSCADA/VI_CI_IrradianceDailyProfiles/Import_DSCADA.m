@@ -24,7 +24,22 @@ ROX.kVAR.A = RidgeRd (1:n, 14);
 ROX.kVAR.B = RidgeRd (1:n, 16);
 ROX.kVAR.C = RidgeRd (1:n, 18);
 %ROX.PI_time = txt(2:end,3);
+%%
+NAME = cell(9,1);
+NAME = [{'Voltage.A'; 'Voltage.B'; 'Voltage.C'; 'Amp.A'; 'Amp.B';...
+        'Amp.C'; 'kW.A'; 'kW.B'; 'kW.C'; 'kVAR.A'; 'kVAR.B'; 'kVAR.C'}];
+%%
+i = 1;
+j = 1;
+k = 1;
 
+%while i < length(NAME)+1
+    while j < n+1
+        data = ROX.Voltage.A(j,1);
+        j = j+1;
+    end
+    %i = i+1;
+%end
 months = [31,28,31,30,31,30,31,31,30,31,30,31,31,28,31];
 
 ref = zeros(n,5);
@@ -64,13 +79,14 @@ end
 %T.Date = datetime(ROX.PI_time,'ConvertFrom','excel');
 ROX.PI_time = RidgeRd(1:end,3);
 DateTime = sum(ROX.PI_time,2);
+diff = zeros(n,1);
 str = datestr(DateTime+datenum('30-Dec-1899'));
 for i=1:1:length(ROX.PI_time);
     ROX.excel_time{i,1} = cellstr(str(i,1:20));
     ROX.NUM_time(i,1) = datenum(ROX.excel_time{i,1});
     ROX.ref_time{i,1} = datestr(ref(i,5));
-    if (ROX.NUM_time(i,1) ~= ref(i,5))
-        diff(i) = ROX.NUM_time(i,1) - ref(i,5);
+    if ROX.NUM_time(i,1) ~= ref(i,5)
+        diff(i,1) = ROX.NUM_time(i,1) - ref(i,5);
     end
 end
 
