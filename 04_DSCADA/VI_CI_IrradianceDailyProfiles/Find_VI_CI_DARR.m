@@ -1,7 +1,8 @@
-clear
-clc
+%clear
+%clc
 %Import Dynamic Datasets:
 %Ask user which site do they want?
+%{
 USER_DEF = GUI_PV_Locations();
 sim_type = USER_DEF(1,1);
 PV_Site = USER_DEF(1,2);
@@ -22,6 +23,7 @@ if sim_type == 1
 elseif sim_type == 2
 
 end
+%}
 %%
 %load M_SHELBY.mat       %W/m^2;   kW_out; TEMP;   ELEV;   AZIM;    DOY;
 tic
@@ -192,10 +194,10 @@ while MNTH < 13
 end
 %plot Fig. 7 daily clearness index & VI for each day of the test year @ Shelby, NC
 %%
-fig = 1;
 
 if FIG_type == 1 || FIG_type == 3
     %---------------------------------
+    fig = fig + 1;
     figure(fig);
     plot(Solar_Constants(:,4),Solar_Constants(:,5),'bo');
 
@@ -204,12 +206,15 @@ if FIG_type == 1 || FIG_type == 3
         title('Shelby,NC: Year = 2014','FontSize',12,'FontWeight','bold');
     elseif sim_type == 1 && PV_Site == 2
         title('Murphy,NC: Year = 2014','FontSize',12,'FontWeight','bold');
+    elseif sim_type == 1 && PV_Site == 3
+        title('Taylorsville,NC: Year = 2014','FontSize',12,'FontWeight','bold');
     end
     xlabel('Variability Index (VI)','FontSize',12,'FontWeight','bold');
     ylabel('Daily Clearness Index','FontSize',12,'FontWeight','bold');
-
     axis([0 30 0 1.2]);
-elseif FIG_type == 2 || FIG_type == 3
+    set(gca,'FontWeight','bold');
+end
+if FIG_type == 2 || FIG_type == 3
     %---------------------------------
     %Plot Sampled Days to display VI from 1 --> 20.
     SAMPLES = zeros(2,20);
@@ -217,6 +222,10 @@ elseif FIG_type == 2 || FIG_type == 3
         SAMPLES(1,:) = [10;1;2;12;12;5;1;11;6;11;9;5;3;10;9;8;4;7;7;5];
         SAMPLES(2,:) = [5; 28;22;21;9;12;17;30;9;18;13;1;4;15;7;12;9;29;17;19];
     elseif sim_type == 1 && PV_Site == 2
+        %Change these --
+        SAMPLES(1,:) = [3;11;2;9;5;12;7;7;4;12;4;11;10;10;8;5;12;1;6;2]; %Month
+        SAMPLES(2,:) = [10;20;1;29;9;29;16;7;22;25;12;25;20;24;17;20;16;1;4;19]; %Day of Month   
+    elseif sim_type == 1 && PV_Site == 3
         %Change these --
         SAMPLES(1,:) = [3;11;2;9;5;12;7;7;4;12;4;11;10;10;8;5;12;1;6;2]; %Month
         SAMPLES(2,:) = [10;20;1;29;9;29;16;7;22;25;12;25;20;24;17;20;16;1;4;19]; %Day of Month   
@@ -241,7 +250,8 @@ elseif FIG_type == 2 || FIG_type == 3
         set(gca,'XTickLabel',[]);
         n = n + 1;
     end
-elseif FIG_type == 4
+end
+if FIG_type == 4
     %---------------------------------
     %Plot some Irradiance Profiles:
     fig = fig + 1;
@@ -298,7 +308,17 @@ if sim_type == 1
         filename = strcat(PV_Site_path2,'\M_MURPHY_SC.mat');
         delete(filename);
         save(filename,'M_MURPHY_SC');
-        
+    elseif PV_Site == 3
+        %Taylorsville,NC
+        M_TAYLOR = M_PVSITE;
+        filename = strcat(PV_Site_path3,'\M_TAYLOR.mat');
+        delete(filename);
+        save(filename,'M_TAYLOR');
+        %Solar Constants
+        M_TAYLOR_SC = Solar_Constants;
+        filename = strcat(PV_Site_path3,'\M_TAYLOR_SC.mat');
+        delete(filename);
+        save(filename,'M_TAYLOR_SC');
     end
 end
 

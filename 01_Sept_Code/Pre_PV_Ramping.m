@@ -99,13 +99,13 @@ end
 %The COUNT Variables tells us how many days we have data for the yr 2014.
 fprintf('\t %s\n\n',sprintf('%0.1f MW Farm in %s,NC',PV1_MW.kW/1e3,PV1_MW.name));
 %fprintf('Capacity in MW_{ac}:\t %0.1f\n',PV1_MW.kW/1e3);
-fprintf('Category 1 clearsky:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat1(:,1))/COUNT)*100);
-fprintf('Category 1 overcast:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat1_O(:,1))/COUNT)*100);
-fprintf('Category 2:\t\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat2(:,1))/COUNT)*100);
-fprintf('Category 3:\t\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat3(:,1))/COUNT)*100);
-fprintf('Category 4:\t\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat4(:,1))/COUNT)*100);
-fprintf('Category 5:\t\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat5(:,1))/COUNT)*100);
-fprintf('Total Days:\t\t\t %0.0f\n',COUNT);
+fprintf('Category 1 clearsky:\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat1(:,1))/COUNT)*100);
+fprintf('Category 1 overcast:\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat1_O(:,1))/COUNT)*100);
+fprintf('Category 2:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat2(:,1))/COUNT)*100);
+fprintf('Category 3:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat3(:,1))/COUNT)*100);
+fprintf('Category 4:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat4(:,1))/COUNT)*100);
+fprintf('Category 5:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat5(:,1))/COUNT)*100);
+fprintf('Total Days:\t\t %0.0f\n',COUNT);
 
 %%
 %Pull from DOY, MONTH, & DAY ---    PV1_1MW.RR_distrib.Cat5(n,1:3)
@@ -175,8 +175,9 @@ end
 
 %%
 %Plotting
+fig = 0;
 if FIG_type == 6 || FIG_type == 8
-    fig = 1;
+    fig = fig + 1;
     figure(fig);
     plot(PV1_MW.VI,PV1_MW.DARR,'bo');
     hold on

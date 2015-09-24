@@ -1,26 +1,6 @@
 %"The variability index: A new and novel metric for quantifying irradiance
 %and PV output variability.
-clear
-clc
 
-%Ask user which site do they want?
-USER_DEF = GUI_PV_Locations();
-sim_type = USER_DEF(1,1);
-PV_Site = USER_DEF(1,2);
-
-if sim_type == 1
-    if PV_Site == 1
-        PV_Site_path1 = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\01_Shelby_NC';
-        addpath(PV_Site_path1);
-        [GHI_K,Date,~] = xlsread('Shelby_1MW.xlsx','Shelby'); %Horiz_Irrad ; Power ; A.Temp ; Elevation ; Azimuth
-    elseif PV_Site == 2
-        PV_Site_path2 = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\02_Murphy_NC';
-        addpath(PV_Site_path2);
-        [GHI_K,Date,~] = xlsread('Murphy_1MW.xlsx','Murphy'); %Horiz_Irrad ; Power ; A.Temp ; Elevation ; Azimuth
-    end
-elseif sim_type == 2
-
-end
 %[EIB_9_5,txt7,~] = xlsread('PV_Power.xlsx','9_5_EIB');
 %[GHI_K,Date,~] = xlsread('Shelby_1MW.xlsx',);
 %GHI_K = [100;-10000;-10000;150;105;104;103;102;-1000;100];
@@ -124,6 +104,12 @@ while POS < 4 %Only filters columns 1 -> 3.
             HOLD = zeros(2,10);
         end
         
+        %Replace -kW with 0kW:
+        if POS == 2 && GHI_K(i,POS) < 0
+            GHI_K(i,POS)=0;
+        end
+        
+            
         %Find any large missing holes in data:
         %{
         if i > 1
@@ -187,6 +173,11 @@ if sim_type == 1
         %Murphy,NC
         M_MURPHY = M_PVSITE;
         filename = strcat(PV_Site_path2,'\M_MURPHY.mat');
+        save(filename);
+    elseif PV_Site == 3
+        %Taylorsville,NC
+        M_TAYLOR = M_PVSITE;
+        filename = strcat(PV_Site_path3,'\M_TAYLOR.mat');
         save(filename);
     end
 end
