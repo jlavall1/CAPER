@@ -1,11 +1,11 @@
 %This algorithm will calculate the DARRmin
 
-clear
-clc
+%clear
+%clc
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles');
 %Import Dynamic Datasets:
 %Ask user which site do they want?
-
+%{
 USER_DEF = GUI_PV_Locations();
 sim_type = USER_DEF(1,1);
 PV_Site = USER_DEF(1,2);
@@ -34,6 +34,7 @@ if sim_type == 1
 elseif sim_type == 2
 
 end
+%}
 %
 PV1_MW.DARR = M_PVSITE_SC(:,6);
 PV1_MW.VI = M_PVSITE_SC(:,4);
@@ -99,12 +100,20 @@ end
 %The COUNT Variables tells us how many days we have data for the yr 2014.
 fprintf('\t %s\n\n',sprintf('%0.1f MW Farm in %s,NC',PV1_MW.kW/1e3,PV1_MW.name));
 %fprintf('Capacity in MW_{ac}:\t %0.1f\n',PV1_MW.kW/1e3);
-fprintf('Category 1 clearsky:\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat1(:,1))/COUNT)*100);
-fprintf('Category 1 overcast:\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat1_O(:,1))/COUNT)*100);
-fprintf('Category 2:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat2(:,1))/COUNT)*100);
-fprintf('Category 3:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat3(:,1))/COUNT)*100);
-fprintf('Category 4:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat4(:,1))/COUNT)*100);
-fprintf('Category 5:\t\t %0.2f%%\n',(length(PV1_MW.RR_distrib.Cat5(:,1))/COUNT)*100);
+CAT = zeros(1,6);
+CAT(1,1) = (length(PV1_MW.RR_distrib.Cat1(:,1))/COUNT)*100;
+CAT(1,2) = (length(PV1_MW.RR_distrib.Cat1_O(:,1))/COUNT)*100;
+CAT(1,3) = (length(PV1_MW.RR_distrib.Cat2(:,1))/COUNT)*100;
+CAT(1,4) = (length(PV1_MW.RR_distrib.Cat3(:,1))/COUNT)*100;
+CAT(1,5) = (length(PV1_MW.RR_distrib.Cat4(:,1))/COUNT)*100;
+CAT(1,6) = (length(PV1_MW.RR_distrib.Cat5(:,1))/COUNT)*100;
+
+fprintf('Category 1 clearsky:\t %0.2f%%\n',CAT(1,1));
+fprintf('Category 1 overcast:\t %0.2f%%\n',CAT(1,2));
+fprintf('Category 2:\t\t %0.2f%%\n',CAT(1,3));
+fprintf('Category 3:\t\t %0.2f%%\n',CAT(1,4));
+fprintf('Category 4:\t\t %0.2f%%\n',CAT(1,5));
+fprintf('Category 5:\t\t %0.2f%%\n',CAT(1,6));
 fprintf('Total Days:\t\t %0.0f\n',COUNT);
 
 %%
@@ -176,7 +185,7 @@ end
 %%
 %Plotting
 fig = 0;
-if FIG_type == 6 || FIG_type == 8
+if FIG_type == 1 || FIG_type == 3
     fig = fig + 1;
     figure(fig);
     plot(PV1_MW.VI,PV1_MW.DARR,'bo');
@@ -195,7 +204,7 @@ if FIG_type == 6 || FIG_type == 8
     title(sprintf('Correlation between daily VI & DARR at %s',PV1_MW.name),'FontSize',14,'FontWeight','bold');
     set(gca,'FontWeight','bold');
 end
-if FIG_type == 7 || FIG_type == 8
+if FIG_type == 2 || FIG_type == 3
     %Plot (2):
     fig = fig + 1;
     figure(fig);
@@ -211,7 +220,6 @@ if FIG_type == 7 || FIG_type == 8
     legend('Mean Irradiance Change','95% Irradiance Change','99% Irradiance Change');
     axis([0 30 0 1]);
     set(gca,'FontWeight','bold');
-    
 end
 
 

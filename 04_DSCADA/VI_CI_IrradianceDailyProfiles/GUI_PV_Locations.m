@@ -30,21 +30,57 @@ function STRING_0 = GUI_PV_Locations()
         while Algo_num<1
             Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','PV Ramping Analysis');
         end
+        %Import only----
+        if Algo_num == 2
+            plot_type = 0;
+        end
+        
+        %Solar Constants ----
         if Algo_num == 1 || Algo_num == 3
             plot_type=menu('Now what plots?','VI vs. CI','VI=1:1:20 Sampled Days','1&2','Irradiances','NONE','Correlation between daily VI & DARR','Irradiance Changes vs. VI','6 & 7');
             while plot_type<1
                 plot_type=menu('Now what plots?','VI vs. CI','VI=1:1:20 Sampled Days','1&2','Irradiances','NONE','Correlation between daily VI & DARR','Irradiance Changes vs. VI','6 & 7');
             end
         end
+        
+        %PV Ramping ----
+        if Algo_num == 1 || Algo_num == 4
+            plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','\tNONE\t');
+            while plot_type<1
+                plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','\tNONE\t');
+            end
+        end
+        %Conclusion:
         %1  :ALL
         %2  :Data Import
         %3  :Solar Constants Calc
         
     elseif sim_type == 2
+        %Make them choose what Dataset they want:
         PV_Site=menu('Choose Site:','5.0MW - Mocksville Farm','3.5MW - Ararat Rock 3.5MW','1.5MW - Old Dominion','1.0MW - Mayberry Farm');
         while sim_type<1
             PV_Site=menu('Choose Site:','5.0MW - Mocksville Farm','3.5MW - Ararat Rock 3.5MW','1.5MW - Old Dominion','1.0MW - Mayberry Farm');
         end
+        
+        %Ask them what algorithm that they want to run??
+        %Opt out of beginning algorithms:
+        Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','PV Ramping Analysis');
+        while Algo_num<1
+            Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','PV Ramping Analysis');
+        end
+        
+        %Import only----
+        if Algo_num == 2
+            plot_type = 0;
+        end
+        %PV Ramping ----
+        if Algo_num == 1 || Algo_num == 4
+            plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','\tNONE\t');
+            while plot_type<1
+                plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','\tNONE\t');
+            end
+        end
+        
     end
     
     STRING_0(1,1) = sim_type;
