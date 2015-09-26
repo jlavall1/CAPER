@@ -53,6 +53,9 @@ Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
 Buses = getBusInfo(DSSCircObj);
 Loads = getLoadInfo(DSSCircObj);
+%
+%Function to generate node names from Buses_Base:
+MAT_FILE_LOAD
 %Extras:
 xfmrNames = DSSCircuit.Transformers.AllNames;
 lineNames = DSSCircuit.Lines.AllNames;

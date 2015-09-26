@@ -55,13 +55,13 @@ if cat_choice==1
         ckt_choice=menu('Name of Circuit:','Bellhaven 12-04','Commonwealth 12-05','Flay 12-01');
     end
     if ckt_choice == 1
-        s2 = '\Bellhaven_Circuit_Opendss\';
+        s2 = '\Bellhaven_Circuit_Opendss\Run_Master_Allocate.dss';
         ckt_num = 0;
     elseif ckt_choice == 2
         s2 = '\Commonwealth_Circuit_Opendss\Run_Master_Allocate.dss';
         ckt_num = 1;
     elseif ckt_choice == 3
-        s2 = '\Flay_Circuit_Opendss\';
+        s2 = '\Flay_Circuit_Opendss\Run_Master_Allocate.dss';
         ckt_num = 2;
     end
     STRING = strcat(s1,s2);
@@ -75,10 +75,10 @@ elseif cat_choice==2
         s2 = '\Roxboro_Circuit_Opendss\Run_Master_Allocate.dss';
         ckt_num = 3;
     elseif ckt_choice == 2
-        s2 = '\HollySprings_Circuit_Opendss\';
+        s2 = '\HollySprings_Circuit_Opendss\Run_Master_Allocate.dss';
         ckt_num = 4;
     elseif ckt_choice == 3
-        s2 = '\ERaleigh_Circuit_Opendss\';
+        s2 = '\ERaleigh_Circuit_Opendss\Run_Master_Allocate.dss';
         ckt_num = 5;
     end
     STRING = strcat(s1,s2);

@@ -13,8 +13,6 @@ mainFile = gui_response{1,1};
 feeder_NUM = gui_response{1,2};
 
 
-% 1. Load background files:
-MAT_FILE_LOAD
 
 % 2. Compile the user selected circuit:
 DSSText.command = ['Compile "',mainFile];
@@ -47,6 +45,8 @@ DSSText.command ='solve loadmult=0.5';
 
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
+% 1. Load background files:
+MAT_FILE_LOAD
 %{
 thermal = zeros(length(Lines_Base),3); %LINE_RATING | MAX sim PHASE CURRENT | %%THERMAL
 ansi84 = zeros(length(Lines_Base),1);  %MAX sim PHASE VOLTAGE
@@ -72,6 +72,13 @@ Loads = getLoadInfo(DSSCircObj);
 % Step through every load & scale it down:
 %Get Capacitor Information
 Capacitors = getCapacitorInfo(DSSCircObj);
+
+%xfmrNames = DSSCircuit.Transformers.AllNames;
+%lineNames = DSSCircuit.Lines.AllNames;
+%loadNames = DSSCircuit.Loads.AllNames;
+
+%%
+
 %Enable/Disable capacitor
 
 %{
@@ -140,11 +147,11 @@ end
 % toc
 %}
 
-%
+%{
 for 1:1:length(Capacitors)
     DSSText.command = sprintf('edit capacitor.%s state=0',Capacitors(1,1).name);
 %DSSText.command = 'edit capacitor.cp-nr-613 state=0';
-
+%}
 % SOLVES THE HOSTING CAP!
 % Initiate PV Central station:
 %DSSText.command = 'new loadshape.PV_Loadshape npts=1 sinterval=60 csvfile="PVloadshape_Central.txt" Pbase=0.10 action=normalize';
@@ -157,6 +164,7 @@ DSSText.command = 'solve loadmult=0.5';
 % Set it as the active element and view its bus information
 
 %DSSCircuit.SetActiveElement('generator.pv');
+%}
 %{
 %---------------------------------------------
 %Iterate PV bus1 location throughout EPRI Circuit
@@ -512,4 +520,5 @@ BusesCoords = reshape([Bus2add.coordinates],2,[])';
 %   copies of A are arranged in each dimension
 busHandle = plot(repmat(BusesCoords(:,2)',2,1),repmat(BusesCoords(:,1)',2,1),'ko','MarkerSize',10,'MarkerFaceColor','c','LineStyle','none','DisplayName','Bottleneck');
 legend([Handles.legendHandles,busHandle'],[Handles.legendText,'PV_{PCC} Locations'] )
+%}
 %}
