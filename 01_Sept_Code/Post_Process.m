@@ -4,7 +4,7 @@ clear
 clc
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
 
-ckt_num = 2;
+ckt_num = 3;
 %Load results and information about the circuit-
 %load RESULTS_9_3_2015.mat
 %load RESULTS_9_10_2015.mat
@@ -16,7 +16,7 @@ if ckt_num == 7
     load config_LINENAMES_CKT7.mat
     load config_XFMRNAMES_CKT7.mat
     sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14_1');
-elseif ckt_num == 2
+elseif ckt_num == 1
     load RESULTS_9_18_2015.mat
     %load DISTANCE_CMNWLTH.mat
     load config_LOADNAMES_CMNWLTH.mat
@@ -24,7 +24,16 @@ elseif ckt_num == 2
     load config_XFMRNAMES_CMNWLTH.mat
     %sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_18');
     sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_19');
+elseif ckt_num == 3
+    load RESULTS_FLAY_SS.mat
+    %configs:
+    load config_LOADNAMES_FLAY.mat
+    load config_LINENAMES_FLAY.mat
+    load config_XFMRNAMES_FLAY.mat
+    %sort_Results = xlsread('RESULTS_SORTED_2.xlsx','FLAY');
 end
+%%
+    
 %1) Setup the COM server
 %[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 

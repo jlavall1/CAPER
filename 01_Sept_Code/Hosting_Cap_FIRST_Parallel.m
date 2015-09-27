@@ -212,7 +212,9 @@ PV_VOLT= zeros(1,3); %Va Vb Vc
 jj = 2; %skip jj=1 for basecase results:
 COUNT = 0;
 %Bus Loop.
-while ii< length(Buses) %length(Buses)
+parpool(3)
+parfor ii=bus_init:1:length(Buses)
+%while ii< length(Buses) %length(Buses)
     %Skip BUS if not 3-ph & connected to 12.47:
     if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
         % ~~~~~~~~~~~~~~~~~

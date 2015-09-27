@@ -159,6 +159,7 @@ end
     STRING_0{1,2} = ckt_num;
     STRING_0{1,3} = sim_type;
     STRING_0{1,4} = s_b;
+    STRING_0{1,5} = cat_choice;
 
 end
     
