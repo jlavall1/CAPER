@@ -219,8 +219,8 @@ while ii< length(Buses) %length(Buses)
         %Connect PV to Bus:
         DSSText.command = sprintf('edit generator.PV bus1=%s kW=%s',Buses(ii,1).name,num2str(PV_size));
         fprintf('%1.1f) SolarGEN located: %s\n',m,Buses(ii,1).name);
+        %}
         % ~~~~~~~~~~~~~~~~~
-        %
         %Search & obtain Line where PV is located on.
         s1 = Buses(ii,1).name;
         s2 = '.1.2.3';
@@ -296,25 +296,13 @@ while ii< length(Buses) %length(Buses)
                      end
                 end   
             end
-            % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            % Obtain PV-PCC VOLTAGE:
-            for i=1:1:length(Voltages)
-            %PV_VOLT(1:3)
-                if strcmp(ref_busVpu{i,1},Buses(ii,1).name)==1 %a match!
-                %if ref_busVpu{i,1}==str2double(Buses(ii,1).name)
-                    %disp(i)
-                    for ij=0:1:2
-                        PV_VOLT(1,ij+1)=Voltages(i+ij,1); %obtain single phase voltages!
-                    end
-                    break
-                end
-            end
+            
             %fDR_LD=DSSCircObj.ActiveCircuit.TotalPower;
             %This is to measure the feeder active load:
             if  feeder_NUM == 0     %Bellhaven
                 DSSCircuit.SetActiveElement('Line.259355408');
             elseif feeder_NUM == 1  %Commonwealth
-                DSSCircuit.SetActiveElement('Line.259355408');
+                DSSCircuit.SetActiveElement('Line.259355408');%Still needs edit.
             elseif feeder_NUM == 2  %Flay
                 DSSCircuit.SetActiveElement('Line.259363665');
             elseif feeder_NUM == 3  %Roxboro
@@ -411,6 +399,23 @@ while ii< length(Buses) %length(Buses)
                   
             RESULTS(jj,11)=fDR_LD; %Feeder 3phase load in kW
             
+            
+            %Calculate R_PV now:
+            % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            % Obtain PV-PCC VOLTAGE:
+            for i=1:1:length(Voltages)
+            %PV_VOLT(1:3)
+                if strcmp(ref_busVpu{i,1},Buses(ii,1).name)==1 %a match!
+                %if ref_busVpu{i,1}==str2double(Buses(ii,1).name)
+                    %disp(i)
+                    for ij=0:1:2
+                        PV_VOLT(1,ij+1)=Voltages(i+ij,1); %obtain single phase voltages!
+                    end
+                    PV_VOLT(2,1)=Buses(ii,1).voltageAngle; %theta_V
+                    %PV_VOLT(2,2)=Buses(ii,1).
+                    break
+                end
+            end
             RESULTS(jj,12)=max(PV_VOLT(1,1:3)); %Maximum voltage voltage
             R_PV=(3*(RESULTS(jj,12)*((12.47e3)/sqrt(3)))^2)/(PV_size*1e3);
             RESULTS(jj,13)=R_PV; %Capture supposibly R_PV

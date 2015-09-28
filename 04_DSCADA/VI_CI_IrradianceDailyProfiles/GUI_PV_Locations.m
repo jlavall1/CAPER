@@ -70,14 +70,14 @@ function STRING_0 = GUI_PV_Locations()
         end
         
         %Import only----
-        if Algo_num == 2
+        if Algo_num == 2 || Algo_num == 3
             plot_type = 0;
         end
         %PV Ramping ----
         if Algo_num == 1 || Algo_num == 4
-            plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','\tNONE\t');
+            plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','   NONE   ');
             while plot_type<1
-                plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','\tNONE\t');
+                plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','   NONE   ');
             end
         end
         

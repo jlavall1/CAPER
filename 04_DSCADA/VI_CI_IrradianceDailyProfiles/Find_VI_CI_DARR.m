@@ -29,7 +29,13 @@ end
 tic
 %-----------
 %Site Specs:
-ALT = 265; %[m] Shelby,NC
+if PV_Site == 1
+    ALT = 265; %[m] Shelby,NC
+elseif PV_Site == 2
+    ALT = 480.06; %[m] Murphy,NC
+elseif PV_Site == 3
+    ALT = 379.781; %[m] Taylorsville,NC
+end
 a_1 = (5.09 * 10 ^ (-5)) * ALT + 0.868;
 a_2 = (3.92 * 10 ^ (-5)) * ALT + 0.0387;
 f_h1 = exp(-1 * ALT / 8000);    %could be -1 as well.

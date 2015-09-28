@@ -40,6 +40,12 @@ PV1_MW.DARR = M_PVSITE_SC(:,6);
 PV1_MW.VI = M_PVSITE_SC(:,4);
 PV1_MW.CI = M_PVSITE_SC(:,5);
 PV1_MW.DATE = M_PVSITE_SC(:,1:3);
+PV1_MW.RR_distrib.Cat1(1,1:4) = zeros(1,4);
+PV1_MW.RR_distrib.Cat1_O(1,1:4) = zeros(1,4);
+PV1_MW.RR_distrib.Cat2(1,1:4) = zeros(1,4);
+PV1_MW.RR_distrib.Cat3(1,1:4) = zeros(1,4);
+PV1_MW.RR_distrib.Cat4(1,1:4) = zeros(1,4);
+PV1_MW.RR_distrib.Cat5(1,1:4) = zeros(1,4);
 %
 %Calculations:
 ii = 1;
@@ -102,11 +108,29 @@ fprintf('\t %s\n\n',sprintf('%0.1f MW Farm in %s,NC',PV1_MW.kW/1e3,PV1_MW.name))
 %fprintf('Capacity in MW_{ac}:\t %0.1f\n',PV1_MW.kW/1e3);
 CAT = zeros(1,6);
 CAT(1,1) = (length(PV1_MW.RR_distrib.Cat1(:,1))/COUNT)*100;
+if CAT(1,1) == 1 && PV1_MW.RR_distrib.Cat1(1,1)==0
+    CAT(1,1) = 0;
+end
 CAT(1,2) = (length(PV1_MW.RR_distrib.Cat1_O(:,1))/COUNT)*100;
+if CAT(1,2) == 1 && PV1_MW.RR_distrib.Cat1_O(1,1)==0
+    CAT(1,2) = 0;
+end
 CAT(1,3) = (length(PV1_MW.RR_distrib.Cat2(:,1))/COUNT)*100;
+if CAT(1,3) == 1 && PV1_MW.RR_distrib.Cat2(1,1)==0
+    CAT(1,3) = 0;
+end
 CAT(1,4) = (length(PV1_MW.RR_distrib.Cat3(:,1))/COUNT)*100;
+if CAT(1,4) == 1 && PV1_MW.RR_distrib.Cat3(1,1)==0
+    CAT(1,4) = 0;
+end
 CAT(1,5) = (length(PV1_MW.RR_distrib.Cat4(:,1))/COUNT)*100;
+if CAT(1,5) == 1 && PV1_MW.RR_distrib.Cat4(1,1)==0
+    CAT(1,5) = 0;
+end
 CAT(1,6) = (length(PV1_MW.RR_distrib.Cat5(:,1))/COUNT)*100;
+if CAT(1,6) == 1 && PV1_MW.RR_distrib.Cat5(1,1)==0
+    CAT(1,6) = 0;
+end
 
 fprintf('Category 1 clearsky:\t %0.2f%%\n',CAT(1,1));
 fprintf('Category 1 overcast:\t %0.2f%%\n',CAT(1,2));
@@ -222,16 +246,6 @@ if FIG_type == 2 || FIG_type == 3
     set(gca,'FontWeight','bold');
 end
 
-
-
-
-
-
-
-
-
-
-
 %%
 %{
 fig = fig + 1;
@@ -261,3 +275,87 @@ surf(X,Y,Z)
 colormap hsv
 colorbar
 %}
+%%
+%   Save Results:
+if sim_type == 1
+    if PV_Site == 1
+        %   Shelby,NC
+        M_SHELBY_INFO = PV1_MW;
+        filename = strcat(PV_Site_path1,'\M_SHELBY_INFO.mat');
+        delete(filename);
+        save(filename,'M_SHELBY_INFO');
+        %   Solar Constants:
+        M_SHELBY_SC = M_PVSITE_SC;
+        filename = strcat(PV_Site_path1,'\M_SHELBY_SC.mat');
+        delete(filename);
+        save(filename,'M_SHELBY_SC');
+    elseif PV_Site == 2
+        %   Murphy,NC
+        M_MURPHY_INFO = PV1_MW;
+        filename = strcat(PV_Site_path2,'\M_MURPHY_INFO.mat');
+        delete(filename);
+        save(filename,'M_MURPHY_INFO');
+        %   Solar Constants:
+        for i=1:1:365
+            %Filter out missing datapoints (DOY=234 to 240; 7Day Gap)
+            if i >= 234 && i <= 240
+                M_PVSITE_SC(i,4:6) = [0,0,0];
+            end
+        end
+        M_MURPHY_SC = M_PVSITE_SC;
+        filename = strcat(PV_Site_path2,'\M_MURPHY_SC.mat');
+        delete(filename);
+        save(filename,'M_MURPHY_SC');
+    elseif PV_Site == 3
+        %   Taylorsville,NC
+        M_TAYLOR_INFO = PV1_MW;
+        filename = strcat(PV_Site_path3,'\M_TAYLOR_INFO.mat');
+        delete(filename);
+        save(filename,'M_TAYLOR_INFO');
+        %Solar Constants
+        M_TAYLOR_SC = M_PVSITE_SC;
+        filename = strcat(PV_Site_path3,'\M_TAYLOR_SC.mat');
+        delete(filename);
+        save(filename,'M_TAYLOR_SC');
+    end
+    
+elseif sim_type == 2
+    if PV_Site == 1
+        %   4.5MW - Mocksville Solar Farm
+        M_MOCKS_INFO = PV1_MW;
+        filename = strcat(PV_Site_path4,'\M_MOCKS_INFO.mat');
+        delete(filename);
+        save(filename,'M_MOCKS_INFO');
+        %   Solar Constants:
+        M_MOCKS_SC = M_PVSITE_SC;
+        filename = strcat(PV_Site_path4,'\M_MOCKS_SC.mat');
+        delete(filename);
+        save(filename,'M_MOCKS_SC');
+        
+    elseif PV_Site == 2
+        %   3.5MW - Ararat Rock Solar Farm
+        M_AROCK_INFO = PV1_MW;
+        filename = strcat(PV_Site_path5,'\M_AROCK.mat');
+        delete(filename);
+        save(filename,'M_AROCK');
+        %   Solar Constants
+        M_AROCK_SC = M_PVSITE_SC;
+        filename = strcat(PV_Site_path5,'\M_AROCK_SC.mat');
+        delete(filename);
+        save(filename,'M_AROCK_SC');
+        
+    elseif PV_Site == 3
+        %TBA
+        M_TAYLOR = M_PVSITE;
+        filename = strcat(PV_Site_path3,'\M_TAYLOR.mat');
+        delete(filename);
+        save(filename,'M_TAYLOR');
+        %Solar Constants
+        M_TAYLOR_SC = M_PVSITE_SC;
+        filename = strcat(PV_Site_path3,'\M_TAYLOR_SC.mat');
+        delete(filename);
+        save(filename,'M_TAYLOR_SC');
+    elseif PV_Site == 4
+        %TBA
+    end
+end

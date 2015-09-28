@@ -26,13 +26,16 @@ if sim_type == 1
         addpath(PV_Site_path3);
         [GHI_K,Date,~] = xlsread('Taylorsville_1MW.xlsx','Taylorsville'); %Horiz_Irrad ; Power ; A.Temp ; Elevation ; Azimuth
     end
+    
+    
     %1]
     %
     %Initate Data Quality & Structuring Algorithm:
     if Algo_num == 1 || Algo_num == 2
         Create_IrradianceMeasurements_Datafile
     end
-    %
+    
+    
     %2]VI_CI_DARR.m
     %
     if Algo_num == 1 || Algo_num == 3
@@ -51,7 +54,8 @@ if sim_type == 1
         clc
         Find_VI_CI_DARR
     end
-    %
+    
+    
     %3]Pre_PV_Ramping.m
     %
     if Algo_num == 1 || Algo_num == 4
@@ -89,8 +93,7 @@ if sim_type == 1
         %
         %Initiate .m File:
         addpath(BASE_path);
-        Pre_PV_Ramping
-        
+        Pre_PV_Ramping   
     end
 
 elseif sim_type == 2
@@ -107,15 +110,90 @@ elseif sim_type == 2
         [PV_OUT,Date,~] = xlsread('Ararat_3_5MW.xlsx','Ararat'); %Power kW ; R.Power kVAR ; RECL Status
         %Load Solar Angles.mat file --
         load TAYLOR_GHI.mat %imports ANGLES_GHI
+    elseif PV_Site == 3
+        PV_Site_path6 = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\06_OldDominion_NC';
+        addpath(PV_Site_path6);
+    elseif PV_Site == 4
+        PV_Site_path7 = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\07_MayBerry_NC';
+        addpath(PV_Site_path6);
     end
-    %
+    
+    
+    %1]
     %
     %Initate Data Quality & Structuring Algorithm:
     if Algo_num == 1 || Algo_num == 2
         %Create_IrradianceMeasurements_Datafile
-        PV_OUT(:,3:5)=ANGLES_GHI;
+        PV_OUT(:,3:5)=ANGLES_GHI(:,1:3);
         Create_SolarFarmMeasurments_Datafile
     end
+    
+    
+    %2]VI_CI_DARR.m
     %
+    if Algo_num == 1 || Algo_num == 3
+        if PV_Site == 1     %Mocksville
+            load M_MOCKS.mat
+            M_PVSITE = M_MOCKS;
+            %Closest irradiance dataset:
+            load M_TAYLOR.mat
+            M_PSEUDO = M_TAYLOR;
+            
+            load M_TAYLOR_SC.mat
+            Solar_Constants = M_TAYLOR_SC;
+        elseif PV_Site == 2 %Ararat Rock
+            load M_AROCK.mat
+            M_PVSITE = M_AROCK;
+            %Closest irradiance dataset:
+            load M_TAYLOR.mat
+            M_PSEUDO = M_TAYLOR;
+            
+            load M_TAYLOR_SC.mat
+            Solar_Constants = M_TAYLOR_SC;
+        elseif PV_Site == 3 %Old Dom
+            %load M_TAYLOR.mat
+            %M_PVSITE = M_TAYLOR;
+        elseif PV_Site == 4 %MayBerry
+            %load M_TAYLOR.mat
+            %M_PVSITE = M_TAYLOR;
+        end
+        %
+        %Initate DARR Calculations:
+        clc
+        Find_DARR
+    end
+    
+    %3]Pre_PV_Ramping.m
     %
+    if Algo_num == 1 || Algo_num == 4
+        clc
+        fprintf('Pre_PV_Ramping\n');
+        %Load Appropriate Data:
+        if PV_Site == 1
+            %   Mocksville:
+            PV_Site_path4 = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\04_Mocksville_NC';
+            addpath(PV_Site_path4);
+            load M_MOCKS.mat
+            load M_MOCKS_SC.mat
+            M_PVSITE = M_MOCKS;    %make general --
+            M_PVSITE_SC = M_MOCKS_SC;
+            PV1_MW.name = 'Mocksville Solar Farm';
+            PV1_MW.kW = 4500;
+        elseif PV_Site == 2
+            %   Ararat Rock:
+            PV_Site_path5 = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\05_AraratRock_NC';
+            addpath(PV_Site_path5);
+            load M_AROCK.mat
+            load M_AROCK_SC.mat
+            M_PVSITE = M_AROCK;
+            M_PVSITE_SC = M_AROCK_SC;
+            PV1_MW.name = 'Ararat Rock Solar Farm';
+            PV1_MW.kW = 3500;
+        end
+        %
+        %Initiate .m File:
+        addpath(BASE_path);
+        Pre_PV_Ramping
+    end
+        
 end

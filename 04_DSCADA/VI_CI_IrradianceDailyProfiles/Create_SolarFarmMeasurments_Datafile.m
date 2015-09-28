@@ -170,34 +170,17 @@ while j < 13
 end
 %%
 %Output Results:
-if sim_type == 1
-    if PV_Site == 1
-        %Shelby,NC
-        M_SHELBY = M_PVSITE;
-        filename = strcat(PV_Site_path1,'\M_SHELBY.mat');
-        save(filename);
-    elseif PV_Site == 2
-        %Murphy,NC
-        M_MURPHY = M_PVSITE;
-        filename = strcat(PV_Site_path2,'\M_MURPHY.mat');
-        save(filename);
-    elseif PV_Site == 3
-        %Taylorsville,NC
-        M_TAYLOR = M_PVSITE;
-        filename = strcat(PV_Site_path3,'\M_TAYLOR.mat');
-        save(filename);
-    end
-elseif sim_type == 2
+if sim_type == 2
     if PV_Site == 1
         %Mocksville Solar Farm
         M_MOCKS = M_PVSITE;
         filename = strcat(PV_Site_path4,'\M_MOCKS.mat');
-        save(filename);
+        save(filename,'M_MOCKS');
     elseif PV_Site == 2
         %Ararat Rock Solar Farm
         M_AROCK = M_PVSITE;
         filename = strcat(PV_Site_path5,'\M_AROCK.mat');
-        save(filename);
+        save(filename,'M_AROCK');
     end
 end
 

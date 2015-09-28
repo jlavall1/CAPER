@@ -168,17 +168,17 @@ if sim_type == 1
         %Shelby,NC
         M_SHELBY = M_PVSITE;
         filename = strcat(PV_Site_path1,'\M_SHELBY.mat');
-        save(filename);
+        save(filename,'M_SHELBY');
     elseif PV_Site == 2
         %Murphy,NC
         M_MURPHY = M_PVSITE;
         filename = strcat(PV_Site_path2,'\M_MURPHY.mat');
-        save(filename);
+        save(filename,'M_MURPHY');
     elseif PV_Site == 3
         %Taylorsville,NC
         M_TAYLOR = M_PVSITE;
         filename = strcat(PV_Site_path3,'\M_TAYLOR.mat');
-        save(filename);
+        save(filename,'M_TAYLOR');
     end
 end
 
