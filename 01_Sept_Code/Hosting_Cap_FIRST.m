@@ -7,7 +7,8 @@ addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
 DSSCircuit = DSSCircObj.ActiveCircuit;
 %Find directory of Circuit:
 % 1. Obtain user's choice of simulation:
-gui_response = GUI_openDSS_Locations();
+DER_Planning_GUI_1
+gui_response = STRING_0;
 mainFile = gui_response{1,1};
 feeder_NUM = gui_response{1,2};
 scenerio_NUM = gui_response{1,3}; %1=VREG-top ; 2=VREG-bot ; 3=steadystate ; 4=RR_up ; 5=RR_down

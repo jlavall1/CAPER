@@ -53,8 +53,10 @@ end
 %Setup the COM server:
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 %Find directory of Circuit:
-
-gui_response = GUI_openDSS_Locations();
+DER_Planning_GUI_1
+%UIWAIT(1)
+gui_response = STRING_0;
+%gui_response = GUI_openDSS_Locations();
 %Declare name of basecase .dss file:
 %master = 'Master_ckt7.dss';
 %basecaseFile = strcat(mainFile,master);

@@ -2,11 +2,21 @@
 
 clear
 clc
-addpath('C:\Users\Brian\Documents\GitHub\CAPER\04_DSCADA')
-addpath('C:\Users\Brian\Documents\GitHub\CAPER\04_DSCADA\Feeder_Data')
+close all
+gui_response = GUI_openDSS_Locations;
+ckt_num = gui_response{1,2}; %0 to 8 (1-9)
+maindir = gui_response{1,4};
+maindir=strcat(maindir,'\04_DSCADA');
+%addpath('C:\Users\Brian\Documents\GitHub\CAPER\04_DSCADA')
+addpath(maindir);
+maindir=strcat(maindir,'\Feeder_Data');
+addpath(maindir);
+%addpath('C:\Users\Brian\Documents\GitHub\CAPER\04_DSCADA\Feeder_Data')
 
-
-load('ROX.mat');
+if ckt_num == 3
+    load('ROX.mat');
+    V_BASE = 23.9e3/sqrt(3);
+end
 
 
 %{
@@ -75,7 +85,7 @@ toc
 %ROX.PI_time
 %%
 %T.Date = datetime(ROX.PI_time,'ConvertFrom','excel');
-
+tic
 DateTime = sum(ROX.PI_time,2);
 diff = zeros(n,1);
 str = datestr(DateTime+datenum('30-Dec-1899'));
@@ -87,6 +97,7 @@ for i=1:1:length(ROX.PI_time);
         diff(i,1) = ROX.NUM_time(i,1) - ref(i,5);
     end
 end
+toc
 %%
 %Preprocess of Filtering out Data Errors:
 
@@ -100,7 +111,7 @@ E_hold = 0;
 E_count = 0;
 Errors = zeros(3,2); 
 
-while struct < length(NAME)+1
+while struct < 4
     if struct == 1
         data = ROX.Voltage.A(:,1);
     elseif struct == 2
@@ -138,14 +149,14 @@ while struct < length(NAME)+1
                 j = j + 1;
             end    
         %Change  to actual reading.
-        elseif data(i,POS) < -20 && struct < 10
+        elseif data(i,POS) < V_BASE*0.75 && struct < 10
             HOLD(1,j+1) = j;
             if j == 1
                 HOLD(2,j) = data(i-1,POS); %grab last real value.
                 BEGIN = HOLD(2,j);
             end
             j = j + 1;
-        elseif data(i,POS) > 3e5
+        elseif data(i,POS) > V_BASE*1.25 && struct < 4
             HOLD(1,j+1) = j;
             if j == 1
                 HOLD(2,j) = data(i-1,POS); %grab last real value.
@@ -205,7 +216,7 @@ while struct < length(NAME)+1
     i = 1;    
     
     
-    struct = struct+1;
+    struct = struct+1
 end
 
 %%

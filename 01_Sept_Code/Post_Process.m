@@ -2,20 +2,17 @@
 %Use of ERPI CKT7
 clear
 clc
+close all
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
-
-ckt_num = 3;
+DER_Planning_GUI_1
+gui_response = STRING_0;
+ckt_num = gui_response{1,2};
 %Load results and information about the circuit-
 %load RESULTS_9_3_2015.mat
 %load RESULTS_9_10_2015.mat
 %load RESULTS_9_11_2015.mat
-if ckt_num == 7
-    load RESULTS_9_14_2015.mat
-    load DISTANCE.mat
-    load config_LOADNAMES_CKT7.mat
-    load config_LINENAMES_CKT7.mat
-    load config_XFMRNAMES_CKT7.mat
-    sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14_1');
+if ckt_num == 0
+    fprintf('not simulated yet!!\n');
 elseif ckt_num == 1
     load RESULTS_9_18_2015.mat
     %load DISTANCE_CMNWLTH.mat
@@ -24,13 +21,20 @@ elseif ckt_num == 1
     load config_XFMRNAMES_CMNWLTH.mat
     %sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_18');
     sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_19');
-elseif ckt_num == 3
-    load RESULTS_FLAY_SS.mat
+elseif ckt_num == 2
+    load RESULTS_FLAY_SS_1.mat
     %configs:
     load config_LOADNAMES_FLAY.mat
     load config_LINENAMES_FLAY.mat
     load config_XFMRNAMES_FLAY.mat
-    %sort_Results = xlsread('RESULTS_SORTED_2.xlsx','FLAY');
+    sort_Results = xlsread('RESULTS_SORTED_2.xlsx','FLAY_3'); %Steady State Case
+elseif ckt_num == 7
+    load RESULTS_9_14_2015.mat
+    load DISTANCE.mat
+    load config_LOADNAMES_CKT7.mat
+    load config_LINENAMES_CKT7.mat
+    load config_XFMRNAMES_CKT7.mat
+    sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14_1');
 end
 %%
     
@@ -283,7 +287,7 @@ ansi(:,2)=ones(101,1).*1.05;
 plot(ansi(:,1),ansi(:,2),'k--','LineWidth',4);
 if ckt_num == 7
     axis([0 10 1.03 1.11]);
-elseif ckt_num == 2
+elseif ckt_num == 2 || ckt_num == 1
     axis([0 10 1.02 1.11]);
 end
 grid on
