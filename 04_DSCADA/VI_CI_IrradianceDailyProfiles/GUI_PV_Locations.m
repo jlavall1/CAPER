@@ -26,9 +26,9 @@ function STRING_0 = GUI_PV_Locations()
         %8  :6 & 7
         
         %Opt out of beginning algorithms:
-        Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','PV Ramping Analysis');
+        Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','3)PV Ramping Analysis','4)CDF plots');
         while Algo_num<1
-            Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','PV Ramping Analysis');
+            Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','3)PV Ramping Analysis','4)CDF plots');
         end
         %Import only----
         if Algo_num == 2
@@ -45,9 +45,17 @@ function STRING_0 = GUI_PV_Locations()
         
         %PV Ramping ----
         if Algo_num == 1 || Algo_num == 4
-            plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','\tNONE\t');
+            plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','  NONE  ');
             while plot_type<1
-                plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','\tNONE\t');
+                plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','  NONE  ');
+            end
+        end
+        
+        %CDF generation ----
+        if Algo_num == 5
+            plot_type=menu('Now what plots?','NONE','1)Annual 1 site','BOTH 1 & 2','2)DARR Category comparison','(open)');
+            while plot_type<1
+                plot_type=menu('Now what plots?','NONE','Annual 1 site','Annual all sites','DARR Category comparison','(open)');
             end
         end
         %Conclusion:
@@ -64,9 +72,9 @@ function STRING_0 = GUI_PV_Locations()
         
         %Ask them what algorithm that they want to run??
         %Opt out of beginning algorithms:
-        Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','PV Ramping Analysis');
+        Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','3)PV Ramping Analysis','4)CDF plots');
         while Algo_num<1
-            Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','PV Ramping Analysis');
+            Algo_num=menu('What stage do you want to run?','ALL','1)Data import','2)Solar Constants Calc','3)PV Ramping Analysis','4)CDF plots');
         end
         
         %Import only----
@@ -78,6 +86,13 @@ function STRING_0 = GUI_PV_Locations()
             plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','   NONE   ');
             while plot_type<1
                 plot_type=menu('Now what plots?','Correlation between daily VI & DARR','Irradiance Changes vs. VI','1 & 2','   NONE   ');
+            end
+        end
+        %CDF generation ----
+        if Algo_num == 5
+            plot_type=menu('Now what plots?','NONE','1)Annual 1 site','BOTH 1 & 2','2)DARR Category comparison','(open)');
+            while plot_type<1
+                plot_type=menu('Now what plots?','NONE','Annual 1 site','Annual all sites','DARR Category comparison','(open)');
             end
         end
         

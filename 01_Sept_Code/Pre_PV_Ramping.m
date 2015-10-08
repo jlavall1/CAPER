@@ -177,7 +177,7 @@ while MNTH < 13
                 %Filter any datapoint when sun was not over horizon
                 if M_PVSITE(MNTH).DAY(time2int(DAY,hr,min),4) > 0
                     RR = M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),1);
-                    RR_Sigma = RR_Sigma + abs(RR)/1000;
+                    RR_Sigma = RR_Sigma + abs(RR)/PV1_MW.kW;
                     COUNT = COUNT + 1;
                 end
                 min = min + 1;
@@ -335,9 +335,9 @@ elseif sim_type == 2
     elseif PV_Site == 2
         %   3.5MW - Ararat Rock Solar Farm
         M_AROCK_INFO = PV1_MW;
-        filename = strcat(PV_Site_path5,'\M_AROCK.mat');
+        filename = strcat(PV_Site_path5,'\M_AROCK_INFO.mat');
         delete(filename);
-        save(filename,'M_AROCK');
+        save(filename,'M_AROCK_INFO');
         %   Solar Constants
         M_AROCK_SC = M_PVSITE_SC;
         filename = strcat(PV_Site_path5,'\M_AROCK_SC.mat');
@@ -345,17 +345,28 @@ elseif sim_type == 2
         save(filename,'M_AROCK_SC');
         
     elseif PV_Site == 3
-        %TBA
-        M_TAYLOR = M_PVSITE;
-        filename = strcat(PV_Site_path3,'\M_TAYLOR.mat');
+        %   1.5MW - Old Dominion Solar Farm (ODOM)
+        M_ODOM_INFO = PV1_MW;
+        filename = strcat(PV_Site_path6,'\M_ODOM_INFO.mat');
         delete(filename);
-        save(filename,'M_TAYLOR');
-        %Solar Constants
-        M_TAYLOR_SC = M_PVSITE_SC;
-        filename = strcat(PV_Site_path3,'\M_TAYLOR_SC.mat');
+        save(filename,'M_ODOM_INFO');
+        %   Solar Constants
+        M_ODOM_SC = M_PVSITE_SC;
+        filename = strcat(PV_Site_path6,'\M_ODOM_SC.mat');
         delete(filename);
-        save(filename,'M_TAYLOR_SC');
+        save(filename,'M_ODOM_SC');
+        
     elseif PV_Site == 4
-        %TBA
+        %   1.0MW - Mayberry Solar Farm (MAYB)
+        M_MAYB_INFO = PV1_MW;
+        filename = strcat(PV_Site_path7,'\M_MAYB_INFO.mat');
+        delete(filename);
+        save(filename,'M_MAYB_INFO');
+        %   Solar Constants
+        M_MAYB_SC = M_PVSITE_SC;
+        filename = strcat(PV_Site_path7,'\M_MAYB_SC.mat');
+        delete(filename);
+        save(filename,'M_MAYB_SC');
+        
     end
 end

@@ -161,6 +161,9 @@ while MNTH < 13
                 PV_KW = M_PVSITE(MNTH).DAY(time2int(DAY,hr,min),1);
                 PV_KW1 = M_PVSITE(MNTH).DAY(time2int(DAY,hr,min-1),1);
                 M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),1) = PV_KW - PV_KW1;
+                M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),2) = M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),1)/PV1_MW.kW;
+                M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),3) = abs(M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),2));
+                
                 %Inc:
                 min = min + 1;
             end

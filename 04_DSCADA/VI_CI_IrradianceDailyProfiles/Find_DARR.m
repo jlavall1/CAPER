@@ -83,6 +83,8 @@ while MNTH < 13
                 PV_KW = M_PVSITE(MNTH).DAY(time2int(DAY,hr,min),1);
                 PV_KW1 = M_PVSITE(MNTH).DAY(time2int(DAY,hr,min-1),1);
                 M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),1) = PV_KW - PV_KW1;
+                M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),2) = M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),1)/PV1_MW.kW;
+                M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),3) = abs(M_PVSITE(MNTH).RR_1MIN(time2int(DAY,hr,min),2));
                 %Inc:
                 min = min + 1;
             end
@@ -90,15 +92,21 @@ while MNTH < 13
             min = 1;
         end
         hr = 0;
+        %Obtain results:
         day_num = M_PVSITE(MNTH).DAY(time2int(DAY,hr,min),6);
-        %Save results:
+        Solar_Constants(day_num,1) = day_num;
+        Solar_Constants(day_num,2) = MNTH;
+        Solar_Constants(day_num,3) = DAY;
+        Solar_Constants(day_num,4) = M_PVSITE_SC(day_num,4);%VI
+        Solar_Constants(day_num,5) = M_PVSITE_SC(day_num,5);%CI
+        
         %DARR:
         DARR = SUM_DARR;
         Solar_Constants(day_num,6) = DARR;
             SUM_DARR = 0;
             DARR = 0;
         
-        
+            
         DAY = DAY + 1;
     end
     DAY = 1;
@@ -227,18 +235,28 @@ if sim_type == 2
         save(filename,'M_AROCK_SC');
         
     elseif PV_Site == 3
-        %TBA
-        M_TAYLOR = M_PVSITE;
-        filename = strcat(PV_Site_path3,'\M_TAYLOR.mat');
+        %1.5MW - Old Dominion (ODOM)
+        M_ODOM = M_PVSITE;
+        filename = strcat(PV_Site_path6,'\M_ODOM.mat');
         delete(filename);
-        save(filename,'M_TAYLOR');
+        save(filename,'M_ODOM');
         %Solar Constants
-        M_TAYLOR_SC = Solar_Constants;
-        filename = strcat(PV_Site_path3,'\M_TAYLOR_SC.mat');
+        M_ODOM_SC = Solar_Constants;
+        filename = strcat(PV_Site_path6,'\M_ODOM_SC.mat');
         delete(filename);
-        save(filename,'M_TAYLOR_SC');
+        save(filename,'M_ODOM_SC');
     elseif PV_Site == 4
-        %TBA
+        %1.0MW - Mayberry (MAYB)
+        M_MAYB = M_PVSITE;
+        filename = strcat(PV_Site_path7,'\M_MAYB.mat');
+        delete(filename);
+        save(filename,'M_MAYB');
+        %Solar Constants
+        M_MAYB_SC = Solar_Constants;
+        filename = strcat(PV_Site_path7,'\M_MAYB_SC.mat');
+        delete(filename);
+        save(filename,'M_MAYB_SC');
+        
     end
 end
 
