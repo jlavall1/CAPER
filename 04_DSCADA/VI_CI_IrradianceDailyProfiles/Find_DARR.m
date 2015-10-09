@@ -241,6 +241,12 @@ if sim_type == 2
         delete(filename);
         save(filename,'M_ODOM');
         %Solar Constants
+        for i=1:1:365
+            %Filter out missing datapoint days (DOY=66 & DOY=347 to 351)
+            if i>=347 && i <= 351 || i==66
+                Solar_Constants(i,4:6) = [0,0,0];
+            end
+        end
         M_ODOM_SC = Solar_Constants;
         filename = strcat(PV_Site_path6,'\M_ODOM_SC.mat');
         delete(filename);
@@ -252,6 +258,12 @@ if sim_type == 2
         delete(filename);
         save(filename,'M_MAYB');
         %Solar Constants
+        for i=1:1:365
+            %Filter out missing datapoint days (DOY=347 to 351)
+            if i>=347 && i <= 351
+                Solar_Constants(i,4:6) = [0,0,0];
+            end
+        end
         M_MAYB_SC = Solar_Constants;
         filename = strcat(PV_Site_path7,'\M_MAYB_SC.mat');
         delete(filename);

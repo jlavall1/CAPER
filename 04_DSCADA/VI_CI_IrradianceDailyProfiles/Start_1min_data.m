@@ -80,12 +80,15 @@ if sim_type == 1
                     M_PVSITE(i).DAY(:,:) = M_SHELBY(i).DAY(1:end-1,1:6);    
                     M_PVSITE(i).RR_1MIN(:,:) = M_SHELBY(i).RR_1MIN(:,1:3);
                 end
-                load M_SHELBY_INFO.mat
-                M_PVSITE_INFO = M_SHELBY_INFO;
-                clearvars M_SHELBY_INFO
+                
             else %Algo_num == 4
                 M_PVSITE = M_SHELBY;    
             end
+            load M_SHELBY_INFO.mat
+            M_PVSITE_INFO = M_SHELBY_INFO;
+            clearvars M_SHELBY_INFO
+            %Solar Constants --
+            
             M_PVSITE_SC = M_SHELBY_SC;
             clearvars M_SHELBY M_SHELBY_SC
             %site informat --
@@ -102,12 +105,14 @@ if sim_type == 1
                     M_PVSITE(i).DAY(:,:) = M_MURPHY(i).DAY(1:end-1,1:6);    
                     M_PVSITE(i).RR_1MIN(:,:) = M_MURPHY(i).RR_1MIN(:,1:3);
                 end
-                load M_MURPHY_INFO.mat
-                M_PVSITE_INFO = M_MURPHY_INFO;
-                clearvars M_MURPHY_INFO
+                
             else
                 M_PVSITE = M_MURPHY;        
             end
+            load M_MURPHY_INFO.mat
+            M_PVSITE_INFO = M_MURPHY_INFO;
+            clearvars M_MURPHY_INFO
+            %Solar Constants --
             M_PVSITE_SC = M_MURPHY_SC;
             clearvars M_MURPHY M_MURPHY_SC
             %site informat --

@@ -181,6 +181,16 @@ if sim_type == 2
         M_AROCK = M_PVSITE;
         filename = strcat(PV_Site_path5,'\M_AROCK.mat');
         save(filename,'M_AROCK');
+    elseif PV_Site == 3
+        %Old Dominion
+        M_ODOM = M_PVSITE;
+        filename = strcat(PV_Site_path6,'\M_ODOM.mat');
+        save(filename,'M_ODOM');
+    elseif PV_Site == 4
+        %Mayberry
+        M_MAYB = M_PVSITE;
+        filename = strcat(PV_Site_path7,'\M_MAYB.mat');
+        save(filename,'M_MAYB');
     end
 end
 

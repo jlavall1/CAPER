@@ -184,25 +184,29 @@ end
 %%
 %SAVE WHAT YOU WANT:
 %   Save Results:
+M_PVSITE_INFO.CDF_annual = RR_distrib(:,1:3);
+M_PVSITE_INFO.CDF_DARRcat = RR_cats(:,1:10);
+M_PVSITE_INFO.save_COUNT = save_COUNT;
+
 if sim_type == 1
     if PV_Site == 1
         %   Shelby,NC
-        M_SHELBY_INFO.CDF_annual = RR_distrib(:,1:3);
-        M_SHELBY_INFO.CDF_DARRcat = RR_cats(:,1:10);
+        M_SHELBY_INFO = M_PVSITE_INFO;
+        
         filename = strcat(PV_Site_path1,'\M_SHELBY_INFO.mat');
         delete(filename);
         save(filename,'M_SHELBY_INFO');
     elseif PV_Site == 2
         %   Murphy,NC
-        M_MURPHY_INFO.CDF_annual = RR_distrib(:,1:3);
-        M_MURPHY_INFO.CDF_DARRcat = RR_cats(:,1:10);
+        M_MURPHY_INFO = M_PVSITE_INFO;
+        
         filename = strcat(PV_Site_path2,'\M_MURPHY_INFO.mat');
         delete(filename);
         save(filename,'M_MURPHY_INFO');
     elseif PV_Site == 3
         %   Taylorsville,NC
-        M_TAYLOR_INFO.CDF_annual = RR_distrib(:,1:3);
-        M_TAYLOR_INFO.CDF_DARRcat = RR_cats(:,1:10);
+        M_TAYLOR_INFO = M_PVSITE_INFO;
+        
         filename = strcat(PV_Site_path3,'\M_TAYLOR_INFO.mat');
         delete(filename);
         save(filename,'M_TAYLOR_INFO');
@@ -210,29 +214,29 @@ if sim_type == 1
 elseif sim_type == 2
     if PV_Site == 1
         %   4.5MW - Mocksville Solar Farm
-        M_MOCKS_INFO.CDF_annual = RR_distrib(:,1:3);
-        M_MOCKS_INFO.CDF_DARRcat = RR_cats(:,1:10);
+        M_MOCKS_INFO = M_PVSITE_INFO;
+        
         filename = strcat(PV_Site_path4,'\M_MOCKS_INFO.mat');
         delete(filename);
         save(filename,'M_MOCKS_INFO');
     elseif PV_Site == 2
         %   3.5MW - Ararat Rock Solar Farm
-        M_AROCK_INFO.CDF_annual = RR_distrib(:,1:3);
-        M_AROCK_INFO.CDF_DARRcat = RR_cats(:,1:10);
+        M_AROCK_INFO = M_PVSITE_INFO;
+        
         filename = strcat(PV_Site_path5,'\M_AROCK_INFO.mat');
         delete(filename);
         save(filename,'M_AROCK_INFO');
     elseif PV_Site == 3
         %   1.5MW - Old Dominion PV system (ODOM)
-        M_ODOM_INFO.CDF_annual = RR_distrib(:,1:3);
-        M_ODOM_INFO.CDF_DARRcat = RR_cats(:,1:10);
+        M_ODOM_INFO = M_PVSITE_INFO;
+        
         filename = strcat(PV_Site_path6,'\M_ODOM_INFO.mat');
         delete(filename);
         save(filename,'M_ODOM_INFO');
     elseif PV_Site == 4
         %   1.0MW - Mayberry Solar Farm (MAYB)
-        M_MAYB_INFO.CDF_annual = RR_distrib(:,1:3);
-        M_MAYB_INFO.CDF_DARRcat = RR_cats(:,1:10);
+        M_MAYB_INFO = M_PVSITE_INFO;
+        
         filename = strcat(PV_Site_path7,'\M_MAYB_INFO.mat');
         delete(filename);
         save(filename,'M_MAYB_INFO');        

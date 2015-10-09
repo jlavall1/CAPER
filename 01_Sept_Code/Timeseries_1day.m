@@ -1,7 +1,7 @@
 %Timeseries Analyses:
 clear
 clc
-%{
+close all
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
 
 %Setup the COM server
@@ -23,7 +23,11 @@ path = strcat(base_path,'\01_Sept_Code');
 addpath(path);
 path = strcat(base_path,'\04_DSCADA');
 addpath(path);
-%}
+
+% 2. Compile the user selected circuit:
+DSSText.command = ['Compile "',mainFile];
+
+
 addpath('C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit');
 %%
 P_PV = 7500;
