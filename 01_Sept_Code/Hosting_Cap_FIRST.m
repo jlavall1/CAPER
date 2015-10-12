@@ -25,8 +25,10 @@ addpath(path);
 % 2. Compile the user selected circuit:
 DSSText.command = ['Compile "',mainFile];
 % 3. Solve the circuit. Call anytime you want the circuit to resolve     
-DSSText.command = 'solve'; 
-
+DSSText.command = 'solve';
+%Lines_Base = getLineInfo(DSSCircObj);
+%Buses_Base = getBusInfo(DSSCircObj);
+%
 %Declare name of basecase .dss file:
 %master = 'Run_Master_Allocate.dss';
 %basecaseFile = strcat(mainFile,master);
