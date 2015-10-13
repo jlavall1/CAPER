@@ -121,11 +121,11 @@ str = str(1:idx(8)-1);
 if timeseries_span == 1
     s_pv_txt = '\Flay_CentralPV_6hr.dss';
 elseif timeseries_span == 2
-    s_pv_txt = '\Flay_CentralPV_24hr.dss';
+    s_pv_txt = '\Flay_CentralPV_24hr2.dss'; %just added the 2
 elseif timeseries_span == 3
     s_pv_txt = '\Flay_CentralPV_168hr.dss';
 elseif timeseries_span == 4
-    s_pv_txt = '\LS_PVannual.csv';
+    s_pv_txt = '\Flay_CentralPV_365dy.dss';
 end
 solarfilename = strcat(s,s_pv_txt);
 %solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
@@ -133,12 +133,33 @@ DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
 DSSText.command = 'solve';
 cd(location);
 %---------------------------------
-%Run OpenDSS simulation for 24-hr at 1-minute resolution:
-DSSText.command = 'Set mode=duty number=1440  hour=0  h=60 sec=0'; %number==#solution to run; h==stepsize (s)
+%Run OpenDSS simulation for 6/24/168-hr at 1-minute resolution:
+%number==#solution to run; h==stepsize (s)
+DSSText.command = sprintf('Set mode=duty number=%s  hour=0  h=%s sec=0',num2str(FEEDER.SIM.npts),num2str(FEEDER.SIM.stepsize)); 
 DSSText.Command = 'Set Controlmode=TIME';
 DSSText.command = 'solve';
+
+
+%%
 %---------------------------------
 %Plot / observe simulation results:
+if timeseries_span == 1
+    shift=10;
+    h_st = 10;
+    h_fin= 15;
+    DOY_fin = 0;
+elseif timeseries_span == 2
+    shift=0;
+    h_st = 0;
+    h_fin= 23;
+    DOY_fin = 0;
+elseif timeseries_span == 3
+    shift=0;
+    h_st = 0;
+    h_fin= 23;
+    DOY_fin = 6;
+end
+
 %   Feeder Power
 DSSfilename=ckt_direct_prime;
 fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
@@ -148,107 +169,48 @@ title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',12,'F
 saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
 %--------------------------------
 %Substation Voltage
-    %DSSText.Command = 'export mon subVI';
-    DSSText.Command = 'export mon fdr_05410_Mon_VI';
-    monitorFile = DSSText.Result;
-    MyCSV = importdata(monitorFile);
-    delete(monitorFile);
-    Hour = MyCSV.data(:,1); Second = MyCSV.data(:,2);
-    subVoltages = MyCSV.data(:,3:2:7);
-    
-    figure;
-    plot(Hour+Second/3600,subVoltages,'LineWidth',2);
-    grid on;
-    set(gca,'FontSize',10,'FontWeight','bold')
-    xlabel('Hour','FontSize',12,'FontWeight','bold')
-    ylabel('Voltage','FontSize',12,'FontWeight','bold')
-    title([strrep(fileNameNoPath,'_',' '),' Substation Voltages'],'FontSize',12,'FontWeight','bold')
-    saveas(gcf,[DSSfilename(1:end-4),'_Sub_Voltage.fig'])
+%DSSText.Command = 'export mon subVI';
+DSSText.Command = 'export mon fdr_05410_Mon_VI';
+monitorFile = DSSText.Result;
+MyCSV = importdata(monitorFile);
+delete(monitorFile);
+Hour = MyCSV.data(:,1); Second = MyCSV.data(:,2);
+subVoltages = MyCSV.data(:,3:2:7);
 
-
-
-%%
-% This is an example timeseries run made in GRID PV
-addpath('C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit');
-P_PV = 7500;
-
-%Initialize PV plant:
-%exampleTimeseriesAnalyses('ExampleCircuit\master_ckt24.dss',{'ExampleCircuit\Ckt24_PV_Central_7_5.dss'})
-% initiate COM interface (only need to do once when you open MATLAB)
-[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
-% Define the circuit:
-DSSCircuit = DSSCircObj.ActiveCircuit;
-% Compile ckt 24:
-caseNames{1} = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\master_ckt24.dss';
-DSSfilename = caseNames{1};
-location = cd;
-DSSText.command = sprintf('Compile (%s)',caseNames{1}); %run basecase first
-DSSText.command = 'solve';
-Lines_Base = getLineInfo(DSSCircObj);
-Buses_Base = getBusInfo(DSSCircObj);
-Loads_Base = getLoadInfo(DSSCircObj); 
-cd(location);
-%----------------------------------
-%Add PV Plant:
+figure;
+plot(Hour+shift+Second/3600,subVoltages(:,1)/((12.47e3)/sqrt(3)),'r-','LineWidth',2);
+hold on
+plot(Hour+shift+Second/3600,subVoltages(:,2)/((12.47e3)/sqrt(3)),'g-','LineWidth',2);
+hold on
+plot(Hour+shift+Second/3600,subVoltages(:,3)/((12.47e3)/sqrt(3)),'b-','LineWidth',2);
+n=length(subVoltages(:,1));
+hold on
+V_120=123.945461370235;
+V_PU=(V_120*59.9963154732886)/((12.47e3)/sqrt(3));
+V_UP=V_PU+(0.5*59.9963154732886)/((12.47e3)/sqrt(3));
+V_DOWN=V_PU-(0.5*59.9963154732886)/((12.47e3)/sqrt(3));
+plot(Hour+shift+Second/3600,V_UP,'k-','LineWidth',4);
+hold on
+plot(Hour+shift+Second/3600,V_DOWN,'k-','LineWidth',4);
 %{
-DSSText.command = sprintf('new loadshape.PV_Loadshape npts=43200 sinterval=2 csvfile="PVloadshape_7_5MW_Central.txt" Pbase=%s action=normalize',P_PV/1000);
-DSSText.command = sprintf('new pvsystem.PV bus1=N292212 irradiance=1 phases=3 kv=34.50 kVA=8250.00 pf=1.00 pmpp=%s duty=PV_Loadshape',P_PV);
+hold on
+plot(Hour+shift+Second/3600,FEEDER.Voltage.A(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'r--','LineWidth',2);
+hold on
+plot(Hour+shift+Second/3600,FEEDER.Voltage.B(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'g--','LineWidth',2);
+hold on
+plot(Hour+shift+Second/3600,FEEDER.Voltage.C(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'b--','LineWidth',2);
+grid on;
 %}
-solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
-DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
-DSSText.command = 'solve';
-cd(location);
-%---------------------------------
-%Run OpenDSS simulation for 1-week at 1-minute resolution:
-DSSText.command = 'Set mode=duty number=10080  hour=0  h=60 sec=0';
-DSSText.Command = 'Set Controlmode=TIME';
-DSSText.command = 'solve';
-%---------------------------------
-%Plot / observe simulation results:
-%   Feeder Power
-fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
-plotMonitor(DSSCircObj,'fdr_05410_Mon_PQ');
-ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
-title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',12,'FontWeight','bold')
-saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
-%--------------------------------
-%Substation Voltage
-    DSSText.Command = 'export mon subVI';
-    monitorFile = DSSText.Result;
-    MyCSV = importdata(monitorFile);
-    delete(monitorFile);
-    Hour = MyCSV.data(:,1); Second = MyCSV.data(:,2);
-    subVoltages = MyCSV.data(:,3:2:7);
-    
-    figure;
-    plot(Hour+Second/3600,subVoltages,'LineWidth',2);
-    grid on;
-    set(gca,'FontSize',10,'FontWeight','bold')
-    xlabel('Hour','FontSize',12,'FontWeight','bold')
-    ylabel('Voltage','FontSize',12,'FontWeight','bold')
-    title([strrep(fileNameNoPath,'_',' '),' Substation Voltages'],'FontSize',12,'FontWeight','bold')
-    saveas(gcf,[DSSfilename(1:end-4),'_Sub_Voltage.fig'])
-%{
-New Monitor.fdr_05410_Mon_VI  element=line.fdr_05410 term=1  mode=0 Residual=Yes
-New Monitor.fdr_05410_Mon_PQ  element=line.fdr_05410 term=1  mode=1 PPolar=No
-New Monitor.fdr_05410_Mon_VA  element=line.fdr_05410 term=1  mode=1 PPolar=Yes
-New Monitor.OtherFeeder_Mon_PQ element=line.Other_Feeders term=1  mode=1 PPolar=No
-New Monitor.Cap1 element=Capacitor.Cap_G2100PL6500 terminal=1 mode=65
-New monitor.Cap1VI element=Capacitor.Cap_G2100PL6500 terminal=1 mode=0
-New Monitor.LTC element=Transformer.SubXFMR terminal=2 mode=2
-New monitor.subVI element=Transformer.SubXFMR terminal=2 mode=0
-%}
-%{
-    mode:
-    0   V&I, each phase, complex number
-    1   Power each phase, complex (kw & kvars)
-    2   transformer taps (connect to xfmr winding)
-    3   State variables (PCElement)
+set(gca,'FontSize',10,'FontWeight','bold')
+xlabel('Hour','FontSize',12,'FontWeight','bold')
+ylabel('Voltage','FontSize',12,'FontWeight','bold')
+axis([0 Hour(end,1)+shift+Second(end,1)/3600 1.02 1.05]);
+%legend('V_{phA}-sim','V_{phB}-sim','V_{phC}-sim','V_{phA}-nonREG','V_{phB}-nonREG','V_{phC}-nonREG');
+legend('V_{phA}','V_{phB}','V_{phC}','Upper B.W.','Lower B.W.');
+title([strrep(fileNameNoPath,'_',' '),' Substation Voltages'],'FontSize',12,'FontWeight','bold')
+saveas(gcf,[DSSfilename(1:end-4),'_Sub_Voltage.fig'])
 
-    +16 Seq. components (012)
-    +32 Magnitude only
-    +64 (+)seq only / avg. phases if not 3phase.
 
-    export monitor command
-%}
+
+
     

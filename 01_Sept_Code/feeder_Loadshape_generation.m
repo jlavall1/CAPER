@@ -44,10 +44,52 @@ end
 %%
 %Select DOY & convert to P.U. --
 %   DOY already decided from PV_Loadshape_generation.
-LS_PhaseA(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY,23,59),1)./kW_peak(1,1);
-LS_PhaseB(:,1) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1)./kW_peak(1,2);
-LS_PhaseC(:,1) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY,23,59),1)./kW_peak(1,3);
-
+if timeseries_span == 1
+    %10AM to 4PM --
+    LS_PhaseA(:,1) = FEEDER.kW.A(time2int(DOY,10,0):time2int(DOY,15,59),1)./kW_peak(1,1);
+    LS_PhaseB(:,1) = FEEDER.kW.B(time2int(DOY,10,0):time2int(DOY,15,59),1)./kW_peak(1,2);
+    LS_PhaseC(:,1) = FEEDER.kW.C(time2int(DOY,10,0):time2int(DOY,15,59),1)./kW_peak(1,3);    
+elseif timeseries_span == 2
+    %24HR Sim    -- 
+    LS_PhaseA(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY,23,59),1)./kW_peak(1,1);
+    LS_PhaseB(:,1) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1)./kW_peak(1,2);
+    LS_PhaseC(:,1) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY,23,59),1)./kW_peak(1,3);
+elseif timeseries_span == 3
+    %1 Week Sim  -- @1min incs.
+    LS_PhaseA(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY+6,23,59),1)./kW_peak(1,1);
+    LS_PhaseB(:,1) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY+6,23,59),1)./kW_peak(1,2);
+    LS_PhaseC(:,1) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY+6,23,59),1)./kW_peak(1,3);
+elseif timeseries_span == 4
+    %1 YEAR Sim -- @10min incs.
+    MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
+    MNTH= 1;
+    DAY = 1;
+    hr = 0;
+    min = 0;
+    i = 1;
+    LS_PhaseA = zeros(365*24*60/10,1);
+    LS_PhaseB = zeros(365*24*60/10,1);
+    LS_PhaseC = zeros(365*24*60/10,1);
+   while MNTH < 13
+       while DAY < MTH_LN(1,MNTH)+1
+           while hr < 24
+               while min < 60
+                   LS_PhaseA(i,1) = FEEDER.kW.A(time2int(DAY,hr,min),1)./kW_peak(1,1);
+                   LS_PhaseB(i,1) = FEEDER.kW.B(time2int(DOY,hr,min),1)./kW_peak(1,2);
+                   LS_PhaseC(i,1) = FEEDER.kW.C(time2int(DOY,hr,min),1)./kW_peak(1,3);
+                   i = i + 1;
+                   min = min + 10;
+               end
+               min = 0;
+               hr = hr + 1;
+           end
+           hr = 0;
+           DAY = DAY + 1;
+       end
+       DAY = 1;
+       MNTH = MNTH + 1;
+   end
+end
 %%
 %Save .txt per phase --
 s = ckt_direct(1:end-23);
@@ -60,7 +102,7 @@ if timeseries_span == 1
     s_kwB = strcat(s,'LS1_PhaseB.txt');
     s_kwC = strcat(s,'LS1_PhaseC.txt');
     FEEDER.SIM.npts= 6*60;  %simulating 6 hours
-    FEEDER.SIM.minterval = 1; %1 minute intervals
+    FEEDER.SIM.stepsize = 60; %60sec sim intervals
     idx = strfind(ckt_direct,'.');
     ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_6hr.dss');
 elseif timeseries_span == 2
@@ -69,7 +111,7 @@ elseif timeseries_span == 2
     s_kwB = strcat(s,'LS2_PhaseB.txt');
     s_kwC = strcat(s,'LS2_PhaseC.txt');
     FEEDER.SIM.npts= 24*60;     %simulating 24 hours
-    FEEDER.SIM.minterval = 1;   %1 minute intervals
+    FEEDER.SIM.stepsize = 60;   %60 second sim intervals
     idx = strfind(ckt_direct,'.');
     ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_24hr.dss');
 elseif timeseries_span == 3
@@ -78,11 +120,38 @@ elseif timeseries_span == 3
     s_kwB = strcat(s,'LS3_PhaseB.txt');
     s_kwC = strcat(s,'LS3_PhaseC.txt');
     FEEDER.SIM.npts= 7*24*60;   %simulating 168 hours
-    FEEDER.SIM.minterval = 1;   %1 minute intervals
+    FEEDER.SIM.stepsize = 60;   %1 minute intervals
     idx = strfind(ckt_direct,'.');
     ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_168hr.dss');
+elseif timeseries_span == 4
+    %1 YEAR simulation
+    s_kwA = strcat(s,'LS4_PhaseA.txt');
+    s_kwB = strcat(s,'LS4_PhaseB.txt');
+    s_kwC = strcat(s,'LS4_PhaseC.txt');
+    FEEDER.SIM.npts= 365*24*60/10;  %simulating full 365days
+    FEEDER.SIM.stepsize = 60*10;    %10 minute intervals
+    idx = strfind(ckt_direct,'.');
+    ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_365dy.dss');
 end
 csvwrite(s_kwA,LS_PhaseA)
 csvwrite(s_kwB,LS_PhaseB)
 csvwrite(s_kwC,LS_PhaseC)
+%%
+%Lets create the needed monitors:
+%{
+if timeseries_span == 1
+    PV_opendss_file=cellstr('new loadshape.PV_Loadshape npts=21600 sinterval=1 csvfile="LS_PVpeakhours.txt" Pbase=1.00 action=normalizenew pvsystem.PV bus1=258405587 irradiance=1 phases=3 kv=12.47 kVA=1100.00 pf=1.00 pmpp=1000.00 duty=PV_Loadshape');
+    filename=strcat(s,'\Flay_CentralPV_6hr.dss');
+elseif timeseries_span == 2
+    PV_opendss_file=cellstr('new loadshape.PV_Loadshape npts=86400 sinterval=1 csvfile="LS_PVdaily.txt" Pbase=1.00 action=normalizenew pvsystem.PV bus1=258405587 irradiance=1 phases=3 kv=12.47 kVA=1100.00 pf=1.00 pmpp=1000.00 duty=PV_Loadshape');
+    filename=strcat(s,'\Flay_CentralPV_24hr.dss');
+end
+
+fid=fopen(filename,'w');
+for i=1:length(PV_opendss_file)
+    cell=cell2mat(PV_opendss_file(1,i));
+    fprintf(fid,[cell ' ']);
+end
+fclose(fid);
+%}
 

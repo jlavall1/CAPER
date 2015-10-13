@@ -144,27 +144,60 @@ for i=1:1:length(RR_distrib(:,1))
     break
 end
 %Now lets pull the kW in P.U. matrix for that specified day:
-PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
-PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),60); %go down to 1 second dataset --
+%PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
+%PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),60); %go down to 1 second dataset --
 %Export to .csv & clear variables that are not needed:
-clearvars M_PVSITE RR_distrib
+%clearvars M_PVSITE RR_distrib
 %s = strtok(ckt_direct,'\Run_Master_Allocate.dss');
 s = ckt_direct(1:end-23);
 str = ckt_direct;
 idx = strfind(str,'\');
 str = str(1:idx(8)-1);
 if timeseries_span == 1
+    %6hr:
+    PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,10,0):time2int(DAY,15,59),1);%1minute interval --
+    PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),60); %go down to 1 second dataset --
     s_pv_txt = '\LS_PVpeakhours.txt';
 elseif timeseries_span == 2
+    %24hr:
+    PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
+    PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),60); %go down to 1 second dataset --
     s_pv_txt = '\LS_PVdaily.txt';
 elseif timeseries_span == 3
+    %168hr(1week):
+    PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY+6,23,59),1);%1minute interval --
+    PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),30); %60sec. to 2sec dataset --
     s_pv_txt = '\LS_PVweekly.txt';
 elseif timeseries_span == 4
+    DAY = 1;
+    PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY+364,23,59),1);%1minute interval --
+    PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),6); %60sec. to 10sec dataset --   
     s_pv_txt = '\LS_PVannual.txt';
 end
+clearvars M_PVSITE RR_distrib
+%Write .csv file for simulation --
 s_pv = strcat(s,s_pv_txt);
 csvwrite(s_pv,PV_loadshape_daily)
+%%
+%see if we can export .dss file --
 %type PV_loadshape.dat
+%{
+if timeseries_span == 1
+    PV_opendss_file=cellstr('new loadshape.PV_Loadshape npts=21600 sinterval=1 csvfile="LS_PVpeakhours.txt" Pbase=1.00 action=normalizenew pvsystem.PV bus1=258405587 irradiance=1 phases=3 kv=12.47 kVA=1100.00 pf=1.00 pmpp=1000.00 duty=PV_Loadshape');
+    filename=strcat(s,'\Flay_CentralPV_6hr.dss');
+elseif timeseries_span == 2
+    PV_opendss_file=cellstr('new loadshape.PV_Loadshape npts=86400 sinterval=1 csvfile="LS_PVdaily.txt" Pbase=1.00 action=normalizenew pvsystem.PV bus1=258405587 irradiance=1 phases=3 kv=12.47 kVA=1100.00 pf=1.00 pmpp=1000.00 duty=PV_Loadshape');
+    filename=strcat(s,'\Flay_CentralPV_24hr.dss');
+end
 
+fid=fopen(filename,'w');
+for i=1:length(PV_opendss_file)
+    cell=cell2mat(PV_opendss_file(1,i));
+    fprintf(fid,[cell ' ']);
+end
+fclose(fid);
+
+%csvwrite(filename,PV_opendss_file);
+%}
 
 

@@ -2,6 +2,6 @@
 New Monitor.fdr_05410_Mon_VI  element=line.259363665 term=1  mode=0 Residual=Yes
 New Monitor.fdr_05410_Mon_PQ  element=line.259363665 term=1  mode=1 PPolar=No
 New Monitor.fdr_05410_Mon_VA  element=line.259363665 term=1  mode=1 PPolar=Yes
-New Monitor.LTC element=Transformer.FLAY_RET_16271201_2 terminal=2 mode=2
-New Monitor.subVI element=Transformer.FLAY_RET_16271201_2 terminal=2 mode=0
+New Monitor.LTC element=Transformer.FLAY_RET_16271201 terminal=2 mode=2
+New Monitor.subVI element=Transformer.FLAY_RET_16271201 terminal=2 mode=0
 New energymeter.fdr_05410 element=line.259363665 term=1 option=R action=C PhaseVolt=YES peakcurrent=(196.597331353572,186.718068471483,238.090235458346)
