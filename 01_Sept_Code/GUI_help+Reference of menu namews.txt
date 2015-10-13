@@ -19,3 +19,11 @@ ckt_num
 6	ckt5
 7	ckt7
 8	ckt24
+
+%Files that changed:
+Loads_time.dss
+
+Run_Master_Allocate_24hr.dss
+Master_24hr.dss
+Flay_CentralPV_24hr.dss
+

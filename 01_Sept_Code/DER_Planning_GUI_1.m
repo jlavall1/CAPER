@@ -56,7 +56,7 @@ h.ppm(4) = uicontrol('style','popup','units','normalized',...
  
 %Timeseries Analysis:
 h.ppm(5) = uicontrol('style','popup','units','normalized',...
-    'position',[0.037 -0.001 0.235 0.155],'string',{'(1) Day, 10:00 to 16:00','(1) Week, 10:00 to 16:00','(1) Month','(1) Season','(1) Year'},...
+    'position',[0.037 -0.001 0.235 0.155],'string',{'(1) Day, 10:00 to 16:00','(1) Day, 0:00 - 23:59','(1) Week','(1) Month','(1) Year'},...
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 h.ppm(6) = uicontrol('style','popup','units','normalized',...
     'position',[0.037 0.006 0.235 0.106],'string',{'hold','hold'},...
@@ -167,10 +167,12 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
 
 %%
 %Set Defaults:
-    set(h.ckbx(1),'Value',0);%DER hosting capacity -- OFF
-    set(h.ckbx(3),'Value',1);%timeseries simulation -- ON
-    set(h.rb(2),'Value',1);%ckt choice
-    set(h.ckbx(2),'Value',1); %PV loadshape -- ON
+    set(h.ckbx(1),'Value',0);   %DER hosting capacity   -- OFF
+    set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
+    set(h.ckbx(3),'Value',1);   %timeseries simulation  -- ON
+    set(h.rb(3),'Value',1);     %ckt choice             -- Flay
+    set(h.ppm(5),'Value',2);    %timeseries DROPDOWN    -- 24hr
+    
     
     uiwait(gcf);
 %%

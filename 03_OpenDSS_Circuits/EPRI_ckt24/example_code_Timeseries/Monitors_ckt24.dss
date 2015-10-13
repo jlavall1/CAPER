@@ -1,0 +1,11 @@
+
+New Monitor.fdr_05410_Mon_VI  element=line.fdr_05410 term=1  mode=0 Residual=Yes
+New Monitor.fdr_05410_Mon_PQ  element=line.fdr_05410 term=1  mode=1 PPolar=No
+New Monitor.fdr_05410_Mon_VA  element=line.fdr_05410 term=1  mode=1 PPolar=Yes
+New Monitor.OtherFeeder_Mon_PQ element=line.Other_Feeders term=1  mode=1 PPolar=No
+New Monitor.Cap1 element=Capacitor.Cap_G2100PL6500 terminal=1 mode=65
+New monitor.Cap1VI element=Capacitor.Cap_G2100PL6500 terminal=1 mode=0
+New Monitor.LTC element=Transformer.SubXFMR terminal=2 mode=2
+New monitor.subVI element=Transformer.SubXFMR terminal=2 mode=0
+
+New energymeter.fdr_05410 element=line.fdr_05410 term=1 option=M action=C PhaseVolt=YES peakcurrent=(466,469,452)

@@ -144,7 +144,8 @@ for i=1:1:length(RR_distrib(:,1))
     break
 end
 %Now lets pull the kW in P.U. matrix for that specified day:
-PV_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);
+PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
+PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),60); %go down to 1 second dataset --
 %Export to .csv & clear variables that are not needed:
 clearvars M_PVSITE RR_distrib
 %s = strtok(ckt_direct,'\Run_Master_Allocate.dss');
@@ -153,10 +154,15 @@ str = ckt_direct;
 idx = strfind(str,'\');
 str = str(1:idx(8)-1);
 if timeseries_span == 1
-    s_pv = strcat(s,'\PV_loadshape_daily.txt');
+    s_pv_txt = '\LS_PVpeakhours.txt';
 elseif timeseries_span == 2
-    s_pv = strcat(s,'\PV_loadshape_weekly.txt');
+    s_pv_txt = '\LS_PVdaily.txt';
+elseif timeseries_span == 3
+    s_pv_txt = '\LS_PVweekly.txt';
+elseif timeseries_span == 4
+    s_pv_txt = '\LS_PVannual.txt';
 end
+s_pv = strcat(s,s_pv_txt);
 csvwrite(s_pv,PV_loadshape_daily)
 %type PV_loadshape.dat
 

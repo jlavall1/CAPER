@@ -1,0 +1,2 @@
+new loadshape.PV_Loadshape npts=43200 sinterval=2 mult=(file='PVloadshape_7_5MW_Central_P.txt') Qmult=(file='PVloadshape_7_5MW_Central_Q.txt') Pbase=7.50 Qbase=2.49 action=normalize
+new generator.PV bus1=N292212 phases=3 kv=34.50 kw=7500.00 kvar=2492.89 duty=PV_Loadshape
