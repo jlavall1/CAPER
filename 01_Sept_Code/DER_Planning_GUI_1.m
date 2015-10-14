@@ -59,15 +59,15 @@ h.ppm(5) = uicontrol('style','popup','units','normalized',...
     'position',[0.037 -0.001 0.235 0.155],'string',{'(1) Day, 10:00 to 16:00','(1) Day, 0:00 - 23:59','(1) Week','(1) Month','(1) Year'},...
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 h.ppm(6) = uicontrol('style','popup','units','normalized',...
-    'position',[0.037 0.006 0.235 0.106],'string',{'hold','hold'},...
+    'position',[0.037 0.006 0.235 0.106],'string',{'January','February','March','April','May','June','July','August','September','October','November','December'},...
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 
 %Selective Timeseries Analysis:
 h.ppm(7) = uicontrol('style','popup','units','normalized',...
-    'position',[0.351 0.162 0.235 0.155],'string',{'hold','hold'},...
+    'position',[0.351 0.162 0.235 0.155],'string',{'(1) Seasonal Run','DARR Category Specific','hold'},...
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 h.ppm(8) = uicontrol('style','popup','units','normalized',...
-     'position',[0.351 0.169 0.235 0.106],'string',{'hold','hold'},...
+     'position',[0.351 0.169 0.235 0.106],'string',{'SPRING','SUMMER','FALL','WINTER'},...
      'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12); 
 
 %Extra Option for future use:
@@ -171,7 +171,8 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
     set(h.ckbx(3),'Value',1);   %timeseries simulation  -- ON
     set(h.rb(3),'Value',1);     %ckt choice             -- Flay
-    set(h.ppm(5),'Value',2);    %timeseries DROPDOWN    -- 24hr
+    set(h.ppm(5),'Value',4);    %timeseries DROPDOWN    -- 1mnth
+    set(h.ppm(6),'Value',2);    %What month DROPDOWN    -- FEB (29d)
     
     
     uiwait(gcf);
@@ -278,7 +279,8 @@ function m=p_run(varargin)
             COUNT = COUNT + 1;
             cat_choice = 3;
         end
-    end   
+    end
+    %%
     %Lets see what kind of sim they want to do:   
     COUNT_1 = 0;
     %---- DER Static hosting capacity:
@@ -323,6 +325,10 @@ function m=p_run(varargin)
     if time_type == 1
         time_select = get(h.ppm(5),'Value');
         sim_type = 0;
+        if time_select == 4
+            %User choosed Monthly run --
+            mnth_select = get(h.ppm(6),'Value'); % 1=JAN  12=DEC
+        end
         %time_select choices:
         %1)  10:00 - 16:00
         %2)  (1) WEEK
@@ -347,6 +353,7 @@ function m=p_run(varargin)
     STRING_0{1,7} = PV_location;
     STRING_0{1,8} = PV_dir;
     STRING_0{1,9} = time_select;
+    STRING_0{1,10} = mnth_select;
     
     %assignin('base', 'cat_choice', cat_choice);
     %assignin('base', 'ckt_num', ckt_num);
@@ -390,7 +397,9 @@ function p_plot(varargin)
         %RTPIS_7
         s1 = 'C:';
     elseif comp_choice==5
-        s1 = 'C:';
+        %Shane's Laptop:
+        s1 = 'C:\Users\Shane\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+        s_b = 'C:\Users\Shane\Documents\GitHub\CAPER';
     end
     %Extract feeder type:
     checked = get(h.rb,'Value');

@@ -20,6 +20,7 @@ cat_choice      = gui_response{1,5}; %DEC DEP EPRI;
 PV_Site         = gui_response{1,7}; %( 1 - 7) site#s;
 PV_Site_path    = gui_response{1,8}; %directory to PV kW file:
 timeseries_span = gui_response{1,9}; %(1) day ; (1) week ; (1) year ; etc.
+monthly_span    = gui_response{1,10};%(1) Month selected ; 1=JAN 12=DEC.
 %{
 STRING_0{1,1} = STRING;
 STRING_0{1,2} = ckt_num;
@@ -30,6 +31,7 @@ STRING_0{1,6} = section_type;
 STRING_0{1,7} = PV_location;
 STRING_0{1,8} = PV_dir;
 STRING_0{1,9} = time_select;
+STRING_0{1,10} = mnth_select;
 %}
 
 % 1. Add paths of background files:
@@ -125,6 +127,14 @@ elseif timeseries_span == 2
 elseif timeseries_span == 3
     s_pv_txt = '\Flay_CentralPV_168hr.dss';
 elseif timeseries_span == 4
+    if shift+1 == 28
+        s_pv_txt = '\Flay_CentralPV_1mnth28.dss';
+    elseif shift+1 == 30
+        s_pv_txt = '\Flay_CentralPV_1mnth30.dss';
+    elseif shift+1 == 31
+        s_pv_txt = '\Flay_CentralPV_1mnth31.dss';
+    end
+elseif timeseries_span == 5
     s_pv_txt = '\Flay_CentralPV_365dy.dss';
 end
 solarfilename = strcat(s,s_pv_txt);
@@ -144,21 +154,33 @@ DSSText.command = 'solve';
 %---------------------------------
 %Plot / observe simulation results:
 if timeseries_span == 1
+    %(1) peakPV RUN
     shift=10;
     h_st = 10;
     h_fin= 15;
     DOY_fin = 0;
 elseif timeseries_span == 2
+    %(1) DAY
     shift=0;
     h_st = 0;
     h_fin= 23;
     DOY_fin = 0;
 elseif timeseries_span == 3
+    %(1) WEEK
     shift=0;
     h_st = 0;
     h_fin= 23;
     DOY_fin = 6;
 elseif timeseries_span == 4
+    %(1) MONTH
+    shift=0;
+    h_st = 0;
+    h_fin= 23;
+    MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
+    MTH_DY(2,1:12) = [1,32,60,91,121,152,182,213,244,274,305,335];
+    DOY_fin = MTH_DY(2,monthly_span);
+elseif timeseries_span == 5
+    %(1) YEAR
     shift=0;
     h_st = 0;
     h_fin = 23;

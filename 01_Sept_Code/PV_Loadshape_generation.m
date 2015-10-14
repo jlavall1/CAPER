@@ -121,28 +121,31 @@ end
 %%
 %For (1) Day simulation with spec. DARR category:
 %DOY = 50;
-DOY = M_PVSITE_INFO.RR_distrib.Cat5(1,1);
-CAT = 5;
-if CAT == 1
-    RR_distrib = M_PVSITE_INFO.RR_distrib.Cat1(:,1:7);
-elseif CAT == 2
-    RR_distrib = M_PVSITE_INFO.RR_distrib.Cat2(:,1:7);
-elseif CAT == 3
-    RR_distrib = M_PVSITE_INFO.RR_distrib.Cat3(:,1:7);
-elseif CAT == 4
-    RR_distrib = M_PVSITE_INFO.RR_distrib.Cat4(:,1:7);
-elseif CAT == 5
-    RR_distrib = M_PVSITE_INFO.RR_distrib.Cat5(:,1:7);
-end
-%Day selection:
-for i=1:1:length(RR_distrib(:,1))
-    if RR_distrib(i,1) == DOY
-        %Day match!
-        MNTH = RR_distrib(i,2);
-        DAY = RR_distrib(i,3);
+if timeseries_span < 4
+    DOY = M_PVSITE_INFO.RR_distrib.Cat5(1,1);
+    CAT = 5;
+    if CAT == 1
+        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat1(:,1:7);
+    elseif CAT == 2
+        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat2(:,1:7);
+    elseif CAT == 3
+        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat3(:,1:7);
+    elseif CAT == 4
+        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat4(:,1:7);
+    elseif CAT == 5
+        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat5(:,1:7);
     end
-    break
+    %Day selection:
+    for i=1:1:length(RR_distrib(:,1))
+        if RR_distrib(i,1) == DOY
+            %Day match!
+            MNTH = RR_distrib(i,2);
+            DAY = RR_distrib(i,3);
+        end
+        break
+    end
 end
+%%
 %Now lets pull the kW in P.U. matrix for that specified day:
 %PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
 %PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),60); %go down to 1 second dataset --
@@ -168,6 +171,23 @@ elseif timeseries_span == 3
     PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY+6,23,59),1);%1minute interval --
     PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),30); %60sec. to 2sec dataset --
     s_pv_txt = '\LS_PVweekly.txt';
+elseif timeseries_span == 4
+    %29-31day sim (1mnth):
+    MNTH = monthly_span;    %DOY & shift come from feeder_Loadshape_generation.m
+    MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
+    MTH_DY(2,1:12) = [1,32,60,91,121,152,182,213,244,274,305,335];
+    DOY = MTH_DY(2,monthly_span);   %From top--> monthly_span:
+    shift = MTH_LN(1,monthly_span)-1;
+    
+    PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(1,0,0):time2int(shift+1,23,59),1);%1minute interval --
+    PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),6); %60sec. to 10sec dataset --
+    if shift+1 == 28
+        s_pv_txt = '\LS_PVmonthly28.txt';   %241920 datapoints
+    elseif shift+1 == 30
+        s_pv_txt = '\LS_PVmonthly30.txt';
+    elseif shift+1 == 31
+        s_pv_txt = '\LS_PVmonthly31.txt';
+    end
 elseif timeseries_span == 5
     %365 (1year):
     DAY = 1;

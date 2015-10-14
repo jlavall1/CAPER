@@ -60,6 +60,11 @@ elseif timeseries_span == 3
     LS_PhaseB(:,1) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY+6,23,59),1)./kW_peak(1,2);
     LS_PhaseC(:,1) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY+6,23,59),1)./kW_peak(1,3);
 elseif timeseries_span == 4
+    % Month Sim -- @10min incs.
+    LS_PhaseA(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY+shift,23,59),1)./kW_peak(1,1);
+    LS_PhaseB(:,1) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY+shift,23,59),1)./kW_peak(1,2);
+    LS_PhaseC(:,1) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY+shift,23,59),1)./kW_peak(1,3);    
+elseif timeseries_span == 5
     %1 YEAR Sim -- @10min incs.
     MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
     MNTH= 1;
@@ -124,10 +129,39 @@ elseif timeseries_span == 3
     idx = strfind(ckt_direct,'.');
     ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_168hr.dss');
 elseif timeseries_span == 4
+    %1 Month simulation
+    FEEDER.SIM.npts= MTH_LN(1,monthly_span)*24*60;   %simulating one month 29-31days
+    FEEDER.SIM.stepsize = 60;   %1 minute intervals
+    if shift+1 == 28
+        s_kwA = strcat(s,'LS4_PhaseA.txt');
+        s_kwB = strcat(s,'LS4_PhaseB.txt');
+        s_kwC = strcat(s,'LS4_PhaseC.txt');
+        idx = strfind(ckt_direct,'.');
+        ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_1mnth28.dss');
+    elseif shift+1 == 30
+        s_kwA = strcat(s,'LS5_PhaseA.txt');
+        s_kwB = strcat(s,'LS5_PhaseB.txt');
+        s_kwC = strcat(s,'LS5_PhaseC.txt');
+        idx = strfind(ckt_direct,'.');
+        ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_1mnth30.dss');
+    elseif shift+1 == 31
+        s_kwA = strcat(s,'LS6_PhaseA.txt');
+        s_kwB = strcat(s,'LS6_PhaseB.txt');
+        s_kwC = strcat(s,'LS6_PhaseC.txt');
+        idx = strfind(ckt_direct,'.');
+        ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_1mnth31.dss');
+    end
+    %{
+    MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
+    MTH_DY(2,1:12) = [1,32,60,91,121,152,182,213,244,274,305,335];
+    DOY = MTH_DY(2,monthly_span);   %From top--> monthly_span:
+    shift = MTH_LN(1,monthly_span)-1;
+    %}
+elseif timeseries_span == 5
     %1 YEAR simulation
-    s_kwA = strcat(s,'LS4_PhaseA.txt');
-    s_kwB = strcat(s,'LS4_PhaseB.txt');
-    s_kwC = strcat(s,'LS4_PhaseC.txt');
+    s_kwA = strcat(s,'LS5_PhaseA.txt');
+    s_kwB = strcat(s,'LS5_PhaseB.txt');
+    s_kwC = strcat(s,'LS5_PhaseC.txt');
     FEEDER.SIM.npts= 365*24*60/10;  %simulating full 365days
     FEEDER.SIM.stepsize = 60*10;    %10 minute intervals
     idx = strfind(ckt_direct,'.');
