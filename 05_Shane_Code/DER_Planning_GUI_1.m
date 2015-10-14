@@ -170,8 +170,9 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     set(h.ckbx(1),'Value',0);   %DER hosting capacity   -- OFF
     set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
     set(h.ckbx(3),'Value',1);   %timeseries simulation  -- ON
-    set(h.rb(3),'Value',1);     %ckt choice             -- Flay
-    set(h.ppm(5),'Value',2);    %timeseries DROPDOWN    -- 24hr
+    set(h.rb(2),'Value',1);     %ckt choice             -- Common
+    set(h.ppm(5),'Value',3);    %timeseries DROPDOWN    -- 24hr
+    set(h.ppm(1),'Value',5);    %Shane's Laptop         --Change 6 TO 5 FOR DT7***
     
     
     uiwait(gcf);

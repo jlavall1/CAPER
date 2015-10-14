@@ -1,17 +1,40 @@
 %function [NODE,SECTION,DER,DSCS] = DSSRead()
-%% Function to read Data from OpenDSS
+addpath('C:\Users\Shane\Documents\GitHub\CAPER\03_OpenDSS_Circuits');
+DER_Planning_GUI_1
+gui_response = STRING_0;
+
+ckt_direct      = gui_response{1,1}; %entire directory string of where the cktfile is locatted
+feeder_NUM      = gui_response{1,2};
+scenerio_NUM    = gui_response{1,3}; %1=VREG-top ; 2=VREG-bot ; 3=steadystate ; 4=RR_up ; 5=RR_down
+base_path       = gui_response{1,4};  %github directory based on user's selected comp. choice;
+cat_choice      = gui_response{1,5}; %DEC DEP EPRI;
+PV_Site         = gui_response{1,7}; %( 1 - 7) site#s;
+PV_Site_path    = gui_response{1,8}; %directory to PV kW file:
+timeseries_span = gui_response{1,9}; %(1) day ; (1) week ; (1) year ; etc.
+
+path = strcat(base_path,'\01_Sept_Code');
+addpath(path);
+path = strcat(base_path,'\04_DSCADA');
+addpath(path);
+
+
+DSSText.command = ['Compile ',ckt_direct];
+%{
+Function to read Data from OpenDSS
 % Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 
 % Find the DSS Master File
 filename = 0;
 while ~filename
-    [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
-        'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\03_OpenDSS_Circuits\');
+    [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File'); %,...
+        %'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\03_OpenDSS_Circuits\');
 end
 
 % Compile and Solve the Circuit
 DSSText.command = ['Compile ',[filelocation,filename]];
+%}
+
 DSSText.command = 'solve';
 DSSCircuit = DSSCircObj.ActiveCircuit;
 
