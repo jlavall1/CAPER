@@ -168,7 +168,8 @@ elseif timeseries_span == 3
     PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY+6,23,59),1);%1minute interval --
     PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),30); %60sec. to 2sec dataset --
     s_pv_txt = '\LS_PVweekly.txt';
-elseif timeseries_span == 4
+elseif timeseries_span == 5
+    %365 (1year):
     DAY = 1;
     PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY+364,23,59),1);%1minute interval --
     PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),6); %60sec. to 10sec dataset --   

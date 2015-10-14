@@ -121,7 +121,7 @@ str = str(1:idx(8)-1);
 if timeseries_span == 1
     s_pv_txt = '\Flay_CentralPV_6hr.dss';
 elseif timeseries_span == 2
-    s_pv_txt = '\Flay_CentralPV_24hr2.dss'; %just added the 2
+    s_pv_txt = '\Flay_CentralPV_24hr.dss'; %just added the 2
 elseif timeseries_span == 3
     s_pv_txt = '\Flay_CentralPV_168hr.dss';
 elseif timeseries_span == 4
@@ -158,6 +158,12 @@ elseif timeseries_span == 3
     h_st = 0;
     h_fin= 23;
     DOY_fin = 6;
+elseif timeseries_span == 4
+    shift=0;
+    h_st = 0;
+    h_fin = 23;
+    DOY = 1;
+    DOY_fin = 365;
 end
 
 %   Feeder Power
