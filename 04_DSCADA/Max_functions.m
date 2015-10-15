@@ -52,18 +52,29 @@ MAX.YEAR.KVAR.C = max(FEEDER.kVAR.C);
 months = [31,28,31,30,31,30,31,31,30,31,30,31];
 Points = zeros(12,1);
 Days = zeros(12,1);
-MAX.MONTH.KW.A = 0;
+
 sum = 0;
 
 % Finds maxes for each month
 for i=1:12
-    MAX.MONTH.KW.A(i,1) = 0;
+    
     Days(i) = months(i);
     Points(i) = Days(i)*60*24;
+    MAX.MONTH.KW.A(i,1) = 0;
     
     for j=sum+1:Points(i)+sum
         if FEEDER.kW.A(j,1) > MAX.MONTH.KW.A(i,1)
             MAX.MONTH.KW.A(i,1) = FEEDER.kW.A(j,1);
+            MAX.MONTH.KW.A(i,2) = j;
+            
+            DOY = j/(24*60);
+            HOUR = 24*(DOY-floor(DOY));
+            MIN = 60*(HOUR-floor(HOUR));
+            
+            MAX.MONTH.KW.A(i,3) = floor(DOY);
+            MAX.MONTH.KW.A(i,4) = floor(HOUR);     
+            MAX.MONTH.KW.A(i,5) = floor(MIN);
+            
         end
 
     end
