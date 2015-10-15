@@ -132,19 +132,19 @@ elseif timeseries_span == 4
     %1 Month simulation
     FEEDER.SIM.npts= MTH_LN(1,monthly_span)*24*60;   %simulating one month 29-31days
     FEEDER.SIM.stepsize = 60;   %1 minute intervals
-    if shift+1 == 28
+    if shift+1 == 28        %40320 datapoints
         s_kwA = strcat(s,'LS4_PhaseA.txt');
         s_kwB = strcat(s,'LS4_PhaseB.txt');
         s_kwC = strcat(s,'LS4_PhaseC.txt');
         idx = strfind(ckt_direct,'.');
         ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_1mnth28.dss');
-    elseif shift+1 == 30
+    elseif shift+1 == 30    %43200 datapoints
         s_kwA = strcat(s,'LS5_PhaseA.txt');
         s_kwB = strcat(s,'LS5_PhaseB.txt');
         s_kwC = strcat(s,'LS5_PhaseC.txt');
         idx = strfind(ckt_direct,'.');
         ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_1mnth30.dss');
-    elseif shift+1 == 31
+    elseif shift+1 == 31    %44640 datapoints
         s_kwA = strcat(s,'LS6_PhaseA.txt');
         s_kwB = strcat(s,'LS6_PhaseB.txt');
         s_kwC = strcat(s,'LS6_PhaseC.txt');
@@ -159,9 +159,9 @@ elseif timeseries_span == 4
     %}
 elseif timeseries_span == 5
     %1 YEAR simulation
-    s_kwA = strcat(s,'LS5_PhaseA.txt');
-    s_kwB = strcat(s,'LS5_PhaseB.txt');
-    s_kwC = strcat(s,'LS5_PhaseC.txt');
+    s_kwA = strcat(s,'LS7_PhaseA.txt');
+    s_kwB = strcat(s,'LS7_PhaseB.txt');
+    s_kwC = strcat(s,'LS7_PhaseC.txt');
     FEEDER.SIM.npts= 365*24*60/10;  %simulating full 365days
     FEEDER.SIM.stepsize = 60*10;    %10 minute intervals
     idx = strfind(ckt_direct,'.');

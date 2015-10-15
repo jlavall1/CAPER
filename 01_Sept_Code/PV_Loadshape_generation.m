@@ -182,11 +182,11 @@ elseif timeseries_span == 4
     PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(1,0,0):time2int(shift+1,23,59),1);%1minute interval --
     PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),6); %60sec. to 10sec dataset --
     if shift+1 == 28
-        s_pv_txt = '\LS_PVmonthly28.txt';   %241920 datapoints
+        s_pv_txt = '\LS_PVmonthly28.txt';   %241920 datapoints (28*24*60*60/10)
     elseif shift+1 == 30
-        s_pv_txt = '\LS_PVmonthly30.txt';
+        s_pv_txt = '\LS_PVmonthly30.txt';   %259200 datapoints (30*24*60*60/10)
     elseif shift+1 == 31
-        s_pv_txt = '\LS_PVmonthly31.txt';
+        s_pv_txt = '\LS_PVmonthly31.txt';   %267840 datapoints (31*24*60*60/10)
     end
 elseif timeseries_span == 5
     %365 (1year):
