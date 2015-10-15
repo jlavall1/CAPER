@@ -358,10 +358,13 @@ if action == 1 || action == 3 || action == 4
 end
 %%
 if action == 2 || action == 3 || action == 4
-    fig = 1;
-    %Time deviations:
-    figure(fig)
-    plot(diff(:,1));
+    fig = 0;
+    if action == 2
+        %Time deviations:
+        fig = fig + 1;
+        figure(fig)
+        plot(diff(:,1));
+    end
     
     fig = fig + 1;
     figure(fig)
