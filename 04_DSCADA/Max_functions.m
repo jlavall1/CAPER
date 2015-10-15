@@ -3,15 +3,16 @@ clear
 clc
 
 gui_response = GUI_DSCADA_Locations;
+base_path = gui_response{1,1};
 feeder_NUM = gui_response{1,2}; %0 to 8 (1-9)
 action = gui_response{1,3};
 maindir = gui_response{1,4};
 maindir=strcat(maindir,'\04_DSCADA');
 addpath(maindir);
-path = strcat(base_path,'\04_DSCADA\Feeder_Data');
+path = strcat(maindir,'\Feeder_Data');
 addpath(path);
 
-%%
+
 if feeder_NUM == 0
     load BELL.mat
     FEEDER = BELL;
@@ -39,27 +40,35 @@ elseif feeder_NUM == 5
 end
 
 %%
-% what is the format for the max functions??
-MAX.YEAR.KW.A = max();
-MAX.YEAR.KW.B = max();
-MAX.YEAR.KW.C = max();
-MAX.YEAR.KVAR.A = max();
-MAX.YEAR.KVAR.B = max();
-MAX.YEAR.KVAR.C = max();
+% Finds max P & Q for year
+MAX.YEAR.KW.A = max(FEEDER.kW.A);
+MAX.YEAR.KW.B = max(FEEDER.kW.B);
+MAX.YEAR.KW.C = max(FEEDER.kW.C);
+MAX.YEAR.KVAR.A = max(FEEDER.kVAR.A);
+MAX.YEAR.KVAR.B = max(FEEDER.kVAR.B);
+MAX.YEAR.KVAR.C = max(FEEDER.kVAR.C);
 
-% Several loops for each max for the month??
-interval = length(FEEDER) / 14;
-MAX.MONTH.KW.A = FEEDER(1);
 
-i=1;
-j=1;
+months = [31,28,31,30,31,30,31,31,30,31,30,31];
+Points = zeros(12,1);
+Days = zeros(12,1);
+MAX.MONTH.KW.A = 0;
+sum = 0;
 
-for i=1:interval:length(FEEDER)
-    for j=1:i
-        if FEEDER(j) > MAX.MONTH.KW.A
-            MAX.MONTH.KW.A = FEEDER(j);
+% Finds maxes for each month
+for i=1:12
+    MAX.MONTH.KW.A(i,1) = 0;
+    Days(i) = months(i);
+    Points(i) = Days(i)*60*24;
+    
+    for j=sum+1:Points(i)+sum
+        if FEEDER.kW.A(j,1) > MAX.MONTH.KW.A(i,1)
+            MAX.MONTH.KW.A(i,1) = FEEDER.kW.A(j,1);
         end
+
     end
+    
+    sum = sum + Points(i);
 end
 
 

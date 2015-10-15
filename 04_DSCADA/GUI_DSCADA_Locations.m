@@ -1,4 +1,4 @@
-function STRING_0 = GUI_openDSS_Locations()
+function STRING_0 = GUI_DSCADA_Locations()
 
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
@@ -22,8 +22,8 @@ elseif comp_choice==2
     s_b = 'C:\Users\jlavall\Documents\GitHub\CAPER';
 elseif comp_choice==3
     %Brians Comp
-    s1 = 'C:\Users\Brian\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
-    s_b = 'C:\Users\Brian\Documents\GitHub\CAPER';
+    s1 = 'C:\Users\Brian\Documents\GitHub\CAPER\CAPER\03_OpenDSS_Circuits';
+    s_b = 'C:\Users\Brian\Documents\GitHub\CAPER\CAPER';
 elseif comp_choice==4
     %RTPIS_7
     s1 = 'C:';
