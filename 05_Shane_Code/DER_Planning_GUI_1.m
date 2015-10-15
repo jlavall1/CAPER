@@ -172,7 +172,7 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     set(h.ckbx(3),'Value',1);   %timeseries simulation  -- ON
     set(h.rb(2),'Value',1);     %ckt choice             -- Common
     set(h.ppm(5),'Value',3);    %timeseries DROPDOWN    -- 24hr
-    set(h.ppm(1),'Value',5);    %Shane's Laptop         --Change 6 TO 5 FOR DT7***
+    set(h.ppm(1),'Value',6);    %Shane's desk         --Change 6 TO 5 FOR DT7***
     
     
     uiwait(gcf);
@@ -210,11 +210,12 @@ function m=p_run(varargin)
         s_b = 'C:\Users\Brian\Documents\GitHub\CAPER';
     elseif comp_choice==4
         %Shane's Desktop DT7
-        s1 = '';
+        s1 = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\03_OpenDSS_Circuits';
+        s_b = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER';
     elseif comp_choice==5
         %Shane's Laptop
         s1 = 'C:\Users\Shane\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
-        s_b = 'C:\Users\Shane\Documents\GitHub\CAPER\';
+        s_b = 'C:\Users\Shane\Documents\GitHub\CAPER';
     end
     %%
     checked = get(h.rb,'Value');

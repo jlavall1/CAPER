@@ -43,7 +43,7 @@ NODE.ID = DSSCircuit.AllBusNames;
 Loads = DSSCircuit.Loads.AllNames;
 %Lines_Base = getLineInfo(DSSCircObj);
 %Buses_Base = getBusInfo(DSSCircObj);
-Loads_Base = getLoadInfo(DSSCircObj);
+
 %%
 
 % Get Bus Info
