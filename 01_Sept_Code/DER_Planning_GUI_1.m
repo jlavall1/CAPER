@@ -328,6 +328,8 @@ function m=p_run(varargin)
         if time_select == 4
             %User choosed Monthly run --
             mnth_select = get(h.ppm(6),'Value'); % 1=JAN  12=DEC
+        else
+            mnth_select = 0;
         end
         %time_select choices:
         %1)  10:00 - 16:00

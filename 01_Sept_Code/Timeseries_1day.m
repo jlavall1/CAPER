@@ -120,22 +120,33 @@ seconds=60*60*24;
 str = ckt_direct;
 idx = strfind(str,'\');
 str = str(1:idx(8)-1);
+%Make .dss name specific to what feeder you are simulating:
+if feeder_NUM == 0
+    %b.s.
+elseif feeder_NUM == 1
+    %Commonwealth
+    root = '\Common';
+elseif feeder_NUM == 2
+    %Flay 13.27km long --
+    root = '\Flay';
+end
+
 if timeseries_span == 1
-    s_pv_txt = '\Flay_CentralPV_6hr.dss';
+    s_pv_txt = sprintf('%s_CentralPV_6hr.dss',root);
 elseif timeseries_span == 2
-    s_pv_txt = '\Flay_CentralPV_24hr.dss'; %just added the 2
+    s_pv_txt = sprintf('%s_CentralPV_24hr.dss',root); %just added the 2
 elseif timeseries_span == 3
-    s_pv_txt = '\Flay_CentralPV_168hr.dss';
+    s_pv_txt = sprintf('%s_CentralPV_168hr.dss',root);
 elseif timeseries_span == 4
     if shift+1 == 28
-        s_pv_txt = '\Flay_CentralPV_1mnth28.dss';
+        s_pv_txt = sprintf('%s_CentralPV_1mnth28.dss',root);
     elseif shift+1 == 30
-        s_pv_txt = '\Flay_CentralPV_1mnth30.dss';
+        s_pv_txt = sprintf('%s_CentralPV_1mnth30.dss',root);
     elseif shift+1 == 31
-        s_pv_txt = '\Flay_CentralPV_1mnth31.dss';
+        s_pv_txt = sprintf('%s_CentralPV_1mnth31.dss',root);
     end
 elseif timeseries_span == 5
-    s_pv_txt = '\Flay_CentralPV_365dy.dss';
+    s_pv_txt = sprintf('%s_CentralPV_365dy.dss',root);
 end
 solarfilename = strcat(s,s_pv_txt);
 %solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
@@ -191,21 +202,21 @@ end
 %   Feeder Power
 DSSfilename=ckt_direct_prime;
 fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
-plotMonitor(DSSCircObj,'fdr_05410_Mon_PQ');
+plotMonitor(DSSCircObj,sprintf('fdr_%s_Mon_PQ',root));
 ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
 title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',12,'FontWeight','bold')
 saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
 %--------------------------------
 %Substation Voltage
 %DSSText.Command = 'export mon subVI';
-DSSText.Command = 'export mon fdr_05410_Mon_VI';
+DSSText.Command = sprintf('export mon fdr_%s_Mon_VI',root);
 monitorFile = DSSText.Result;
 MyCSV = importdata(monitorFile);
 delete(monitorFile);
 Hour = MyCSV.data(:,1); Second = MyCSV.data(:,2);
 subVoltages = MyCSV.data(:,3:2:7);
 
-figure;
+figure(2);
 plot(Hour+shift+Second/3600,subVoltages(:,1)/((12.47e3)/sqrt(3)),'r-','LineWidth',2);
 hold on
 plot(Hour+shift+Second/3600,subVoltages(:,2)/((12.47e3)/sqrt(3)),'g-','LineWidth',2);
@@ -237,8 +248,14 @@ axis([0 Hour(end,1)+shift+Second(end,1)/3600 1.02 1.05]);
 legend('V_{phA}','V_{phB}','V_{phC}','Upper B.W.','Lower B.W.');
 title([strrep(fileNameNoPath,'_',' '),' Substation Voltages'],'FontSize',12,'FontWeight','bold')
 saveas(gcf,[DSSfilename(1:end-4),'_Sub_Voltage.fig'])
-
-
-
+%
+%------------------
+figure(3);
+DSSfilename=ckt_direct_prime;
+fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
+plotMonitor(DSSCircObj,'259181477_Mon_PQ');
+ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
+title([strrep(fileNameNoPath,'_',' '),' Closest Line Load'],'FontSize',12,'FontWeight','bold')
+%saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
 
     

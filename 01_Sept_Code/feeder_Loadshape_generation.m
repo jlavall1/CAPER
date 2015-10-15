@@ -1,4 +1,4 @@
-%feeder_Loadshape_generation: This .m file will generate the .txt single
+f%feeder_Loadshape_generation: This .m file will generate the .txt single
 %phase files of the desired day user define.
 %%
 %Temp init. vars/actions
@@ -97,7 +97,7 @@ elseif timeseries_span == 5
 end
 %%
 %Save .txt per phase --
-s = ckt_direct(1:end-23);
+s = ckt_direct(1:end-23); % <--------THIS MIGHT CHANGE PER FEEDER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 str = ckt_direct;
 idx = strfind(str,'\');
 str = str(1:idx(8)-1);
@@ -170,22 +170,3 @@ end
 csvwrite(s_kwA,LS_PhaseA)
 csvwrite(s_kwB,LS_PhaseB)
 csvwrite(s_kwC,LS_PhaseC)
-%%
-%Lets create the needed monitors:
-%{
-if timeseries_span == 1
-    PV_opendss_file=cellstr('new loadshape.PV_Loadshape npts=21600 sinterval=1 csvfile="LS_PVpeakhours.txt" Pbase=1.00 action=normalizenew pvsystem.PV bus1=258405587 irradiance=1 phases=3 kv=12.47 kVA=1100.00 pf=1.00 pmpp=1000.00 duty=PV_Loadshape');
-    filename=strcat(s,'\Flay_CentralPV_6hr.dss');
-elseif timeseries_span == 2
-    PV_opendss_file=cellstr('new loadshape.PV_Loadshape npts=86400 sinterval=1 csvfile="LS_PVdaily.txt" Pbase=1.00 action=normalizenew pvsystem.PV bus1=258405587 irradiance=1 phases=3 kv=12.47 kVA=1100.00 pf=1.00 pmpp=1000.00 duty=PV_Loadshape');
-    filename=strcat(s,'\Flay_CentralPV_24hr.dss');
-end
-
-fid=fopen(filename,'w');
-for i=1:length(PV_opendss_file)
-    cell=cell2mat(PV_opendss_file(1,i));
-    fprintf(fid,[cell ' ']);
-end
-fclose(fid);
-%}
-
