@@ -57,7 +57,7 @@ cd(location);
 [~,index] = sortrows([Lines_Base.bus1Distance].'); 
 Lines_Distance = Lines_Base(index); 
 clear index
-
+%
 % 4. Add loadshapes:
 %{
 DSSText.command = sprintf('new Loadshape.LS_PhaseA npts=%s minterval=%s mult=(file=%s) action=normalize',num2str(FEEDER.SIM.npts),num2str(FEEDER.SIM.minterval),s_kwA);
@@ -126,9 +126,11 @@ if feeder_NUM == 0
 elseif feeder_NUM == 1
     %Commonwealth
     root = '\Common';
+    root1= 'Common';
 elseif feeder_NUM == 2
     %Flay 13.27km long --
     root = '\Flay';
+    root1= 'Flay';
 end
 
 if timeseries_span == 1
@@ -150,9 +152,10 @@ elseif timeseries_span == 5
 end
 solarfilename = strcat(s,s_pv_txt);
 %solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
-DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
-DSSText.command = 'solve';
-cd(location);
+%%
+%DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
+%DSSText.command = 'solve';
+%cd(location);
 %---------------------------------
 %Run OpenDSS simulation for 6/24/168-hr at 1-minute resolution:
 %number==#solution to run; h==stepsize (s)
@@ -202,14 +205,14 @@ end
 %   Feeder Power
 DSSfilename=ckt_direct_prime;
 fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
-plotMonitor(DSSCircObj,sprintf('fdr_%s_Mon_PQ',root));
+plotMonitor(DSSCircObj,sprintf('fdr_%s_Mon_PQ',root1));
 ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
 title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',12,'FontWeight','bold')
 saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
 %--------------------------------
 %Substation Voltage
 %DSSText.Command = 'export mon subVI';
-DSSText.Command = sprintf('export mon fdr_%s_Mon_VI',root);
+DSSText.Command = sprintf('export mon fdr_%s_Mon_VI',root1);
 monitorFile = DSSText.Result;
 MyCSV = importdata(monitorFile);
 delete(monitorFile);
@@ -224,7 +227,11 @@ hold on
 plot(Hour+shift+Second/3600,subVoltages(:,3)/((12.47e3)/sqrt(3)),'b-','LineWidth',2);
 n=length(subVoltages(:,1));
 hold on
-V_120=123.945461370235;
+if feeder_NUM == 1
+    V_120=122.98315227577;
+elseif feeder_NUM == 2
+    V_120=123.945461370235;
+end
 V_PU=(V_120*59.9963154732886)/((12.47e3)/sqrt(3));
 V_UP=V_PU+(0.5*59.9963154732886)/((12.47e3)/sqrt(3));
 V_DOWN=V_PU-(0.5*59.9963154732886)/((12.47e3)/sqrt(3));
@@ -253,7 +260,11 @@ saveas(gcf,[DSSfilename(1:end-4),'_Sub_Voltage.fig'])
 figure(3);
 DSSfilename=ckt_direct_prime;
 fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
-plotMonitor(DSSCircObj,'259181477_Mon_PQ');
+if feeder_NUM == 1
+    plotMonitor(DSSCircObj,'259181477_Mon_PQ');
+elseif feeder_NUM == 2
+    plotMonitor(DSSCircObj,'259181477_Mon_PQ');
+end
 ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
 title([strrep(fileNameNoPath,'_',' '),' Closest Line Load'],'FontSize',12,'FontWeight','bold')
 %saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])

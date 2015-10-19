@@ -170,8 +170,8 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     set(h.ckbx(1),'Value',0);   %DER hosting capacity   -- OFF
     set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
     set(h.ckbx(3),'Value',1);   %timeseries simulation  -- ON
-    set(h.rb(3),'Value',1);     %ckt choice             -- Flay
-    set(h.ppm(5),'Value',4);    %timeseries DROPDOWN    -- 1mnth
+    set(h.rb(2),'Value',1);     %ckt choice             -- Flay(3) Common(2)
+    set(h.ppm(5),'Value',1);    %timeseries DROPDOWN    -- daytime,1 day,2 week,3 1mnth,4
     set(h.ppm(6),'Value',2);    %What month DROPDOWN    -- FEB (29d)
     
     

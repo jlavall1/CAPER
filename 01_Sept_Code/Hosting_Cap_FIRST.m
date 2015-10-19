@@ -28,6 +28,8 @@ DSSText.command = ['Compile "',mainFile];
 DSSText.command = 'solve';
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
+[~,index] = sortrows([Lines_Base.bus1Distance].'); 
+Lines_Distance = Lines_Base(index); clear index
 %%
 %Declare name of basecase .dss file:
 %master = 'Run_Master_Allocate.dss';
