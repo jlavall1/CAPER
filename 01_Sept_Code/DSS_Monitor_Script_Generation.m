@@ -4,16 +4,23 @@ clear
 clc
 close all
 %Lets create the needed monitors:
-feeder_NUM = 2;
+feeder_NUM = 1;
 
 if feeder_NUM == 1
     %Commonwealth --
+    temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss';
+    addpath(temp_dir)
+    load Lines_Monitor.mat %Lines_Distance
+    %For export .txt file --
+    filename = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Monitors_GEN.txt';
+    
 elseif feeder_NUM == 2
     temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss';
     addpath(temp_dir)
     load Lines_Monitor.mat %Lines_Distance
     %For export .txt file --
     filename = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Monitors_GEN.txt';
+    
 end
 
 %%

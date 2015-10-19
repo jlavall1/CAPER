@@ -1,0 +1,25 @@
+! ---------------------------------
+!! Converted from CYME 
+! DATE=June 04, 2015 at 12:44:40
+! CYME_VERSION=7.10
+! CYMDIST_REVISION=05
+!    COMMONWEALTH FEEDER
+! ---------------------------------
+! 
+clear
+Compile 'Master_6hr.DSS'
+
+! 
+! Disable Capacitors for load allocation
+Disable Capacitor.*
+! 
+AllocateLoad
+AllocateLoad
+AllocateLoad
+!Dump AllocationFactors
+! 
+! Enable capacitors before solving
+Enable Capacitor.*
+! 
+Solve
+

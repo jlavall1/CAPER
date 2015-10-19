@@ -1,4 +1,4 @@
-f%feeder_Loadshape_generation: This .m file will generate the .txt single
+%feeder_Loadshape_generation: This .m file will generate the .txt single
 %phase files of the desired day user define.
 %%
 %Temp init. vars/actions
@@ -22,9 +22,9 @@ if feeder_NUM == 0
     clearvars BELL
     kW_peak = [0,0,0];
 elseif feeder_NUM == 1
-    load COMN.mat
-    FEEDER = COMN;
-    clearvars COMN
+    load CMNWLTH.mat
+    FEEDER = CMNWLTH;
+    clearvars CMNWLTH
     kW_peak = [2.475021572579630e+03,2.609588847297235e+03,2.086659558753901e+03];
 elseif feeder_NUM == 2
     load FLAY.mat
