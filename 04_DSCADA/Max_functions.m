@@ -72,62 +72,73 @@ for i=1:12
         DOY = j/(24*60);
         HOUR = 24*(DOY-floor(DOY));
         MIN = 60*(HOUR-floor(HOUR));
+        if HOUR >= 10 && HOUR < 16    
             
-        if FEEDER.kW.A(j,1) > MAX.MONTH.KW.A(i,1)
+            WINDOW.KW.A(j,1) = FEEDER.kW.A(j,1);
+            WINDOW.KW.B(j,1) = FEEDER.kW.B(j,1);
+            WINDOW.KW.C(j,1) = FEEDER.kW.C(j,1);
+            
+            if FEEDER.kW.A(j,1) > MAX.MONTH.KW.A(i,1)
             MAX.MONTH.KW.A(i,1) = FEEDER.kW.A(j,1);
             MAX.MONTH.KW.A(i,2) = j;                        
             MAX.MONTH.KW.A(i,3) = floor(DOY);
             MAX.MONTH.KW.A(i,4) = floor(HOUR);     
             MAX.MONTH.KW.A(i,5) = floor(MIN);
             
-        end
-        if FEEDER.kW.B(j,1) > MAX.MONTH.KW.B(i,1)
-            MAX.MONTH.KW.B(i,1) = FEEDER.kW.B(j,1);
-            MAX.MONTH.KW.B(i,2) = j;           
-            MAX.MONTH.KW.B(i,3) = floor(DOY);
-            MAX.MONTH.KW.B(i,4) = floor(HOUR);     
-            MAX.MONTH.KW.B(i,5) = floor(MIN);
-            
-        end
-        if FEEDER.kW.C(j,1) > MAX.MONTH.KW.C(i,1)
-            MAX.MONTH.KW.C(i,1) = FEEDER.kW.C(j,1);
-            MAX.MONTH.KW.C(i,2) = j;
-            MAX.MONTH.KW.C(i,3) = floor(DOY);
-            MAX.MONTH.KW.C(i,4) = floor(HOUR);     
-            MAX.MONTH.KW.C(i,5) = floor(MIN);
-            
-        end
-        
-        % Concerns about vars - several months with 0
-        if FEEDER.kVAR.A(j,1) > MAX.MONTH.KVAR.A(i,1)
-            MAX.MONTH.KVAR.A(i,1) = FEEDER.kVAR.A(j,1);
-            MAX.MONTH.KVAR.A(i,2) = j;         
-            MAX.MONTH.KVAR.A(i,3) = floor(DOY);
-            MAX.MONTH.KVAR.A(i,4) = floor(HOUR);     
-            MAX.MONTH.KVAR.A(i,5) = floor(MIN);
-            
-        end
-        if FEEDER.kVAR.B(j,1) > MAX.MONTH.KVAR.B(i,1)
-            MAX.MONTH.KVAR.B(i,1) = FEEDER.kVAR.B(j,1);
-            MAX.MONTH.KVAR.B(i,2) = j;
-            MAX.MONTH.KVAR.B(i,3) = floor(DOY);
-            MAX.MONTH.KVAR.B(i,4) = floor(HOUR);     
-            MAX.MONTH.KVAR.B(i,5) = floor(MIN);
-            
-        end
-        if FEEDER.kVAR.C(j,1) > MAX.MONTH.KVAR.C(i,1)
-            MAX.MONTH.KVAR.C(i,1) = FEEDER.kVAR.C(j,1);
-            MAX.MONTH.KVAR.C(i,2) = j;           
-            MAX.MONTH.KVAR.C(i,3) = floor(DOY);
-            MAX.MONTH.KVAR.C(i,4) = floor(HOUR);     
-            MAX.MONTH.KVAR.C(i,5) = floor(MIN);
-            
-        end
+            end
+            if FEEDER.kW.B(j,1) > MAX.MONTH.KW.B(i,1)
+                MAX.MONTH.KW.B(i,1) = FEEDER.kW.B(j,1);
+                MAX.MONTH.KW.B(i,2) = j;           
+                MAX.MONTH.KW.B(i,3) = floor(DOY);
+                MAX.MONTH.KW.B(i,4) = floor(HOUR);     
+                MAX.MONTH.KW.B(i,5) = floor(MIN);
 
+            end
+            if FEEDER.kW.C(j,1) > MAX.MONTH.KW.C(i,1)
+                MAX.MONTH.KW.C(i,1) = FEEDER.kW.C(j,1);
+                MAX.MONTH.KW.C(i,2) = j;
+                MAX.MONTH.KW.C(i,3) = floor(DOY);
+                MAX.MONTH.KW.C(i,4) = floor(HOUR);     
+                MAX.MONTH.KW.C(i,5) = floor(MIN);
+
+            end
+
+            % Concerns about vars - several months with 0
+            if FEEDER.kVAR.A(j,1) > MAX.MONTH.KVAR.A(i,1)
+                MAX.MONTH.KVAR.A(i,1) = FEEDER.kVAR.A(j,1);
+                MAX.MONTH.KVAR.A(i,2) = j;         
+                MAX.MONTH.KVAR.A(i,3) = floor(DOY);
+                MAX.MONTH.KVAR.A(i,4) = floor(HOUR);     
+                MAX.MONTH.KVAR.A(i,5) = floor(MIN);
+
+            end
+            if FEEDER.kVAR.B(j,1) > MAX.MONTH.KVAR.B(i,1)
+                MAX.MONTH.KVAR.B(i,1) = FEEDER.kVAR.B(j,1);
+                MAX.MONTH.KVAR.B(i,2) = j;
+                MAX.MONTH.KVAR.B(i,3) = floor(DOY);
+                MAX.MONTH.KVAR.B(i,4) = floor(HOUR);     
+                MAX.MONTH.KVAR.B(i,5) = floor(MIN);
+
+            end
+            if FEEDER.kVAR.C(j,1) > MAX.MONTH.KVAR.C(i,1)
+                MAX.MONTH.KVAR.C(i,1) = FEEDER.kVAR.C(j,1);
+                MAX.MONTH.KVAR.C(i,2) = j;           
+                MAX.MONTH.KVAR.C(i,3) = floor(DOY);
+                MAX.MONTH.KVAR.C(i,4) = floor(HOUR);     
+                MAX.MONTH.KVAR.C(i,5) = floor(MIN);
+
+            end
+        end
     end
     
     sum = sum + Points(i);
 end
+
+%% Hours 10 - 16 window dataset
+
+[~,index] = sortrows([WINDOW.KW.A].'); 
+Sorted_data = WINDOW(index); %Lines_Distance ==> sorted column 
+clear index
 
 
 
