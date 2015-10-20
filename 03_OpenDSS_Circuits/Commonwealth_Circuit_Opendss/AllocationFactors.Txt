@@ -12,7 +12,11 @@ Load.258904010_2_2.CFactor=90.857
 Load.699645825_3.CFactor=67.544
 Load.263530738_3.CFactor=67.544
 Load.258908375_1.CFactor=53.256
+<<<<<<< HEAD
+Load.258904020_2.CFactor=90.857
+=======
 Load.258904010_2.CFactor=90.857
+>>>>>>> origin/master
 Load.258904095_2.CFactor=90.857
 Load.699645905_1.CFactor=53.256
 Load.260761308_2.CFactor=90.857

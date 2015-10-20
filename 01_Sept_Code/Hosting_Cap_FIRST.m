@@ -28,6 +28,7 @@ DSSText.command = ['Compile "',mainFile];
 DSSText.command = 'solve';
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
+Loads_Base = getLoadInfo(DSSCircObj);
 [~,index] = sortrows([Lines_Base.bus1Distance].'); 
 Lines_Distance = Lines_Base(index); clear index
 %%

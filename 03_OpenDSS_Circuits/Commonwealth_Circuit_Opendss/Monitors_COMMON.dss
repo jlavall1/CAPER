@@ -1,8 +1,7 @@
 !
 ! Declare Energy meter to convert P.U. to kW & for load allocation --
 !
-New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
-EnergyMeter.CircuitMeter.peakcurrent=[  345.492818586166   362.418979727275   291.727365549702  ] 
+!New energymeter.fdr_common element=line.259355408 term=1 option=R action=C PhaseVolt=YES peakcurrent=(345.492818586166,362.418979727275,291.727365549702)
 
 !
 ! PCC upstream bus --

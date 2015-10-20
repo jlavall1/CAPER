@@ -1,5 +1,9 @@
 %function [NODE,SECTION,DER,DSCS] = DSSRead()
-%addpath('C:\Users\Shane\Documents\GitHub\CAPER\03_OpenDSS_Circuits');
+% Function to read Data from OpenDSS
+
+%{
+
+addpath('C:\Users\Shane\Documents\GitHub\CAPER\03_OpenDSS_Circuits');
 DER_Planning_GUI_1
 gui_response = STRING_0;
 
@@ -17,24 +21,25 @@ timeseries_span = gui_response{1,9}; %(1) day ; (1) week ; (1) year ; etc.
 path = strcat(base_path,'\04_DSCADA');
 addpath(path);
 
-% Setup the COM server
-[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
-DSSText.command = ['Compile ',ckt_direct];
-%{
-Function to read Data from OpenDSS
+%}
 
+% Find the CAPER folder location (CAPER folder must be in MATLAB path
+rootlocation = textread('pathdef.m','%c')';
+rootlocation = regexp(rootlocation,'C:.*?CAPER\\','match');
+len = cellfun(@(x) numel(x), rootlocation);
+rootlocation = rootlocation(len==min(len));
+rootlocation = [cell2mat(rootlocation(1)),'03_OpenDSS_Circuits\'];
 
-% Find the DSS Master File
 filename = 0;
 while ~filename
-    [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File'); %,...
-        %'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\03_OpenDSS_Circuits\');
+    [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',rootlocation);
 end
+
+% Setup the COM server
+[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 
 % Compile and Solve the Circuit
 DSSText.command = ['Compile ',[filelocation,filename]];
-%}
-
 DSSText.command = 'solve';
 DSSCircuit = DSSCircObj.ActiveCircuit;
 
@@ -44,7 +49,6 @@ Loads = DSSCircuit.Loads.AllNames;
 %Lines_Base = getLineInfo(DSSCircObj);
 %Buses_Base = getBusInfo(DSSCircObj);
 Loads_Base = getLoadInfo(DSSCircObj);
-%%
 
 % Get Bus Info
 N = length(NODE.ID);

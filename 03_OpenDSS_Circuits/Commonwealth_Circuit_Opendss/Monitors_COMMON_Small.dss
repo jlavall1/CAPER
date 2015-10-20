@@ -1,0 +1,17 @@
+!
+! Declare Energy meter to convert P.U. to kW & for load allocation --
+!
+New energymeter.fdr_common element=line.259355408 term=1 option=R action=C PhaseVolt=YES peakcurrent=(345.492818586166,362.418979727275,291.727365549702)
+!New energymeter.fdr_05410 element=line.259363665 term=1 option=R action=C PhaseVolt=YES peakcurrent=(196.597331353572,186.718068471483,238.090235458346)
+!
+! PCC upstream bus --
+!
+New Monitor.LTC element=Transformer.COMMONWEALTH_RET_01311205 terminal=2 mode=2
+New Monitor.subVI element=Transformer.COMMONWEALTH_RET_01311205 terminal=2 mode=0
+New Monitor.fdr_Common_Mon_VI  element=line.259355408 term=1  mode=0 Residual=Yes
+New Monitor.fdr_Common_Mon_PQ  element=line.259355408 term=1  mode=1 PPolar=No
+!
+! Three phase backbone monitors --
+!
+New Monitor.259355403_Mon_VI  element=line.259355403 term=1  mode=0 Residual=Yes
+New Monitor.259355403_Mon_PQ  element=line.259355403 term=1  mode=1 PPolar=No
