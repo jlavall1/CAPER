@@ -14,7 +14,7 @@ New Circuit.COMMONWEALTH_RET_01311205 Bus1=COMMONWEALTH_RET_01311205
 ~ Z1=[ 0.034212 ,  0.649771 ] ! Actual ohms
 ~ Z2=[ 0.034212 ,  0.649771 ]
 ~ Z0=[ 0.024887 ,  0.605013 ]
-Redirect SourceRegulator.dss
+Redirect SourceRegulator_3ph.dss  ! Just added _3ph
 ! 
 ! Library Data
 ! 
@@ -27,7 +27,7 @@ Redirect UGLineCodes.dss
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
 Redirect Regulators.dss
-Redirect Loads.dss
+Redirect Loads_NCSU.dss !Just changed to _NCSU.dss
 Redirect Capacitors.dss
 Redirect SwtControls.dss
 Redirect Reclosers.dss

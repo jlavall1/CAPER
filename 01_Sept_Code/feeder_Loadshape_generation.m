@@ -20,7 +20,7 @@ if feeder_NUM == 0
     load BELL.mat
     FEEDER = BELL;
     clearvars BELL
-    kW_peak = [0,0,0];
+    kW_peak = [2.940849617143377e+03,2.699860573083591e+03,3.092128804831415e+03];
 elseif feeder_NUM == 1
     load CMNWLTH.mat
     FEEDER = CMNWLTH;
@@ -46,14 +46,20 @@ end
 %   DOY already decided from PV_Loadshape_generation.
 if timeseries_span == 1
     %10AM to 4PM --
-    LS_PhaseA(:,1) = FEEDER.kW.A(time2int(DOY,10,0):time2int(DOY,15,59),1)./kW_peak(1,1);
-    LS_PhaseB(:,1) = FEEDER.kW.B(time2int(DOY,10,0):time2int(DOY,15,59),1)./kW_peak(1,2);
-    LS_PhaseC(:,1) = FEEDER.kW.C(time2int(DOY,10,0):time2int(DOY,15,59),1)./kW_peak(1,3);    
+    LOAD_ACTUAL(:,1) = FEEDER.kW.A(time2int(DOY,10,0):time2int(DOY,15,59),1);
+    LOAD_ACTUAL(:,2) = FEEDER.kW.B(time2int(DOY,10,0):time2int(DOY,15,59),1);
+    LOAD_ACTUAL(:,3) = FEEDER.kW.C(time2int(DOY,10,0):time2int(DOY,15,59),1);
+    LS_PhaseA(:,1) = LOAD_ACTUAL(:,1)./kW_peak(1,1);
+    LS_PhaseB(:,1) = LOAD_ACTUAL(:,2)./kW_peak(1,2);
+    LS_PhaseC(:,1) = LOAD_ACTUAL(:,3)./kW_peak(1,3);    
 elseif timeseries_span == 2
     %24HR Sim    -- 
-    LS_PhaseA(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY,23,59),1)./kW_peak(1,1);
-    LS_PhaseB(:,1) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1)./kW_peak(1,2);
-    LS_PhaseC(:,1) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY,23,59),1)./kW_peak(1,3);
+    LOAD_ACTUAL(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY,23,59),1);
+    LOAD_ACTUAL(:,2) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
+    LOAD_ACTUAL(:,3) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY,23,59),1);
+    LS_PhaseA(:,1) = LOAD_ACTUAL(:,1)./kW_peak(1,1);
+    LS_PhaseB(:,1) = LOAD_ACTUAL(:,2)./kW_peak(1,2);
+    LS_PhaseC(:,1) = LOAD_ACTUAL(:,3)./kW_peak(1,3);
 elseif timeseries_span == 3
     %1 Week Sim  -- @1min incs.
     LS_PhaseA(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY+6,23,59),1)./kW_peak(1,1);

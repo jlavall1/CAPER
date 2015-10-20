@@ -303,7 +303,7 @@ if action == 3
     FEED.kVAR.A = interp(FEED1.kVAR.A(1:end-1,1),10);
     FEED.kVAR.B = interp(FEED1.kVAR.B(1:end-1,1),10);
     FEED.kVAR.C = interp(FEED1.kVAR.C(1:end-1,1),10);
-elseif action < 3
+elseif action < 3 && action ~= 2
     FEED.Voltage.A = FEED1.Voltage.A(:,1);
     FEED.Voltage.B = FEED1.Voltage.B(:,1);
     FEED.Voltage.C = FEED1.Voltage.C(:,1);

@@ -52,7 +52,7 @@ Buses_Base = getBusInfo(DSSCircObj);
 Loads_Base = getLoadInfo(DSSCircObj);
 %Xfmr_Base = get
 cd(location);
-
+%%
 %Sort Lines into closest from PCC --
 [~,index] = sortrows([Lines_Base.bus1Distance].'); 
 Lines_Distance = Lines_Base(index); 
@@ -77,10 +77,11 @@ for i=1:1:length(Loads_Base)
     end
 end
 %}
-DSSText.command = 'solve';
-Loads_NEW = getLoadInfo(DSSCircObj);  
+%DSSText.command = 'solve';
+%Loads_NEW = getLoadInfo(DSSCircObj);  
 
 % 6. Add  PV loadshapes:
+%{
 PV_INFO.sizeMW = 1;
 USER_def_km = 1; 
 %   Now lets find the closest bus to 1 km.
@@ -112,7 +113,7 @@ seconds=60*60*24;
 
 %DSSText.command =sprintf('new loadshape.PV_Loadshape npts=%s sinterval=1 csvfile="%s" Pbase=%s action=normalizenew pvsystem.PV bus1=%s irradiance=1 phases=3 kv=%s kVA=%s pf=1.00 pmpp=%s duty=PV_Loadshape',seconds,s_pv_txt,PV_INFO.sizeMW,PV_INFO.busName,PV_INFO.kV,PV_INFO.kVA,PV_INFO.pmpp);
 %DSSText.command =sprintf('
-
+%}
 % 7. Run Simulation:
 
 %----------------------------------
@@ -122,10 +123,12 @@ idx = strfind(str,'\');
 str = str(1:idx(8)-1);
 %Make .dss name specific to what feeder you are simulating:
 if feeder_NUM == 0
-    %b.s.
+    %Bellhaven
+    root = 'Bell';
+    root1= 'Bell';
 elseif feeder_NUM == 1
     %Commonwealth
-    root = '\Common';
+    root = 'Common';
     root1= 'Common';
 elseif feeder_NUM == 2
     %Flay 13.27km long --
@@ -208,7 +211,11 @@ fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
 plotMonitor(DSSCircObj,sprintf('fdr_%s_Mon_PQ',root1));
 ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
 title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',12,'FontWeight','bold')
-saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
+%saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
+DSSText.Command = sprintf('export mon fdr_%s_Mon_PQ',root1);
+monitorFile = DSSText.Result;
+MyLOAD = importdata(monitorFile);
+delete(monitorFile);
 %--------------------------------
 %Substation Voltage
 %DSSText.Command = 'export mon subVI';
@@ -218,6 +225,7 @@ MyCSV = importdata(monitorFile);
 delete(monitorFile);
 Hour = MyCSV.data(:,1); Second = MyCSV.data(:,2);
 subVoltages = MyCSV.data(:,3:2:7);
+subCurrents = MyCSV.data(:,11:2:15);
 
 figure(2);
 plot(Hour+shift+Second/3600,subVoltages(:,1)/((12.47e3)/sqrt(3)),'r-','LineWidth',2);
@@ -227,7 +235,9 @@ hold on
 plot(Hour+shift+Second/3600,subVoltages(:,3)/((12.47e3)/sqrt(3)),'b-','LineWidth',2);
 n=length(subVoltages(:,1));
 hold on
-if feeder_NUM == 1
+if feeder_NUM == 0
+    V_120=120.000002416772;
+elseif feeder_NUM == 1
     V_120=122.98315227577;
 elseif feeder_NUM == 2
     V_120=123.945461370235;
@@ -250,7 +260,7 @@ grid on;
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel('Hour','FontSize',12,'FontWeight','bold')
 ylabel('Voltage','FontSize',12,'FontWeight','bold')
-axis([0 Hour(end,1)+shift+Second(end,1)/3600 1.02 1.05]);
+axis([0 Hour(end,1)+shift+Second(end,1)/3600 V_DOWN-0.01 1.05]);
 %legend('V_{phA}-sim','V_{phB}-sim','V_{phC}-sim','V_{phA}-nonREG','V_{phB}-nonREG','V_{phC}-nonREG');
 legend('V_{phA}','V_{phB}','V_{phC}','Upper B.W.','Lower B.W.');
 title([strrep(fileNameNoPath,'_',' '),' Substation Voltages'],'FontSize',12,'FontWeight','bold')
@@ -258,15 +268,26 @@ saveas(gcf,[DSSfilename(1:end-4),'_Sub_Voltage.fig'])
 %
 %------------------
 figure(3);
+plot(Hour+shift+Second/3600,subCurrents);
+set(gca,'FontSize',10,'FontWeight','bold')
+xlabel('Hour','FontSize',12,'FontWeight','bold')
+ylabel('Current (A)','FontSize',12,'FontWeight','bold')
+
+
+%{
+figure(3);
 DSSfilename=ckt_direct_prime;
 fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
+if feeder_NUM == 0
+    plotMonitor(DSSCircObj,'
 if feeder_NUM == 1
-    plotMonitor(DSSCircObj,'259181477_Mon_PQ');
+    plotMonitor(DSSCircObj,'259355403_Mon_PQ');
 elseif feeder_NUM == 2
     plotMonitor(DSSCircObj,'259181477_Mon_PQ');
 end
 ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
 title([strrep(fileNameNoPath,'_',' '),' Closest Line Load'],'FontSize',12,'FontWeight','bold')
 %saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
+%}
 
     

@@ -1,0 +1,22 @@
+! ---------------------------------
+!! Converted from CYME 
+! DATE=June 04, 2015 at 12:44:40
+! CYME_VERSION=7.10
+! CYMDIST_REVISION=05
+! ---------------------------------
+! 
+Compile 'D:\NCSU Research\Duke Circuits\commonwealth\Master.DSS' 
+! 
+! Recommendation: Add an energymeter here to first line in feeder
+! New EnergyMeter.M1 LINE.____ 1  
+! 
+Solve
+! 
+!Show V LN Node
+! Some Optional commands
+/***** Begin Block Comment ******
+plot circuit Power    max=2000 n n C1=$00FF0000  1ph=3
+plot circuit Voltage Max=2000 dots=n labels=n subs=y C1=$00FF0000
+! 
+plot profile phases=all    ' Requires an energymeter
+*** End Block Comment  *****/
