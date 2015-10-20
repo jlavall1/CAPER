@@ -66,17 +66,21 @@ for i=1:12
     MAX.MONTH.KVAR.A(i,1) = 0;
     MAX.MONTH.KVAR.B(i,1) = 0;
     MAX.MONTH.KVAR.C(i,1) = 0;
+    k = 1;
     
     for j=sum+1:Points(i)+sum
         
         DOY = j/(24*60);
         HOUR = 24*(DOY-floor(DOY));
         MIN = 60*(HOUR-floor(HOUR));
+        
         if HOUR >= 10 && HOUR < 16    
             
-            WINDOW.KW.A(j,1) = FEEDER.kW.A(j,1);
-            WINDOW.KW.B(j,1) = FEEDER.kW.B(j,1);
-            WINDOW.KW.C(j,1) = FEEDER.kW.C(j,1);
+            
+            WINDOW.KW.A(k,1) = FEEDER.kW.A(j,1);
+            WINDOW.KW.B(k,1) = FEEDER.kW.B(j,1);
+            WINDOW.KW.C(k,1) = FEEDER.kW.C(j,1);
+            k = k+1;
             
             if FEEDER.kW.A(j,1) > MAX.MONTH.KW.A(i,1)
             MAX.MONTH.KW.A(i,1) = FEEDER.kW.A(j,1);
@@ -136,9 +140,24 @@ end
 
 %% Hours 10 - 16 window dataset
 
-[~,index] = sortrows([WINDOW.KW.A].'); 
-Sorted_data = WINDOW(index); %Lines_Distance ==> sorted column 
+[~,index] = sortrows([WINDOW.KW.A]); 
+WINDOW.KW.A(:,2) = WINDOW.KW.A(index); %Lines_Distance ==> sorted column 
 clear index
+%{
+h=1;
+g=1;
+for z=1:length(WINDOW.KW.A)
+if WINDOW.KW.A(z,2) < 500
+    low(h,1) = WINDOW.KW.A(z,2);
+    h=h+1;
+elseif WINDOW.KW.A(z,2) > 500 && WINDOW.KW.A(z,2) < 750
+    mid(g,1) = WINDOW.KW.A(z,2);
+    g=g+1;
+end
+end
+%}
+figure
+hist(WINDOW.KW.A(:,2))
 
 
 
