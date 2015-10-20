@@ -25,14 +25,12 @@ addpath(path);
 
 % Find the CAPER folder location (CAPER folder must be in MATLAB path
 rootlocation = textread('pathdef.m','%c')';
-rootlocation = regexp(rootlocation,'C:.*?CAPER\\','match');
-len = cellfun(@(x) numel(x), rootlocation);
-rootlocation = rootlocation(len==min(len));
-rootlocation = [cell2mat(rootlocation(1)),'03_OpenDSS_Circuits\'];
+rootlocation = regexp(rootlocation,'C:[^.]*?CAPER\\','match','once');
 
 filename = 0;
 while ~filename
-    [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',rootlocation);
+    [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
+        [rootlocation,'03_OpenDSS_Circuits\']);
 end
 
 % Setup the COM server
