@@ -6,7 +6,7 @@
 ! ---------------------------------
 ! 
 clear
-Compile 'D:\NCSU Research\Duke Circuits\Roxboro_2015_05_28\Master.DSS' 
+Compile 'Master.DSS' 
 ! 
 ! Recommendation: Add an energymeter here to first line in feeder
 New EnergyMeter.CircuitMeter LINE.PH997__2571841 terminal=1 option=R PhaseVoltageReport=yes
@@ -18,18 +18,10 @@ Disable Capacitor.*
 AllocateLoad
 AllocateLoad
 AllocateLoad
-Dump AllocationFactors
+!Dump AllocationFactors
 ! 
 ! Enable capacitors before solving
 Enable Capacitor.*
 ! 
 Solve
-! 
-Show V LN Node
-! Some Optional commands
-/***** Begin Block Comment ******
-plot circuit Power    max=2000 n n C1=$00FF0000  1ph=3
-plot circuit Voltage Max=2000 dots=n labels=n subs=y C1=$00FF0000
-! 
-plot profile phases=all    ' Requires an energymeter
-*** End Block Comment  *****/
+

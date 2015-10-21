@@ -1,0 +1,17 @@
+Sub Functions:
+
+deg2rad.m
+time2int.m
+
+Data Processing Algorithms:
+1) Create_IrradianceMeasurements_Datafile.m
+	OUTPUT:
+		M_PVSITE.mat (Struct with .DAY .kW  .Ctemp)
+		TIME_INT.mat (Reference array with DOY;MNTH;HR;MIN)
+2) Find_VI_CI_DARR.m:
+	OUTPUT:
+		M_PVSITE.mat (Struct with .DAY .kW  .Ctemp  .GHI  .RR_1MIN)
+		M_PVSITE_SC.mat (Matrix with DOY  MNTH  DAY  VI  CI  DARR)
+3) Pre_PV_Ramping.m:
+	OUTPUT:
+		M_PVSITE_SC.mat (Matrix with DOY  MNTH  DAY  VI  CI  DARR  RR_avg  RR_95th  RR_99th)
