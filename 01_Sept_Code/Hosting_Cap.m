@@ -2,12 +2,19 @@
 clear
 clc
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
-load reference_CKT7_Vpu.mat
+
 %Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 %
 %Find directory of Circuit:
-mainFile = GUI_openDSS_Locations();
+% 1. Obtain user's choice of simulation:
+gui_response = GUI_openDSS_Locations();
+mainFile = gui_response{1,1};
+feeder_NUM = gui_response{1,2};
+
+
+
+% 2. Compile the user selected circuit:
 DSSText.command = ['Compile "',mainFile];
 % 3. Solve the circuit. Call anytime you want the circuit to resolve     
 DSSText.command = 'solve'; 
@@ -38,6 +45,8 @@ DSSText.command ='solve loadmult=0.5';
 
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
+% 1. Load background files:
+MAT_FILE_LOAD
 %{
 thermal = zeros(length(Lines_Base),3); %LINE_RATING | MAX sim PHASE CURRENT | %%THERMAL
 ansi84 = zeros(length(Lines_Base),1);  %MAX sim PHASE VOLTAGE
@@ -62,7 +71,14 @@ Loads = getLoadInfo(DSSCircObj);
 
 % Step through every load & scale it down:
 %Get Capacitor Information
-%Capacitors = getCapacitorInfo(DSSCircObj);
+Capacitors = getCapacitorInfo(DSSCircObj);
+
+%xfmrNames = DSSCircuit.Transformers.AllNames;
+%lineNames = DSSCircuit.Lines.AllNames;
+%loadNames = DSSCircuit.Loads.AllNames;
+
+%%
+
 %Enable/Disable capacitor
 
 %{
@@ -131,9 +147,11 @@ end
 % toc
 %}
 
-%
-
-
+%{
+for 1:1:length(Capacitors)
+    DSSText.command = sprintf('edit capacitor.%s state=0',Capacitors(1,1).name);
+%DSSText.command = 'edit capacitor.cp-nr-613 state=0';
+%}
 % SOLVES THE HOSTING CAP!
 % Initiate PV Central station:
 %DSSText.command = 'new loadshape.PV_Loadshape npts=1 sinterval=60 csvfile="PVloadshape_Central.txt" Pbase=0.10 action=normalize';
@@ -146,6 +164,7 @@ DSSText.command = 'solve loadmult=0.5';
 % Set it as the active element and view its bus information
 
 %DSSCircuit.SetActiveElement('generator.pv');
+%}
 %{
 %---------------------------------------------
 %Iterate PV bus1 location throughout EPRI Circuit
@@ -327,19 +346,24 @@ while ii< length(Buses) %length(Buses)
             %tic
             Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
             Voltages=Voltages';
-            max_V = zeros(2,2); %[3ph_mx,index;1ph_mx,index]
+            max_V = zeros(3,2); %[Aph_mx,index;Bph_mx,index;Cph_mx,index]
             for i=1:1:length(Voltages)
                 %Obtain peak 1-ph max Bus Voltage:
-                if strcmp('1',ref_busVpu{i,2})==0 %This means that the voltage is on a 1ph bus:
+                if strcmp('1',ref_busVpu{i,2})==0       %ph A
                     if Voltages(i,1) > max_V(2,1);
-                        max_V(2,1) = Voltages(i,1);
-                        max_V(2,2) = i;
-                    end
-                elseif strcmp('3',ref_busVpu{i,2})==0
-                    if Voltages(i,1) > max_V(1,1);
                         max_V(1,1) = Voltages(i,1);
                         max_V(1,2) = i;
                     end
+                elseif strcmp('2',ref_busVpu{i,2})==0   %ph B
+                     if Voltages(i,1) > max_V(1,1); 
+                        max_V(2,1) = Voltages(i,1);
+                        max_V(2,2) = i;
+                     end
+                elseif strcmp('3',ref_busVpu{i,2})==0   %ph C
+                     if Voltages(i,1) > max_V(1,1);
+                        max_V(3,1) = Voltages(i,1);
+                        max_V(3,2) = i;
+                     end
                 end   
             end
             % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -357,6 +381,7 @@ while ii< length(Buses) %length(Buses)
             end
             %fDR_LD=DSSCircObj.ActiveCircuit.TotalPower;
             %This is to measure the feeder active load:
+            
             DSSCircuit.SetActiveElement('Line.333');
             %power = DSSCircuit.ActiveDSSElement.Powers; %complex
             power = DSSCircuit.ActiveCktElement.Powers;
@@ -435,7 +460,7 @@ while ii< length(Buses) %length(Buses)
             end
             %
             %Save results for this iteration:
-            RESULTS(jj,1:8)=[PV_size,max_V(1,1),max_V(2,1),max_C(1,1),max_C(2,1),PV_LOC,Capacitors(1,1).powerReactive,Capacitors(2,1).powerReactive]; %|PV_KW|maxV_3ph|maxV_1ph|maxC1|maxC2|bus_name|kVAR_CAP1|kVAR_CAP2
+            RESULTS(jj,1:8)=[PV_size,max(max_V(:,1)),max_V(2,1),max_C(1,1),max_C(2,1),PV_LOC,Capacitors(1,1).powerReactive,Capacitors(2,1).powerReactive]; %|PV_KW|maxV_3ph|maxV_1ph|maxC1|maxC2|bus_name|kVAR_CAP1|kVAR_CAP2
             %*** leave Columns 9,10 blank for post_Process.m ***
             RESULTS(jj,11)=fDR_LD; %Feeder 3phase load in kW
             RESULTS(jj,12)=max(PV_VOLT(1,1:3)); %Maximum voltage voltage
@@ -495,4 +520,5 @@ BusesCoords = reshape([Bus2add.coordinates],2,[])';
 %   copies of A are arranged in each dimension
 busHandle = plot(repmat(BusesCoords(:,2)',2,1),repmat(BusesCoords(:,1)',2,1),'ko','MarkerSize',10,'MarkerFaceColor','c','LineStyle','none','DisplayName','Bottleneck');
 legend([Handles.legendHandles,busHandle'],[Handles.legendText,'PV_{PCC} Locations'] )
+%}
 %}

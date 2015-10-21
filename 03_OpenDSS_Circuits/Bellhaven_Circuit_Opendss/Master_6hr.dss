@@ -1,0 +1,59 @@
+! ---------------------------------
+!! Converted from CYME 
+! DATE=June 04, 2015 at 12:43:37
+! CYME_VERSION=7.10
+! CYMDIST_REVISION=05
+!	BELLHAVEN	BELLHAVEN
+! ---------------------------------
+! 
+Clear    ! Always start the Master with a Clear command
+! 
+! Define the Circuit
+! 
+New Circuit.BELLHAVEN_RET_01291204 Bus1=BELLHAVEN_RET_01291204
+~ BasekV= 12.47  pu= 1.00000002013976  angle= 0 
+~ Z1=[ 0.035781 ,  0.939054 ] ! Actual ohms
+~ Z2=[ 0.035781 ,  0.939054 ]
+~ Z0=[ 0.030727 ,  0.902154 ]
+Redirect SourceRegulator.dss
+! 
+! Library Data
+! 
+Redirect Wiredata.dss
+Redirect linespacing.dss
+Redirect UGLineCodes.dss
+!
+! Declare loadshapes for 6hour simulation from 10:00 - 16:00.
+!
+New Loadshape.LS_PhaseA npts=360 minterval=1 mult=(file=LS1_PhaseA.txt) action=normalize
+New Loadshape.LS_PhaseB npts=360 minterval=1 mult=(file=LS1_PhaseB.txt) action=normalize
+New Loadshape.LS_PhaseC npts=360 minterval=1 mult=(file=LS1_PhaseC.txt) action=normalize
+! 
+! Circuit Element Data
+! 
+Redirect UGLines.dss
+Redirect LinesByPhase.dss
+Redirect Regulators.dss
+Redirect Loads_time.dss		!added _time
+Redirect Capacitors_CNTL.dss	!added _CNTL
+Redirect SwtControls.dss
+Redirect Reclosers.dss
+Redirect SectionalizerSettings.DSS
+Redirect FuseSettings.dss
+! 
+! Set the voltage bases
+! 
+Set voltagebases = [ 12.47 0.480, 0.208, 0.24, 0.12]
+CalcVoltageBases
+!
+! Declare where monitors will be going
+!
+Redirect Monitors_Bell.dss
+! 
+! Define the bus coordinates
+! 
+Buscoords Buscoords.CSV
+! 
+! Some command templates (commented out)
+! 
+

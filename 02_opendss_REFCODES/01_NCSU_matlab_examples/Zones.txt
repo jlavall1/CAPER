@@ -1,0 +1,24 @@
+%Code to identify loading zones based on impedece*************
+%Identify self impedence of each bus
+%Inserts a quantity into a dictionary
+%Write the dictionary to a text file
+
+
+
+
+Buses = getBusInfo(DSSCircObj)
+
+%Insert the zone index
+for ii=0:1:length(Buses) ;
+	Buses[ii].append(zoneIndex)
+	if((Buses[ii].Zsc1 >= 0) && (Buses[ii].Zsc1 <=5))
+		Buses[ii].zoneIndex = 1;
+	elif((Buses[ii].Zsc1 >5) && (Buses[ii].Zsc1 <=10))
+		Buses[ii].zoneIndex = 2;
+	elif((Buses[ii].Zsc1 10) && (Buses[ii].Zsc1 <=15))
+		Buses[ii].zoneIndex = 3;
+	else
+		printf("Sorry");
+end
+
+%Write the Bus name and Bus zone index into a file

@@ -1,0 +1,2 @@
+new loadshape.PV_Loadshape npts=43200 sinterval=2 csvfile="PVloadshape_7_5MW_Central.txt" Pbase=7.50 action=normalize
+new pvsystem.PV bus1=N292212 irradiance=1 phases=3 kv=34.50 kVA=8250.00 pf=1.00 pmpp=7500.00 duty=PV_Loadshape

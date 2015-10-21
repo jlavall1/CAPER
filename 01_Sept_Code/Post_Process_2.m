@@ -4,28 +4,62 @@
 %%
 clear
 clc
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
 %import numpy as np
 %import matplotlib.pyplot as plt
-
+ckt_num=menu('Which Circuit?','EPRI - 7','Commonwealth','Roxoboro');
+while ckt_num<1
+    ckt_num=menu('Which Circuit?','EPRI - 7','Commonwealth','Roxoboro');
+end
 % "PV size & distance effect on max bus voltage under 50% load"
-%load RESULTS_9_3_2015.mat
-load RESULTS_9_10_2015.mat
+if ckt_num == 1
+    %load RESULTS_9_3_2015.mat
+    %load RESULTS_9_10_2015.mat
+    load RESULTS_9_14_2015.mat
+    sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14_1');
+    load DISTANCE.mat
+    load config_LOADNAMES_CKT7.mat
+    load config_LINENAMES_CKT7.mat
+    load config_XFMRNAMES_CKT7.mat
+    load config_BUSNAMES_CKT7.mat
+    load config_LINESBASE_CKT7.mat
+    load config_LEGALBUSES_CKT7.mat
+    load config_LEGALDISTANCE_CKT7.mat
+    begin_M = 1001;
+    i = 102; %skip bus3 b/c distance to sub = 0km
+    ii = 102;
+    n = 2;
+    k = 2; %skip bus in sub.
+elseif ckt_num == 2
+    load RESULTS_9_18_2015.mat
+    sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_18');
+    load config_DISTANCE_CMNWLTH.mat
+    load config_LOADNAMES_CMNWLTH.mat
+    load config_LINENAMES_CMNWLTH.mat
+    load config_XFMRNAMES_CMNWLTH.mat
+    %BUSNAMES
+    load config_LINESBASE_CMNWLTH.mat
+    load config_LEGALBUSES_CMNWLTH.mat
+    load config_LEGALDISTANCE_CMNWLTH.mat
+    load config_BUSESBASE_CMNWLTH.mat
+    begin_M = 2;
+    i = 2; %skip bus3 b/c distance to sub = 0km
+    ii = 2;
+    n = 1;
+    k = 1; %use all --
+end
+    
 
 %sort_Results = xlsread('RESULTS_SORTED.xlsx');
-sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
-load DISTANCE.mat
-load config_LOADNAMES.mat
-load config_LINENAMES.mat
-load config_XFMRNAMES.mat
-load config_BUSNAMES.mat
-load config_LINESBASE.mat
-load config_LEGALBUSES.mat
-load config_LEGALDISTANCE.mat
+%sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
+
 %Find where bus hits legal bus & distance from substation:
-%j = 1;
+%{
+j = 1;
 %PV_LOC = zeros(202,2);
 %ii = 5;
-%{
+
 while ii< length(Buses) %length(Buses)
     s1 = Buses(ii,1).name;
     s2 = '.1.2.3';
@@ -46,34 +80,85 @@ while ii< length(Buses) %length(Buses)
     ii = ii + 1;
 end
 %}
-%
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%Investigate:
+ijj = 1;
+ij = 1;
+while ijj< length(Buses_Base) %length(Buses)
+    if Buses_Base(ijj,1).numPhases == 3 && Buses_Base(ijj,1).voltage > 6000
+        s1 = Buses_Base(ijj,1).name;
+        s2 = '.1.2.3';
+        s = strcat(s1,'.1.2.3');
+        for iii=1:1:length(Lines_Base)
+            if strcmp(Lines_Base(iii,1).bus1,s) == 1 %Bus name matches:
+                if Lines_Base(iii,1).numPhases == 3
+                    B1 = Lines_Base(iii,1).bus1;
+                    %take off node #'s (.1.2.3):
+                    B2 = regexprep({B1},'(\.[0-9]+)','');
+                    for jjj=1:1:length(Buses_Base)
+                        if strcmp(B2,Buses_Base(jjj,1).name)==1 %match!
+                            if Buses_Base(jjj,1).distance > 1e-4
+                                %Check to see if NOT in substation.
+                                PV_LOC = iii;
+                                Check_inv(ij,1) = PV_LOC;
+                                Check_inv(ij,2) = str2double(Buses_Base(jjj,1).name);
+                                Check_inv(ij,3) = Buses_Base(jjj,1).distance;
+                                ij = ij + 1;
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    ijj = ijj + 1;
+end
+ij = 1;
+for ijj=2:100:length(RESULTS)
+    Check_inv(ij,4) = RESULTS(ijj,6);
+    ij = ij + 1;
+    %disp(ijj)
+end
+
+
 %Add a distance from SUB column vector to RESULTS:
 j = 1;
 m = 1;
-n = 1;
-for i=1:1:20000
-    RESULTS(i,9) = legal_distances(n,1);
+%k = 2; %skip bus in sub.
+while ii < length(RESULTS)+1%20001
+    if ckt_num == 1
+        RESULTS(ii,9) = legal_distances(k,1);
+    elseif ckt_num == 2
+        %RESULTS(ii,9) = legal_distances{k,1};
+        for ijj=1:1:length(Check_inv)
+            if RESULTS(ii,6) == Check_inv(ijj,1)
+                RESULTS(ii,9) = Check_inv(ijj,3); %distances:
+            end
+        end
+        %RESULTS(ii,9) = Check_inv(k,3); %distances
+    end
     if m == 100
         %move onto next bus:
         m = 1;
-        n = n + 1;
+        k = k + 1;
     else
         m = m + 1;
     end  
+    ii = ii + 1;
 end
+%%
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+%{
 %Sort in ascending order in respect to BUS VOLT:
-VS_RESULTS = zeros(length(RESULTS),9);
-
-[VS_RESULTS(:,2),I]=sort(RESULTS(:,2),1,'descend');
+VS_RESULTS = zeros(length(RESULTS(102:20001,1)),9);
+[VS_RESULTS(:,2),I]=sort(RESULTS(102:20001,2),1,'descend');
 for i=1:1:length(VS_RESULTS)
-    for j=1:1:length(RESULTS)
+    for j=102:1:20001%length(RESULTS)
         if j==I(i,1) %if the index matches:
-            VS_RESULTS(i,1)=RESULTS(j,1);
-            VS_RESULTS(i,3)=RESULTS(j,3);
-            VS_RESULTS(i,6)=RESULTS(j,6);
-            VS_RESULTS(i,9)=RESULTS(j,9);
+            VS_RESULTS(i,1)=RESULTS(j,1); %PV_KW
+            VS_RESULTS(i,3)=RESULTS(j,2); %max_BusV
+            VS_RESULTS(i,6)=RESULTS(j,6); %max_%thermal
+            VS_RESULTS(i,9)=RESULTS(j,9); %
         end
     end
 end
@@ -130,9 +215,10 @@ y = VS_RESULTS(1:20000,2); %max BUS VOLTAGE
 x_pv = VS_RESULTS(1:20000,1)/1000; %PV SIZE
 %}
 %Other Method:
-x = RESULTS(1001:21000,9); %DISTANCE
-y = RESULTS(1001:21000,2); %max BUS VOLTAGE
-x_pv = RESULTS(1001:21000,1)/1000; %PV SIZE
+end_M = length(RESULTS);
+x = RESULTS(begin_M:end_M,9); %DISTANCE
+y = RESULTS(begin_M:end_M,2); %max BUS VOLTAGE
+x_pv = RESULTS(begin_M:end_M,1)/1000; %PV SIZE
 %}
 %
 colormap('jet');
@@ -144,27 +230,89 @@ c = colorbar('location','eastoutside');
 %p = [x,y,width]
 % pos1(1,1) = pos1(1,1);
 % set(c,'position',pos1);
-
+%
 %Edit title string:
 set(get(c,'title'),'string','PV Size (MW)','Rotation',90.0,'FontWeight','bold');
 pos = get(get(c,'title'),'position');
-pos(1,1) = pos(1,1)+2.5;
-pos(1,2) = pos(1,2)*0.5;
+pos(1,1) = pos(1,1)+50.5;
+pos(1,2) = pos(1,2)+120;
 set(get(c,'title'),'position',pos);
 
 
 %Other params:
 xlabel('PV Distance (km)','FontWeight','bold');
 ylabel('Max Bus Voltage in Each Scenerio(pu)','FontWeight','bold');
-axis([0 4.25 1.02 1.1]);
+if ckt_num == 1
+    axis([0 4.25 1.03 1.11]);
+    title('EPRI-CKT7','FontWeight','bold');
+elseif ckt_num == 2
+    axis([0 4.25 1.02 1.11]);
+    title('DEC-COMMONWEALTH','FontWeight','bold');
+end
 grid on
 set(gca,'FontWeight','bold');
 %%
 %
-%
-%Figure 6.
-    
-    
-    
+
+%Figure 8 "Max Allowed PV size at a single bus under 50% Load"
+%num_loc = 199;
+num_loc = length(legal_distances)-1;
+num_kws = 10e3/100;
+max_PVkw = zeros(199,4);
+%i = 102; %skip bus3 b/c distance to sub = 0km
+%n = 1;
+while i < length(x)+1%20002
+    location = RESULTS(i:i+99,1:9);
+    j = 1;
+    while j < 101 %100 different PV levels:
+        if location(j,2) > 1.05
+            max_PVkw(n,1) = location(j,1); %PV_KW
+            %max_PVkw(n,2) = str2double(cell2mat(legal_buses(n,1))); %BUS#
+            max_PVkw(n,2) = location(j,6); %Bus ref
+            %Store voltage of violation:
+            max_PVkw(n,3) = location(j,2); %max3phV
+            max_PVkw(n,4) = location(j,9); %km
+            
+            %Reset Variables;
+            n = n + 1;
+            j = 202;
+        elseif location(j,4) > 100
+            max_PVkw(n,1) = location(j,1); %PV_KW
+            %max_PVkw(n,2) = str2double(cell2mat(legal_buses(n,1))); %BUS#
+            max_PVkw(n,2) = location(j,6);
+            %max_PVkw(n,2) = legal_buses(n+1,1); %BUS#
+            %Store voltage of violation:
+            max_PVkw(n,3) = location(j,4); %max%THERM
+            max_PVkw(n,4) = location(j,9); %km
+            %Reset Variables;
+            n = n + 1;
+            j = 202;
+        elseif j == 100
+            max_PVkw(n,1) = location(j,1); %PV_KW
+            %max_PVkw(n,2) = str2double(cell2mat(legal_buses(n,1))); %BUS#
+            max_PVkw(n,2) = location(j,6); %Bus ref
+            %max_PVkw(n,2) = legal_buses(n+1,1); %BUS#
+            max_PVkw(n,4) = location(j,9); %km
+            n = n + 1;
+        end
+        j = j + 1;
+        display(n)
+    end
+    i = i + 100;
+end
+fig = fig + 1;
+figure(fig);
+scatter(max_PVkw(:,4),max_PVkw(:,1)) %distance VS maxKW
+if ckt_num == 1
+    axis([0 4 0 14000]);
+    title('EPRI - CKT7','FontWeight','bold');
+elseif ckt_num == 2
+    axis([0 5 0 14000]);
+    title('DEC2 - CMNWLTH','FontWeight','bold');
+end
+xlabel('PV Distance (km)','FontWeight','bold');
+ylabel('Max Central PV Size (kW)','FontWeight','bold');    
+grid on
+set(gca,'FontWeight','bold');    
     
 

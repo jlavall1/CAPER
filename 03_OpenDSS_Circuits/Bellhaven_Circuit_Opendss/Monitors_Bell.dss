@@ -1,0 +1,11 @@
+!Create monitors at all three-phase nodes in BELLHAVEN
+New Monitor.LTC element=Transformer.BELLHAVEN_RET_01291204 terminal=2 mode=2
+New Monitor.subVI element=Transformer.BELLHAVEN_RET_01291204 terminal=2 mode=0
+!
+! PCC upstream bus --
+!
+New Monitor.fdr_Bell_Mon_VI  element=line.258839833 term=1  mode=0 Residual=Yes
+New Monitor.fdr_Bell_Mon_PQ  element=line.258839833 term=1  mode=1 PPolar=No
+!
+! Three phase backbone monitors --
+!
