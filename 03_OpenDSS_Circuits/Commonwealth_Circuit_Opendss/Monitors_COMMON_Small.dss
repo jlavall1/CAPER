@@ -2,7 +2,6 @@
 ! Declare Energy meter to convert P.U. to kW & for load allocation --
 !
 New energymeter.fdr_common element=line.259355408 term=1 option=R action=C PhaseVolt=YES peakcurrent=(345.492818586166,362.418979727275,291.727365549702)
-!New energymeter.fdr_05410 element=line.259363665 term=1 option=R action=C PhaseVolt=YES peakcurrent=(196.597331353572,186.718068471483,238.090235458346)
 !
 ! PCC upstream bus --
 !

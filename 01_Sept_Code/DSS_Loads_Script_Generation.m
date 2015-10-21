@@ -4,7 +4,7 @@ clc
 close all
 fileloc_base='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
 %USER_INPUT --
-feeder_NUM=0;
+feeder_NUM=1;
 
 if feeder_NUM == 0
     fileloc=strcat(fileloc_base,'\Bellhaven_Circuit_Opendss');

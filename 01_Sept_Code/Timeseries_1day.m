@@ -160,9 +160,9 @@ end
 solarfilename = strcat(s,s_pv_txt);
 %solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
 %%
-DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
-DSSText.command = 'solve';
-cd(location);
+%DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
+%DSSText.command = 'solve';
+%cd(location);
 %---------------------------------
 %Run OpenDSS simulation for 6/24/168-hr at 1-minute resolution:
 %number==#solution to run; h==stepsize (s)
