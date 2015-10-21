@@ -3,7 +3,7 @@ clear
 clc
 close all
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
-
+tic
 %Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 DSSCircuit = DSSCircObj.ActiveCircuit;
@@ -132,7 +132,7 @@ elseif feeder_NUM == 1
     root1= 'Common';
 elseif feeder_NUM == 2
     %Flay 13.27km long --
-    root = '\Flay';
+    root = 'Flay';
     root1= 'Flay';
 end
 
@@ -156,16 +156,16 @@ end
 solarfilename = strcat(s,s_pv_txt);
 %solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
 %%
-%DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
-%DSSText.command = 'solve';
-%cd(location);
+DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
+DSSText.command = 'solve';
+cd(location);
 %---------------------------------
 %Run OpenDSS simulation for 6/24/168-hr at 1-minute resolution:
 %number==#solution to run; h==stepsize (s)
 DSSText.command = sprintf('Set mode=duty number=%s  hour=0  h=%s sec=0',num2str(FEEDER.SIM.npts),num2str(FEEDER.SIM.stepsize)); 
 DSSText.Command = 'Set Controlmode=TIME';
 DSSText.command = 'solve';
-
+toc
 
 %%
 %---------------------------------

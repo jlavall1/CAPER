@@ -28,14 +28,17 @@ if PV_Site == 1
     M_PVSITE_INFO.RR_distrib = M_SHELBY_INFO.RR_distrib;
     M_PVSITE_INFO.kW = M_SHELBY_INFO.kW;
     M_PVSITE_INFO.name = M_SHELBY_INFO.name;
+    M_PVSITE_INFO.VI = M_SHELBY_INFO.VI;
+    M_PVSITE_INFO.CI = M_SHELBY_INFO.CI;
     load M_SHELBY.mat
-
     for i=1:1:12
         M_PVSITE(i).DAY(:,:) = M_SHELBY(i).DAY(1:end-1,1:6);    
         M_PVSITE(i).RR_1MIN(:,:) = M_SHELBY(i).RR_1MIN(:,1:3);
         M_PVSITE(i).PU(:,:) = M_SHELBY(i).kW(1:end-1,1)./M_PVSITE_INFO.kW;
     end
-    clearvars M_SHELBY_INFO M_SHELBY
+    load M_SHELBY_SC.mat
+    M_PVSITE_SC = M_SHELBY_SC;
+    clearvars M_SHELBY_INFO M_SHELBY M_SHELBY_SC
 elseif PV_Site == 2
     %MURPHY
     load M_MURPHY_INFO.mat
@@ -122,27 +125,58 @@ end
 %For (1) Day simulation with spec. DARR category:
 %DOY = 50;
 if timeseries_span < 4
-    DOY = M_PVSITE_INFO.RR_distrib.Cat5(1,1);
-    CAT = 5;
+    DOY = 0;
+    %User wants:
+    CAT = 4;
+    VI_min = 10.5;
+    VI_max = 10.8;
+    
     if CAT == 1
-        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat1(:,1:7);
+        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat1(:,1:4);
     elseif CAT == 2
-        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat2(:,1:7);
+        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat2(:,1:4);
     elseif CAT == 3
-        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat3(:,1:7);
+        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat3(:,1:4);
     elseif CAT == 4
-        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat4(:,1:7);
+        RR_distrib = M_PVSITE_INFO.RR_distrib.Cat4(:,1:4);
+        %DOY = M_PVSITE_INFO.RR_distrib.Cat4(1,1);
     elseif CAT == 5
         RR_distrib = M_PVSITE_INFO.RR_distrib.Cat5(:,1:7);
+        %DOY = M_PVSITE_INFO.RR_distrib.Cat5(1,1);
     end
-    %Day selection:
+    %RR_distrib contains all DOYs within Specifc DARR Cat.
+    %   Now lets select a day within VI limits:
+    DOY_potent = zeros(length(RR_distrib(:,1)),3); %SAVE: DOY|VI|CI
+    ii = 1;
+    for j=1:1:length(RR_distrib(:,1))
+        VI = M_PVSITE_INFO.VI(RR_distrib(j,1),1);
+        if VI >= VI_min && VI <= VI_max
+            DOY_potent(ii,1)=RR_distrib(j,1); %DOY
+            DOY_potent(ii,2)=VI;
+            DOY_potent(ii,3)=M_PVSITE_INFO.CI(RR_distrib(j,1)); %CI
+            ii = ii + 1;
+        end
+    end
+    if ii == 1
+        fprintf('Did not find specificied Day\n');
+        DOY=RR_distrib(1,1);
+    end
+    %Find day with maximum CI:
+    max_CI=max(DOY_potent(1:ii-1,3));
+    for j=1:1:ii-1
+        if DOY_potent(j,3)==max_CI
+            DOY=DOY_potent(j,1);
+            fprintf('DOY to start sim will be %0.0f\n',DOY);
+        end
+    end
+    %
+    %Day selection search function:
     for i=1:1:length(RR_distrib(:,1))
         if RR_distrib(i,1) == DOY
             %Day match!
             MNTH = RR_distrib(i,2);
             DAY = RR_distrib(i,3);
         end
-        break
     end
 end
 %%
@@ -195,7 +229,7 @@ elseif timeseries_span == 5
     PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),6); %60sec. to 10sec dataset --   
     s_pv_txt = '\LS_PVannual.txt';
 end
-clearvars M_PVSITE RR_distrib
+clearvars M_PVSITE %RR_distrib
 %Write .csv file for simulation --
 s_pv = strcat(s,s_pv_txt);
 csvwrite(s_pv,PV_loadshape_daily)
