@@ -52,23 +52,24 @@ MAX.YEAR.KVAR.C = max(FEEDER.kVAR.C);
 months = [31,28,31,30,31,30,31,31,30,31,30,31];
 Points = zeros(12,1);
 Days = zeros(12,1);
+win_pts = zeros(12,1);
 
 tot = 0;
-
+k=1;
 % Finds maxes for each month
 for i=1:12
     
     Days(i) = months(i);
     Points(i) = Days(i)*60*24;
+    win_pts(i) = Days(i)*60*6;
     MAX.MONTH.KW.A(i,1) = 0;
     MAX.MONTH.KW.B(i,1) = 0;
     MAX.MONTH.KW.C(i,1) = 0;
     MAX.MONTH.KVAR.A(i,1) = -1000;
     MAX.MONTH.KVAR.B(i,1) = -1000;
     MAX.MONTH.KVAR.C(i,1) = -1000;
-    k = 1;
+    %k = 1;
     TOT = 0;
-    WINDOW.KW.A = 0;
     for j=tot+1:Points(i)+tot
         
         DOY = j/(24*60);
@@ -77,6 +78,7 @@ for i=1:12
         
         % Window of 10am - 4pm
         if HOUR >= 10 && HOUR < 16    
+            
             
             % First column is every data point within window
             WINDOW.KW.A(k,1) = FEEDER.kW.A(j,1);
@@ -176,18 +178,14 @@ for i=1:12
                 MAX.MONTH.KVAR.C(i,5) = floor(MIN);
 
             end
-            k = k+1;
+            k=k+1;
+            
             
         end
-                    % Fifth column is average per month
-            %%%%%%%%
-            %avg(i) = WINDOW.KW.A(TOT+1:k+TOT,1)
-            
-            WINDOW.KW.A(i,5) = mean(WINDOW.KW.A(TOT+1:k+TOT,1));
-            TOT = TOT+k;
+        
     end
-    
     tot = tot + Points(i);
+    
 end
 
 %% Hours 10 - 16 window dataset
@@ -211,26 +209,102 @@ clear index
 [~,index] = sortrows([WINDOW.KVAR.C]); 
 WINDOW.KVAR.C(:,2) = WINDOW.KVAR.C(index); %Lines_Distance ==> sorted column 
 clear index
-
-%{
-h=1;
-g=1;
-for z=1:length(WINDOW.KW.A)
-if WINDOW.KW.A(z,2) < 500
-    low(h,1) = WINDOW.KW.A(z,2);
-    h=h+1;
-elseif WINDOW.KW.A(z,2) > 500 && WINDOW.KW.A(z,2) < 750
-    mid(g,1) = WINDOW.KW.A(z,2);
-    g=g+1;
-end
-end
-%}
+%%
 figure
+subplot(1,3,1)
 hist(WINDOW.KW.A(:,2))
+hold on 
+hist(WINDOW.KW.B(:,2))
+title('kW - A')
+axis([0 1500 0 3000]);
+subplot(1,3,2)
+hist(WINDOW.KW.B(:,2))
+title('kW - B')
+axis([0 1500 0 3000]);
+subplot(1,3,3)
+hist(WINDOW.KW.C(:,2))
+title('kW - C')
+axis([0 1500 0 3000]);
+
+figure
+subplot(2,2,1)
+hist(WINDOW.KVAR.A(:,2))
+title('kVAR - A')
+subplot(2,2,2)
+hist(WINDOW.KVAR.B(:,2))
+title('kVAR - B')
+subplot(2,2,3)
+hist(WINDOW.KVAR.C(:,2))
+title('kVAR - C')
+%%
+for j=1:1:3
+    if j == 1
+        W = WINDOW.KW.A(:,2);
+    elseif j == 2
+        W = WINDOW.KW.B(:,2);
+    elseif j == 3
+        W = WINDOW.KW.C(:,2);
+    end
+    
+    y_bar = zeros(length(W)/30,1);
+    t = 0;
+    y_sum = 0;
+    for k=1:1:length(W)/30
+
+        for i=t+1:1:30+t
+            y = W(i);
+            y_sum = y_sum + y;
+            %disp(i)
+        end
+        y_bar(k) = y_sum/30;
+        t = t + 29;
+        y_sum = 0;
+        %now we have (1) 30min avg. kW
+    end
+    mu(j) = mean(y_bar(:))
+    %now lets find variance then s:
+    y_bar_p = y_bar(:)-mu(j);
+    sum = 0;
+    for i=1:1:length(y_bar)
+        sum = sum + (y_bar(i,1)-mu(j))^2;
+    end
+    var(j) = sum/(length(y_bar)-1)
+    %var = sum(y_bar(:))^2/(length(y_bar)-1)
+    SD(j) = sqrt(var(j))
+    %make norm distrib
+    %mu = 0;
+    x(:,j) = y_bar_p(:);
+    pd = makedist('Normal',0,SD(j));
+    y = pdf(pd,x(:,j));
+    y_mine(:,j) = y.';
+end
 
 
 
 
+% y_bar(k) = y;
+% mu = y/30;
+% var = sum(y_bar(k)-mu)^2/(i-1);
+% SD = sqrt(var);
+
+        %end
+        
+        %mu = y/i;
+        %var = sum(y_bar(k)-mu)^2/(i-1);
+        %SD = sqrt(var);
+
+%%
+figure
+
+
+plot(x(:,1),y_mine(:,1))
+hold on
+plot(x(:,2),y_mine(:,2))
+hold on
+plot(x(:,3),y_mine(:,3))
+hold off
+legend('A','B','C')
+%}
 
 
 
