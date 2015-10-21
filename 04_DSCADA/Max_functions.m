@@ -53,7 +53,7 @@ months = [31,28,31,30,31,30,31,31,30,31,30,31];
 Points = zeros(12,1);
 Days = zeros(12,1);
 
-sum = 0;
+tot = 0;
 
 % Finds maxes for each month
 for i=1:12
@@ -63,44 +63,75 @@ for i=1:12
     MAX.MONTH.KW.A(i,1) = 0;
     MAX.MONTH.KW.B(i,1) = 0;
     MAX.MONTH.KW.C(i,1) = 0;
-    MAX.MONTH.KVAR.A(i,1) = 0;
-    MAX.MONTH.KVAR.B(i,1) = 0;
-    MAX.MONTH.KVAR.C(i,1) = 0;
+    MAX.MONTH.KVAR.A(i,1) = -1000;
+    MAX.MONTH.KVAR.B(i,1) = -1000;
+    MAX.MONTH.KVAR.C(i,1) = -1000;
     k = 1;
-    
-    for j=sum+1:Points(i)+sum
+    TOT = 0;
+    WINDOW.KW.A = 0;
+    for j=tot+1:Points(i)+tot
         
         DOY = j/(24*60);
         HOUR = 24*(DOY-floor(DOY));
         MIN = 60*(HOUR-floor(HOUR));
         
+        % Window of 10am - 4pm
         if HOUR >= 10 && HOUR < 16    
             
-            
+            % First column is every data point within window
             WINDOW.KW.A(k,1) = FEEDER.kW.A(j,1);
             WINDOW.KW.B(k,1) = FEEDER.kW.B(j,1);
             WINDOW.KW.C(k,1) = FEEDER.kW.C(j,1);
-            WINDOW.KW.A(k,3) = 100e3;
-            WINDOW.KW.B(k,3) = 100e3;
-            WINDOW.KW.C(k,3) = 100e3;
+            WINDOW.KVAR.A(k,1) = FEEDER.kVAR.A(j,1);
+            WINDOW.KVAR.B(k,1) = FEEDER.kVAR.B(j,1);
+            WINDOW.KVAR.C(k,1) = FEEDER.kVAR.C(j,1);
             
-            if FEEDER.kW.A(j,1) < WINDOW.KW.A(k,3)
-                WINDOW.KW.A(k,3) = FEEDER.kW.A(j,1);
+         
+            WINDOW.KW.A(i,3) = 100e3;
+            WINDOW.KW.B(i,3) = 100e3;
+            WINDOW.KW.C(i,3) = 100e3;
+            WINDOW.KVAR.A(i,3) = 100e3;
+            WINDOW.KVAR.B(i,3) = 100e3;
+            WINDOW.KVAR.C(i,3) = 100e3;
+            
+            % Third column is min per month
+            if FEEDER.kW.A(j,1) < WINDOW.KW.A(i,3)
+                WINDOW.KW.A(i,3) = FEEDER.kW.A(j,1);
             end
-   
+            if FEEDER.kW.B(j,1) < WINDOW.KW.B(i,3)
+                WINDOW.KW.B(i,3) = FEEDER.kW.B(j,1);
+            end
+            if FEEDER.kW.C(j,1) < WINDOW.KW.C(i,3)
+                WINDOW.KW.C(i,3) = FEEDER.kW.C(j,1);
+            end            
+            if FEEDER.kVAR.A(j,1) < WINDOW.KVAR.A(i,3)
+                WINDOW.KVAR.A(i,3) = FEEDER.kVAR.A(j,1);
+            end            
+            if FEEDER.kVAR.B(j,1) < WINDOW.KVAR.B(i,3)
+                WINDOW.KVAR.B(i,3) = FEEDER.kVAR.B(j,1);
+            end
+            if FEEDER.kVAR.C(j,1) < WINDOW.KVAR.C(i,3)
+                WINDOW.KVAR.C(i,3) = FEEDER.kVAR.C(j,1);
+            end
+            
+            
             if FEEDER.kW.A(j,1) > MAX.MONTH.KW.A(i,1)
-            MAX.MONTH.KW.A(i,1) = FEEDER.kW.A(j,1);
-            WINDOW.KW.A(k,4) = FEEDER.kW.A(j,1);
-            MAX.MONTH.KW.A(i,2) = j;                        
-            MAX.MONTH.KW.A(i,3) = floor(DOY);
-            MAX.MONTH.KW.A(i,4) = floor(HOUR);     
-            MAX.MONTH.KW.A(i,5) = floor(MIN);
-            
+                MAX.MONTH.KW.A(i,1) = FEEDER.kW.A(j,1);
+                
+                % Fourth column is max per month
+                WINDOW.KW.A(i,4) = FEEDER.kW.A(j,1);
+                
+                MAX.MONTH.KW.A(i,2) = j;                        
+                MAX.MONTH.KW.A(i,3) = floor(DOY);
+                MAX.MONTH.KW.A(i,4) = floor(HOUR);     
+                MAX.MONTH.KW.A(i,5) = floor(MIN);
             end
-            WINDOW.KW.A(k,5) = (WINDOW.KW.A(k,3) + WINDOW.KW.A(k,4))/2;
+            
+
             
             if FEEDER.kW.B(j,1) > MAX.MONTH.KW.B(i,1)
                 MAX.MONTH.KW.B(i,1) = FEEDER.kW.B(j,1);
+                WINDOW.KW.B(i,4) = FEEDER.kW.B(j,1);
                 MAX.MONTH.KW.B(i,2) = j;           
                 MAX.MONTH.KW.B(i,3) = floor(DOY);
                 MAX.MONTH.KW.B(i,4) = floor(HOUR);     
@@ -109,6 +140,7 @@ for i=1:12
             end
             if FEEDER.kW.C(j,1) > MAX.MONTH.KW.C(i,1)
                 MAX.MONTH.KW.C(i,1) = FEEDER.kW.C(j,1);
+                WINDOW.KW.C(i,4) = FEEDER.kW.C(j,1);
                 MAX.MONTH.KW.C(i,2) = j;
                 MAX.MONTH.KW.C(i,3) = floor(DOY);
                 MAX.MONTH.KW.C(i,4) = floor(HOUR);     
@@ -119,6 +151,7 @@ for i=1:12
             % Concerns about vars - several months with 0
             if FEEDER.kVAR.A(j,1) > MAX.MONTH.KVAR.A(i,1)
                 MAX.MONTH.KVAR.A(i,1) = FEEDER.kVAR.A(j,1);
+                WINDOW.KVAR.A(i,4) = FEEDER.kVAR.A(j,1);
                 MAX.MONTH.KVAR.A(i,2) = j;         
                 MAX.MONTH.KVAR.A(i,3) = floor(DOY);
                 MAX.MONTH.KVAR.A(i,4) = floor(HOUR);     
@@ -127,6 +160,7 @@ for i=1:12
             end
             if FEEDER.kVAR.B(j,1) > MAX.MONTH.KVAR.B(i,1)
                 MAX.MONTH.KVAR.B(i,1) = FEEDER.kVAR.B(j,1);
+                WINDOW.KVAR.B(i,4) = FEEDER.kVAR.B(j,1);
                 MAX.MONTH.KVAR.B(i,2) = j;
                 MAX.MONTH.KVAR.B(i,3) = floor(DOY);
                 MAX.MONTH.KVAR.B(i,4) = floor(HOUR);     
@@ -135,6 +169,7 @@ for i=1:12
             end
             if FEEDER.kVAR.C(j,1) > MAX.MONTH.KVAR.C(i,1)
                 MAX.MONTH.KVAR.C(i,1) = FEEDER.kVAR.C(j,1);
+                WINDOW.KVAR.C(i,4) = FEEDER.kVAR.C(j,1);
                 MAX.MONTH.KVAR.C(i,2) = j;           
                 MAX.MONTH.KVAR.C(i,3) = floor(DOY);
                 MAX.MONTH.KVAR.C(i,4) = floor(HOUR);     
@@ -142,17 +177,41 @@ for i=1:12
 
             end
             k = k+1;
+            
         end
+                    % Fifth column is average per month
+            %%%%%%%%
+            %avg(i) = WINDOW.KW.A(TOT+1:k+TOT,1)
+            
+            WINDOW.KW.A(i,5) = mean(WINDOW.KW.A(TOT+1:k+TOT,1));
+            TOT = TOT+k;
     end
     
-    sum = sum + Points(i);
+    tot = tot + Points(i);
 end
 
 %% Hours 10 - 16 window dataset
 
+% Second column is data sorted low to high
 [~,index] = sortrows([WINDOW.KW.A]); 
 WINDOW.KW.A(:,2) = WINDOW.KW.A(index); %Lines_Distance ==> sorted column 
 clear index
+[~,index] = sortrows([WINDOW.KW.B]); 
+WINDOW.KW.B(:,2) = WINDOW.KW.B(index); %Lines_Distance ==> sorted column 
+clear index
+[~,index] = sortrows([WINDOW.KW.C]); 
+WINDOW.KW.C(:,2) = WINDOW.KW.C(index); %Lines_Distance ==> sorted column 
+clear index
+[~,index] = sortrows([WINDOW.KVAR.A]); 
+WINDOW.KVAR.A(:,2) = WINDOW.KVAR.A(index); %Lines_Distance ==> sorted column 
+clear index
+[~,index] = sortrows([WINDOW.KVAR.B]); 
+WINDOW.KVAR.B(:,2) = WINDOW.KVAR.B(index); %Lines_Distance ==> sorted column 
+clear index
+[~,index] = sortrows([WINDOW.KVAR.C]); 
+WINDOW.KVAR.C(:,2) = WINDOW.KVAR.C(index); %Lines_Distance ==> sorted column 
+clear index
+
 %{
 h=1;
 g=1;
