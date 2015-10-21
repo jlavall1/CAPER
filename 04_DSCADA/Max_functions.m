@@ -80,16 +80,25 @@ for i=1:12
             WINDOW.KW.A(k,1) = FEEDER.kW.A(j,1);
             WINDOW.KW.B(k,1) = FEEDER.kW.B(j,1);
             WINDOW.KW.C(k,1) = FEEDER.kW.C(j,1);
-            k = k+1;
+            WINDOW.KW.A(k,3) = 100e3;
+            WINDOW.KW.B(k,3) = 100e3;
+            WINDOW.KW.C(k,3) = 100e3;
             
+            if FEEDER.kW.A(j,1) < WINDOW.KW.A(k,3)
+                WINDOW.KW.A(k,3) = FEEDER.kW.A(j,1);
+            end
+   
             if FEEDER.kW.A(j,1) > MAX.MONTH.KW.A(i,1)
             MAX.MONTH.KW.A(i,1) = FEEDER.kW.A(j,1);
+            WINDOW.KW.A(k,4) = FEEDER.kW.A(j,1);
             MAX.MONTH.KW.A(i,2) = j;                        
             MAX.MONTH.KW.A(i,3) = floor(DOY);
             MAX.MONTH.KW.A(i,4) = floor(HOUR);     
             MAX.MONTH.KW.A(i,5) = floor(MIN);
             
             end
+            WINDOW.KW.A(k,5) = (WINDOW.KW.A(k,3) + WINDOW.KW.A(k,4))/2;
+            
             if FEEDER.kW.B(j,1) > MAX.MONTH.KW.B(i,1)
                 MAX.MONTH.KW.B(i,1) = FEEDER.kW.B(j,1);
                 MAX.MONTH.KW.B(i,2) = j;           
@@ -132,6 +141,7 @@ for i=1:12
                 MAX.MONTH.KVAR.C(i,5) = floor(MIN);
 
             end
+            k = k+1;
         end
     end
     
