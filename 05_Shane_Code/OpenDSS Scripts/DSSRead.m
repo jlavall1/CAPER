@@ -8,6 +8,7 @@ rootlocation = textscan(fid,'%c')';
 rootlocation = regexp(rootlocation{1}','C:[^.]*?CAPER\\','match','once');
 
 filename = 0;
+load('COMMONWEALTH_Location.mat');
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
         [rootlocation,'03_OpenDSS_Circuits\']);
@@ -30,13 +31,13 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 %    'Phase B [kW]','Phase B [kVAR]','Phase C [kW]','Phase C [kVAR]'};
 
 %% Read in Element Names
-% Get Node Names
+% Get Node Names and Find Source Nodes
 NODE.ID = DSSCircuit.AllBusNames;
-N = length(NODE.ID); % Number of Nodes
-
-% Find Source Nodes Name
 DER.ID = NODE.ID(DSSCircuit.AllBusDistances == 0);
+NODE.ID = NODE.ID(cellfun(@isempty,regexp(NODE.ID,'.*_reg'))); % Remove Regulator Nodes
 DER.ID = DER.ID(cellfun(@isempty,regexp(DER.ID,'.*_reg'))); % Remove Regulator Nodes
+N = length(NODE.ID); % Number of Nodes
+D = length(DER.ID); % Number of DERs
 
 % Get Section Names
 Lines = DSSCircuit.Lines.AllNames;
@@ -46,18 +47,39 @@ S = length(Lines);
 Loads = DSSCircuit.Loads.AllNames;
 L = length(Loads); % Number of Loads
 
+% Get Switch/Fuse Names
+Fuses       = DSSCircuit.Fuses.AllNames;
+Switches    = DSSCircuit.SwtControls.AllNames;
+
 %% Read in Section DATA (SECTION.ID, SECTION.IMPEDANCE, SECTION.CAPACITY, DSCS.SC, DSCS.SO)
 % Initialize Variables
-SECTION.ID = cell(S,2); % For Future: Have ID be section name and SECTION.NODE be node names
+SECTION.ID          = cell(S,2); % For Future: Have ID be section name and SECTION.NODE be node names
+SECTION.IMPEDANCE   = zeros(S,6);
+SECTION.CAPACITY    = zeros(S,3);
 for i = 1:S
     % Set Active Element
     DSSCircuit.SetActiveElement(['Line.',Lines{i}]);
+    DSSCircuit.Lines.Name = Lines{i};
     % to/from Node Names
-    Nodes = regexp(DSSCircuit.ActiveElement.BusNames,'^.*?(?=[.])','match'); % Remove Everything after Period
-    SECTION.ID{i,1} = Nodes{1}; SECTION.ID{i,2} = Nodes{2};
-    % Line Impedance
+    % Separate out Node IDs from Phase Indicators
+    [Nodes,Phases] = regexp(DSSCircuit.ActiveElement.BusNames,'^.*?(?=[.])','match','split');
+    SECTION.ID{i,1} = Nodes{1}{1}; SECTION.ID{i,2} = Nodes{2}{1};
+    % Find phases
+    Phases = regexp(Phases{1}{2},'\d','match');
+    NumPhases = length(Phases);
+    % Impedance Matricies
+    Rmatrix = reshape(DSSCircuit.Lines.Rmatrix,NumPhases,[]);
+    Xmatrix = reshape(DSSCircuit.Lines.Xmatrix,NumPhases,[]);
+    Imax = DSSCircuit.Lines.NormAmps;
+    for j = 1:NumPhases
+        phase = str2num(Phases{j}); %#ok<ST2NM>
+        % Line Impedance
+        SECTION.IMPEDANCE(i,2*phase-1) = Rmatrix(j,j);
+        SECTION.IMPEDANCE(i,2*phase)   = Xmatrix(j,j);
+        % Line Capacity
+        SECTION.CAPACITY(i,phase) = Imax;
+    end
     
-    % Line Capacity
     
     % Switching Constraints
     
@@ -87,12 +109,29 @@ for i = 1:L
     end
     
     
-    %NODE.PARENT = raw1(:,7:12);
 end
 
 %% Find Parent/Child Relationships for each node
-
-
+% Make Copy of Section IDs
+NODE.PARENT = cell(N,D);
+for i = 1:D
+    Sections = SECTION.ID;
+    % Find Section Connected to DER
+    SectionIndex = find(~cellfun(@isempty,regexp(Sections,DER.ID{i})));
+    
+    while ~isempty(Sections) % Loop until All sections have been assigned a Parent and Child
+        for j = 1:length(SectionIndex) % For all sections attached to given node
+            % Set Indexed Node as Parent of Paired Non-Indexed Node
+            NODE.PARENT{find(~cellfun(@isempty,regexp(NODE.ID,...
+                Sections{mod(SectionIndex,S),SectionIndex<S+1}))),i} = Sections{SectionIndex};
+            % Set Non-Indexed Node as Child of Section
+            
+            % Delete Section
+            Sections(mod(SectionIndex,S),:) = [];
+        end
+        
+    end
+end
 
 [capacity_kva,DER.ID,~] = xlsread(filename,'Nodes',['P2:Q',num2str(n+1)]);
 % Assuming a minimum power factor of 0.95
