@@ -2,6 +2,10 @@
 clear
 clc
 close all
+fid = fopen('pathdef.m');
+rootlocation = textscan(fid,'%c')';
+rootlocation = regexp(rootlocation{1}','C:[^.]*?CAPER\\','match','once');
+%%
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
 tic
 %Setup the COM server
