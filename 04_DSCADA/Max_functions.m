@@ -56,6 +56,8 @@ win_pts = zeros(12,1);
 
 tot = 0;
 k=1;
+s=1;
+w=1;
 % Finds maxes for each month
 for i=1:12
     
@@ -68,8 +70,15 @@ for i=1:12
     MAX.MONTH.KVAR.A(i,1) = -1000;
     MAX.MONTH.KVAR.B(i,1) = -1000;
     MAX.MONTH.KVAR.C(i,1) = -1000;
-    %k = 1;
-    TOT = 0;
+    
+    WINDOW.KW.A(i,3) = 100e3;
+    WINDOW.KW.B(i,3) = 100e3;
+    WINDOW.KW.C(i,3) = 100e3;
+    WINDOW.KVAR.A(i,3) = 100e3;
+    WINDOW.KVAR.B(i,3) = 100e3;
+    WINDOW.KVAR.C(i,3) = 100e3;
+
+
     for j=tot+1:Points(i)+tot
         
         DOY = j/(24*60);
@@ -77,8 +86,7 @@ for i=1:12
         MIN = 60*(HOUR-floor(HOUR));
         
         % Window of 10am - 4pm
-        if HOUR >= 10 && HOUR < 16    
-            
+        if HOUR >= 10 && HOUR < 16  
             
             % First column is every data point within window
             WINDOW.KW.A(k,1) = FEEDER.kW.A(j,1);
@@ -87,14 +95,69 @@ for i=1:12
             WINDOW.KVAR.A(k,1) = FEEDER.kVAR.A(j,1);
             WINDOW.KVAR.B(k,1) = FEEDER.kVAR.B(j,1);
             WINDOW.KVAR.C(k,1) = FEEDER.kVAR.C(j,1);
-            
-         
-            WINDOW.KW.A(i,3) = 100e3;
-            WINDOW.KW.B(i,3) = 100e3;
-            WINDOW.KW.C(i,3) = 100e3;
-            WINDOW.KVAR.A(i,3) = 100e3;
-            WINDOW.KVAR.B(i,3) = 100e3;
-            WINDOW.KVAR.C(i,3) = 100e3;
+
+            if DOY > 120 && DOY <= 304 %SUMMER
+                
+                % First column is every data point within window
+                WINDOW.SUM.KW.A(s,1) = FEEDER.kW.A(j,1);
+                WINDOW.SUM.KW.B(s,1) = FEEDER.kW.B(j,1);
+                WINDOW.SUM.KW.C(s,1) = FEEDER.kW.C(j,1);
+                WINDOW.SUM.KVAR.A(s,1) = FEEDER.kVAR.A(j,1);
+                WINDOW.SUM.KVAR.B(s,1) = FEEDER.kVAR.B(j,1);
+                WINDOW.SUM.KVAR.C(s,1) = FEEDER.kVAR.C(j,1);
+                s=s+1;
+                
+                 % Third column is min per month
+                if FEEDER.kW.A(j,1) < WINDOW.KW.A(i,3)
+                    WINDOW.SUM.KW.A(i,3) = FEEDER.kW.A(j,1);
+                end
+                if FEEDER.kW.B(j,1) < WINDOW.KW.B(i,3)
+                    WINDOW.SUM.KW.B(i,3) = FEEDER.kW.B(j,1);
+                end
+                if FEEDER.kW.C(j,1) < WINDOW.KW.C(i,3)
+                    WINDOW.SUM.KW.C(i,3) = FEEDER.kW.C(j,1);
+                end            
+                if FEEDER.kVAR.A(j,1) < WINDOW.KVAR.A(i,3)
+                    WINDOW.SUM.KVAR.A(i,3) = FEEDER.kVAR.A(j,1);
+                end            
+                if FEEDER.kVAR.B(j,1) < WINDOW.KVAR.B(i,3)
+                    WINDOW.SUM.KVAR.B(i,3) = FEEDER.kVAR.B(j,1);
+                end
+                if FEEDER.kVAR.C(j,1) < WINDOW.KVAR.C(i,3)
+                    WINDOW.SUM.KVAR.C(i,3) = FEEDER.kVAR.C(j,1);
+                end
+                
+            elseif DOY <= 120 || DOY > 304 %WINTER
+                
+                % First column is every data point within window
+                WINDOW.WINT.KW.A(w,1) = FEEDER.kW.A(j,1);
+                WINDOW.WINT.KW.B(w,1) = FEEDER.kW.B(j,1);
+                WINDOW.WINT.KW.C(w,1) = FEEDER.kW.C(j,1);
+                WINDOW.WINT.KVAR.A(w,1) = FEEDER.kVAR.A(j,1);
+                WINDOW.WINT.KVAR.B(w,1) = FEEDER.kVAR.B(j,1);
+                WINDOW.WINT.KVAR.C(w,1) = FEEDER.kVAR.C(j,1);
+                w=w+1;
+                
+                 % Third column is min per month
+                if FEEDER.kW.A(j,1) < WINDOW.KW.A(i,3)
+                    WINDOW.WINT.KW.A(i,3) = FEEDER.kW.A(j,1);
+                end
+                if FEEDER.kW.B(j,1) < WINDOW.KW.B(i,3)
+                    WINDOW.WINT.KW.B(i,3) = FEEDER.kW.B(j,1);
+                end
+                if FEEDER.kW.C(j,1) < WINDOW.KW.C(i,3)
+                    WINDOW.WINT.KW.C(i,3) = FEEDER.kW.C(j,1);
+                end            
+                if FEEDER.kVAR.A(j,1) < WINDOW.KVAR.A(i,3)
+                    WINDOW.WINT.KVAR.A(i,3) = FEEDER.kVAR.A(j,1);
+                end            
+                if FEEDER.kVAR.B(j,1) < WINDOW.KVAR.B(i,3)
+                    WINDOW.WINT.KVAR.B(i,3) = FEEDER.kVAR.B(j,1);
+                end
+                if FEEDER.kVAR.C(j,1) < WINDOW.KVAR.C(i,3)
+                    WINDOW.WINT.KVAR.C(i,3) = FEEDER.kVAR.C(j,1);
+                end
+            end
             
             % Third column is min per month
             if FEEDER.kW.A(j,1) < WINDOW.KW.A(i,3)
@@ -209,120 +272,9 @@ clear index
 [~,index] = sortrows([WINDOW.KVAR.C]); 
 WINDOW.KVAR.C(:,2) = WINDOW.KVAR.C(index); %Lines_Distance ==> sorted column 
 clear index
-%%
-figure
-subplot(1,3,1)
-hist(WINDOW.KW.A(:,2))
-hold on 
-hist(WINDOW.KW.B(:,2))
-title('kW - A')
-axis([0 1500 0 3000]);
-subplot(1,3,2)
-hist(WINDOW.KW.B(:,2))
-title('kW - B')
-axis([0 1500 0 3000]);
-subplot(1,3,3)
-hist(WINDOW.KW.C(:,2))
-title('kW - C')
-axis([0 1500 0 3000]);
 
-figure
-subplot(2,2,1)
-hist(WINDOW.KVAR.A(:,2))
-title('kVAR - A')
-subplot(2,2,2)
-hist(WINDOW.KVAR.B(:,2))
-title('kVAR - B')
-subplot(2,2,3)
-hist(WINDOW.KVAR.C(:,2))
-title('kVAR - C')
-%%
-for j=1:1:3
-    if j == 1
-        W = WINDOW.KW.A(:,2);
-    elseif j == 2
-        W = WINDOW.KW.B(:,2);
-    elseif j == 3
-        W = WINDOW.KW.C(:,2);
-    end
-    
-    y_bar = zeros(length(W)/30,1);
-    t = 0;
-    y_sum = 0;
-    for k=1:1:length(W)/30
-
-        for i=t+1:1:30+t
-            y = W(i);
-            y_sum = y_sum + y;
-            %disp(i)
-        end
-        y_bar(k) = y_sum/30;
-        t = t + 29;
-        y_sum = 0;
-        %now we have (1) 30min avg. kW
-    end
-    mu(j) = mean(y_bar(:))
-    %now lets find variance then s:
-    y_bar_p = y_bar(:)-mu(j);
-    sum = 0;
-    for i=1:1:length(y_bar)
-        sum = sum + (y_bar(i,1)-mu(j))^2;
-    end
-    var(j) = sum/(length(y_bar)-1)
-    %var = sum(y_bar(:))^2/(length(y_bar)-1)
-    SD(j) = sqrt(var(j))
-    %make norm distrib
-    %mu = 0;
-    x(:,j) = y_bar_p(:);
-    pd = makedist('Normal',0,SD(j));
-    y = pdf(pd,x(:,j));
-    y_mine(:,j) = y.';
-end
-
-
-
-
-% y_bar(k) = y;
-% mu = y/30;
-% var = sum(y_bar(k)-mu)^2/(i-1);
-% SD = sqrt(var);
-
-        %end
-        
-        %mu = y/i;
-        %var = sum(y_bar(k)-mu)^2/(i-1);
-        %SD = sqrt(var);
-
-%%
-figure
-
-
-plot(x(:,1),y_mine(:,1))
-hold on
-plot(x(:,2),y_mine(:,2))
-hold on
-plot(x(:,3),y_mine(:,3))
-hold off
-legend('A','B','C')
-%}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+filename = strcat(maindir,'\Feeder_Data\Annual_daytime_load.mat');
+delete(filename);
+save(filename,'WINDOW');
 
 
