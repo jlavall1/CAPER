@@ -59,8 +59,7 @@ for i = 1:S
     
     % Line Capacity
     
-    % Switching Constraints
-    
+    % Swith
 end
 
 %% Read in Node DATA (NODE.WEIGHT)
