@@ -1,0 +1,16 @@
+!Capacitors for Commonwealth 01311205
+New Capacitor.258903785 Phases= 3  Bus1=258903785 kvar= 300  kV= 12.47
+New Capacitor.258903900 Phases= 3  Bus1=258903900 kvar= 600  kV= 12.47
+
+!Cap Controls for Commonwealth:
+New Capcontrol.cap1Ctrl element=line.258903788 terminal=1 capacitor=258903785
+~ type=voltage ONsetting=120 OFFsetting=122 PTRatio= 1.11666666666667 
+~ VoltOverride=N Vmax = 116.000000 Vmin = 0
+
+New Capcontrol.cap2Ctrl element=line.258903903 terminal=1 capacitor=258903900
+~ type=voltage ONsetting=120 OFFsetting=122 PTRatio= 1.11666666666667 
+~ VoltOverride=N Vmax = 116.000000 Vmin = 0
+
+
+!258903788 for 300kVAR;
+!258903903 for 600kVAR;

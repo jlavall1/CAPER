@@ -1,0 +1,5 @@
+new loadshape.PV_Loadshape npts=43200 sinterval=2 mult=(file='PVloadshape_7_5MW_Central_P.txt') Qmult=(file='PVloadshape_7_5MW_Central_Q.txt') Pbase=7.50 Qbase=1 action=normalize
+New XYCurve.myvvc_curve npts=6 Yarray=(1  1  0  0 -1 -1) XArray=(0.9        0.95        0.98        1.02        1.05         1.1)
+new pvsystem.PV bus1=N292212 irradiance=1 phases=3 kv=34.50 pmpp=7500.00 kva=9000.00 duty=PV_Loadshape
+New InvControl.PVcontrol PVSystemList=pvsystem.PV mode=voltvar VVC_Curve1=myvvc_curve
+Set maxcontroliter=500

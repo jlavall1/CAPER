@@ -228,16 +228,21 @@ if FIG_type == 2 || FIG_type == 3
     %Plot Sampled Days to display VI from 1 --> 20.
     SAMPLES = zeros(2,20);
     if sim_type == 1 && PV_Site == 1
+        %Shelby -- 
         SAMPLES(1,:) = [10;1;2;12;12;5;1;11;6;11;9;5;3;10;9;8;4;7;7;5];
         SAMPLES(2,:) = [5; 28;22;21;9;12;17;30;9;18;13;1;4;15;7;12;9;29;17;19];
+        SAMPLES_1(1,:) = [10;7;10;5;7];
+        SAMPLES_1(2,:) = [5;31;9;29;17];
     elseif sim_type == 1 && PV_Site == 2
         %Change these --
         SAMPLES(1,:) = [3;11;2;9;5;12;7;7;4;12;4;11;10;10;8;5;12;1;6;2]; %Month
         SAMPLES(2,:) = [10;20;1;29;9;29;16;7;22;25;12;25;20;24;17;20;16;1;4;19]; %Day of Month   
     elseif sim_type == 1 && PV_Site == 3
         %Change these --
-        SAMPLES(1,:) = [4;12;5;1;6;8;9;5;9;8;6;3;1;8;3;5;2;9;6;8]; %Month
-        SAMPLES(2,:) = [18;20;24;7;18;24;8;7;27;2;28;31;29;6;5;16;2;4;12;5]; %Day of Month   
+        SAMPLES(1,:) = [4;2;5;1;6;8;9;5;9;8;6;3;1;8;3;5;2;9;6;8]; %Month
+        SAMPLES(2,:) = [16;16;24;7;18;24;8;7;27;2;28;31;29;6;5;16;2;4;12;5]; %Day of Month
+        SAMPLES_1(1,:) = [9;9];
+        SAMPLES_1(2,:) = [20;23];
     end
 
     fig = fig + 1;
@@ -255,10 +260,36 @@ if FIG_type == 2 || FIG_type == 3
         %Calc. Cleark Sky:
         plot(M_PVSITE(MNTH).GHI(time2int(D_S,0,0):time2int(D_S,23,59),3),'r-');
         title(sprintf('VI = %s   &   CI = %2.2f',num2str(n),CI),'FontSize',14)
+        axis([0 1440 0 1200]);
         set(gca,'YTickLabel',[]);
         set(gca,'XTickLabel',[]);
         n = n + 1;
     end
+    
+    %Now Lets plot Classifying Solar Days into 5 Categories:
+    %Clear:
+    day_type={'Clear','Overcast','Mild','Moderate','High'};
+    for n=1:1:5
+        %Create new fig:
+        fig = fig + 1;
+        figure(fig);
+        MNTH = SAMPLES_1(1,n);
+        D_S = SAMPLES_1(2,n);
+        DoY = M_PVSITE(MNTH).DAY(time2int(D_S,0,0),6);
+        CI = Solar_Constants(DoY,5);   %DoY | Month | DoM | VI | CI
+        VI = Solar_Constants(DoY,4);
+        %Global Measurements:
+        plot(M_PVSITE(MNTH).DAY(time2int(D_S,0,0):time2int(D_S,23,59),1),'b-','LineWidth',3);
+        hold on
+        %Calc. Cleark Sky:
+        plot(M_PVSITE(MNTH).GHI(time2int(D_S,0,0):time2int(D_S,23,59),3),'r-.','LineWidth',3);
+        title(sprintf('%s day with a VI of %0.2f and a CI of %0.2f',day_type{n},VI,CI));
+        axis([300 1330 0 1200]);
+        set(gca,'YTickLabel',[]);
+        set(gca,'XTickLabel',[]);
+        
+    end
+    
 end
 if FIG_type == 4
     %---------------------------------

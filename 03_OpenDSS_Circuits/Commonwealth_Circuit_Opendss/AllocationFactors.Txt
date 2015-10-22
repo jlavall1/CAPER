@@ -8,11 +8,19 @@ Load.260761148_3.CFactor=67.544
 Load.260761153_3.CFactor=67.544
 Load.258904090_2.CFactor=90.857
 Load.260761293_3.CFactor=67.544
-Load.258904010_2.CFactor=90.857
+Load.258904010_2_2.CFactor=90.857
 Load.699645825_3.CFactor=67.544
 Load.263530738_3.CFactor=67.544
 Load.258908375_1.CFactor=53.256
+<<<<<<< HEAD
 Load.258904020_2.CFactor=90.857
+=======
+<<<<<<< HEAD
+Load.258904020_2.CFactor=90.857
+=======
+Load.258904010_2.CFactor=90.857
+>>>>>>> origin/master
+>>>>>>> 01e80f4e5f58fffe08873a69035064c8589db5de
 Load.258904095_2.CFactor=90.857
 Load.699645905_1.CFactor=53.256
 Load.260761308_2.CFactor=90.857
