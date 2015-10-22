@@ -1,10 +1,25 @@
 clear
 clc
 close all
-
+load FLAY.mat
 load Annual_daytime_load.mat
 %%
-
+months = [31,28,31,30,31,30,31,31,30,31,30,31];
+tot=0;
+DOY = 1;
+points = zeros(12,1);
+WINDOW.MAX.KW.A(:,1) = 0;
+for i=1:1:12
+    points(i) = 60*24*months(i);
+    for jj = tot+1:points(i)+tot
+        
+        for DOY=1:1:365
+            if FLAY.kW.A(jj,1) < WINDOW.MAX.KW.A(DOY,1) 
+                WINDOW.MAX.KW.A(DOY,1) = FLAY.kW.A(jj,1);
+            end
+        end
+    end
+end
 % Data for P
 dataW = [WINDOW.WINT.KW.A(:,1); WINDOW.SUM.KW.A(:,1);...
         WINDOW.WINT.KW.B(:,1); WINDOW.SUM.KW.B(:,1);...
