@@ -2,18 +2,17 @@
 clear
 clc
 close all
-fid = fopen('pathdef.m');
-rootlocation = textscan(fid,'%c')';
-rootlocation = regexp(rootlocation{1}','C:[^.]*?CAPER\\','match','once');
-%%
-addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
+s_b ='C:\Users\jlavall\Documents\GitHub\CAPER';
+%addpath(strcat(s_b,'\01_Sept_Code'));
 tic
 %Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 DSSCircuit = DSSCircObj.ActiveCircuit;
 %Find directory of Circuit:
 % 1. Obtain user's choice of simulation:
+Import_PV_Farm_Datasets
 DER_Planning_GUI_1
+Delete_PV_Farm_Datasets
 gui_response = STRING_0;
 
 ckt_direct      = gui_response{1,1}; %entire directory string of where the cktfile is locatted
@@ -25,7 +24,10 @@ PV_Site         = gui_response{1,7}; %( 1 - 7) site#s;
 PV_Site_path    = gui_response{1,8}; %directory to PV kW file:
 timeseries_span = gui_response{1,9}; %(1) day ; (1) week ; (1) year ; etc.
 monthly_span    = gui_response{1,10};%(1) Month selected ; 1=JAN 12=DEC.
-%{
+DARR_category   = gui_response{1,11};%(1)Stabe through (5)Unstable.
+VI_USER_span    = gui_response{1,12};
+CI_USER_slt     = gui_response{1,13};
+%{ 
 STRING_0{1,1} = STRING;
 STRING_0{1,2} = ckt_num;
 STRING_0{1,3} = sim_type;
@@ -36,8 +38,10 @@ STRING_0{1,7} = PV_location;
 STRING_0{1,8} = PV_dir;
 STRING_0{1,9} = time_select;
 STRING_0{1,10} = mnth_select;
+STRING_0{1,11} = DARR_cat;
+STRING_0{1,12} = VI;
 %}
-
+%%
 % 1. Add paths of background files:
 path = strcat(base_path,'\01_Sept_Code');
 addpath(path);

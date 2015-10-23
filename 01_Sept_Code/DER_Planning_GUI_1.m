@@ -26,15 +26,27 @@ h.st(4) = uicontrol('style','text','unit','normalized','position',[0.01 0.608 0.
 h.st(5) = uicontrol('style','text','unit','normalized','position',[0.641 0.947 0.351 0.036],...
     'min',0,'max',1,'fontsize',8,'string','Center for Advanced Power Engineering  CAPER  2014-2016',...
     'backgroundColor',bk_color,'FontWeight','bold','FontAngle','italic');
-h.st(6) = uicontrol('style','text','unit','normalized','position',[0.486 0.815 0.157 0.036],...
+h.st(6) = uicontrol('style','text','unit','normalized','position',[0.486 0.83 0.157 0.036],...
     'min',0,'max',1,'fontsize',10,'string','(DARR) Daily Aggregate RR',...
     'backgroundColor',[0.973 0.973 0.973],'FontWeight','bold');
-h.st(7) = uicontrol('style','text','unit','normalized','position',[0.656 0.815 0.157 0.036],...
+h.st(7) = uicontrol('style','text','unit','normalized','position',[0.656 0.83 0.157 0.036],...
     'min',0,'max',1,'fontsize',10,'string','(VI) Variability Index',...
     'backgroundColor',[0.973 0.973 0.973],'FontWeight','bold');
-h.st(8) = uicontrol('style','text','unit','normalized','position',[0.827 0.815 0.157 0.036],...
+h.st(8) = uicontrol('style','text','unit','normalized','position',[0.827 0.83 0.157 0.036],...
     'min',0,'max',1,'fontsize',10,'string','(CI) Clearsky Index',...
     'backgroundColor',[0.973 0.973 0.973],'FontWeight','bold');
+h.st(9) = uicontrol('style','text','unit','normalized','position',[0.657 0.707 0.156 0.036],...
+    'min',0,'max',1,'fontsize',10,'string','Enter a number from 1 to 40.',...
+    'backgroundColor',bk_color,'FontAngle','italic');
+h.st(10) = uicontrol('style','text','unit','normalized','position',[0.717 0.759 0.041 0.029],...
+    'min',0,'max',1,'fontsize',12,'string','< VI <',...
+    'backgroundColor',bk_color,'FontWeight','bold');
+h.st(11) = uicontrol('style','text','unit','normalized','position',[0.68 0.792 0.036 0.029],...
+    'min',0,'max',1,'fontsize',12,'string','Lower:',...
+    'backgroundColor',bk_color);
+h.st(12) = uicontrol('style','text','unit','normalized','position',[0.759 0.792 0.036 0.029],...
+    'min',0,'max',1,'fontsize',12,'string','Upper:',...
+    'backgroundColor',bk_color);
 %%
 %Add all popupmenu:
 h.ppm(1) = uicontrol('style','popup','units','normalized','position',[0.185 0.746 0.235 0.237],...
@@ -128,27 +140,34 @@ h.push(1) = uicontrol('style','pushbutton','units','normalized',...
     'callback',@p_run,'fontsize',16,'ForegroundColor',[0.973 0.973 0.973],...
     'BackgroundColor',[0 1 0],'FontWeight','bold');
 h.push(2) = uicontrol('style','pushbutton','units','normalized',...
-    'position',[0.398 0.389 0.07 0.05],'string','Cancel',...
-    'callback',@p_cancel,'fontsize',16,'ForegroundColor',[0.502 0.502 0.502],...
+    'position',[0.398 0.389 0.07 0.05],'string','Clear',...
+    'callback',@p_reset,'fontsize',16,'ForegroundColor',[0.502 0.502 0.502],...
     'BackgroundColor',[0.941 0.941 0.941]);
 h.push(3) = uicontrol('style','pushbutton','units','normalized',...
     'position',[0.195 0.441 0.195 0.05],'string','Plot Selected Feeder',...
     'callback',@p_plot,'fontsize',16,'ForegroundColor',[1 1 1],...
     'BackgroundColor',[0.871 0.49 0]);
 h.push(4) = uicontrol('style','pushbutton','units','normalized',...
-    'position',[0.195 0.389 0.195 0.05],'string','Make Settings Default',...
-    'callback',@p_reset,'fontsize',16,'ForegroundColor',[1 1 1],...
+    'position',[0.195 0.389 0.195 0.05],'string','Plot Coefficient Distrib.',...
+    'callback',@p_plotSolar,'fontsize',16,'ForegroundColor',[1 1 1],...
     'BackgroundColor',[0.831 0.816 0.784]);
 %%
-%Add Sliders:
-%   for solar coefficients
-h.slide(1) = uicontrol('style','slider','units','normalized',...
-    'position',[0.486 0.767 0.157 0.024],'fontsize',8);
-h.slide(2) = uicontrol('style','slider','units','normalized',...
-    'position',[0.656 0.767 0.157 0.024],'fontsize',8);
-h.slide(3) = uicontrol('style','slider','units','normalized',...
-    'position',[0.827 0.767 0.157 0.024],'fontsize',8);
-
+%Add Listboxes:
+%   For DARR & CI choice
+h.lsbx(1) = uicontrol('style','listbox','units','normalized',...
+    'position',[0.491 0.65 0.149 0.172],'string',{'Category 1 - Stable Day','Category 2 - Slight',...
+    'Category 3 - Party Cloudy','Category 4 - Variable','Category 5 - Unstable'},...
+    'BackgroundColor',[1 1 1],'Fontsize',10);
+h.lsbx(2) = uicontrol('style','listbox','units','normalized',...
+    'position',[0.83 0.65 0.149 0.172],'string',{'Minimum Solar Energy','Medium Solar Energy',...
+    'Maximum Solar Energy'},'BackgroundColor',[1 1 1],'Fontsize',10);
+%%
+%Add Edit Boxes:
+%   For User's VI choice
+h.editbx(1) = uicontrol('style','edit','units','normalized',...
+    'position',[0.678 0.755 0.04 0.035],'string','','BackgroundColor',[1 1 1],'Fontsize',8);
+h.editbx(2) = uicontrol('style','edit','units','normalized',...
+    'position',[0.758 0.755 0.04 0.035],'string','','BackgroundColor',[1 1 1],'Fontsize',8);
 %%
 %Add axis plot:
 %   the axes for plotting selected plot
@@ -156,13 +175,13 @@ hPlotAxes=axes('Parent',h.f,'Units','normalized',...
     'HandleVisibility','callback','Position',[0.195 0.509 0.274 0.403],...
     'YTick',[],'XTick',[]);
 hPlotAxes1=axes('Parent',h.f,'Units','normalized',...
-    'HandleVisibility','callback','Position',[0.487 0.51 0.156 0.236],...
+    'HandleVisibility','callback','Position',[0.506 0.421 0.127 0.213],... %[0.487 0.4 0.156 0.236]
     'YTick',[],'XTick',[]);
 hPlotAxes2=axes('Parent',h.f,'Units','normalized',...
-    'HandleVisibility','callback','Position',[0.657 0.51 0.156 0.236],...
+    'HandleVisibility','callback','Position',[0.682 0.421 0.127 0.213],...
     'YTick',[],'XTick',[]);
 hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
-    'HandleVisibility','callback','Position',[0.828 0.51 0.156 0.236],...
+    'HandleVisibility','callback','Position',[0.848 0.421 0.127 0.213],...
     'YTick',[],'XTick',[]);
 
 %%
@@ -193,6 +212,7 @@ function m=p_run(varargin)
     end
     %}
     %%
+    CLOSE = 0;
     comp_choice = get(h.ppm(1),'Value');
     assignin('base', 'comp_choice', 1);
     %Update main directory to folder w/ circuits:
@@ -222,6 +242,7 @@ function m=p_run(varargin)
     if isempty(checked)
         checked = 'none';
         msgbox('You did not select the settings for your test. Please use checkboxes to select your test and click Okay.');
+        CLOSE = 1;
     elseif m ~= 0
     COUNT = 0;
         %See what circuit:
@@ -319,6 +340,7 @@ function m=p_run(varargin)
         end 
     else
         msgbox('no PV loadshape was selected');
+        CLOSE = 1;
     end
     %---- Timeseries analysis choices:
     time_type = get(h.ckbx(3),'Value');
@@ -335,7 +357,21 @@ function m=p_run(varargin)
         %1)  10:00 - 16:00
         %2)  (1) WEEK
     end
-
+    %---- Solar Coefficient Criteria:
+    DARR_cat = get(h.lsbx(1),'Value'); %DARR Category selection.
+    VI(1,1) = str2double(get(h.editbx(1),'String')); %min
+    if isnan(VI(1,1))
+        msgbox('Error: Enter Number in Lower Bound');
+        CLOSE = 1;
+    end
+    VI(1,2) = str2double(get(h.editbx(2),'String')); %max
+    if isnan(VI(1,2))
+        msgbox('Error: Enter Number in Upper Bound');
+        CLOSE = 1;
+    end
+    CI_cat = get(h.lsbx(2),'Value'); %CI Energy Level selection.
+    
+    
     %Check if multiple selections & then string combine if OK.
     if COUNT > 1
         msgbox('More than 1 feeder was selected.');
@@ -356,12 +392,17 @@ function m=p_run(varargin)
     STRING_0{1,8} = PV_dir;
     STRING_0{1,9} = time_select;
     STRING_0{1,10} = mnth_select;
+    STRING_0{1,11} = DARR_cat;
+    STRING_0{1,12} = VI;
+    STRING_0{1,13} = CI_cat;
     
     %assignin('base', 'cat_choice', cat_choice);
     %assignin('base', 'ckt_num', ckt_num);
     %assignin('base', 'STRING', STRING);
     assignin('base', 'STRING_0', STRING_0);
-    close(h.f);
+    %if CLOSE == 0
+        close(h.f);
+    %end
     end
 end
 function p_reset(varargin)
@@ -374,10 +415,6 @@ function p_reset(varargin)
     for i=1:1:length(cat2)
         set(h.ckbx(i),'Value',0);
     end
-end
-
-function p_cancel(varargin)
-    close(h.f);
 end
 
 function p_plot(varargin)
@@ -441,6 +478,7 @@ function p_plot(varargin)
         end
     end
     STRING = strcat(s1,s2);
+    axes(hPlotAxes);
     cla(hPlotAxes);
     [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
     mainFile = STRING;
@@ -450,6 +488,104 @@ function p_plot(varargin)
     set(hPlotAxes,'Ytick',[],'Xtick',[]);
     %title(titlestring);
 
+end
+
+function p_plotSolar(varargin)
+    %Extract computer directory:
+    comp_choice = get(h.ppm(1),'Value');
+    if comp_choice==1
+        %JML Home Desktop
+        s1 = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+        s_b = 'C:\Users\jlavall\Documents\GitHub\CAPER';
+    elseif comp_choice==2
+        %JML Laptop
+        s1 = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+        s_b = 'C:\Users\jlavall\Documents\GitHub\CAPER';
+    elseif comp_choice==3
+        %Brians Comp
+        s1 = 'C:\Users\Brian\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+        s_b = 'C:\Users\Brian\Documents\GitHub\CAPER';
+    elseif comp_choice==4
+        %RTPIS_7
+        s1 = 'C:';
+    elseif comp_choice==5
+        %Shane's Laptop:
+        s1 = 'C:\Users\Shane\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+        s_b = 'C:\Users\Shane\Documents\GitHub\CAPER';
+    end
+    %Find what the user selected for Irradiance Type:
+    PV_type = get(h.ckbx(2),'Value');
+    if PV_type == 1
+        PV_location = get(h.ppm(4),'Value');
+        if PV_location == 1
+            M_PVSITE_INFO=evalin('base','M_SHELBY_INFO');
+        elseif PV_location == 2
+            M_PVSITE_INFO = evalin('base','M_MURPHY_INFO');
+        elseif PV_location == 3
+            M_PVSITE_INFO = evalin('base','M_TAYLOR_INFO');
+        elseif PV_location == 4
+            M_PVSITE_INFO = evalin('base','M_MOCKS_INFO');
+        elseif PV_location == 5
+            M_PVSITE_INFO = evalin('base','M_AROCK_INFO');
+        elseif PV_location == 6
+            M_PVSITE_INFO = evalin('base','M_ODOM_INFO');
+        elseif PV_location == 7
+            M_PVSITE_INFO = evalin('base','M_MAYB_INFO');
+        end
+    else
+        msgbox('no PV loadshape was selected');
+    end
+    %----DARR
+    axes(hPlotAxes1);
+    cla(hPlotAxes1);
+    %plot(1,1,'r.');
+    X = 0:1:364;
+    %   Draw bands of categories --
+    Y = ones(1,365)*3;
+    plot(X,Y,'k-','LineWidth',3);
+    hold on
+    Y = ones(1,365)*13;
+    plot(X,Y,'k-','LineWidth',3);
+    hold on
+    Y = ones(1,365)*23;
+    plot(X,Y,'k-','LineWidth',3);
+    hold on
+    Y = ones(1,365)*33;
+    plot(X,Y,'k-','LineWidth',3);
+    hold on
+    %   Plot DARR for annual distribution --
+    plot(M_PVSITE_INFO.DARR,'r-','LineWidth',2)
+    hold off
+    xlabel('Day of Year (DoY)','fontweight','bold','fontsize',10);
+    ylabel('DARR','fontweight','bold','fontsize',10);
+    axis([0 365 0 80]);
+
+    %----VI
+    axes(hPlotAxes2);
+    cla(hPlotAxes2);
+    %plot(1,1,'b.');
+    hist(M_PVSITE_INFO.VI,20);
+    h_hist(2) = findobj(gca,'Type','patch');
+    set(h_hist(2),'FaceColor',[0 0.75 0.75]);
+    xlabel('VI Magnitude Group','fontweight','bold','fontsize',10);
+    ylabel('Number of Days','fontweight','bold','fontsize',10);
+    axis([0 40 0 100]);
+    
+    %----CI
+    axes(hPlotAxes3);
+    cla(hPlotAxes3);
+    %plot(1,1,'k.');
+    hist(M_PVSITE_INFO.CI,20,'g')
+    h_hist(3) = findobj(gca,'Type','patch');
+    set(h_hist(3),'FaceColor',[0.2 0.8 0.2]);
+    xlabel('CI Magnitude Group','fontweight','bold','fontsize',10);
+    ylabel('Number of Days','fontweight','bold','fontsize',10);
+    axis([0 1.1 0 40]);
+
+    set(hPlotAxes1,'Ytick',[0,20,40,60,80],'Xtick',[]);
+    %set(hPlotAxes2,'Ytick',[0,10,20,30,40],'Xtick',[]);
+    %set(hPlotAxes3,'Ytick',[],'Xtick',[]);
+    
 end
 
 

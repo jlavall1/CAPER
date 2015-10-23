@@ -126,21 +126,22 @@ end
 %DOY = 50;
 if timeseries_span < 4
     DOY = 0;
-    %User wants:
-    CAT = 4;
-    VI_min = 10.5;
-    VI_max = 10.8;
+    %User wants: %DARR_Category;VI_USER_span; CI_USER_slt
+    %VI_min = 10.5;
+    %VI_max = 10.8;
+    VI_min = VI_USER_span(1,1);
+    VI_max = VI_USER_span(1,2);
     
-    if CAT == 1
+    if DARR_category == 1
         RR_distrib = M_PVSITE_INFO.RR_distrib.Cat1(:,1:4);
-    elseif CAT == 2
+    elseif DARR_category == 2
         RR_distrib = M_PVSITE_INFO.RR_distrib.Cat2(:,1:4);
-    elseif CAT == 3
+    elseif DARR_category == 3
         RR_distrib = M_PVSITE_INFO.RR_distrib.Cat3(:,1:4);
-    elseif CAT == 4
+    elseif DARR_category == 4
         RR_distrib = M_PVSITE_INFO.RR_distrib.Cat4(:,1:4);
         %DOY = M_PVSITE_INFO.RR_distrib.Cat4(1,1);
-    elseif CAT == 5
+    elseif DARR_category == 5
         RR_distrib = M_PVSITE_INFO.RR_distrib.Cat5(:,1:7);
         %DOY = M_PVSITE_INFO.RR_distrib.Cat5(1,1);
     end
@@ -162,11 +163,19 @@ if timeseries_span < 4
         DOY=RR_distrib(1,1);
     end
     %Find day with maximum CI:
-    max_CI=max(DOY_potent(1:ii-1,3));
+    if CI_USER_slt == 1
+        select_CI=min(DOY_potent(1:ii-1,3));
+    elseif CI_USER_slt == 2
+        fprintf('still to come\n');
+    elseif CI_USER_slt == 3
+        select_CI=max(DOY_potent(1:ii-1,3));
+    end
+    
     for j=1:1:ii-1
-        if DOY_potent(j,3)==max_CI
+        if DOY_potent(j,3)==select_CI
             DOY=DOY_potent(j,1);
-            fprintf('DOY to start sim will be %0.0f\n',DOY);
+            fprintf('DOY to start QSTS Simulation will be %0.0f\n',DOY);
+            fprintf('With a VI=%0.2f & a CI=%0.2f\n',DOY_potent(j,2),DOY_potent(j,3));
         end
     end
     %
