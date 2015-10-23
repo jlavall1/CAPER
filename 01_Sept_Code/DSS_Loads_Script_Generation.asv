@@ -46,7 +46,7 @@ for i=1:1:length(CELL)
             k = strfind(CELL{i,j},'PF=');
             insert = CELL{i,j}(1:k-1);
             output_text{i,1}=strcat(output_text{i,1},sprintf(' %s',insert));
-            output_text{i,1}=strcat(output_text{i,1},sprintf(' %s','PF=0.98'));
+            
             
         else %j==4
             output_text{i,1}=strcat(output_text{i,1},sprintf('%s',num2str(CELL{i,j})));
