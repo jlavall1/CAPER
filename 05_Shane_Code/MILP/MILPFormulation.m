@@ -220,7 +220,7 @@ for i = 1:n
         Aeq_PVCC(m*n + m*(i-1)+k, (k+3*m+1)*n - 1 + i) = 1;     % coeff for Q_ik (13)
         Aeq_PVCC(m*n + m*(i-1)+k, (k    +1)*n - 1 + i) = -NODE.DEMAND(i,2); % coeff for c_ik (13)
         
-        children = find(ismember(NODE.PARENT(:,k),NODE.ID(i)));
+        children = find(~cellfun(@isempty,regexp(NODE.PARENT,NODE.ID(i))));
         for j = 1:length(children)
             Aeq_PVCC(      m*(i-1)+k, (k+2*m+1)*n - 1 + children(j)) = -1;     % coeff for P_jk (12)
             
@@ -231,7 +231,7 @@ end
 
 % (16.1) V_dd = V_R
 for k = 1:m
-    der = find(ismember(NODE.ID,DER.ID(k)));
+    der = find(~cellfun(@isempty,regexp(NODE.ID,DER.ID(k))));
     Aeq_PVCC(2*m*n + k, (k+4*m+1)*n - 1 + der) = 1;  % coeff for V_kk (16.1)
 end
 beq_PVCC(2*m*n+1:(2*n+1)*m) = Vref;   % b for (16.1)
