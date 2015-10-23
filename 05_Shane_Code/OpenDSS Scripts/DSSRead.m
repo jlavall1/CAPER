@@ -9,6 +9,7 @@ rootlocation = regexp(rootlocation{1}','C:[^.]*?CAPER\\','match','once');
 
 filename = 0;
 load('COMMONWEALTH_Location.mat');
+%load('FLAY_Location.mat');
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
         [rootlocation,'03_OpenDSS_Circuits\']);
@@ -63,7 +64,8 @@ for i = 1:S
     % to/from Node Names
     % Separate out Node IDs from Phase Indicators
     [Nodes,Phases] = regexp(DSSCircuit.ActiveElement.BusNames,'^.*?(?=[.])','match','split');
-    SECTION.ID{i,1} = Nodes{1}{1}; SECTION.ID{i,2} = Nodes{2}{1};
+    SECTION.ID{i,1} = regexprep(Nodes{1}{1},'_reg','');
+    SECTION.ID{i,2} = regexprep(Nodes{2}{1},'_reg','');
     % Find phases
     Phases = regexp(Phases{1}{2},'\d','match');
     NumPhases = length(Phases);
@@ -113,22 +115,59 @@ end
 
 %% Find Parent/Child Relationships for each node
 % Make Copy of Section IDs
-NODE.PARENT = cell(N,D);
+NODE.PARENT   = cell(N,D);
+SECTION.CHILD = cell(S,D);
 for i = 1:D
     Sections = SECTION.ID;
-    % Find Section Connected to DER
-    SectionIndex = find(~cellfun(@isempty,regexp(Sections,DER.ID{i})));
+    % Find Section Connected to DER (Starting Index)
+    CurrentIndex = find(~cellfun(@isempty,regexp(Sections,DER.ID{i})));
     
     while ~isempty(Sections) % Loop until All sections have been assigned a Parent and Child
-        for j = 1:length(SectionIndex) % For all sections attached to given node
-            % Set Indexed Node as Parent of Paired Non-Indexed Node
-            NODE.PARENT{find(~cellfun(@isempty,regexp(NODE.ID,...
-                Sections{mod(SectionIndex,S),SectionIndex<S+1}))),i} = Sections{SectionIndex};
-            % Set Non-Indexed Node as Child of Section
-            
-            % Delete Section
-            Sections(mod(SectionIndex,S),:) = [];
+        NewIndex = [];
+        % Update Loop Variable
+        [SectionLen,~] = size(Sections);
+        % Separate out Indexed Sections and remove from further consideration
+        CurrentSections =  Sections(mod(CurrentIndex-1,length(Sections))+1,:);
+        Sections(mod(CurrentIndex-1,length(Sections))+1,:) = [];
+        
+        [CurrentLen,~] = size(CurrentSections);
+        if CurrentLen == 0
+            warning('Did not finish assigning Parent/Child Relationships')
+            break
         end
+        for j = 1:CurrentLen % For all current sections
+            % Identifiy Child and Parent Nodes/Indicies (in NODE.ID)
+            ParentNode  = CurrentSections{j,(CurrentIndex(j)>SectionLen)+1};
+            ChildNode   = CurrentSections{j,(CurrentIndex(j)<SectionLen)+1};
+            ParentIndex = find(~cellfun(@isempty,regexp(NODE.ID,ParentNode)));
+            ChildIndex  = find(~cellfun(@isempty,regexp(NODE.ID,ChildNode)));
+            % Identify Section Index
+            SectionIndex = ~cellfun(@isempty,regexp(SECTION.ID,ParentNode))|...
+                ~cellfun(@isempty,regexp(SECTION.ID,ChildNode));
+            SectionIndex = find(SectionIndex(:,1)&SectionIndex(:,2));
+            if length(SectionIndex)>1
+                warning('Duplicate Sections: Index %d and Index %d',SectionIndex)
+            end
+            % Set Parent Node
+            NODE.PARENT{ChildIndex,i} = ParentNode;
+            
+            % Set Child Node
+            for k = 1:length(SectionIndex)
+                SECTION.CHILD{SectionIndex(k),i} = ChildNode;
+            end
+                        
+            %{
+            if strcmp(ChildNode,HaultNode)
+                find(~cellfun(@isempty,regexp(Sections,ChildNode)))
+                flag = 1;
+            end
+            %}
+            
+            % Find all sections where Child is Parent//Set as new Section Indicies
+            NewIndex = [NewIndex; find(~cellfun(@isempty,regexp(Sections,ChildNode)))];
+        end
+        CurrentIndex = NewIndex;
+        
         
     end
 end
