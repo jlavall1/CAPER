@@ -3,23 +3,111 @@ clc
 close all
 load FLAY.mat
 load Annual_daytime_load.mat
+fig = 0;
 %%
+t=0;
+%DATAKW = [FLAY.kW.A,FLAY.kW.B,FLAY.kW.C]
+tt =0;
+sum = 0;
+% Calculate the average by month for only 10am - 4pm
 months = [31,28,31,30,31,30,31,31,30,31,30,31];
-tot=0;
-DOY = 1;
-points = zeros(12,1);
-WINDOW.MAX.KW.A(:,1) = 0;
-for i=1:1:12
-    points(i) = 60*24*months(i);
-    for jj = tot+1:points(i)+tot
-        
-        for DOY=1:1:365
-            if FLAY.kW.A(jj,1) < WINDOW.MAX.KW.A(DOY,1) 
-                WINDOW.MAX.KW.A(DOY,1) = FLAY.kW.A(jj,1);
-            end
+for i=1:12
+    x=60*6*months(i);
+    for ii=tt+1:x+tt
+        if isnan(WINDOW.KW.A(ii,1))
+            %fprintf('fuck you\n');
+        else
+            sum = WINDOW.KW.A(ii,1) + sum;
         end
     end
+    tt = tt+x;
+    WINDOW.MONTH.KW.A(i,3) = sum/x;
+    sum = 0;
 end
+fig = fig + 1;
+figure(fig);
+n = 1;
+%p1=bar(WINDOW.MONTH.KW.A(1:12,3));
+
+%set(p1,'FaceColor','blue')
+%
+for n=1:1:12
+    if n < 5 || n > 10
+        p1 = bar(n,WINDOW.MONTH.KW.A(n,3));
+        set(p1,'FaceColor','blue');
+        %set(p1,'XTick',n);
+        
+    else
+        p2 = bar(n,WINDOW.MONTH.KW.A(n,3));
+        set(p2,'FaceColor','red');
+    end
+    hold on
+end
+%}
+title('Monthly Average Demand during Solar Peak Interval')
+xlabel('Month of Year','Fontsize',12,'FontWeight','bold');
+ylabel('Average Monthly Real Power (P_{avg}) [kW]','Fontsize',12,'FontWeight','bold');
+%axis([0 1200 1 12]);
+    
+
+
+
+%%
+%%%%% Add all three phases???
+for k=1:length(FLAY.kW.A)/1440
+    WINDOW.MONTH.KW.A(k,1) = 100000;
+    WINDOW.MONTH.KW.A(k,2) = 0;
+    WINDOW.MONTH.KW.B(k,1) = 100000;
+    WINDOW.MONTH.KW.B(k,2) = 0;
+    WINDOW.MONTH.KW.C(k,1) = 100000;
+    WINDOW.MONTH.KW.C(k,2) = 0;
+    for i=t+1:1440+t
+        
+        if FLAY.kW.A(i,1) < WINDOW.MONTH.KW.A(k,1)
+            WINDOW.MONTH.KW.A(k,1) = FLAY.kW.A(i,1);
+        end
+        if FLAY.kW.A(i,1) > WINDOW.MONTH.KW.A(k,2)
+            WINDOW.MONTH.KW.A(k,2) = FLAY.kW.A(i,1);
+        end
+        if FLAY.kW.B(i,1) < WINDOW.MONTH.KW.B(k,1)
+            WINDOW.MONTH.KW.B(k,1) = FLAY.kW.B(i,1);
+        end
+        if FLAY.kW.B(i,1) > WINDOW.MONTH.KW.B(k,2)
+            WINDOW.MONTH.KW.B(k,2) = FLAY.kW.B(i,1);
+        end
+        if FLAY.kW.C(i,1) < WINDOW.MONTH.KW.C(k,1)
+            WINDOW.MONTH.KW.C(k,1) = FLAY.kW.C(i,1);
+        end
+        if FLAY.kW.C(i,1) > WINDOW.MONTH.KW.C(k,2)
+            WINDOW.MONTH.KW.C(k,2) = FLAY.kW.C(i,1);
+        end
+    end
+    t = t+1399;
+end
+
+% Plot of Max and mins per day for all of 2014
+fig = fig + 1;
+figure(fig);
+plot(WINDOW.MONTH.KW.A(:,1))
+hold on
+plot(WINDOW.MONTH.KW.A(:,2))
+title('Daily Maximum and Minimum Annual Loadshape')
+xlabel('Day of Year (DOY)','Fontsize',12,'FontWeight','bold')
+ylabel('Real Power (P) [kW]','Fontsize',12,'FontWeight','bold')
+legend('Daily minimums','Daily maximums')
+
+
+% Plot of only points between 8am-6pm for all of 2014
+fig = fig + 1;
+figure(fig);
+hour = (8:18);
+bar(WINDOW.DAYTIME.KW.A(:,1))
+title('Cummulative Distribution during Solar Peak Interval')
+xlabel('Data Point','Fontsize',12,'FontWeight','bold')
+ylabel('Real Power (P) [kW]','Fontsize',12,'FontWeight','bold')
+
+%%
+
 % Data for P
 dataW = [WINDOW.WINT.KW.A(:,1); WINDOW.SUM.KW.A(:,1);...
         WINDOW.WINT.KW.B(:,1); WINDOW.SUM.KW.B(:,1);...
@@ -27,32 +115,32 @@ dataW = [WINDOW.WINT.KW.A(:,1); WINDOW.SUM.KW.A(:,1);...
 TOT = 0;    
 L = length(WINDOW.WINT.KW.A); 
 for i =TOT+1:1:L+TOT
-    charW(i) = {'W_A'};
+    charW(i) = {'Winter-A'};
 end
 TOT = TOT+L;
 L = length(WINDOW.SUM.KW.A); 
 for i =TOT+1:1:L+TOT
-    charW(i) = {'S_A'};
+    charW(i) = {'Summer-A'};
 end
 TOT = TOT+L;
 L = length(WINDOW.WINT.KW.B); 
 for i =TOT+1:1:L+TOT
-    charW(i) = {'W_B'};
+    charW(i) = {'Winter-B'};
 end
 TOT = TOT+L;
 L = length(WINDOW.SUM.KW.B); 
 for i =TOT+1:1:L+TOT
-    charW(i) = {'S_B'};
+    charW(i) = {'Summer-B'};
 end
 TOT = TOT+L;
 L = length(WINDOW.WINT.KW.C); 
 for i =TOT+1:1:L+TOT
-    charW(i) = {'W_C'};
+    charW(i) = {'Winter-C'};
 end
 TOT = TOT+L;
 L = length(WINDOW.SUM.KW.C); 
 for i =TOT+1:1:L+TOT
-    charW(i) = {'S_C'};
+    charW(i) = {'Summer-C'};
 end
 
 % Data for Q
@@ -62,98 +150,101 @@ dataV = [WINDOW.WINT.KVAR.A(:,1); WINDOW.SUM.KVAR.A(:,1);...
 TOT = 0;   
 L = length(WINDOW.WINT.KVAR.A); 
 for i =TOT+1:1:L+TOT
-    charV(i) = {'W_A'};
+    charV(i) = {'Winter-A'};
 end
 TOT = TOT+L;
 L = length(WINDOW.SUM.KVAR.A); 
 for i =TOT+1:1:L+TOT
-    charV(i) = {'S_A'};
+    charV(i) = {'Summer-A'};
 end
 TOT = TOT+L;
 L = length(WINDOW.WINT.KVAR.B); 
 for i =TOT+1:1:L+TOT
-    charV(i) = {'W_B'};
+    charV(i) = {'Winter-B'};
 end
 TOT = TOT+L;
 L = length(WINDOW.SUM.KVAR.B); 
 for i =TOT+1:1:L+TOT
-    charV(i) = {'S_B'};
+    charV(i) = {'Summer-B'};
 end
 TOT = TOT+L;
 L = length(WINDOW.WINT.KVAR.C); 
 for i =TOT+1:1:L+TOT
-    charV(i) = {'W_C'};
+    charV(i) = {'Winter-C'};
 end
 TOT = TOT+L;
 L = length(WINDOW.SUM.KVAR.C); 
 for i =TOT+1:1:L+TOT
-    charV(i) = {'S_C'};
+    charV(i) = {'Summer-C'};
 end
 
 % Box and Whisker plots
-figure(1)
+fig = fig + 1;
+figure(fig);
 boxplot(dataW,charW)
-title('Seasonal Comparison for Peak Solar Hours')
-xlabel('Season and Phase')
-ylabel('Load [kW]')
+title('Seasonal Comparison during Peak Solar Interval')
+xlabel('Season and Phase','Fontsize',12,'FontWeight','bold')
+ylabel('Load [kW]','Fontsize',12,'FontWeight','bold')
 
-figure(2)
+figure(4)
 boxplot(dataV,charV)
-title('Seasonal Comparison for Peak Solar Hours')
-xlabel('Season and Phase')
-ylabel('Load [kVAR]')
+title('Seasonal Comparison during Peak Solar Interval')
+xlabel('Season and Phase','Fontsize',12,'FontWeight','bold')
+ylabel('Load [kVAR]','Fontsize',12,'FontWeight','bold')
 
 %%
 
 % Histogram plots
-figure(3)
+fig = fig + 1;
+figure(fig);
 subplot(1,3,1)
 hist(WINDOW.KW.A(:,2))
 h = findobj(gca,'Type','patch');
 h.FaceColor = [0 0 1];
-title('kW - Phase A')
-xlabel('Range of kW')
-ylabel('Frequency of Range')
+%title('kW - Phase A')
+%xlabel('Range of kW','Fontsize',12,'FontWeight','bold')
+ylabel('Number of Occurrences','Fontsize',12,'FontWeight','bold')
 axis([0 1500 0 50000]);
 subplot(1,3,2)
 hist(WINDOW.KW.B(:,2))
 h = findobj(gca,'Type','patch');
 h.FaceColor = [0 0 1];
-title('kW - Phase B')
-xlabel('Range of kW')
-ylabel('Frequency of Range')
+title('Frequency during Peak Solar Interval')
+xlabel('Range of Power (P) [kW]','Fontsize',12,'FontWeight','bold')
+%ylabel('Frequency of Range','Fontsize',12,'FontWeight','bold')
 axis([0 1500 0 50000]);
 subplot(1,3,3)
 hist(WINDOW.KW.C(:,2))
 h = findobj(gca,'Type','patch');
 h.FaceColor = [0 0 1];
-title('kW - Phase C')
+%title('kW - Phase C')
 axis([0 1500 0 50000]);
-xlabel('Range of kW')
-ylabel('Frequency of Range')
+%xlabel('Range of kW','Fontsize',12,'FontWeight','bold')
+%ylabel('Frequency of Range','Fontsize',12,'FontWeight','bold')
 
-figure(4)
+fig = fig + 1;
+figure(fig);
 subplot(1,3,1)
 hist(WINDOW.KVAR.A(:,2))
 h = findobj(gca,'Type','patch');
 h.FaceColor = [1 0 0];
-title('kVAR - Phase A')
-xlabel('Range of kVAR')
-ylabel('Frequency of Range')
+%title('kVAR - Phase A')
+%xlabel('Range of kVAR','Fontsize',12,'FontWeight','bold')
+ylabel('Number of Occurrences','Fontsize',12,'FontWeight','bold')
 subplot(1,3,2)
 hist(WINDOW.KVAR.B(:,2))
 h = findobj(gca,'Type','patch');
 h.FaceColor = [1 0 0];
-title('kVAR - Phase B')
-xlabel('Range of kVAR')
-ylabel('Frequency of Range')
+title('Frequency during Peak Solar Interval')
+xlabel('Range of Power (Q) [kVAR]','Fontsize',12,'FontWeight','bold')
+%ylabel('Frequency of Range','Fontsize',12,'FontWeight','bold')
 subplot(1,3,3)
 hist(WINDOW.KVAR.C(:,2))
 h = findobj(gca,'Type','patch');
 h.FaceColor = [1 0 0];
-title('kVAR - Phase C')
-xlabel('Range of kVAR')
-ylabel('Frequency of Range')
+%title('kVAR - Phase C')
+%xlabel('Range of kVAR','Fontsize',12,'FontWeight','bold')
+%ylabel('Frequency of Range','Fontsize',12,'FontWeight','bold')
 
 %%
 
@@ -200,7 +291,8 @@ for j=1:1:3
     y_mine(:,j) = y.';
 end
 
-figure
+fig = fig + 1;
+figure(fig);
 
 plot(x(:,1),y_mine(:,1))
 hold on
