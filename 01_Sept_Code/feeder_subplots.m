@@ -4,6 +4,7 @@ clear
 clc
 
 str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\run_master_allocate.DSS';
+%str = 'C:\Users\jlavall\Desktop\Commonwealth_Circuit_Opendss\run_master_allocate.DSS';
 %str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss\run_master_allocate.DSS';
 %str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Run_Master_Allocate.DSS';
 %str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Bellhaven_Circuit_Opendss\run_master_allocate.DSS';
