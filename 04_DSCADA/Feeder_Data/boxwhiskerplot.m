@@ -5,23 +5,23 @@ load FLAY.mat
 load Annual_daytime_load.mat
 fig = 0;
 %%
-t=0;
+t_w=0;
 %DATAKW = [FLAY.kW.A,FLAY.kW.B,FLAY.kW.C]
 tt =0;
 sum = 0;
 % Calculate the average by month for only 10am - 4pm
 months = [31,28,31,30,31,30,31,31,30,31,30,31];
 for i=1:12
-    x=60*6*months(i);
-    for ii=tt+1:x+tt
+    x_w=60*6*months(i);
+    for ii=tt+1:x_w+tt
         if isnan(WINDOW.KW.A(ii,1))
             %fprintf('fuck you\n');
         else
             sum = WINDOW.KW.A(ii,1) + sum;
         end
     end
-    tt = tt+x;
-    WINDOW.MONTH.KW.A(i,3) = sum/x;
+    tt = tt+x_w;
+    WINDOW.MONTH.KW.A(i,3) = sum/x_w;
     sum = 0;
 end
 fig = fig + 1;
@@ -61,7 +61,7 @@ for k=1:length(FLAY.kW.A)/1440
     WINDOW.MONTH.KW.B(k,2) = 0;
     WINDOW.MONTH.KW.C(k,1) = 100000;
     WINDOW.MONTH.KW.C(k,2) = 0;
-    for i=t+1:1440+t
+    for i=t_w+1:1440+t_w
         
         if FLAY.kW.A(i,1) < WINDOW.MONTH.KW.A(k,1)
             WINDOW.MONTH.KW.A(k,1) = FLAY.kW.A(i,1);
@@ -82,7 +82,7 @@ for k=1:length(FLAY.kW.A)/1440
             WINDOW.MONTH.KW.C(k,2) = FLAY.kW.C(i,1);
         end
     end
-    t = t+1399;
+    t_w = t_w+1399;
 end
 
 % Plot of Max and mins per day for all of 2014
@@ -248,14 +248,96 @@ h.FaceColor = [1 0 0];
 
 %%
 
+% Plotting seasonal with std. dev.
+
+W = [WINDOW.WINT.KW.A;WINDOW.WINT.KW.B;WINDOW.WINT.KW.C];
+S = [WINDOW.SUM.KW.A;WINDOW.SUM.KW.B;WINDOW.SUM.KW.C];
+y_bar_w = zeros(length(W)/30,1);
+y_bar_s = zeros(length(S)/30,1);
+t_w = 0;
+y_sum_w = 0;
+t_s = 0;
+y_sum_s = 0;
+
+for k=1:1:length(W)/30
+    for i=t_w+1:1:30+t_w
+        y_w = W(k);
+        y_sum_w = y_sum_w + y_w;
+        %disp(i)
+    end
+    y_bar_w(k) = y_sum_w/30;
+    t_w = t_w + 29;
+    y_sum_w = 0;
+    %now we have (1) 30min avg. kW
+end
+
+mu_w = mean(y_bar_w(:))
+%now lets find variance then s:
+y_bar_p_w = y_bar_w(:)-mu_w;
+sum = 0;
+for i=1:1:length(y_bar_w)
+    sum = sum + (y_bar_w(i,1)-mu_w)^2;
+end
+var_w = sum/(length(y_bar_w)-1)
+%var = sum(y_bar(:))^2/(length(y_bar)-1)
+SD_w = sqrt(var_w)
+%make norm distrib
+%mu = 0;
+x_w = y_bar_p_w(:);
+pd_w = makedist('Normal',mu_w,SD_w);
+y_w = pdf(pd_w,x_w);
+%y_mine(:) = y.';
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%{
+for k=1:1:length(S)/30
+    for i=t_s+1:1:30+t_s
+        y_s = S(k);
+        y_sum_s = y_sum_s + y_s;
+        %disp(i)
+    end
+    y_bar_s(k) = y_sum_s/30;
+    t_s = t_s + 29;
+    y_sum_s = 0;
+    %now we have (1) 30min avg. kW
+end
+
+mu_s = mean(y_bar_s(:))
+%now lets find variance then s:
+y_bar_p_s = y_bar_s(:)-mu_s;
+sum = 0;
+for i=1:1:length(y_bar_s)
+    sum = sum + (y_bar_s(i,1)-mu_s)^2;
+end
+var_s = sum/(length(y_bar_s)-1)
+%var = sum(y_bar(:))^2/(length(y_bar)-1)
+SD_s = sqrt(var_s)
+%make norm distrib
+%mu = 0;
+x_s = y_bar_p_s(:);
+pd_s = makedist('Normal',mu_s,SD_s);
+y_s = pdf(pd_s,x_s);
+%y_mine(:) = y.';
+%}
+fig = fig + 1;
+figure(fig);
+plot(y_bar_w)
+hold on
+plot(y_bar_w+SD_w)
+plot(y_bar_w-SD_w)
+
+
+
+%%
+%{
 % Normal Distribution Plot
 for j=1:1:3
     if j == 1
-        W = WINDOW.KW.A(:,2);
+        W = WINDOW.WINT.KW.A(:,2);
     elseif j == 2
-        W = WINDOW.KW.B(:,2);
+        W = WINDOW.WINT.KW.B(:,2);
     elseif j == 3
-        W = WINDOW.KW.C(:,2);
+        W = WINDOW.WINT.KW.C(:,2);
     end
     
     y_bar = zeros(length(W)/30,1);
@@ -304,6 +386,8 @@ title('Normal Distribution of Three Phases Power')
 xlabel('\mu')
 ylabel('Percentage')
 legend('A','B','C')
+%}
+
 
 
 
