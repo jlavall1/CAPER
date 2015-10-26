@@ -5,8 +5,8 @@ New energymeter.fdr_common element=line.259355408 term=1 option=R action=C Phase
 !
 ! PCC upstream bus --
 !
-New Monitor.LTC element=Transformer.COMMONWEALTH_RET_01311205 terminal=2 mode=2
-New Monitor.subVI element=Transformer.COMMONWEALTH_RET_01311205 terminal=2 mode=0
+New Monitor.LTC element=Transformer.COMMONWEALTH_RET_01311205_1 terminal=2 mode=2
+New Monitor.subVI element=Transformer.COMMONWEALTH_RET_01311205_1 terminal=2 mode=0
 New Monitor.fdr_Common_Mon_VI  element=line.259355408 term=1  mode=0 Residual=Yes
 New Monitor.fdr_Common_Mon_PQ  element=line.259355408 term=1  mode=1 PPolar=No
 !

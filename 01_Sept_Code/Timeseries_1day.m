@@ -280,6 +280,7 @@ plot(Hour+shift+Second/3600,subCurrents);
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel('Hour','FontSize',12,'FontWeight','bold')
 ylabel('Current (A)','FontSize',12,'FontWeight','bold')
+legend('I_{A}','I_{B}','I_{C}');
 
 
 %{

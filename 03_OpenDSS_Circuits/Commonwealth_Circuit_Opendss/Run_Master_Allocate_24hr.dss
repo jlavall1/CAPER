@@ -7,7 +7,7 @@
 ! ---------------------------------
 ! 
 clear
-Compile 'Master_6hr.DSS'
+Compile 'Master_24hr.DSS'
 !
 ! Add energy meter to first line of feeder
 !
@@ -27,4 +27,3 @@ Enable Capacitor.*
 ! 
 Solve
 Show Eventlog
-

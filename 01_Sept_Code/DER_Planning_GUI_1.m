@@ -190,9 +190,13 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
     set(h.ckbx(3),'Value',1);   %timeseries simulation  -- ON
     set(h.rb(2),'Value',1);     %ckt choice             -- Flay(3) Common(2)
-    set(h.ppm(5),'Value',1);    %timeseries DROPDOWN    -- daytime,1 day,2 week,3 1mnth,4
+    set(h.ppm(5),'Value',2);    %timeseries DROPDOWN    -- daytime,1 day,2 week,3 1mnth,4
     set(h.ppm(6),'Value',2);    %What month DROPDOWN    -- FEB (29d)
     
+    set(h.lsbx(1),'Value',4);   %DARR Category 4
+    set(h.lsbx(2),'Value',3);   %Max Solar Energy
+    set(h.editbx(1),'String','10.5');
+    set(h.editbx(2),'String','10.8');
     
     uiwait(gcf);
 %%

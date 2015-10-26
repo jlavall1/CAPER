@@ -1,0 +1,10 @@
+// *****************************
+// Regulator definitions converted from CYME
+// This involves changing the name of a bus in the Section
+// *****************************
+New Transformer.290683550A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[290683552_Reg.1 290683552.1] kvas=[3520.44 3520.44] kVs=[7.620000 7.620000]
+New RegControl.290683550A Transformer=290683550A Winding=2 Vreg=124 Band=2.000000 PTratio= 60  CTPrim= 350  R=0 X=0 
+New Transformer.290683550B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[290683552_Reg.2 290683552.2] kvas=[3520.44 3520.44] kVs=[7.620000 7.620000]
+New RegControl.290683550B Transformer=290683550B Winding=2 Vreg=124 Band=2.000000 PTratio= 60  CTPrim= 350  R=0 X=0 
+New Transformer.290683550C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[290683552_Reg.3 290683552.3] kvas=[3520.44 3520.44] kVs=[7.620000 7.620000]
+New RegControl.290683550C Transformer=290683550C Winding=2 Vreg=124 Band=2.000000 PTratio= 60  CTPrim= 350  R=0 X=0 

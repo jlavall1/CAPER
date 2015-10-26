@@ -1,0 +1,56 @@
+! ---------------------------------
+!! Converted from CYME 
+! DATE=June 04, 2015 at 12:44:40
+! CYME_VERSION=7.10
+! CYMDIST_REVISION=05
+!       COMMONWEALTH     COMMONWEALTH     COMMONWEALTH
+! ---------------------------------
+! 
+!Clear    ! Always start the Master with a Clear command
+! 
+! Define the Circuit
+! 
+New Circuit.COMMONWEALTH_RET_01311205 Bus1=COMMONWEALTH_RET_01311205
+~ BasekV= 12.47  pu= 1.02485960229808  angle= 0 
+~ Z1=[ 0.034212 ,  0.649771 ] ! Actual ohms
+~ Z2=[ 0.034212 ,  0.649771 ]
+~ Z0=[ 0.024887 ,  0.605013 ]
+Redirect SourceRegulator.dss  !Just added _3ph
+! 
+! Library Data
+! 
+Redirect Wiredata.dss
+Redirect linespacing.dss
+Redirect UGLineCodes.dss
+!
+! Declare loadshapes for 24hr sim
+!
+New Loadshape.LS_PhaseA npts=1440 minterval=1 mult=(file=LS2_PhaseA.txt) action=normalize
+New Loadshape.LS_PhaseB npts=1440 minterval=1 mult=(file=LS2_PhaseB.txt) action=normalize
+New Loadshape.LS_PhaseC npts=1440 minterval=1 mult=(file=LS2_PhaseC.txt) action=normalize
+! 
+! Circuit Element Data
+! 
+Redirect UGLines.dss
+Redirect LinesByPhase.dss
+Redirect Regulators.dss
+Redirect Loads_try_smallAmount.DSS 	!Just changed to _time.dss
+Redirect Capacitors.dss 	!Just changed to _CLRL.dss
+Redirect SwtControls.dss
+Redirect Reclosers.dss
+Redirect SectionalizerSettings.DSS
+Redirect FuseSettings.dss
+! 
+! Set the voltage bases
+! 
+Set voltagebases = [ 12.47 0.480, 0.208, 0.24, 0.12]
+CalcVoltageBases
+!
+! Declare Monitors
+!
+Redirect Monitors_COMMON_Small.dss
+! 
+! Define the bus coordinates
+! 
+Buscoords Buscoords.CSV
+
