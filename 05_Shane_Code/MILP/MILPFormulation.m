@@ -12,8 +12,8 @@ function [f,intcon,Aineq,bineq,Aeq,beq,lb,ub] = MILPFormulation(NODE,SECTION,DER
 
 n = length(NODE.ID);
 m = length(DER.ID);
-Vref = PARAM.VOLTAGE(1);
-tol  = PARAM.VOLTAGE(2);
+Vref = (12.89/12.47)*PARAM.VOLTAGE(1);   %**SET GEN VOLTAGE TO 12.89kV**
+tol  = (12.89/12.47)*PARAM.VOLTAGE(2);   % Adjust epsilon accordingly
 
 %%
 %           max              sum(w_i * sum(c_id*p_i))
@@ -45,6 +45,10 @@ xlen = length(f);
 %% Set variable bounds/binary constraints
 % Lower Bound 0 for all variables
 lb = zeros((2+6*m)*n - 1,1);
+% Un-contstrain P and Q Lower Bound
+lb((2+3*m)*n:(2+4*m)*n-1) = -Inf;
+lb((2+2*m)*n:(2+3*m)*n-1) = -Inf;
+
 
 % Binary Variables: a,b,c,gamma
 intcon = 1:(2+2*m)*n - 1;
@@ -234,7 +238,7 @@ for k = 1:m
     der = find(~cellfun(@isempty,regexp(NODE.ID,DER.ID(k))));
     Aeq_PVCC(2*m*n + k, (k+4*m+1)*n - 1 + der) = 1;  % coeff for V_kk (16.1)
 end
-beq_PVCC(2*m*n+1:(2*n+1)*m) = Vref;   % b for (16.1)
+beq_PVCC(2*m*n+1:(2*n+1)*m) = Vref;   % b for (16.1) 
 % (16.2) V_id - V_jd + r_ij/V_R * P_id + x_ij/V_R * Q_id + delta_id = 0, j = theta_d(i) (parent)
 for i = 1:n-1
     for k = 1:m
