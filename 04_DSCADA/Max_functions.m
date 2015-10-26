@@ -53,7 +53,7 @@ months = [31,28,31,30,31,30,31,31,30,31,30,31];
 Points = zeros(12,1);
 Days = zeros(12,1);
 win_pts = zeros(12,1);
-
+kk = 1;
 tot = 0;
 k=1;
 s=1;
@@ -67,6 +67,8 @@ for i=1:12
     MAX.MONTH.KW.A(i,1) = 0;
     MAX.MONTH.KW.B(i,1) = 0;
     MAX.MONTH.KW.C(i,1) = 0;
+    
+    
     MAX.MONTH.KVAR.A(i,1) = -1000;
     MAX.MONTH.KVAR.B(i,1) = -1000;
     MAX.MONTH.KVAR.C(i,1) = -1000;
@@ -85,7 +87,17 @@ for i=1:12
         HOUR = 24*(DOY-floor(DOY));
         MIN = 60*(HOUR-floor(HOUR));
         
+
+       
         % Window of 10am - 4pm
+        if HOUR >= 8 && HOUR < 18
+            WINDOW.DAYTIME.KW.A(kk,1) = FEEDER.kW.A(j,1);
+            WINDOW.DAYTIME.KW.B(kk,1) = FEEDER.kW.B(j,1);
+            WINDOW.DAYTIME.KW.C(kk,1) = FEEDER.kW.C(j,1);
+            kk=kk+1;
+        end
+        
+        
         if HOUR >= 10 && HOUR < 16  
             
             % First column is every data point within window
