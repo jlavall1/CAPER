@@ -155,6 +155,13 @@ for ii=1:length(Lines)
     %Save phase currents calculated for export:
     Lines(ii).bus1PhaseCurrent = bus1PhaseCurrent;
     Lines(ii).lineRating = DSSCircuit.ActiveElement.NormalAmps;
+    %Obtain power losses:
+    losses = DSSCircuit.ActiveCktElement.Losses;
+    Lines(ii).losses = losses(1)/1000; %kw %+ 1i*losses(2)/1000;
+   
+    %losses = DSSCircuit.ActiveCktElement.PhaseLosses;
+    %losses = reshape(losses,2,[]);
+    %Lines(ii).phaseLosses = losses(1,:) + 1i*losses(2,:);
     %numPhases = DSSCircuit.ActiveElement.NumPhases;
     %Lines(ii).numPhases = numPhases;
     %

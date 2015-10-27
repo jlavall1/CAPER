@@ -1,16 +1,14 @@
 %Post_Process --PART II--
 %Coding to replicate Figure 5 & Figure 6:
-
-%%
 clear
 clc
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
 %import numpy as np
 %import matplotlib.pyplot as plt
-ckt_num=menu('Which Circuit?','EPRI - 7','Commonwealth','Roxoboro');
+ckt_num=menu('Which Circuit?','EPRI - 7','Commonwealth','Flay');
 while ckt_num<1
-    ckt_num=menu('Which Circuit?','EPRI - 7','Commonwealth','Roxoboro');
+    ckt_num=menu('Which Circuit?','EPRI - 7','Commonwealth','Flay');
 end
 % "PV size & distance effect on max bus voltage under 50% load"
 if ckt_num == 1
@@ -48,7 +46,27 @@ elseif ckt_num == 2
     ii = 2;
     n = 1;
     k = 1; %use all --
+elseif ckt_num == 3
+    %Flay -- To be used in CUEPRA meeting!
+    load RESULTS_FLAY_SS_1.mat
+    sort_Results = xlsread('RESULTS_SORTED_2.xlsx','FLAY_3');
+    %load feeder openDSS config files:
+    load config_DISTANCE_FLAY.mat
+    load config_LOADNAMES_FLAY.mat
+    load config_LINENAMES_FLAY.mat
+    load config_XFMRNAMES_FLAY.mat
+    %BUSNAMES
+    load config_LINESBASE_FLAY.mat
+    load config_LEGALBUSES_FLAY.mat
+    load config_LEGALDISTANCE_FLAY.mat
+    load config_BUSESBASE_FLAY.mat
+    begin_M = 2;
+    i = 2; %where you want to start in RESULTS
+    ii = 2;
+    n = 1;
+    k = 1; 
 end
+%%   
     
 
 %sort_Results = xlsread('RESULTS_SORTED.xlsx');
@@ -128,7 +146,7 @@ m = 1;
 while ii < length(RESULTS)+1%20001
     if ckt_num == 1
         RESULTS(ii,9) = legal_distances(k,1);
-    elseif ckt_num == 2
+    elseif ckt_num == 2 || ckt_num == 3
         %RESULTS(ii,9) = legal_distances{k,1};
         for ijj=1:1:length(Check_inv)
             if RESULTS(ii,6) == Check_inv(ijj,1)
@@ -248,6 +266,8 @@ if ckt_num == 1
 elseif ckt_num == 2
     axis([0 4.25 1.02 1.11]);
     title('DEC-COMMONWEALTH','FontWeight','bold');
+elseif ckt_num == 3
+    title('DEC-FLAY','FontWeight','bold');
 end
 grid on
 set(gca,'FontWeight','bold');

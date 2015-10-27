@@ -31,29 +31,9 @@ Buses_Base = getBusInfo(DSSCircObj);
 Loads_Base = getLoadInfo(DSSCircObj);
 [~,index] = sortrows([Lines_Base.bus1Distance].'); 
 Lines_Distance = Lines_Base(index); clear index
-%%
-%Declare name of basecase .dss file:
-%master = 'Run_Master_Allocate.dss';
-%basecaseFile = strcat(mainFile,master);
-%DSSEnergyMeters = DSSCircuit.Meters;
 %
-%{
-%Compile the circuit
-%DSSText.command = 'Compile R:\00_CAPER_SYSTEM\05_OpenDSS_Circuits\Roxboro_Circuit_Opendss\Master.DSS'; 
-%DSSText.command = ['Compile "', gridpvPath,'ExampleCircuit\master_Ckt24.dss"'];
-%
-%Solve basecase:
 
-DSSText.command = 'Set mode=duty number=10  hour=1  h=1 sec=0';
-DSSText.Command = 'Set Controlmode=Static'; %take control actions immediately without delays
-DSSText.command = 'solve';
-%}
-%{  
-DSSText.command = 'Set mode=snapshot';
-DSSText.command = 'Set controlmode = static';
-DSSText.command = 'solve';
-%}
-% 4. Adjust simulation feeder load:
+% 1. Adjust initial simulation feeder load:
 DSSText.command ='solve loadmult=0.5';
 %{
 figure(1);
@@ -75,7 +55,7 @@ xfmrNames = DSSCircuit.Transformers.AllNames;
 lineNames = DSSCircuit.Lines.AllNames;
 loadNames = DSSCircuit.Loads.AllNames;
 %BusNames = DSSCircuit.Buses.AllNames;
-
+%
 %{
 %Trace the circuit all the way back to the substation
 %UpstreamBuses = findUpstreamBuses(DSSCircObj, MYBUS);
@@ -178,12 +158,6 @@ DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=12.47 kW=100 pf=
 DSSText.command = 'solve loadmult=0.5';
 Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
 MAT_FILE_LOAD %generates 'ref_busVpu'
-
-%fprintf(fid,'new generator.PV%s bus1=%s phases=%1.0f kv=%2.2f kw=%2.2f pf=1 duty=PV_Loadshape\n',Transformers(ii).bus1,Transformers(ii).bus1,Transformers(ii).numPhases,Transformers(ii).bus1Voltage/1000,kva(ii)/totalSystemSize*totalPVSize);
-% Set it as the active element and view its bus information
-
-%DSSCircuit.SetActiveElement('generator.pv');
-
 %---------------------------------------------
 %Iterate PV bus1 location throughout EPRI Circuit
 
@@ -212,6 +186,7 @@ DSSCircuit.Enable('generator.PV');
 ii = bus_init;
 PV_size = 100;
 PV_LOC = 3;
+P_loss = 0;
 %fDR_LD;
 PV_VOLT= zeros(1,3); %Va Vb Vc
 %RESULTS = zeros(
@@ -225,7 +200,12 @@ while ii< length(Buses) %length(Buses)
         %Connect PV to Bus:
         DSSText.command = sprintf('edit generator.PV bus1=%s kW=%s',Buses(ii,1).name,num2str(PV_size));
         fprintf('%1.1f) SolarGEN located: %s\n',m,Buses(ii,1).name);
-        %}
+        %Reset Vreg to initial state:
+        for ij=1:DSSCircuit.Transformers.Count;
+            if isempty(XfmrTaps(ij,1).Init_tap) == 0
+                DSSText.command= sprintf('edit RegControl.%s Tapnum=%s',char(xfmrName(ij)),num2str(XfmrTaps(ij,1).Init_tap));
+            end
+        end
         % ~~~~~~~~~~~~~~~~~
         %Search & obtain Line where PV is located on.
         s1 = Buses(ii,1).name;
@@ -425,6 +405,14 @@ while ii< length(Buses) %length(Buses)
             RESULTS(jj,12)=max(PV_VOLT(1,1:3)); %Maximum voltage voltage
             R_PV=(3*(RESULTS(jj,12)*((12.47e3)/sqrt(3)))^2)/(PV_size*1e3);
             RESULTS(jj,13)=R_PV; %Capture supposibly R_PV
+            %
+            %Calculate feeder power losses:
+            % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            for i=1:1:length(Lines)
+                P_loss = P_loss + Lines(i).losses;
+            end
+            RESULTS(jj,14)=P_loss;
+            P_loss = 0;
             
             %Now increment the solar site:
             PV_size = PV_size + 100; %kW

@@ -4,9 +4,10 @@ clear
 clc
 close all
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
-DER_Planning_GUI_1
-gui_response = STRING_0;
-ckt_num = gui_response{1,2};
+%DER_Planning_GUI_1
+%gui_response = STRING_0;
+%ckt_num = gui_response{1,2};
+ckt_num = 2;
 %Load results and information about the circuit-
 %load RESULTS_9_3_2015.mat
 %load RESULTS_9_10_2015.mat

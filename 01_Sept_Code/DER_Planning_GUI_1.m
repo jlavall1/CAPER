@@ -186,10 +186,20 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
 
 %%
 %Set Defaults:
+    %Timeseries analysis:
+    %{
     set(h.ckbx(1),'Value',0);   %DER hosting capacity   -- OFF
     set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
     set(h.ckbx(3),'Value',1);   %timeseries simulation  -- ON
     set(h.rb(2),'Value',1);     %ckt choice             -- Flay(3) Common(2)
+    %}
+    %Locational Hosting Capacity:
+    set(h.ckbx(1),'Value',1);   %DER hosting capacity   -- ON
+    set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
+    set(h.ckbx(3),'Value',0);   %timeseries simulation  -- OFF
+    set(h.rb(3),'Value',1);     %ckt choice             -- Flay(3) Common(2)
+    set(h.ppm(2),'Value',3);    %Simulation choice      -- Steady State(3)
+    
     set(h.ppm(5),'Value',2);    %timeseries DROPDOWN    -- daytime,1 day,2 week,3 1mnth,4
     set(h.ppm(6),'Value',2);    %What month DROPDOWN    -- FEB (29d)
     
@@ -360,6 +370,8 @@ function m=p_run(varargin)
         %time_select choices:
         %1)  10:00 - 16:00
         %2)  (1) WEEK
+    else
+        mnth_select = 0;
     end
     %---- Solar Coefficient Criteria:
     DARR_cat = get(h.lsbx(1),'Value'); %DARR Category selection.

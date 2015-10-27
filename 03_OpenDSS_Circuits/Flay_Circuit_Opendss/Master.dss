@@ -14,7 +14,7 @@ New Circuit.FLAY_RET_16271201 Bus1=FLAY_RET_16271201
 ~ Z1=[ 0.34933 ,  1.69963 ] ! Actual ohms
 ~ Z2=[ 0.34933 ,  1.69963 ]
 ~ Z0=[ 0.09228 ,  0.84 ]
-Redirect SourceRegulator.dss
+Redirect SourceRegulator_3ph.dss
 ! 
 ! Library Data
 ! 
