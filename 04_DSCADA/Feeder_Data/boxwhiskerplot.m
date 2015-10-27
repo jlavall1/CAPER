@@ -1,6 +1,24 @@
 clear
 clc
 close all
+%{
+gui_response = GUI_DSCADA_Locations;
+base_path = gui_response{1,1};
+feeder_NUM = gui_response{1,2}; %0 to 8 (1-9)
+action = gui_response{1,3};
+maindir = gui_response{1,4};
+maindir=strcat(maindir,'\04_DSCADA');
+addpath(maindir);
+path = strcat(maindir,'\Feeder_Data');
+addpath(path);
+
+if feeder_NUM == 1
+    load Annual_daytime_load
+
+
+
+
+%}
 load FLAY.mat
 load Annual_daytime_load.mat
 fig = 0;
@@ -27,10 +45,10 @@ end
 fig = fig + 1;
 figure(fig);
 n = 1;
-%p1=bar(WINDOW.MONTH.KW.A(1:12,3));
+p1=bar(WINDOW.MONTH.KW.A(1:12,3));
 
 %set(p1,'FaceColor','blue')
-%
+%{
 for n=1:1:12
     if n < 5 || n > 10
         p1 = bar(n,WINDOW.MONTH.KW.A(n,3));
@@ -44,7 +62,7 @@ for n=1:1:12
     hold on
 end
 %}
-title('Monthly Average Demand during Solar Peak Interval')
+title('Monthly Average Demand during Solar Peak Interval','Fontsize',14,'FontWeight','bold')
 xlabel('Month of Year','Fontsize',12,'FontWeight','bold');
 ylabel('Average Monthly Real Power (P_{avg}) [kW]','Fontsize',12,'FontWeight','bold');
 %axis([0 1200 1 12]);
@@ -91,7 +109,7 @@ figure(fig);
 plot(WINDOW.MONTH.KW.A(:,1))
 hold on
 plot(WINDOW.MONTH.KW.A(:,2))
-title('Daily Maximum and Minimum Annual Loadshape')
+title('Daily Maximum and Minimum Annual Loadshape','Fontsize',14,'FontWeight','bold')
 xlabel('Day of Year (DOY)','Fontsize',12,'FontWeight','bold')
 ylabel('Real Power (P) [kW]','Fontsize',12,'FontWeight','bold')
 legend('Daily minimums','Daily maximums')
@@ -102,7 +120,7 @@ fig = fig + 1;
 figure(fig);
 hour = (8:18);
 bar(WINDOW.DAYTIME.KW.A(:,1))
-title('Cummulative Distribution during Solar Peak Interval')
+title('Cummulative Distribution during Solar Peak Interval','Fontsize',14,'FontWeight','bold')
 xlabel('Data Point','Fontsize',12,'FontWeight','bold')
 ylabel('Real Power (P) [kW]','Fontsize',12,'FontWeight','bold')
 
@@ -182,13 +200,13 @@ end
 fig = fig + 1;
 figure(fig);
 boxplot(dataW,charW)
-title('Seasonal Comparison during Peak Solar Interval')
+title('Seasonal Comparison during Peak Solar Interval','Fontsize',14,'FontWeight','bold')
 xlabel('Season and Phase','Fontsize',12,'FontWeight','bold')
 ylabel('Load [kW]','Fontsize',12,'FontWeight','bold')
 
 figure(4)
 boxplot(dataV,charV)
-title('Seasonal Comparison during Peak Solar Interval')
+title('Seasonal Comparison during Peak Solar Interval','Fontsize',14,'FontWeight','bold')
 xlabel('Season and Phase','Fontsize',12,'FontWeight','bold')
 ylabel('Load [kVAR]','Fontsize',12,'FontWeight','bold')
 
@@ -209,7 +227,7 @@ subplot(1,3,2)
 hist(WINDOW.KW.B(:,2))
 h = findobj(gca,'Type','patch');
 h.FaceColor = [0 0 1];
-title('Frequency during Peak Solar Interval')
+title('Frequency during Peak Solar Interval','Fontsize',14,'FontWeight','bold')
 xlabel('Range of Power (P) [kW]','Fontsize',12,'FontWeight','bold')
 %ylabel('Frequency of Range','Fontsize',12,'FontWeight','bold')
 axis([0 1500 0 50000]);
@@ -235,7 +253,7 @@ subplot(1,3,2)
 hist(WINDOW.KVAR.B(:,2))
 h = findobj(gca,'Type','patch');
 h.FaceColor = [1 0 0];
-title('Frequency during Peak Solar Interval')
+title('Frequency during Peak Solar Interval','Fontsize',14,'FontWeight','bold')
 xlabel('Range of Power (Q) [kVAR]','Fontsize',12,'FontWeight','bold')
 %ylabel('Frequency of Range','Fontsize',12,'FontWeight','bold')
 subplot(1,3,3)
@@ -250,81 +268,86 @@ h.FaceColor = [1 0 0];
 
 % Plotting seasonal with std. dev.
 
-W = [WINDOW.WINT.KW.A;WINDOW.WINT.KW.B;WINDOW.WINT.KW.C];
-S = [WINDOW.SUM.KW.A;WINDOW.SUM.KW.B;WINDOW.SUM.KW.C];
-y_bar_w = zeros(length(W)/30,1);
-y_bar_s = zeros(length(S)/30,1);
+W_w = [WINDOW.WINT.KW.A+WINDOW.WINT.KW.B+WINDOW.WINT.KW.C];
+S = [WINDOW.SUM.KW.A+WINDOW.SUM.KW.B+WINDOW.SUM.KW.C];
+% y_bar_w = zeros(length(W_w)/30,1);
+% y_bar_s = zeros(length(S)/30,1);
 t_w = 0;
 y_sum_w = 0;
 t_s = 0;
 y_sum_s = 0;
-
-for k=1:1:length(W)/30
-    for i=t_w+1:1:30+t_w
-        y_w = W(k);
-        y_sum_w = y_sum_w + y_w;
-        %disp(i)
+k=1;
+%181 days with 360 datapoint blocks
+for ii = 1:2
+    if ii==1
+        W = W_w;
+        DAY=181;
+    else
+        W = S;
+        DAY = 365-181;
     end
-    y_bar_w(k) = y_sum_w/30;
-    t_w = t_w + 29;
-    y_sum_w = 0;
-    %now we have (1) 30min avg. kW
-end
+    
+    for j=1:1:length(W)/DAY
+        k=j;
+        while k<length(W)-360+1
+            %go through each day, 
+            if isnan(W(k))
+            else
+                y_w = W(k);
+                y_sum_w = y_sum_w + y_w;
+            end
+            k=k+360;
 
-mu_w = mean(y_bar_w(:))
-%now lets find variance then s:
-y_bar_p_w = y_bar_w(:)-mu_w;
-sum = 0;
-for i=1:1:length(y_bar_w)
-    sum = sum + (y_bar_w(i,1)-mu_w)^2;
-end
-var_w = sum/(length(y_bar_w)-1)
-%var = sum(y_bar(:))^2/(length(y_bar)-1)
-SD_w = sqrt(var_w)
-%make norm distrib
-%mu = 0;
-x_w = y_bar_p_w(:);
-pd_w = makedist('Normal',mu_w,SD_w);
-y_w = pdf(pd_w,x_w);
-%y_mine(:) = y.';
+        end
+        mu_w(j,ii) = y_sum_w/DAY;
+        k=j;
+        while k<length(W)-360+1
+            %go through each day, 
+            if isnan(W(k))
+            else
+                y_bar_w = W(k);
+                sum = sum + (y_bar_w-mu_w(j,ii))^2;
+            end
+            k=k+360;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%{
-for k=1:1:length(S)/30
-    for i=t_s+1:1:30+t_s
-        y_s = S(k);
-        y_sum_s = y_sum_s + y_s;
-        %disp(i)
+        end
+
+        var_w(j,ii) = sum/360;
+        SD_w(j,ii) = sqrt(var_w(j,ii));
+
+        % reset vars
+
+        y_sum_w =0;
+        sum = 0;
+        %count var
+    
     end
-    y_bar_s(k) = y_sum_s/30;
-    t_s = t_s + 29;
-    y_sum_s = 0;
-    %now we have (1) 30min avg. kW
+    k=1;
 end
+X=10:1/60:15+59/60;
 
-mu_s = mean(y_bar_s(:))
-%now lets find variance then s:
-y_bar_p_s = y_bar_s(:)-mu_s;
-sum = 0;
-for i=1:1:length(y_bar_s)
-    sum = sum + (y_bar_s(i,1)-mu_s)^2;
-end
-var_s = sum/(length(y_bar_s)-1)
-%var = sum(y_bar(:))^2/(length(y_bar)-1)
-SD_s = sqrt(var_s)
-%make norm distrib
-%mu = 0;
-x_s = y_bar_p_s(:);
-pd_s = makedist('Normal',mu_s,SD_s);
-y_s = pdf(pd_s,x_s);
-%y_mine(:) = y.';
-%}
 fig = fig + 1;
 figure(fig);
-plot(y_bar_w)
+plot(X,mu_w(:,1),'b-','LineWidth',3);
 hold on
-plot(y_bar_w+SD_w)
-plot(y_bar_w-SD_w)
+plot(X,mu_w(:,1)+1.5*SD_w(:,1),'b--','LineWidth',2);
+hold on
+plot(X,mu_w(:,1)-1.5*SD_w(:,1),'b--','LineWidth',2);
+hold on
+plot(X,mu_w(:,2),'r-','LineWidth',3);
+hold on
+plot(X,mu_w(:,2)+1.5*SD_w(:,2),'r--','LineWidth',2);
+hold on
+plot(X,mu_w(:,2)-1.5*SD_w(:,2),'r--','LineWidth',2);
+
+axis([10 16 0 3500]);
+legend('Avg. (Winter)','+1.5s (Winter)','-1.5s (Winter)','Avg. (Summer)','+1.5s (Summer)','-1.5s (Summer)','Location','SouthEast');
+xlabel('Hour of Day (H) [hr]','Fontsize',12,'FontWeight','bold')
+ylabel('Real Power (P) [p.u.]','Fontsize',12,'FontWeight','bold')
+title('Seasonal Shift in Loadshape','Fontsize',14,'FontWeight','bold');
+%%
+
+
 
 
 
