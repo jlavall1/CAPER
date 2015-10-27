@@ -35,7 +35,7 @@ Redirect UGLines.dss
 Redirect LinesByPhase.dss
 Redirect Regulators.dss
 Redirect Loads_try_smallAmount.DSS 	!Just changed to _time.dss
-Redirect Capacitors.dss 	!Just changed to _CLRL.dss
+Redirect Capacitors.dss 		!Just changed to _CLRL.dss
 Redirect SwtControls.dss
 Redirect Reclosers.dss
 Redirect SectionalizerSettings.DSS
