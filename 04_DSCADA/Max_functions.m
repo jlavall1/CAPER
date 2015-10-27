@@ -18,25 +18,31 @@ if feeder_NUM == 0
     FEEDER = BELL;
     clearvars BELL
     kW_peak = [0,0,0];
+    str_FDR = '_BELL.mat';
 elseif feeder_NUM == 1
     load COMN.mat
     FEEDER = COMN;
     clearvars COMN
     kW_peak = [2.475021572579630e+03,2.609588847297235e+03,2.086659558753901e+03];
+    str_FDR = '_COMN.mat';
 elseif feeder_NUM == 2
     load FLAY.mat
     FEEDER = FLAY;
     clearvars FLAY
     kW_peak = [1.424871573296857e+03,1.347528364235151e+03,1.716422704604557e+03];
+    str_FDR = '_FLAY.mat';
 elseif feeder_NUM == 3
     load ROX.mat
     FEEDER = ROX;
     clearvars ROX
     kW_peak = [3.189154306704542e+03,3.319270338767296e+03,3.254908188719974e+03];
+    str_FDR = '_ROX.mat';
 elseif feeder_NUM == 4
     load HOLLY.mat
+    str_FDR = '_HOLLY.mat';
 elseif feeder_NUM == 5
     load ERalh.mat
+    str_FDR = '_ERalh.mat';
 end
 
 %%
@@ -285,8 +291,13 @@ clear index
 WINDOW.KVAR.C(:,2) = WINDOW.KVAR.C(index); %Lines_Distance ==> sorted column 
 clear index
 
-filename = strcat(maindir,'\Feeder_Data\Annual_daytime_load.mat');
+filename = strcat(maindir,'\Feeder_Data\Annual_daytime_load');
+filename = strcat(filename,str_FDR);
 delete(filename);
 save(filename,'WINDOW');
 
+filename = strcat(maindir,'\Feeder_Data\Annual_ls');
+filename = strcat(filename,str_FDR);
+delete(filename);
+save(filename,'MAX');
 
