@@ -372,6 +372,7 @@ while ii< length(Buses) %length(Buses)
             %
             %Save results for this iteration:
             RESULTS(jj,1:6)=[PV_size,max(max_V(:,1)),max_V(2,1),max_C(1,1),max_C(2,1),PV_LOC]; %|PV_KW|maxV_3ph|maxV_1ph|maxC1|maxC2|bus_name|kVAR_CAP1|kVAR_CAP2
+            %{
             if length(Capacitors) == 2
                 RESULTS(jj,7)=Capacitors(1,1).powerReactive;
                 RESULTS(jj,8)=Capacitors(2,1).powerReactive;
@@ -380,7 +381,9 @@ while ii< length(Buses) %length(Buses)
                 RESULTS(jj,8)=Capacitors(2,1).powerReactive;
                 RESULTS(jj,10)=Capacitors(3,1).powerReactive;
             end
-            
+            %}
+            RESULTS(jj,7)=0;
+            RESULTS(jj,8)=0;
             %*** leave Columns 9,10 blank for post_Process_2.m ***
                   
             RESULTS(jj,11)=fDR_LD; %Feeder 3phase load in kW
