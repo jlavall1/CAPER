@@ -106,9 +106,9 @@ end
 % Plot of Max and mins per day for all of 2014
 fig = fig + 1;
 figure(fig);
-plot(WINDOW.MONTH.KW.A(:,1))
+plot(WINDOW.MONTH.KW.A(:,1),'r-','LineWidth',3)
 hold on
-plot(WINDOW.MONTH.KW.A(:,2))
+plot(WINDOW.MONTH.KW.A(:,2),'b-','LineWidth',3)
 title('Daily Maximum and Minimum Annual Loadshape','Fontsize',14,'FontWeight','bold')
 xlabel('Day of Year (DOY)','Fontsize',12,'FontWeight','bold')
 ylabel('Real Power (P) [kW]','Fontsize',12,'FontWeight','bold')

@@ -164,9 +164,9 @@ end
 solarfilename = strcat(s,s_pv_txt);
 %solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
 %%
-%DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
-%DSSText.command = 'solve';
-%cd(location);
+DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
+DSSText.command = 'solve';
+cd(location);
 %---------------------------------
 %Run OpenDSS simulation for 6/24/168-hr at 1-minute resolution:
 %number==#solution to run; h==stepsize (s)
@@ -212,13 +212,31 @@ elseif timeseries_span == 5
     DOY = 1;
     DOY_fin = 365;
 end
-
+%%
 %   Feeder Power
 DSSfilename=ckt_direct_prime;
 fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
-plotMonitor(DSSCircObj,sprintf('fdr_%s_Mon_PQ',root1));
-ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
-title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',12,'FontWeight','bold')
+%plotMonitor(DSSCircObj,sprintf('fdr_%s_Mon_PQ',root1));
+DSSText.Command = sprintf('export mon fdr_%s_Mon_PQ',root1);
+monitorFile = DSSText.Result;
+MyCSV = importdata(monitorFile);
+delete(monitorFile);
+Hour = MyCSV.data(:,1); Second = MyCSV.data(:,2);
+subPowers = MyCSV.data(:,3:2:7);
+subReact = MyCSV.data(:,4:2:8);
+plot(Hour+shift+Second/3600,subPowers,'LineWidth',1.5);
+hold on
+plot(Hour+shift+Second/3600,subReact,'LineWidth',1.5);
+hold on
+ylabel('Power (kW,kVar)','FontSize',16,'FontWeight','bold');
+xlabel('Hour of Simulation (H)','FontSize',16,'FontWeight','bold');
+title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',18,'FontWeight','bold')
+legend('P_{A} (kW)','P_{B} (kW)','P_{C}','Q_{A} (kVAR)','Q_{B} (kVAR)','Q_{C} (kVAR)','Location','NorthWest');
+set(gca,'FontSize',14,'FontWeight','bold')
+axis([0 168 -200 800]);
+
+%%
+
 %saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
 DSSText.Command = sprintf('export mon fdr_%s_Mon_PQ',root1);
 monitorFile = DSSText.Result;
@@ -265,13 +283,13 @@ hold on
 plot(Hour+shift+Second/3600,FEEDER.Voltage.C(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'b--','LineWidth',2);
 grid on;
 %}
-set(gca,'FontSize',10,'FontWeight','bold')
-xlabel('Hour','FontSize',12,'FontWeight','bold')
-ylabel('Voltage','FontSize',12,'FontWeight','bold')
+set(gca,'FontSize',14,'FontWeight','bold')
+xlabel('Hour','FontSize',16,'FontWeight','bold')
+ylabel('Voltage','FontSize',16,'FontWeight','bold')
 axis([0 Hour(end,1)+shift+Second(end,1)/3600 V_DOWN-0.01 1.05]);
 %legend('V_{phA}-sim','V_{phB}-sim','V_{phC}-sim','V_{phA}-nonREG','V_{phB}-nonREG','V_{phC}-nonREG');
-legend('V_{phA}','V_{phB}','V_{phC}','Upper B.W.','Lower B.W.');
-title([strrep(fileNameNoPath,'_',' '),' Substation Voltages'],'FontSize',12,'FontWeight','bold')
+legend('V_{phA}','V_{phB}','V_{phC}','Upper B.W.','Lower B.W.','FontSize',14);
+title([strrep(fileNameNoPath,'_',' '),' Substation Voltages'],'FontSize',18,'FontWeight','bold')
 saveas(gcf,[DSSfilename(1:end-4),'_Sub_Voltage.fig'])
 %
 %------------------
