@@ -341,30 +341,34 @@ if action == 5
     hr = 10;
     i = 1;
     j = 1;
-    for i=1:1:4
+    for i=1:1:12 %12 monhts
+        %{
         if i==1
             %Winter
             DAY=30;
-            MNTH=4;
+            %MNTH=4;
         elseif i==2
             %Winter
             DAY=1;
-            MNTH=11;
+            %MNTH=11;
         elseif i==3
             %SUMMER
             DAY=1;
-            MNTH=5;
+            %MNTH=5;
         elseif i==4
             %Summer
             DAY=31;
-            MNTH=10;
+            %MNTH=10;
         end
+        %}
+        MNTH=i
+        DAY=1;
         %Now grab each minute from 10:00 to 16:00
         while hr < 16
             while min < 60
                 CSI_k(j,i) = M_PVSITE(MNTH).GHI(time2int(DAY,hr,min),3);
-                CSI_k(j,5) = hr;
-                CSI_k(j,6) = min;
+                CSI_k(j,13) = hr;
+                CSI_k(j,14) = min;
                 %Inc:
                 min = min + 1;
                 j = j + 1;
@@ -382,45 +386,104 @@ if action == 5
     X=10:1/60:15+59/60;
     fig = fig + 1;
     figure(fig);
-    %Winter:
-    plot(X,mu_w(:,1)/kW_peak_3ph,'b-','LineWidth',3);
+    s = 2; %meaning between dotted lines represents 95.44% of kW measurements.
+    % only 2.28% kW were below
+    %Winter -----------------------------------------
+    plot(X,mu_w(:,1)/kW_peak_3ph,'b-','LineWidth',3.5);
     hold on
-    plot(X,(mu_w(:,1)+1.5*SD_w(:,1))/kW_peak_3ph,'b--','LineWidth',2);
+    plot(X,(mu_w(:,1)+s*SD_w(:,1))/kW_peak_3ph,'b--','LineWidth',2.5);
     hold on
-    plot(X,(mu_w(:,1)-1.5*SD_w(:,1))/kW_peak_3ph,'b--','LineWidth',2);
+    plot(X,(mu_w(:,1)-s*SD_w(:,1))/kW_peak_3ph,'b--','LineWidth',2.5);
     hold on
-    plot(X,(CSI_k(:,1)/1000),'k-.','LineWidth',2);
+    %now CSI paths:
+    
+    plot(X,(CSI_k(:,1)/1000),'k-.','LineWidth',1);
     hold on
-    plot(X,(CSI_k(:,2)/1000),'k-.','LineWidth',2);
+    plot(X,(CSI_k(:,2)/1000),'k-.','LineWidth',1.5);
     hold on
-    line([X(206) X(206)],[0 1.3]);
+    plot(X,(CSI_k(:,3)/1000),'k-.','LineWidth',2);
+    hold on
+    plot(X,(CSI_k(:,4)/1000),'k-.','LineWidth',2.5);
+    hold on
+    plot(X, (CSI_k(:,11)/1000),'k-.','LineWidth',3);
+    hold on
+    plot(X, (CSI_k(:,12)/1000),'k-.','LineWidth',3.5);
+    hold on
+    %Now draw dot where maximums are:
+    %-1.5s means that 93.32% of all load levels are greater than 0.3pu at
+    %peak solar time interval.
+    %   confidence interval would be: 86.64%
+    for j=1:1:12
+        if j < 5
+            [mx,idx]=max(CSI_k(:,j));
+            plot(X(idx),CSI_k(idx,j)/1000,'g*','LineWidth',4);
+            hold on
+            plot(X(idx),(mu_w(idx,1)-s*SD_w(idx,1))/kW_peak_3ph,'b*','LineWidth',5);
+            hold on
+        elseif j > 10
+            [mx,idx]=max(CSI_k(:,j));
+            plot(X(idx),CSI_k(idx,j)/1000,'g*','LineWidth',4);
+            hold on
+            plot(X(idx),(mu_w(idx,1)-s*SD_w(idx,1))/kW_peak_3ph,'b*','LineWidth',5);
+            hold on
+        end
+    end
+    %line([X(206) X(206)],[0 1.3]);
     %Plot settings:
-    axis([10 16 0 1.4]);
-    legend('Avg. (Winter)','+1.5s (Winter)','-1.5s (Winter)','4/30','11/1','Location','NorthEast');
+    axis([10 16 0 2]);
+    set(gca,'YTick',0:0.1:2);
+    set(gca,'fontweight','bold');
+    legend('Avg. (Winter)','+2.0s (Winter)','-2.0s (Winter)','1/1 CSI path','2/1 CSI path','3/1 CSI path','4/1 CSI path','11/1 CSI path','12/1 CSI path','Location','NorthWest');
     xlabel('Hour of Day (H) [hr]','Fontsize',12,'FontWeight','bold')
     ylabel('Real Power (P) [p.u.]','Fontsize',12,'FontWeight','bold')
-    title('Seasonal Shift in Loadshape','Fontsize',14,'FontWeight','bold');
+    title('Winter Load Range vs. Cleak Sky Irradiance (CSI)','Fontsize',14,'FontWeight','bold');
     grid on
     
     
-    %Summer:
+    %Summer -----------------------------------------
+   
     fig = fig + 1;
     figure(fig);
     plot(X,mu_w(:,2)/kW_peak_3ph,'r-','LineWidth',3);
     hold on
-    plot(X,(mu_w(:,2)+1.5*SD_w(:,2))/kW_peak_3ph,'r--','LineWidth',2);
+    plot(X,(mu_w(:,2)+s*SD_w(:,2))/kW_peak_3ph,'r--','LineWidth',2);
     hold on
-    plot(X,(mu_w(:,2)-1.5*SD_w(:,2))/kW_peak_3ph,'r--','LineWidth',2);
+    plot(X,(mu_w(:,2)-s*SD_w(:,2))/kW_peak_3ph,'r--','LineWidth',2);
     hold on
-    plot(X,(CSI_k(:,3)/1000),'k-.','LineWidth',2);
+    % CSI Plots now:
+    plot(X,(CSI_k(:,5)/1000),'k-.','LineWidth',1);
     hold on
-    plot(X,(CSI_k(:,4)/1000),'k-.','LineWidth',2);
-    %plot(X(
-    axis([10 16 0 1.4]);
-    legend('Avg. (Summer)','+1.5s (Summer)','-1.5s (Summer)','5/1','10/31','Location','NorthEast');
+    plot(X,(CSI_k(:,6)/1000),'k-.','LineWidth',1.5);
+    hold on
+    plot(X,(CSI_k(:,7)/1000),'k-.','LineWidth',2);
+    hold on
+    plot(X,(CSI_k(:,8)/1000),'k-.','LineWidth',2.5);
+    hold on
+    plot(X,(CSI_k(:,9)/1000),'k-.','LineWidth',3);
+    hold on
+    plot(X,(CSI_k(:,10)/1000),'k-.','LineWidth',3.5);
+    hold on
+    % peaks dot now:
+     for j=1:1:12
+        if j > 4 && j < 11
+            [mx,idx]=max(CSI_k(:,j));
+            plot(X(idx),CSI_k(idx,j)/1000,'g*','LineWidth',4);
+            hold on
+            plot(X(idx),(mu_w(idx,2)-s*SD_w(idx,2))/kW_peak_3ph,'r*','LineWidth',5);
+            hold on
+            plot(X(idx),(mu_w(idx,2))/kW_peak_3ph,'r*','LineWidth',8);
+            hold on
+        end
+     end
+    
+     %plot settings --
+    axis([10 16 0 2]);
+    set(gca,'YTick',0:0.1:2);
+    set(gca,'fontweight','bold');
+    legend('Avg. (Summer)','+2.0s (Summer)','-2.0s (Summer)','5/1 CSI path','6/1 CSI path','7/1 CSI path','8/1 CSI path','9/1 CSI path','10/1 CSI path','Location','NorthWest');
     xlabel('Hour of Day (H) [hr]','Fontsize',12,'FontWeight','bold')
     ylabel('Real Power (P) [p.u.]','Fontsize',12,'FontWeight','bold')
-    title('Seasonal Shift in Loadshape','Fontsize',14,'FontWeight','bold');
+    title('Summer Load Range vs. Clear Sky Irradiance (CSI)','Fontsize',14,'FontWeight','bold');
     grid on
     
     %

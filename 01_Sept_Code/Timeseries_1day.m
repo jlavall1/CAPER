@@ -228,12 +228,13 @@ plot(Hour+shift+Second/3600,subPowers,'LineWidth',1.5);
 hold on
 plot(Hour+shift+Second/3600,subReact,'LineWidth',1.5);
 hold on
-ylabel('Power (kW,kVar)','FontSize',16,'FontWeight','bold');
-xlabel('Hour of Simulation (H)','FontSize',16,'FontWeight','bold');
-title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',18,'FontWeight','bold')
-legend('P_{A} (kW)','P_{B} (kW)','P_{C}','Q_{A} (kVAR)','Q_{B} (kVAR)','Q_{C} (kVAR)','Location','NorthWest');
-set(gca,'FontSize',14,'FontWeight','bold')
-axis([0 168 -200 800]);
+ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold');
+xlabel('Hour of Simulation (H)','FontSize',12,'FontWeight','bold');
+%title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',12,'FontWeight','bold')
+title('Feeder-03''s Substation Phase P & Q','FontSize',12,'FontWeight','bold')
+legend('P_{A}','P_{B}','P_{C}','Q_{A}','Q_{B}','Q_{C}','Location','NorthWest');
+set(gca,'FontSize',10,'FontWeight','bold')
+axis([0 168 -1500 2000]);
 
 %%
 
@@ -254,11 +255,11 @@ subVoltages = MyCSV.data(:,3:2:7);
 subCurrents = MyCSV.data(:,11:2:15);
 
 figure(2);
-plot(Hour+shift+Second/3600,subVoltages(:,1)/((12.47e3)/sqrt(3)),'r-','LineWidth',2);
+plot(Hour+shift+Second/3600,subVoltages(:,1)/((12.47e3)/sqrt(3)),'b-','LineWidth',2);
 hold on
 plot(Hour+shift+Second/3600,subVoltages(:,2)/((12.47e3)/sqrt(3)),'g-','LineWidth',2);
 hold on
-plot(Hour+shift+Second/3600,subVoltages(:,3)/((12.47e3)/sqrt(3)),'b-','LineWidth',2);
+plot(Hour+shift+Second/3600,subVoltages(:,3)/((12.47e3)/sqrt(3)),'r-','LineWidth',2);
 n=length(subVoltages(:,1));
 hold on
 if feeder_NUM == 0
@@ -283,13 +284,13 @@ hold on
 plot(Hour+shift+Second/3600,FEEDER.Voltage.C(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'b--','LineWidth',2);
 grid on;
 %}
-set(gca,'FontSize',14,'FontWeight','bold')
-xlabel('Hour','FontSize',16,'FontWeight','bold')
-ylabel('Voltage','FontSize',16,'FontWeight','bold')
-axis([0 Hour(end,1)+shift+Second(end,1)/3600 V_DOWN-0.01 1.05]);
+set(gca,'FontSize',10,'FontWeight','bold')
+xlabel('Hour of Simulation (H)','FontSize',12,'FontWeight','bold')
+ylabel('Voltage (V) [P.U.]','FontSize',12,'FontWeight','bold')
+axis([0 Hour(end,1)+shift+Second(end,1)/3600 V_DOWN-0.01 1.055]);
 %legend('V_{phA}-sim','V_{phB}-sim','V_{phC}-sim','V_{phA}-nonREG','V_{phB}-nonREG','V_{phC}-nonREG');
-legend('V_{phA}','V_{phB}','V_{phC}','Upper B.W.','Lower B.W.','FontSize',14);
-title([strrep(fileNameNoPath,'_',' '),' Substation Voltages'],'FontSize',18,'FontWeight','bold')
+legend('V_{phA}','V_{phB}','V_{phC}','Upper B.W.','Lower B.W.');
+title('Feeder-03''s Substation Phase Voltages','FontSize',12,'FontWeight','bold')
 saveas(gcf,[DSSfilename(1:end-4),'_Sub_Voltage.fig'])
 %
 %------------------

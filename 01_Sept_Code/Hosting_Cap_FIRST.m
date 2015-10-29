@@ -17,6 +17,9 @@ cat_choice = gui_response{1,5};
 
 
 % 1. Load background files:
+filename = strcat(base_path,'\01_Sept_Code\Result_Analysis\RESULTS_FLAY_025.mat');
+pu_load = 0.25;
+
 path = strcat(base_path,'\01_Sept_Code');
 addpath(path);
 path = strcat(base_path,'\04_DSCADA');
@@ -32,9 +35,9 @@ Loads_Base = getLoadInfo(DSSCircObj);
 [~,index] = sortrows([Lines_Base.bus1Distance].'); 
 Lines_Distance = Lines_Base(index); clear index
 %
-
+%%
 % 1. Adjust initial simulation feeder load:
-DSSText.command ='solve loadmult=0.5';
+DSSText.command =sprintf('solve loadmult=%s',num2str(pu_load));
 %{
 figure(1);
 plotCircuitLines(DSSCircObj,'Coloring','lineLoading','PVMarker','on','MappingBackground','none');
@@ -47,6 +50,7 @@ Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
 Buses = getBusInfo(DSSCircObj);
 Loads = getLoadInfo(DSSCircObj);
+%%
 %
 %Function to generate node names from Buses_Base:
 MAT_FILE_LOAD
@@ -89,7 +93,7 @@ end
 for jj=1:1:length(Capacitors)
     DSSText.command = sprintf('edit capacitor.%s state=%s',Capacitors(jj,1).name,num2str(cap_on));
 end
-DSSText.command ='solve loadmult=0.5';
+DSSText.command =sprintf('solve loadmult=%s',num2str(pu_load));
 Capacitors = getCapacitorInfo(DSSCircObj);
 %DSSText.command = 'edit capacitor.cp-nr-613 state=0';
 
@@ -155,7 +159,7 @@ end
 
 DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=12.47 kW=100 pf=1.00 enabled=false',Buses(bus_init,1).name);
 %DSSText.command = 'solve';
-DSSText.command = 'solve loadmult=0.5';
+DSSText.command =sprintf('solve loadmult=%s',num2str(pu_load));
 Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
 MAT_FILE_LOAD %generates 'ref_busVpu'
 %---------------------------------------------
@@ -199,7 +203,7 @@ while ii< length(Buses) %length(Buses)
         % ~~~~~~~~~~~~~~~~~
         %Connect PV to Bus:
         DSSText.command = sprintf('edit generator.PV bus1=%s kW=%s',Buses(ii,1).name,num2str(PV_size));
-        fprintf('%1.1f) SolarGEN located: %s\n',m,Buses(ii,1).name);
+        fprintf('%1.1f/%1.1f SolarGEN located: %s\n',m,length(legal_buses),Buses(ii,1).name);
         %Reset Vreg to initial state:
         for ij=1:DSSCircuit.Transformers.Count;
             if isempty(XfmrTaps(ij,1).Init_tap) == 0
@@ -238,7 +242,7 @@ while ii< length(Buses) %length(Buses)
             %Run powerflow at Bus location:
             %tic
             DSSText.command = sprintf('edit generator.PV kW=%s',num2str(PV_size));
-            DSSText.command = 'solve loadmult=0.5';
+            DSSText.command =sprintf('solve loadmult=%s',num2str(pu_load));
             %{
             DSSText.command = 'Set mode=snapshot';
             DSSText.command = 'Set controlmode = static';
@@ -366,9 +370,9 @@ while ii< length(Buses) %length(Buses)
             
             %fprintf('Max %%thermalrating is %3.3f %%, located at:  %s\n',max_C(1,1),Lines(max_C(1,2),1).name);  
             %fprintf('\nMax P.U. voltage is %3.3f, located at:  %s\n',max_V(1,1),Lines(max_V(1,2),1).name);
-            if mod(PV_size,2000) == 0
-                fprintf('\tSIZE: %3.1f kW\n',PV_size);
-            end
+            %if mod(PV_size,2000) == 0
+                %fprintf('\tSIZE: %3.1f kW\n',PV_size);
+            %end
             %
             %Save results for this iteration:
             RESULTS(jj,1:6)=[PV_size,max(max_V(:,1)),max_V(2,1),max_C(1,1),max_C(2,1),PV_LOC]; %|PV_KW|maxV_3ph|maxV_1ph|maxC1|maxC2|bus_name|kVAR_CAP1|kVAR_CAP2
@@ -432,6 +436,7 @@ while ii< length(Buses) %length(Buses)
     %Increment Position:
     ii = ii + 1;
 end
+save(filename,'RESULTS');
 %%
 %After Simulation, Lets show where all the locations were w/ distance from
 %substation.
