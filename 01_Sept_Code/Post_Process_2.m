@@ -2,6 +2,7 @@
 %Coding to replicate Figure 5 & Figure 6:
 clear
 clc
+clear all
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
 %import numpy as np
@@ -48,8 +49,19 @@ elseif ckt_num == 2
     k = 1; %use all --
 elseif ckt_num == 3
     %Flay -- To be used in CUEPRA meeting!
+    %   30% loading condition:
+    load RESULTS_FLAY_030.mat
+    RESULTS_30 = RESULTS;
+    sort_Results_30 = xlsread('RESULTS_FLAY.xlsx','RESULTS_025');
+    %   25% loading condition:
+    load RESULTS_FLAY_025.mat
+    RESULTS_25 = RESULTS;
+    sort_Results_25 = xlsread('RESULTS_FLAY.xlsx','RESULTS_030');
+    %   50% loading condition:
     load RESULTS_FLAY_SS_1.mat
     sort_Results = xlsread('RESULTS_SORTED_2.xlsx','FLAY_3');
+    
+    
     %load feeder openDSS config files:
     load config_DISTANCE_FLAY.mat
     load config_LOADNAMES_FLAY.mat
@@ -151,6 +163,9 @@ while ii < length(RESULTS)+1%20001
         for ijj=1:1:length(Check_inv)
             if RESULTS(ii,6) == Check_inv(ijj,1)
                 RESULTS(ii,9) = Check_inv(ijj,3); %distances:
+                RESULTS_30(ii,9) = Check_inv(ijj,3);
+                RESULTS_25(ii,9) = Check_inv(ijj,3);
+                
             end
         end
         %RESULTS(ii,9) = Check_inv(k,3); %distances
@@ -281,57 +296,86 @@ num_kws = 10e3/100;
 max_PVkw = zeros(199,4);
 %i = 102; %skip bus3 b/c distance to sub = 0km
 %n = 1;
-while i < length(x)+1%20002
-    location = RESULTS(i:i+99,1:9);
-    j = 1;
-    while j < 101 %100 different PV levels:
-        if location(j,2) > 1.05
-            max_PVkw(n,1) = location(j,1); %PV_KW
-            %max_PVkw(n,2) = str2double(cell2mat(legal_buses(n,1))); %BUS#
-            max_PVkw(n,2) = location(j,6); %Bus ref
-            %Store voltage of violation:
-            max_PVkw(n,3) = location(j,2); %max3phV
-            max_PVkw(n,4) = location(j,9); %km
-            
-            %Reset Variables;
-            n = n + 1;
-            j = 202;
-        elseif location(j,4) > 100
-            max_PVkw(n,1) = location(j,1); %PV_KW
-            %max_PVkw(n,2) = str2double(cell2mat(legal_buses(n,1))); %BUS#
-            max_PVkw(n,2) = location(j,6);
-            %max_PVkw(n,2) = legal_buses(n+1,1); %BUS#
-            %Store voltage of violation:
-            max_PVkw(n,3) = location(j,4); %max%THERM
-            max_PVkw(n,4) = location(j,9); %km
-            %Reset Variables;
-            n = n + 1;
-            j = 202;
-        elseif j == 100
-            max_PVkw(n,1) = location(j,1); %PV_KW
-            %max_PVkw(n,2) = str2double(cell2mat(legal_buses(n,1))); %BUS#
-            max_PVkw(n,2) = location(j,6); %Bus ref
-            %max_PVkw(n,2) = legal_buses(n+1,1); %BUS#
-            max_PVkw(n,4) = location(j,9); %km
-            n = n + 1;
+for k=1:1:3
+    while i < length(x)+1%20002
+        if k==1
+            location = RESULTS(i:i+99,1:9);
+        elseif k==2
+            location = RESULTS_30(i:i+99,1:10);
+        elseif k==3
+            location = RESULTS_25(i:i+99,1:10);
         end
-        j = j + 1;
-        display(n)
+        
+        j = 1;
+        while j < 101 %100 different PV levels:
+            if location(j,2) > 1.05
+                max_PVkw(n,1) = location(j,1); %PV_KW
+                %max_PVkw(n,2) = str2double(cell2mat(legal_buses(n,1))); %BUS#
+                max_PVkw(n,2) = location(j,6); %Bus ref
+                %Store voltage of violation:
+                max_PVkw(n,3) = location(j,2); %max3phV
+                max_PVkw(n,4) = location(j,9); %km
+
+                %Reset Variables;
+                n = n + 1;
+                j = 202;
+            elseif location(j,4) > 100
+                max_PVkw(n,1) = location(j,1); %PV_KW
+                %max_PVkw(n,2) = str2double(cell2mat(legal_buses(n,1))); %BUS#
+                max_PVkw(n,2) = location(j,6);
+                %max_PVkw(n,2) = legal_buses(n+1,1); %BUS#
+                %Store voltage of violation:
+                max_PVkw(n,3) = location(j,4); %max%THERM
+                max_PVkw(n,4) = location(j,9); %km
+                %Reset Variables;
+                n = n + 1;
+                j = 202;
+            elseif j == 100
+                max_PVkw(n,1) = location(j,1); %PV_KW
+                %max_PVkw(n,2) = str2double(cell2mat(legal_buses(n,1))); %BUS#
+                max_PVkw(n,2) = location(j,6); %Bus ref
+                %max_PVkw(n,2) = legal_buses(n+1,1); %BUS#
+                max_PVkw(n,4) = location(j,9); %km
+                n = n + 1;
+            end
+            j = j + 1;
+            display(n)
+        end
+        i = i + 100;
     end
-    i = i + 100;
+    if k == 1
+        MAX_PV.L50 = max_PVkw;
+    elseif k == 2
+        MAX_PV.L30 = max_PVkw;
+    elseif k == 3
+        MAX_PV.L25 = max_PVkw;
+    end
+    i = 2;
+    n = 2;
 end
 fig = fig + 1;
 figure(fig);
-scatter(max_PVkw(:,4),max_PVkw(:,1)) %distance VS maxKW
+plot(MAX_PV.L50(:,4),MAX_PV.L50(:,1),'bo') %distance VS maxKW
+hold on
+plot(MAX_PV.L30(:,4),MAX_PV.L30(:,1),'ro') %distance VS maxKW
+hold on
+plot(MAX_PV.L25(:,4),MAX_PV.L25(:,1),'go') %distance VS maxKW
+
+
+
 if ckt_num == 1
     axis([0 4 0 14000]);
     title('EPRI - CKT7','FontWeight','bold');
 elseif ckt_num == 2
     axis([0 5 0 14000]);
     title('DEC2 - CMNWLTH','FontWeight','bold');
+elseif ckt_num == 3
+    axis([0 13 0 11000]);
+    title('Feeder-03 DER Hosting Capacity','FontWeight','bold');
 end
-xlabel('PV Distance (km)','FontWeight','bold');
-ylabel('Max Central PV Size (kW)','FontWeight','bold');    
+xlabel('PV Distance (km)','FontWeight','bold','FontSize',12);
+ylabel('Max Central PV Size (kW)','FontWeight','bold','FontSize',12);   
+legend('Avg. Summer Load (0.5)','Min. Summer Load (0.3)','Min. Winter Load (0.25)');
 grid on
 set(gca,'FontWeight','bold');    
     
