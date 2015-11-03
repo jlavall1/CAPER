@@ -24,6 +24,9 @@ Lines = getLineInfo(DSSCircObj);
 %}
 
 %% Plot Circuit Profiles
+
+%{
+
 % USING GRIDPV TOOLBOX
 figure(1);
 %subplot(2,2,1);
@@ -119,55 +122,62 @@ ylabel(gca,'Bus Voltage (pu)','FontSize',12,'FontWeight','bold')
 title('Feeder Voltage Profile','FontWeight','bold','FontSize',12);
 legend('OpenDSS','MILP')
 
-
+%}
 
 
 %% Calculate Error
 Len = length(Lines_Base);
-errPowerReal = zeros(Len,1);
-errPowerReactive = zeros(Len,1);
-errVoltage = zeros(Len,1);
+%errPowerReal = zeros(Len,1);
+%errPowerReactive = zeros(Len,1);
+%errVoltage = zeros(Len,1);
+AllIndex  = [];
+AllIndex2 = [];
+j = 1;
 for i = 1:length(Lines_Base)
-    NodeIndex = find(~cellfun(@isempty,regexp(NODE.ID,regexp(Lines_Base(i).bus1,'^.*?(?=[.])','match'))));
-    if (~isempty(NodeIndex))
-        errPowerReal(i)     = (Lines_Base(i).bus1PowerReal     - P(NodeIndex)      );%/Lines_Base(i).bus1PowerReal;
-        errPowerReactive(i) = (Lines_Base(i).bus1PowerReactive - Q(NodeIndex)      );%/Lines_Base(i).bus1PowerReactive;
-        errVoltage(i)       = (Lines_Base(i).bus1VoltagePU     - V(NodeIndex)/12.47);%/Lines_Base(i).bus1VoltagePU;
+    if Lines_Base(i).numPhases == 3
+        NodeIndex = find(~cellfun(@isempty,regexp(NODE.ID,regexp(Lines_Base(i).bus1,'^.*?(?=[.])','match'))));
+        if (~isempty(NodeIndex)) && (P(NodeIndex) > 10^-2)
+            AllIndex  = [AllIndex;NodeIndex];
+            AllIndex2 = [AllIndex2;i];
+            errPowerReal(j)     = (Lines_Base(i).bus1PowerReal     - P(NodeIndex)      )/Lines_Base(i).bus1PowerReal;
+            errPowerReactive(j) = (Lines_Base(i).bus1PowerReactive - Q(NodeIndex)      )/Lines_Base(i).bus1PowerReactive;
+            errVoltage(j)       = (Lines_Base(i).bus1VoltagePU     - V(NodeIndex)/12.47)/Lines_Base(i).bus1VoltagePU;
+            j = j+1;
+        end
     end
 end
-
 
 
 % Plot Errors
 figure(4);
 subplot(1,3,1);
-plot([Lines_Base.bus1Distance],errPowerReal,'.k')
+plot(NODE.DISTANCE(AllIndex),100*errPowerReal,'.k');%/mean(P_3ph),'.k')
 grid on;
-%axis([0 6 -1 1])
+axis([0 6 -100 100])
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Distance from Substation (km)','FontSize',12,'FontWeight','bold')
 ylabel(gca,'Percent Error','FontSize',12,'FontWeight','bold')
-title('Feeder kW Profile','FontWeight','bold','FontSize',12);
+title('Feeder kW Percent Error','FontWeight','bold','FontSize',12);
 legend('Percent Error')
 
 subplot(1,3,2);
-plot([Lines_Base.bus1Distance],errPowerReactive,'.k','MarkerSize',8)
+plot(NODE.DISTANCE(AllIndex),100*errPowerReactive,'.k','MarkerSize',8)
 grid on;
-%axis([0 6 -1 1])
+%axis([0 6 -100 100])
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Distance from Substation (km)','FontSize',12,'FontWeight','bold')
 ylabel(gca,'Percent Error','FontSize',12,'FontWeight','bold')
-title('Feeder kVAR Profile','FontWeight','bold','FontSize',12);
+title('Feeder kVAR Percent Error','FontWeight','bold','FontSize',12);
 legend('Percent Error')
 
 subplot(1,3,3);
-plot([Lines_Base.bus1Distance],errVoltage,'.k','MarkerSize',8)
+plot(NODE.DISTANCE(AllIndex),100*errVoltage,'.k','MarkerSize',8)
 grid on;
-%axis([0 6 -.01 .1])
+%axis([0 6 -.5 .5])
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Distance from Substation (km)','FontSize',12,'FontWeight','bold')
 ylabel(gca,'Percent Error','FontSize',12,'FontWeight','bold')
-title('Feeder Voltage Profile','FontWeight','bold','FontSize',12);
+title('Feeder Voltage Percent Error','FontWeight','bold','FontSize',12);
 legend('Percent Error')
 
 
