@@ -9,24 +9,45 @@ while action<1
     action=menu('Which Plot would you like to initiate?','Monthly averages during PV peak','Yearly distrib. of daily max/mins','box plot of seasons','Histograms of avgs.','W&S mu+/-1.5s');
 end
 
-feeder_NUM=menu('Which feeder','Bellhaven','Flay','Commonwealth','Roxboro');
+feeder_NUM=menu('Which feeder','1-Bellhaven','2-Flay','3-Commonwealth','4-Roxboro');
 while feeder_NUM<1
-    feeder_NUM=menu('Which feeder','Bellhaven','Flay','Commonwealth','Roxboro');
-end
-if feeder_NUM == 1
-    %Bell
-elseif feeder_NUM == 2
-    %Flay
-    kW_peak = [1.424871573296857e+03,1.347528364235151e+03,1.716422704604557e+03];
-    kW_peak_3ph = sum(kW_peak(1,:));
-    load FLAY.mat
-    load Annual_daytime_load.mat
-    addpath('C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\01_Shelby_NC');
-    load M_SHELBY.mat
-    M_PVSITE=M_SHELBY;
-    clear M_SHELBY;
+    feeder_NUM=menu('Which feeder','1-Bellhaven','2-Flay','3-Commonwealth','4-Roxboro');
 end
 
+if feeder_NUM == 1
+    load BELL.mat
+    FEEDER = BELL;
+    clearvars BELL
+    kW_peak = [0,0,0];
+    str_FDR = '_BELL.mat';
+elseif feeder_NUM == 2
+    load FLAY.mat
+    FEEDER = FLAY;
+    clearvars FLAY
+    kW_peak = [1.424871573296857e+03,1.347528364235151e+03,1.716422704604557e+03];
+    kW_peak_3ph = sum(kW_peak(1,:));
+    str_FDR = '_FLAY.mat';
+elseif feeder_NUM == 3
+    load CMNWLTH.mat
+    FEEDER = CMNWLTH;
+    clearvars CMNWLTH
+    kW_peak = [2.475021572579630e+03,2.609588847297235e+03,2.086659558753901e+03];
+    str_FDR = '_CMNWLTH.mat';
+elseif feeder_NUM == 4
+    load ROX.mat
+    FEEDER = ROX;
+    clearvars ROX
+    kW_peak = [3.189154306704542e+03,3.319270338767296e+03,3.254908188719974e+03];
+    str_FDR = '_ROX.mat';
+    
+end
+
+load Annual_daytime_load.mat
+%LOAD PV INFO:
+addpath('C:\Users\Brian\Documents\GitHub\CAPER\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\03_Taylorsville_NC');
+load M_TAYLOR.mat
+M_PVSITE=M_TAYLOR;
+clearvars M_TAYLOR
 fig = 0;
 t_w=0;  
 tt =0;
@@ -79,7 +100,7 @@ end
 
 %%
 %%%%% Add all three phases???
-for k=1:length(FLAY.kW.A)/1440
+for k=1:length(FEEDER.kW.A)/1440
     WINDOW.MONTH.KW.A(k,1) = 100000;
     WINDOW.MONTH.KW.A(k,2) = 0;
     WINDOW.MONTH.KW.B(k,1) = 100000;
@@ -88,23 +109,23 @@ for k=1:length(FLAY.kW.A)/1440
     WINDOW.MONTH.KW.C(k,2) = 0;
     for i=t_w+1:1440+t_w
 
-        if FLAY.kW.A(i,1) < WINDOW.MONTH.KW.A(k,1)
-            WINDOW.MONTH.KW.A(k,1) = FLAY.kW.A(i,1);
+        if FEEDER.kW.A(i,1) < WINDOW.MONTH.KW.A(k,1)
+            WINDOW.MONTH.KW.A(k,1) = FEEDER.kW.A(i,1);
         end
-        if FLAY.kW.A(i,1) > WINDOW.MONTH.KW.A(k,2)
-            WINDOW.MONTH.KW.A(k,2) = FLAY.kW.A(i,1);
+        if FEEDER.kW.A(i,1) > WINDOW.MONTH.KW.A(k,2)
+            WINDOW.MONTH.KW.A(k,2) = FEEDER.kW.A(i,1);
         end
-        if FLAY.kW.B(i,1) < WINDOW.MONTH.KW.B(k,1)
-            WINDOW.MONTH.KW.B(k,1) = FLAY.kW.B(i,1);
+        if FEEDER.kW.B(i,1) < WINDOW.MONTH.KW.B(k,1)
+            WINDOW.MONTH.KW.B(k,1) = FEEDER.kW.B(i,1);
         end
-        if FLAY.kW.B(i,1) > WINDOW.MONTH.KW.B(k,2)
-            WINDOW.MONTH.KW.B(k,2) = FLAY.kW.B(i,1);
+        if FEEDER.kW.B(i,1) > WINDOW.MONTH.KW.B(k,2)
+            WINDOW.MONTH.KW.B(k,2) = FEEDER.kW.B(i,1);
         end
-        if FLAY.kW.C(i,1) < WINDOW.MONTH.KW.C(k,1)
-            WINDOW.MONTH.KW.C(k,1) = FLAY.kW.C(i,1);
+        if FEEDER.kW.C(i,1) < WINDOW.MONTH.KW.C(k,1)
+            WINDOW.MONTH.KW.C(k,1) = FEEDER.kW.C(i,1);
         end
-        if FLAY.kW.C(i,1) > WINDOW.MONTH.KW.C(k,2)
-            WINDOW.MONTH.KW.C(k,2) = FLAY.kW.C(i,1);
+        if FEEDER.kW.C(i,1) > WINDOW.MONTH.KW.C(k,2)
+            WINDOW.MONTH.KW.C(k,2) = FEEDER.kW.C(i,1);
         end
     end
     t_w = t_w+1399;
@@ -361,7 +382,7 @@ if action == 5
             %MNTH=10;
         end
         %}
-        MNTH=i
+        MNTH=i;
         DAY=1;
         %Now grab each minute from 10:00 to 16:00
         while hr < 16
