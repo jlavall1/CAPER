@@ -20,11 +20,11 @@ if feeder_NUM == 0
     kW_peak = [0,0,0];
     str_FDR = '_BELL.mat';
 elseif feeder_NUM == 1
-    load COMN.mat
-    FEEDER = COMN;
-    clearvars COMN
+    load CMNWLTH.mat
+    FEEDER = CMNWLTH;
+    clearvars CMNWLTH
     kW_peak = [2.475021572579630e+03,2.609588847297235e+03,2.086659558753901e+03];
-    str_FDR = '_COMN.mat';
+    str_FDR = '_CMNWLTH.mat';
 elseif feeder_NUM == 2
     load FLAY.mat
     FEEDER = FLAY;

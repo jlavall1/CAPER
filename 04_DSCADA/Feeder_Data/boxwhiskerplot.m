@@ -16,12 +16,14 @@ end
 
 if feeder_NUM == 1
     load BELL.mat
+    load Annual_daytime_load_BELL.mat
     FEEDER = BELL;
     clearvars BELL
     kW_peak = [0,0,0];
     str_FDR = '_BELL.mat';
 elseif feeder_NUM == 2
     load FLAY.mat
+    load Annual_daytime_load_FLAY.mat
     FEEDER = FLAY;
     clearvars FLAY
     kW_peak = [1.424871573296857e+03,1.347528364235151e+03,1.716422704604557e+03];
@@ -29,12 +31,14 @@ elseif feeder_NUM == 2
     str_FDR = '_FLAY.mat';
 elseif feeder_NUM == 3
     load CMNWLTH.mat
+    load Annual_daytime_load_CMNWLTH.mat
     FEEDER = CMNWLTH;
     clearvars CMNWLTH
     kW_peak = [2.475021572579630e+03,2.609588847297235e+03,2.086659558753901e+03];
     str_FDR = '_CMNWLTH.mat';
 elseif feeder_NUM == 4
     load ROX.mat
+    load Annual_daytime_load.mat
     FEEDER = ROX;
     clearvars ROX
     kW_peak = [3.189154306704542e+03,3.319270338767296e+03,3.254908188719974e+03];
@@ -42,7 +46,7 @@ elseif feeder_NUM == 4
     
 end
 
-load Annual_daytime_load.mat
+
 %LOAD PV INFO:
 addpath('C:\Users\Brian\Documents\GitHub\CAPER\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\03_Taylorsville_NC');
 load M_TAYLOR.mat
