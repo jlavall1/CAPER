@@ -194,9 +194,9 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     set(h.rb(2),'Value',1);     %ckt choice             -- Flay(3) Common(2)
     %}
     %Locational Hosting Capacity:
-    set(h.ckbx(1),'Value',1);   %DER hosting capacity   -- ON
+    set(h.ckbx(1),'Value',0);   %DER hosting capacity   -- ON
     set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
-    set(h.ckbx(3),'Value',0);   %timeseries simulation  -- OFF
+    set(h.ckbx(3),'Value',1);   %timeseries simulation  -- OFF
     set(h.rb(3),'Value',1);     %ckt choice             -- Flay(3) Common(2)
     set(h.ppm(2),'Value',3);    %Simulation choice      -- Steady State(3)
     

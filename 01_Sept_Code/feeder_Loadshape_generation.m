@@ -118,7 +118,7 @@ if timeseries_span == 1
     ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_6hr.dss');
 elseif timeseries_span == 2
     %24 Hours, 1 DAY at 1minute intervals
-    s_kwA = strcat(s,'LS2_PhaseA.txt');
+    s_kwA = strcat(s,'LS2_PhaseA.txt'); %was .txt
     s_kwB = strcat(s,'LS2_PhaseB.txt');
     s_kwC = strcat(s,'LS2_PhaseC.txt');
     FEEDER.SIM.npts= 24*60;     %simulating 24 hours

@@ -13,6 +13,7 @@ Compile 'Master_24hr.DSS'
 !EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ] 
 ! 
 ! Disable Capacitors for load allocation
+/***** Begin Block Comment ******
 Disable Capacitor.*
 ! 
 AllocateLoad
@@ -22,6 +23,7 @@ AllocateLoad
 ! 
 ! Enable capacitors before solving
 Enable Capacitor.*
+*** End Block Comment  *****/
 ! 
 Solve
 ! 
