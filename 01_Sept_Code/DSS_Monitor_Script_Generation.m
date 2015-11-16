@@ -38,7 +38,7 @@ while k <= n
     line = Lines_Distance(k,1).name;
     numPh = Lines_Distance(k,1).numPhases;   
     if numPh == 3
-        for i=2:1:2 %WIll only generate _PQ
+        for i=1:1:2 %WIll only generate _PQ
             Monitor{j,2}=Lines_Distance(k,1).bus1Distance;
             B1 = Lines_Distance(k,1).bus1;
             %take off node #'s (.1.2.3):
@@ -71,6 +71,7 @@ while k <= n
     end
     k = k + 1;
 end
+%{
 k=1;
 while k <=length(Loads_Base)
     load_name = Loads_Base(k,1).name;
@@ -85,7 +86,7 @@ while k <=length(Loads_Base)
     k = k + 1;
     j = j + 1
 end
-    
+%}  
     
     
 

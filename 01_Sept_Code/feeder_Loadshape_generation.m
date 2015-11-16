@@ -31,6 +31,7 @@ elseif feeder_NUM == 2
     FEEDER = FLAY;
     clearvars FLAY
     kW_peak = [1.424871573296857e+03,1.347528364235151e+03,1.716422704604557e+03];
+    %kW_peak = [1373.635335,1296.987098,1626.668382];
 elseif feeder_NUM == 3
     load ROX.mat
     FEEDER = ROX;
@@ -54,12 +55,22 @@ if timeseries_span == 1
     LS_PhaseC(:,1) = LOAD_ACTUAL(:,3)./kW_peak(1,3);    
 elseif timeseries_span == 2
     %24HR Sim    -- 
-    LOAD_ACTUAL(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY,23,59),1);
-    LOAD_ACTUAL(:,2) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
-    LOAD_ACTUAL(:,3) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY,23,59),1);
-    LS_PhaseA(:,1) = LOAD_ACTUAL(:,1)./kW_peak(1,1);
-    LS_PhaseB(:,1) = LOAD_ACTUAL(:,2)./kW_peak(1,2);
-    LS_PhaseC(:,1) = LOAD_ACTUAL(:,3)./kW_peak(1,3);
+    LOAD_ACTUAL_1(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY,23,59),1);
+    LOAD_ACTUAL_1(:,2) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
+    LOAD_ACTUAL_1(:,3) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY,23,59),1);
+    %drop to 1minute loads:
+    LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),6);
+    LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),6);
+    LOAD_ACTUAL(:,3) = interp(LOAD_ACTUAL_1(:,3),6);
+    %{
+    %Now construct P.U.
+    LS_PhaseA(:,1) = (LOAD_ACTUAL(:,1)./(kW_peak(1,1)))*1.5; %0.6
+    LS_PhaseB(:,1) = (LOAD_ACTUAL(:,2)./(kW_peak(1,2)))*1.5; %0.55
+    LS_PhaseC(:,1) = (LOAD_ACTUAL(:,3)./(kW_peak(1,3)))*1.7; %0.3
+    %}
+    LS_PhaseA(:,1) = LOAD_ACTUAL(:,1);
+    LS_PhaseB(:,1) = LOAD_ACTUAL(:,2);
+    LS_PhaseC(:,1) = LOAD_ACTUAL(:,3);
 elseif timeseries_span == 3
     %1 Week Sim  -- @1min incs.
     LS_PhaseA(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY+6,23,59),1)./kW_peak(1,1);
@@ -121,8 +132,8 @@ elseif timeseries_span == 2
     s_kwA = strcat(s,'LS2_PhaseA.txt'); %was .txt
     s_kwB = strcat(s,'LS2_PhaseB.txt');
     s_kwC = strcat(s,'LS2_PhaseC.txt');
-    FEEDER.SIM.npts= 24*60;     %simulating 24 hours
-    FEEDER.SIM.stepsize = 60;   %60 second sim intervals
+    FEEDER.SIM.npts= 24*60*6;     %simulating 24 hours   (used to be: 24*60)
+    FEEDER.SIM.stepsize = 10;   %60 second sim interval (used to be: 60)
     idx = strfind(ckt_direct,'.');
     ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_24hr.dss');
 elseif timeseries_span == 3

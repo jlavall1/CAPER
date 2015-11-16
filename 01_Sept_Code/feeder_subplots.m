@@ -38,6 +38,6 @@ subplot(2,2,4);
 %plotAmpProfile(DSSCircObj,'258904005');    %Commonwealth
 %plotAmpProfile(DSSCircObj,'258126280');     %Flay
 %plotAmpProfile(DSSCircObj,'1713339'); %Roxboro
-
-
 % Lines2=getLineInfo_DJM(DSSCircObj, DSSText);
+%%
+gcf=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');

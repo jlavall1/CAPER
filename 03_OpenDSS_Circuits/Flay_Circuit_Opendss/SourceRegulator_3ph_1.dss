@@ -1,0 +1,16 @@
+New Transformer.FLAY_RET_16271201 Phases=3 Windings=2 
+~	buses=(FLAY_RET_16271201 FLAY_RET_16271201_reg)
+~	conns='wye wye'
+~	kvs=(12.47 12.47)
+~	kvas=(10561.31 10561.31)
+~	XHL=0.1
+~	%LoadLoss=0.001
+	
+
+New RegControl.FLAY_RET_16271201 Transformer=FLAY_RET_16271201 Winding=2 R= 0  X= 0  
+~ Vreg= 124 			
+~ Band=1 
+~ PTratio= 60			
+~ Delay=30 
+
+

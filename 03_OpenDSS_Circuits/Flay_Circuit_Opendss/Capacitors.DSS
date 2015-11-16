@@ -2,5 +2,5 @@ New Capacitor.38395182 Phases= 3  Bus1=258425776 kvar= 600  kV= 12.47
 New Capacitor.38391707_Sw Phases= 3  Bus1=258406388 kvar= 450  kV= 12.47 
 !CapControllers, should be based on PF
 
-New Capcontrol.38391707 Element=Line.258406386 Terminal=2 Capacitor=38391707_Sw Type=voltage ONsetting=120 OFFsetting=123 PTRatio= 1.11666666666667  VoltOverride=N Vmax = 116.000000 Vmin = 0 enabled=T delay=30
-New Capcontrol.38395182_Sw Element=Line.259126903 Terminal=2 Capacitor=38395182 Type=voltage ONsetting=120 OFFsetting=123 PTRatio= 1.11666666666667  VoltOverride=N Vmax = 116.000000 Vmin = 0 enabled=T delay=30
+!New Capcontrol.38391707 Element=Line.258406386 Terminal=2 Capacitor=38391707_Sw Type=voltage ONsetting=120 OFFsetting=123 PTRatio= 1.11666666666667  VoltOverride=N Vmax = 116.000000 Vmin = 0 enabled=T delay=30
+!New Capcontrol.38395182_Sw Element=Line.259126903 Terminal=2 Capacitor=38395182 Type=voltage ONsetting=120 OFFsetting=123 PTRatio= 60  VoltOverride=N Vmax = 126.0 Vmin = 116.0 enabled=T delay=30

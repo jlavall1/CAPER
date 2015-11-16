@@ -1,6 +1,6 @@
 New Monitor.LTC element=Transformer.FLAY_RET_16271201 terminal=2 mode=2
 New Monitor.subVI element=Transformer.FLAY_RET_16271201 terminal=2 mode=0
-New energymeter.fdr_05410 element=line.259363665 term=1 option=R action=C PhaseVolt=YES peakcurrent=(196.597331353572,186.718068471483,238.090235458346)
+!New energymeter.fdr_05410 element=line.259363665 term=1 option=R action=C PhaseVolt=YES peakcurrent=(196.597331353572,186.718068471483,238.090235458346)
 !
 ! PCC upstream bus --
 !
@@ -353,7 +353,7 @@ New Monitor.259332453_Mon_PQ  element=line.259332453 term=1  mode=1 PPolar=No
 New Monitor.258443642_Mon_PQ  element=line.258443642 term=1  mode=1 PPolar=No
 New Monitor.258443647_Mon_PQ  element=line.258443647 term=1  mode=1 PPolar=No
 New Monitor.1_Mon_VI  element=load.259529045_1 term=1  mode=32
-New Monitor.2_Mon_VI  element=load.258425092_2  mode=32
+New Monitor.2_Mon_VI  element=load.258425092_2 term=1  mode=32
 New Monitor.3_Mon_VI  element=load.258425010_3 term=1  mode=32
 New Monitor.4_Mon_VI  element=load.260005788_1 term=1  mode=32
 New Monitor.5_Mon_VI  element=load.258406113_1 term=1  mode=32
@@ -701,9 +701,9 @@ New Monitor.346_Mon_VI  element=load.258425458_3 term=1  mode=32
 New Monitor.347_Mon_VI  element=load.259259891-2_1 term=1  mode=32
 New Monitor.348_Mon_VI  element=load.263395381_1 term=1  mode=32
 New Monitor.349_Mon_VI  element=load.264148873_3 term=1  mode=32
-New Monitor.350_Mon_VI  element=load.258443674-2_2 term=1  mode=32
+!New Monitor.350_Mon_VI  element=load.258443674-2_2 term=1  mode=32
 New Monitor.351_Mon_VI  element=load.263733336_2 term=1  mode=32
-New Monitor.352_Mon_VI  element=load.258425946-3_1 term=1  mode=32
+!New Monitor.352_Mon_VI  element=load.258425946-3_1 term=1  mode=32
 New Monitor.353_Mon_VI  element=load.258406625_3 term=1  mode=32
 New Monitor.354_Mon_VI  element=load.263733327_1 term=1  mode=32
 New Monitor.355_Mon_VI  element=load.258425937_2 term=1  mode=32
@@ -714,7 +714,7 @@ New Monitor.359_Mon_VI  element=load.263399238_1 term=1  mode=32
 New Monitor.360_Mon_VI  element=load.260663805_1 term=1  mode=32
 New Monitor.361_Mon_VI  element=load.263733291_2 term=1  mode=32
 New Monitor.362_Mon_VI  element=load.258405858_2 term=1  mode=32
-New Monitor.363_Mon_VI  element=load.258443654-2_2 term=1  mode=32
+!New Monitor.363_Mon_VI  element=load.258443654-2_2 term=1  mode=32
 New Monitor.364_Mon_VI  element=load.260663800_1 term=1  mode=32
 New Monitor.365_Mon_VI  element=load.258405993_2 term=1  mode=32
 New Monitor.366_Mon_VI  element=load.264148855_2 term=1  mode=32
@@ -724,7 +724,7 @@ New Monitor.369_Mon_VI  element=load.263399337_3 term=1  mode=32
 New Monitor.370_Mon_VI  element=load.261434092_3 term=1  mode=32
 New Monitor.371_Mon_VI  element=load.263399166_3 term=1  mode=32
 New Monitor.372_Mon_VI  element=load.258424981_1 term=1  mode=32
-New Monitor.373_Mon_VI  element=load.258424981-2_2 term=1  mode=32
+!New Monitor.373_Mon_VI  element=load.258424981-2_2 term=1  mode=32
 New Monitor.374_Mon_VI  element=load.258424981_3 term=1  mode=32
 New Monitor.375_Mon_VI  element=load.258425917_2 term=1  mode=32
 New Monitor.376_Mon_VI  element=load.258405963_3 term=1  mode=32
@@ -739,7 +739,7 @@ New Monitor.384_Mon_VI  element=load.259596194_1 term=1  mode=32
 New Monitor.385_Mon_VI  element=load.258405838_3 term=1  mode=32
 New Monitor.386_Mon_VI  element=load.258425982_3 term=1  mode=32
 New Monitor.387_Mon_VI  element=load.615922898_1 term=1  mode=32
-New Monitor.388_Mon_VI  element=load.258443444-2_1 term=1  mode=32
+!New Monitor.388_Mon_VI  element=load.258443444-2_1 term=1  mode=32
 New Monitor.389_Mon_VI  element=load.258406585_2 term=1  mode=32
 New Monitor.390_Mon_VI  element=load.258425977_3 term=1  mode=32
 New Monitor.391_Mon_VI  element=load.263399283_1 term=1  mode=32
@@ -752,9 +752,9 @@ New Monitor.397_Mon_VI  element=load.258443549_1 term=1  mode=32
 New Monitor.398_Mon_VI  element=load.258405806_3 term=1  mode=32
 New Monitor.399_Mon_VI  element=load.258443434_2 term=1  mode=32
 New Monitor.400_Mon_VI  element=load.258425867_1 term=1  mode=32
-New Monitor.401_Mon_VI  element=load.258444194-2_1 term=1  mode=32
-New Monitor.402_Mon_VI  element=load.258444194-2_2 term=1  mode=32
-New Monitor.403_Mon_VI  element=load.258444194-3_2 term=1  mode=32
+!New Monitor.401_Mon_VI  element=load.258444194-2_1 term=1  mode=32
+!New Monitor.402_Mon_VI  element=load.258444194-2_2 term=1  mode=32
+!New Monitor.403_Mon_VI  element=load.258444194-3_2 term=1  mode=32
 New Monitor.404_Mon_VI  element=load.258443376_3 term=1  mode=32
 New Monitor.405_Mon_VI  element=load.258405933_1 term=1  mode=32
 New Monitor.406_Mon_VI  element=load.258405933_2 term=1  mode=32
@@ -765,7 +765,7 @@ New Monitor.410_Mon_VI  element=load.258443709_2 term=1  mode=32
 New Monitor.411_Mon_VI  element=load.258405918_3 term=1  mode=32
 New Monitor.412_Mon_VI  element=load.258405883_3 term=1  mode=32
 New Monitor.413_Mon_VI  element=load.258443533_2 term=1  mode=32
-New Monitor.414_Mon_VI  element=load.258443796-2_2 term=1  mode=32
+!New Monitor.414_Mon_VI  element=load.258443796-2_2 term=1  mode=32
 New Monitor.415_Mon_VI  element=load.264487409_2 term=1  mode=32
 New Monitor.416_Mon_VI  element=load.258405878_1 term=1  mode=32
 New Monitor.417_Mon_VI  element=load.258443494_3 term=1  mode=32
@@ -793,7 +793,7 @@ New Monitor.438_Mon_VI  element=load.491389324_3 term=1  mode=32
 New Monitor.439_Mon_VI  element=load.258443764_3 term=1  mode=32
 New Monitor.440_Mon_VI  element=load.258406667_2 term=1  mode=32
 New Monitor.441_Mon_VI  element=load.258406667_3 term=1  mode=32
-New Monitor.442_Mon_VI  element=load.258425665-2_1 term=1  mode=32
+!New Monitor.442_Mon_VI  element=load.258425665-2_1 term=1  mode=32
 New Monitor.443_Mon_VI  element=load.258425776_2 term=1  mode=32
 New Monitor.444_Mon_VI  element=load.258406647_3 term=1  mode=32
 New Monitor.445_Mon_VI  element=load.258425755_2 term=1  mode=32
@@ -848,12 +848,12 @@ New Monitor.493_Mon_VI  element=load.258425615_1 term=1  mode=32
 New Monitor.494_Mon_VI  element=load.258425699_1 term=1  mode=32
 New Monitor.495_Mon_VI  element=load.258405637_1 term=1  mode=32
 New Monitor.496_Mon_VI  element=load.258425368_2 term=1  mode=32
-New Monitor.497_Mon_VI  element=load.258425428-2_2 term=1  mode=32
+!New Monitor.497_Mon_VI  element=load.258425428-2_2 term=1  mode=32
 New Monitor.498_Mon_VI  element=load.258444098_2 term=1  mode=32
 New Monitor.499_Mon_VI  element=load.258425254_2 term=1  mode=32
 New Monitor.500_Mon_VI  element=load.258443826_3 term=1  mode=32
 New Monitor.501_Mon_VI  element=load.620861448_2 term=1  mode=32
-New Monitor.502_Mon_VI  element=load.263391571-2_2 term=1  mode=32
+!New Monitor.502_Mon_VI  element=load.263391571-2_2 term=1  mode=32
 New Monitor.503_Mon_VI  element=load.263909231_1 term=1  mode=32
 New Monitor.504_Mon_VI  element=load.258443816_3 term=1  mode=32
 New Monitor.505_Mon_VI  element=load.258443946_3 term=1  mode=32
@@ -867,7 +867,7 @@ New Monitor.512_Mon_VI  element=load.258406535_3 term=1  mode=32
 New Monitor.513_Mon_VI  element=load.258425528_3 term=1  mode=32
 New Monitor.514_Mon_VI  element=load.258406348_1 term=1  mode=32
 New Monitor.515_Mon_VI  element=load.258406403_3 term=1  mode=32
-New Monitor.516_Mon_VI  element=load.258443816-2_2 term=1  mode=32
+!New Monitor.516_Mon_VI  element=load.258443816-2_2 term=1  mode=32
 New Monitor.517_Mon_VI  element=load.258425413_2 term=1  mode=32
 New Monitor.518_Mon_VI  element=load.258406233_1 term=1  mode=32
 New Monitor.519_Mon_VI  element=load.258425483_3 term=1  mode=32
@@ -875,7 +875,7 @@ New Monitor.520_Mon_VI  element=load.258426014_2 term=1  mode=32
 New Monitor.521_Mon_VI  element=load.258405622_3 term=1  mode=32
 New Monitor.522_Mon_VI  element=load.258425488_3 term=1  mode=32
 New Monitor.523_Mon_VI  element=load.258426136_1 term=1  mode=32
-New Monitor.524_Mon_VI  element=load.258426136-2_2 term=1  mode=32
+!New Monitor.524_Mon_VI  element=load.258426136-2_2 term=1  mode=32
 New Monitor.525_Mon_VI  element=load.258426136_3 term=1  mode=32
 New Monitor.526_Mon_VI  element=load.258406495_2 term=1  mode=32
 New Monitor.527_Mon_VI  element=load.258425408_2 term=1  mode=32
@@ -897,7 +897,7 @@ New Monitor.542_Mon_VI  element=load.258406048_1 term=1  mode=32
 New Monitor.543_Mon_VI  element=load.263391427_1 term=1  mode=32
 New Monitor.544_Mon_VI  element=load.258443719_1 term=1  mode=32
 New Monitor.545_Mon_VI  element=load.263391373_3 term=1  mode=32
-New Monitor.546_Mon_VI  element=load.258426101-2_2 term=1  mode=32
+!New Monitor.546_Mon_VI  element=load.258426101-2_2 term=1  mode=32
 New Monitor.547_Mon_VI  element=load.259374992_2 term=1  mode=32
 New Monitor.548_Mon_VI  element=load.620861248_2 term=1  mode=32
 New Monitor.549_Mon_VI  element=load.258406515_1 term=1  mode=32
@@ -926,21 +926,21 @@ New Monitor.571_Mon_VI  element=load.258425137_2 term=1  mode=32
 New Monitor.572_Mon_VI  element=load.263391409_1 term=1  mode=32
 New Monitor.573_Mon_VI  element=load.263391490_1 term=1  mode=32
 New Monitor.574_Mon_VI  element=load.263997753_1 term=1  mode=32
-New Monitor.575_Mon_VI  element=load.426195246-2_2 term=1  mode=32
+!New Monitor.575_Mon_VI  element=load.426195246-2_2 term=1  mode=32
 New Monitor.576_Mon_VI  element=load.261052106_1 term=1  mode=32
 New Monitor.577_Mon_VI  element=load.699613129_2 term=1  mode=32
 New Monitor.578_Mon_VI  element=load.258425030_3 term=1  mode=32
-New Monitor.579_Mon_VI  element=load.258406133-2_1 term=1  mode=32
+!New Monitor.579_Mon_VI  element=load.258406133-2_1 term=1  mode=32
 New Monitor.580_Mon_VI  element=load.258425388_2 term=1  mode=32
-New Monitor.581_Mon_VI  element=load.258425388-2_2 term=1  mode=32
+!New Monitor.581_Mon_VI  element=load.258425388-2_2 term=1  mode=32
 New Monitor.582_Mon_VI  element=load.259219720_2 term=1  mode=32
-New Monitor.583_Mon_VI  element=load.258406123-2_1 term=1  mode=32
+!New Monitor.583_Mon_VI  element=load.258406123-2_1 term=1  mode=32
 New Monitor.584_Mon_VI  element=load.263391508_1 term=1  mode=32
 New Monitor.585_Mon_VI  element=load.263395471_3 term=1  mode=32
 New Monitor.586_Mon_VI  element=load.258406093_1 term=1  mode=32
 New Monitor.587_Mon_VI  element=load.259228581_3 term=1  mode=32
 New Monitor.588_Mon_VI  element=load.258425132_1 term=1  mode=32
-New Monitor.589_Mon_VI  element=load.258425132-2_2 term=1  mode=32
+!New Monitor.589_Mon_VI  element=load.258425132-2_2 term=1  mode=32
 New Monitor.590_Mon_VI  element=load.258425132_3 term=1  mode=32
 New Monitor.591_Mon_VI  element=load.258406088_1 term=1  mode=32
 New Monitor.592_Mon_VI  element=load.258406008_3 term=1  mode=32

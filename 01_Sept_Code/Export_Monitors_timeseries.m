@@ -31,7 +31,7 @@ end
 
 %%
 n = length(Lines_Distance(:,1));
-k = 2;
+k = 26;
 j = 1;
 COUNT = 1;
 %Pull PCC monitors:
@@ -47,11 +47,11 @@ COUNT = 1;
     j = j + 1;
     
 %Now do general pull:
-%{
-while k <= n
+
+while k <= 90 %n
     numPh = Lines_Distance(k,1).numPhases; 
     if numPh == 3
-        for i=2:1:2
+        for i=1:1:2
             %line = Lines_Distance(k,1).name;
             %Save info in the following fashion:
             %[bus1]  [numPhases] [monitor name] [phaseCurrents] [
@@ -113,10 +113,10 @@ while k <= n
     end
     k = k + 1;
 end
-%}
+%{
 c_j = j;
 k=1;
-while k<=40%length(Loads_Base)
+while k<=100%length(Loads_Base)
     %Assign new monitor name:
     Monitor{j,1}=strcat(num2str(k),'_Mon_VI');
     %Export monitor:
@@ -145,26 +145,42 @@ while k<=40%length(Loads_Base)
     k = k + 1;
     j = j + 1;
 end
-
+%}
+%Now lets export LTC tap changes:
+DSSText.Command = 'export mon LTC';
+monitorFile = DSSText.Result;
+MyLTC = importdata(monitorFile);
+delete(monitorFile);
+%%
+%Now lets export LTC voltages:
+DSSText.Command = 'export mon subVI';
+monitorFile = DSSText.Result;
+MySUBV = importdata(monitorFile);
+delete(monitorFile);
+%%
 save(filename,'DATA_SAVE');
 %%
 %Plot results --
+%{
 figure(1)
-for k=1:1:40%length(Loads_Base)
+for k=1:1:100%length(Loads_Base)
     if Loads_Base(k,1).nodes == 1
-        plot(k,DATA_SAVE(k+c_j-1).phaseV(1,1),'ro');
+        plot(k,DATA_SAVE(k+c_j-1).phaseV(10,1),'ro');
     elseif Loads_Base(k,1).nodes == 2
-        plot(k,DATA_SAVE(k+c_j-1).phaseV(1,1),'go');
+        plot(k,DATA_SAVE(k+c_j-1).phaseV(10,1),'go');
     elseif Loads_Base(k,1).nodes == 3
-        plot(k,DATA_SAVE(k+c_j-1).phaseV(1,1),'bo');
+        plot(k,DATA_SAVE(k+c_j-1).phaseV(10,1),'bo');
     end
     hold on
     %k+c_j
 end
+%}
 %%
 figure(2)
 title('Command vs. actual CHECK');
-plot(DATA_SAVE(1).phaseP,'DisplayName','DATA_SAVE(1).phaseP')
+plot(DATA_SAVE(1).phaseP,'r-')
 hold on
-plot(LOAD_ACTUAL,'DisplayName','LOAD_ACTUAL')
+plot(LOAD_ACTUAL,'b-')
+%%
+
         
