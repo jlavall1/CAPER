@@ -164,14 +164,17 @@ end
 solarfilename = strcat(s,s_pv_txt);
 %solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
 %%
-DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
-DSSText.command = 'solve';
-cd(location);
+%DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
+%DSSText.command = 'solve';
+%cd(location);
 %---------------------------------
 %Run OpenDSS simulation for 6/24/168-hr at 1-minute resolution:
 %number==#solution to run; h==stepsize (s)
-DSSText.command = sprintf('Set mode=duty number=%s  hour=0  h=%s sec=0',num2str(FEEDER.SIM.npts),num2str(FEEDER.SIM.stepsize)); 
-DSSText.Command = 'Set Controlmode=TIME';
+DSSText.command = 'Set Controlmode=TIME';
+%DSSText.command = sprintf('Set mode=duty number=%s  hour=0  h=%s sec=0',num2str(FEEDER.SIM.npts),num2str(FEEDER.SIM.stepsize));
+DSSText.command = sprintf('Set mode=duty number=%s h=1',num2str(FEEDER.SIM.npts*60)); 
+%DSSText.command = sprintf('Set mode=duty number=%s  stepsize=1s',num2str(FEEDER.SIM.npts));
+DSSCircuit.Solution.dblHour = 0.0;
 DSSText.command = 'solve';
 toc
 
@@ -213,6 +216,9 @@ elseif timeseries_span == 5
     DOY_fin = 365;
 end
 %%
+Export_Monitors_timeseries
+%%
+%{
 %   Feeder Power
 DSSfilename=ckt_direct_prime;
 fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
@@ -237,7 +243,6 @@ set(gca,'FontSize',10,'FontWeight','bold')
 axis([0 168 -1500 2000]);
 
 %%
-
 %saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
 DSSText.Command = sprintf('export mon fdr_%s_Mon_PQ',root1);
 monitorFile = DSSText.Result;
@@ -316,6 +321,7 @@ end
 ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
 title([strrep(fileNameNoPath,'_',' '),' Closest Line Load'],'FontSize',12,'FontWeight','bold')
 %saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
+%}
 %}
 
     

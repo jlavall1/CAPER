@@ -195,7 +195,7 @@ end
 %Export to .csv & clear variables that are not needed:
 %clearvars M_PVSITE RR_distrib
 %s = strtok(ckt_direct,'\Run_Master_Allocate.dss');
-s = ckt_direct(1:end-23); %<--------------------- THIS MIGHT CHANGE TOOO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+s = ckt_direct(1:end-11); %<--------------------- THIS MIGHT CHANGE TOOO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 str = ckt_direct;
 idx = strfind(str,'\');
 str = str(1:idx(8)-1);

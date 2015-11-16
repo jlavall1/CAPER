@@ -1,11 +1,15 @@
-New Transformer.FLAY_RET_16271201 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[FLAY_RET_16271201.1.2.3 FLAY_RET_16271201_reg.1.2.3] kVs=[ 7.19955785679463   7.19955785679463 ]
+New Transformer.FLAY_RET_16271201 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[FLAY_RET_16271201.1.2.3 FLAY_RET_16271201_reg.1.2.3] kvas=[10561.31 10561.31]
+~ kVs=[12.47 12.47] 		
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes		
 
-!New RegControl.FLAY_RET_16271201 Transformer=FLAY_RET_16271201 Winding=2 Vreg= 123.945461370235  Band= 1 PTratio= 59.9963154732886  CTPrim= 100  R= 0  X= 0 
-New RegControl.FLAY_RET_16271201 Transformer=FLAY_RET_16271201 Winding=2 bus=FLAY_RET_16271201_reg.3 Vreg= 123.945461370235  Band= 1 PTratio= 59.9963154732886  CTPrim= 100  R= 0  X= 0 
+New RegControl.FLAY_RET_16271201 Transformer=FLAY_RET_16271201 Winding=2 R= 0  X= 0  
+~ Vreg= 125 			!Vreg= 123.945461370235
+~ Band= 1 
+~ PTratio= 60			!59.9963154732886
+~ CTPrim= 100   		!CTPrim=350
+~ Delay=45 
+~ PTphase=3 			!Phase C
 
 
-
-!New Transformer.FLAY_RET_16271201_2 Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[FLAY_RET_16271201.2 FLAY_RET_16271201_reg.2] kVs=[ 7.19955785679463   7.19955785679463 ]
-!New Transformer.FLAY_RET_16271201_3 Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[FLAY_RET_16271201.3 FLAY_RET_16271201_reg.3] kVs=[ 7.19955785679463   7.19955785679463 ]
-!New RegControl.FLAY_RET_16271201_2 Transformer=FLAY_RET_16271201_2 Winding=2 Vreg= 123.945461370235  Band= 1 PTratio= 59.9963154732886  CTPrim= 100  R= 0  X= 0 
-!New RegControl.FLAY_RET_16271201_3 Transformer=FLAY_RET_16271201_3 Winding=2 Vreg= 123.945461370235  Band= 1 PTratio= 59.9963154732886  CTPrim= 100  R= 0  X= 0 

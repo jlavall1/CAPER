@@ -3,10 +3,10 @@
 clear
 clc
 
-str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\run_master_allocate.DSS';
+%str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\run_master_allocate.DSS';
 %str = 'C:\Users\jlavall\Desktop\Commonwealth_Circuit_Opendss\run_master_allocate.DSS';
 %str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss\run_master_allocate.DSS';
-%str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Run_Master_Allocate.DSS';
+str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Run_Master_Allocate.DSS';
 %str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Bellhaven_Circuit_Opendss\run_master_allocate.DSS';
 % 1. Start the OpenDSS COM. Needs to be done each time MATLAB is opened     
 [DSSCircObj, DSSText] = DSSStartup; 
@@ -38,6 +38,6 @@ subplot(2,2,4);
 %plotAmpProfile(DSSCircObj,'258904005');    %Commonwealth
 %plotAmpProfile(DSSCircObj,'258126280');     %Flay
 %plotAmpProfile(DSSCircObj,'1713339'); %Roxboro
-
-
 % Lines2=getLineInfo_DJM(DSSCircObj, DSSText);
+%%
+gcf=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');
