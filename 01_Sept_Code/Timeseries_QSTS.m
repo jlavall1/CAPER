@@ -83,6 +83,10 @@ elseif feeder_NUM == 2
     %Flay 13.27km long --
     root = 'Flay';
     root1= 'Flay';
+elseif feeder_NUM == 8
+    %EPRI Circuit 24
+    root = 'ckt24';
+    root1 = 'ckt24';
 end
 
 if timeseries_span == 1

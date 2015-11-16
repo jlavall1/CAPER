@@ -9,11 +9,43 @@ Redirect  TriplexLineCodes_ckt24.dss
 Redirect  Substation_ckt24.dss
 
 ! Loadshapes for yearly simulations (normalized)
-New Loadshape.LS_PhaseA npts=8760 interval=1 mult=(file=LS_PhaseA.txt) action=normalize 
-New Loadshape.LS_PhaseB npts=8760 interval=1 mult=(file=LS_PhaseB.txt) action=normalize
-New Loadshape.LS_PhaseC npts=8760 interval=1 mult=(file=LS_PhaseC.txt) action=normalize
-New Loadshape.LS_ThreePhase npts=8760 interval=1 mult=(file=LS_ThreePhase.txt) action=normalize
-New Loadshape.Other_Bus_Load npts=8760 interval=1 mult=(file=Other_Bus_Load.txt) action=normalize
+/****
+! 1hour interval
+New Loadshape.LS_PhaseA npts=8760 minterval=60 mult=(file=LS_PhaseA.txt) action=normalize 
+New Loadshape.LS_PhaseB npts=8760 minterval=60 mult=(file=LS_PhaseB.txt) action=normalize
+New Loadshape.LS_PhaseC npts=8760 minterval=60 mult=(file=LS_PhaseC.txt) action=normalize
+New Loadshape.LS_ThreePhase npts=8760 minterval=60 mult=(file=LS_ThreePhase.txt) action=normalize
+New Loadshape.Other_Bus_Load npts=8760 minterval=60 mult=(file=Other_Bus_Load.txt) action=normalize
+
+! 1minute interval -- ONE WEEK SIM
+New Loadshape.LS_PhaseA npts=525600 minterval=1 mult=(file=LS1_PhaseA.txt) action=normalize 
+New Loadshape.LS_PhaseB npts=525600 minterval=1 mult=(file=LS1_PhaseB.txt) action=normalize
+New Loadshape.LS_PhaseC npts=525600 minterval=1 mult=(file=LS1_PhaseC.txt) action=normalize
+New Loadshape.LS_ThreePhase npts=525600 minterval=1 mult=(file=LS1_ThreePhase.txt) action=normalize
+New Loadshape.Other_Bus_Load npts=525600 minterval=1 mult=(file=LS1_Other.txt) action=normalize
+
+! 1min - Duty
+New Loadshape.LS_PhaseA npts=525600 minterval=1 mult=(file=LS1_PhaseA.txt) action=normalize 
+New Loadshape.LS_PhaseB npts=525600 minterval=1 mult=(file=LS1_PhaseB.txt) action=normalize
+New Loadshape.LS_PhaseC npts=525600 minterval=1 mult=(file=LS1_PhaseC.txt) action=normalize
+New Loadshape.LS_ThreePhase npts=525600 minterval=1 mult=(file=LS1_ThreePhase.txt) action=normalize
+New Loadshape.Other_Bus_Load npts=525600 minterval=1 mult=(file=LS1_Other.txt) action=normalize
+
+! 5sec loadshape for 24hour simulation.
+New Loadshape.LS_PhaseA npts=17280 sinterval=5 mult=(file=LS3_PhaseA.txt) action=normalize 
+New Loadshape.LS_PhaseB npts=17280 sinterval=5 mult=(file=LS3_PhaseB.txt) action=normalize
+New Loadshape.LS_PhaseC npts=17280 sinterval=5 mult=(file=LS3_PhaseC.txt) action=normalize
+New Loadshape.LS_ThreePhase npts=17280 sinterval=5 mult=(file=LS3_ThreePhase.txt) action=normalize
+New Loadshape.Other_Bus_Load npts=17280 sinterval=5 mult=(file=LS3_Other.txt) action=normalize
+****/
+
+! 1min - ONE DAY SIM
+New Loadshape.LS_PhaseA npts=1440 minterval=1 mult=(file=LS2_PhaseA.txt) action=normalize 
+New Loadshape.LS_PhaseB npts=1440 minterval=1 mult=(file=LS2_PhaseB.txt) action=normalize
+New Loadshape.LS_PhaseC npts=1440 minterval=1 mult=(file=LS2_PhaseC.txt) action=normalize
+New Loadshape.LS_ThreePhase npts=1440 minterval=1 mult=(file=LS2_ThreePhase.txt) action=normalize
+New Loadshape.Other_Bus_Load npts=1440 minterval=1 mult=(file=LS2_Other.txt) action=normalize
+
 
 Redirect  lines_ckt24.dss
 Redirect  Capacitors_ckt24.dss
@@ -22,8 +54,16 @@ Redirect  transformers_ckt24.dss
 Redirect  sec_serv_ckt24.dss
 
 ! Loads (allocated by XF kVA)
-Redirect  Allocated_Loads_ckt24.dss
+!Redirect Allocated_Loads_ckt24.dss (This is the original load.dss)
+!Redirect Loads_remake.dss (test to see if string generation worked)
+!Redirect Loads_DUTY_2.dss
+
+Redirect Loads_remake_2.dss
 Redirect Other_Load_ckt24.dss
+
+!Redirect Loads_DUTY.dss
+!Redirect Other_Load_ckt24_DUTY.dss
+
 ! set the initial allocation factors based on previousload allocations
 Redirect  AllocationFactors_Base.Txt  !!! R=7 Vset=123
 

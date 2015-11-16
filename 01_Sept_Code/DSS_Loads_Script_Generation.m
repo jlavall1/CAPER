@@ -4,7 +4,7 @@ clc
 close all
 fileloc_base='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
 %USER_INPUT --
-feeder_NUM=0;
+feeder_NUM=8;
 
 if feeder_NUM == 0
     fileloc=strcat(fileloc_base,'\Bellhaven_Circuit_Opendss');
@@ -16,7 +16,12 @@ elseif feeder_NUM == 1
     [RAW_DATA, A, CELL] = xlsread('Loads_Text.xlsx', 'Loads_NCSU');
 elseif feeder_NUM == 2
     fileloc=strcat(fileloc_base,'\Flay_Circuit_Opendss');
+elseif feeder_NUM == 8
+    fileloc=strcat(fileloc_base,'EPRI_ckt24');
+    cd(fileloc);
+    [RAW_DATA, A, CELL] = xlsread('Loads_Text.xlsx', 'Loads_BASE');
 end
+    
 
 output_text = cell(length(CELL),1);
 for i=1:1:length(CELL)
