@@ -273,7 +273,7 @@ function m=p_run(varargin)
             cat_choice = 1;
         end
         if checked{3} == 1
-            s2 = '\Flay_Circuit_Opendss\Run_Master_Allocate.dss';
+            s2 = '\Flay_Circuit_Opendss\Master.dss';
             ckt_num = 2;
             COUNT = COUNT + 1;
             cat_choice = 1;

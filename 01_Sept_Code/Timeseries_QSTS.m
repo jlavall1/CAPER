@@ -55,16 +55,18 @@ feeder_Loadshape_generation
 % 3. Compile the user selected circuit:
 location = cd;
 DSSText.command = ['Compile ',ckt_direct_prime];
+%{
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
 Loads_Base = getLoadInfo(DSSCircObj);
+%}
 %Xfmr_Base = get
 cd(location);
 %%
 %Sort Lines into closest from PCC --
-[~,index] = sortrows([Lines_Base.bus1Distance].'); 
-Lines_Distance = Lines_Base(index); 
-clear index
+%[~,index] = sortrows([Lines_Base.bus1Distance].'); 
+%Lines_Distance = Lines_Base(index); 
+%clear index
 %----------------------------------
 %Add PV Plant:
 str = ckt_direct;
@@ -113,16 +115,6 @@ solarfilename = strcat(s,s_pv_txt);
 %DSSText.command = 'solve';
 %cd(location);
 %---------------------------------
-%Run OpenDSS simulation for 6/24/168-hr at 1-minute resolution:
-%number==#solution to run; h==stepsize (s)
-DSSText.command = 'Set loadmult=1.0';
-DSSText.command = 'Set Controlmode=TIME';
-DSSText.command = sprintf('Set mode=duty number=%s stepsize=10s',num2str(FEEDER.SIM.npts));%,num2str(FEEDER.SIM.stepsize));
-%DSSText.command = sprintf('Set mode=duty number=%s h=1',num2str(FEEDER.SIM.npts*60)); %(attempt 2)
-%DSSText.command = sprintf('Set mode=duty number=%s stepsize=1s',num2str(FEEDER.SIM.npts));
-%DSSCircuit.Solution.dblHour = 0.0; %(attempt 2)
-DSSText.command = 'solve';
-toc
 
 %%
 %---------------------------------
@@ -134,11 +126,19 @@ if timeseries_span == 1
     h_fin= 15;
     DOY_fin = 0;
 elseif timeseries_span == 2
-    %(1) DAY
+    %(1) DAY, 24hr
     shift=0;
     h_st = 0;
     h_fin= 23;
     DOY_fin = 0;
+    %start openDSS ---------------------------
+    % Run 1-day simulation at 1minute interval:
+    DSSText.command='set mode=daily stepsize=1m number=1440'; %stepsize is now 1minute (60s)
+    % Turn the overload report on:
+    DSSText.command='Set overloadreport=true';
+    DSSText.command='Set voltexcept=true';
+    % Solve QSTS Solution:
+    DSSText.command='solve';
 elseif timeseries_span == 3
     %(1) WEEK
     shift=0;

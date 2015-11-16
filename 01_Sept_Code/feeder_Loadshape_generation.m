@@ -141,7 +141,7 @@ elseif timeseries_span == 2
     s_kwA = strcat(s,'LS2_PhaseA.txt'); %was .txt
     s_kwB = strcat(s,'LS2_PhaseB.txt');
     s_kwC = strcat(s,'LS2_PhaseC.txt');
-    FEEDER.SIM.npts= 24*60*6;     %simulating 24 hours   (used to be: 24*60)
+    FEEDER.SIM.npts= 24*60;     %simulating 24 hours   (used to be: 24*60)
     FEEDER.SIM.stepsize = 10;   %60 second sim interval (used to be: 60)
     idx = strfind(ckt_direct,'.');
     ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_24hr.dss');

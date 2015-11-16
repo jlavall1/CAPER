@@ -8,6 +8,13 @@ s_b ='C:\Users\jlavall\Documents\GitHub\CAPER';
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\EPRI_ckt24');
 %addpath(strcat(s_b,'\01_Sept_Code'));
 ckt_direct_prime=strcat(s_b,'\03_OpenDSS_Circuits\EPRI_ckt24\Master.dss');
+
+%{
+s_b ='C:\Users\jlavall\Documents\GitHub\CAPER';
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss');
+%addpath(strcat(s_b,'\01_Sept_Code'));
+ckt_direct_prime=strcat(s_b,'\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Master_24hr.dss');
+%}
 %Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 DSSCircuit = DSSCircObj.ActiveCircuit;
@@ -15,12 +22,12 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 %Start simulation:
 tic
 DSSText.command = ['Compile ',ckt_direct_prime];
-
+%{
 DSSText.command = 'solve loadmult=1.0';
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
 Loads_Base = getLoadInfo(DSSCircObj);
-%}
+
 
 NAMEPLATE=zeros(1,5);
 ALLOC=zeros(length(Loads_Base),1);
@@ -47,6 +54,7 @@ for i=1:1:length(Loads_Base)
         ALLOC(i,1)=Loads_Base(i,1).xfkVA/NAMEPLATE(1,4);
     end
 end
+%}
 
 %%
 %Run 1-week simulation at hour 5280 out of 8760
@@ -56,6 +64,7 @@ end
 %DSSText.command='set mode=yearly number=10080 hour=5280'; %number=168*60 for 1min intervals
 %DSSText.command='set mode=duty number=10080 hour=5280'; %duty
 %DSSText.command='set mode=daily stepsize=1m number=1440'; %stepsize is now 1minute (60s)
+%DSSText.command='set mode=daily stepsize=30s number=2880'; %stepsize is now 1minute (30s)
 DSSText.command='set mode=daily stepsize=5s number=17280'; %stepsize is now        (05s)
 %DSSText.command='set stepsize=60';
 %DSSText.command='set mode=duty number=17280';
@@ -71,9 +80,12 @@ DSSText.command='Set voltexcept=true';
 %DSSText.command='Set hour=5280';
 DSSText.command='solve';
 %DSSText.command='closedi';
+toc
 
 %%
 %Now lets obtain results:
+
+% 1]
 DSSText.Command = 'export mon fdr_05410_Mon_VI';
 monitorFile = DSSText.Result;
 MySUBv = importdata(monitorFile);
@@ -86,7 +98,6 @@ delete(monitorFile);
 figure(2)
 plot(MySUBp.data(:,[3,5,7]),'DisplayName','MySUBp.data(:,[3,5,7])');
 title('Single Phase Real Power consumption');
-
 % 3]
 DSSText.Command = 'export mon SubXFMR_taps';
 monitorFile = DSSText.Result;
@@ -95,6 +106,32 @@ delete(monitorFile);
 figure(3)
 plot(MyLTC.data(:,end));
 title('LTC operations');
+%{
+% 1]
+DSSText.Command = 'export mon fdr_Flay_Mon_VI';
+monitorFile = DSSText.Result;
+MySUBv = importdata(monitorFile);
+delete(monitorFile);
+figure(1)
+plot(MySUBv.data(:,[3,5,7])/((12.47e3)/sqrt(3)));
+title('Voltage at substation');
+% 2]
+DSSText.Command = 'export mon fdr_Flay_Mon_PQ';
+monitorFile = DSSText.Result;
+MySUBp = importdata(monitorFile);
+delete(monitorFile);
+figure(2)
+plot(MySUBp.data(:,[3,5,7]),'DisplayName','MySUBp.data(:,[3,5,7])');
+title('Single Phase Real Power consumption');
+% 3]
+DSSText.Command = 'export mon LTC';
+monitorFile = DSSText.Result;
+MyLTC = importdata(monitorFile);
+delete(monitorFile);
+figure(3)
+plot(MyLTC.data(:,end));
+title('LTC operations');
+%}
 
 
 
