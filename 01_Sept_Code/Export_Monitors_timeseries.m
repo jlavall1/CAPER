@@ -48,7 +48,7 @@ COUNT = 1;
     
 %Now do general pull:
 
-while k <= 90 %n
+while k <= n %n __ 90
     numPh = Lines_Distance(k,1).numPhases; 
     if numPh == 3
         for i=1:1:2

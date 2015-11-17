@@ -4,6 +4,9 @@
 clear
 clc
 close all
+
+time_int=5;
+
 %{
 s_b ='C:\Users\jlavall\Documents\GitHub\CAPER';
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\EPRI_ckt24');
@@ -13,8 +16,11 @@ ckt_direct_prime=strcat(s_b,'\03_OpenDSS_Circuits\EPRI_ckt24\Master.dss');
 s_b ='C:\Users\jlavall\Documents\GitHub\CAPER';
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss');
 %addpath(strcat(s_b,'\01_Sept_Code'));
-ckt_direct_prime=strcat(s_b,'\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Master_24hr.dss');
-
+if time_int == 60
+    ckt_direct_prime=strcat(s_b,'\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Master_24hr_60sec.dss');
+elseif time_int == 5
+    ckt_direct_prime=strcat(s_b,'\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Master_24hr_5sec.dss');
+end
 %Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 DSSCircuit = DSSCircObj.ActiveCircuit;
@@ -24,7 +30,12 @@ tic
 DSSText.command = ['Compile ',ckt_direct_prime];
 
 %Run 1-day simulation at 1minute interval:
-DSSText.command='set mode=daily stepsize=1m number=1440'; %stepsize is now 1minute (60s)
+if time_int == 60
+    DSSText.command='set mode=daily stepsize=1m number=1440'; %stepsize is now 1minute (60s)
+elseif time_int == 5
+    DSSText.command='set mode=daily stepsize=5s number=17280'; %stepsize is now 1minute (60s)
+end
+
 %Turn the overload report on:
 DSSText.command='Set overloadreport=true';
 DSSText.command='Set voltexcept=true';
@@ -57,6 +68,12 @@ delete(monitorFile);
 figure(3)
 plot(MyLTC.data(:,end));
 title('LTC operations');
+%%
+% Export monitor data:
+feeder_NUM=2;
+root1= 'Flay';
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code');
+Export_Monitors_timeseries
 
 
 

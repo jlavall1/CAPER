@@ -269,5 +269,47 @@ title([strrep(fileNameNoPath,'_',' '),' Closest Line Load'],'FontSize',12,'FontW
 %saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
 %}
 %}
+%%
+figure(4);
+for i=1:1:159
+    if DATA_SAVE(i).Vbase == 7.199557856794634e+03
+        
+        plot(DATA_SAVE(i).phaseV(:,1));
+        hold on
+    end
+end
+figure(5);
+for i=1:1:159
+    if DATA_SAVE(i).Vbase == 7.199557856794634e+03
+        
+        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseV(720,1)/7.199557856794634e+03,'ro','linewidth',4);
+        hold on
+        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseV(720,2)/7.199557856794634e+03,'bo','linewidth',4);
+        hold on
+        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseV(720,3)/7.199557856794634e+03,'go','linewidth',4);
+        hold on
+    end
+end
+xlabel('Distance from SUB (d) [km]');
+ylabel('Phase A Voltage Profile (V) [P.U.]');
+title('AT noon sample');
+grid on
+%
+figure(6);
+for i=1:1:159
+    if DATA_SAVE(i).Vbase == 7.199557856794634e+03
+        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseP(720,1),'ro','linewidth',3);
+        hold on
+        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseP(720,2),'bo','linewidth',3);
+        hold on
+        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseP(720,3),'go','linewidth',3);
+        hold on
+    end
+end
+xlabel('Distance from SUB (d) [km]');
+ylabel('Phase A Real Power Profile (P) [kW]');
+title('AT noon sample');
+grid on
+axis([0 8 -50 550]);
 
     
