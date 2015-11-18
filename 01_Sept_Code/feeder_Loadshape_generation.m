@@ -35,7 +35,7 @@ elseif feeder_NUM == 2
     eff_KW(1,1) = 0.9562;
     eff_KW(1,2) = 0.9594;
     eff_KW(1,3) = 0.9239;
-    V_LTC = 1.04*((12.47e3)/sqrt(3));
+    V_LTC = 1.03*((12.47e3)/sqrt(3));
     
 elseif feeder_NUM == 3
     load ROX.mat
@@ -69,20 +69,52 @@ elseif timeseries_span == 2
     LOAD_ACTUAL_1(:,2) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
     LOAD_ACTUAL_1(:,3) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY,23,59),1);
     %drop to 1minute loads:
-    LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),6);
-    LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),6);
-    LOAD_ACTUAL(:,3) = interp(LOAD_ACTUAL_1(:,3),6);
+    if strcmp(time_int,'1m') == 1
+        t_int=1;
+    elseif strcmp(time_int,'30s') == 1
+        t_int=2;
+    elseif strcmp(time_int,'5s') == 1
+        t_int=12;
+    end
+    LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),t_int);
+    LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),t_int);
+    LOAD_ACTUAL(:,3) = interp(LOAD_ACTUAL_1(:,3),t_int);
     %Find peak kW per phase to nominalize:
     for i=1:1:3
         %peak:
         peak_KW(1,i) = max(LOAD_ACTUAL(:,i));
-        peak_AMP(1,i) = (peak_KW(1,i)*1000)/(0.98*V_LTC*eff_KW(1,i));
-        %nominal:
-        LOAD_ACTUAL(:,i)=LOAD_ACUTAL(:,i)/peak_KW(1,i);
+        peak_current(1,i) = (peak_KW(1,i)*1000)/(0.98*V_LTC*eff_KW(1,i));
+        
     end
+    %[103.495301953215,96.6441972706368,114.971409775341] %Calc
+    %[105.620106708074,98.4618867738973,117.338827780071] %Sim
+    
     %Find corresponding current to allocateLoad:
     %(eff_KW(1,1) = 0.9562;eff_KW(1,2) = 0.9594;eff_KW(1,3) = 0.9239;V_LTC = 1.04*((12.47e3)/sqrt(3));
-    
+    %nominalize:
+    LS_PhaseA(:,1)=LOAD_ACTUAL(:,1)./peak_KW(1,1);
+    LS_PhaseB(:,1)=LOAD_ACTUAL(:,2)./peak_KW(1,2);
+    LS_PhaseC(:,1)=LOAD_ACTUAL(:,3)./peak_KW(1,3);
+    %Now lets find new allocation Factors:
+    str = strcat(s,'\Master.DSS');
+    [DSSCircObj, DSSText] = DSSStartup; 
+    DSSText.command = ['Compile ' str]; 
+    DSSText.command = 'New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes';
+    %DSSText.command = 'EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ]';
+    DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
+    DSSText.command = 'Disable Capacitor.*';
+    DSSText.command = 'AllocateLoad';
+    DSSText.command = 'AllocateLoad';
+    DSSText.command = 'AllocateLoad';
+    DSSText.command = 'Dump AllocationFactors';
+    DSSText.command = 'Enable Capacitor.*';
+    % 3. Solve at peak currents.
+    DSSText.command = 'solve loadmult=1.0';
+    % 4. Check solution.
+    DSSCircuit = DSSCircObj.ActiveCircuit;
+    Buses=getBusInfo(DSSCircObj);
+    Lines=getLineInfo(DSSCircObj);
+    Loads=getLoadInfo(DSSCircObj);
     
     %{
     LS_PhaseA(:,1) = (LOAD_ACTUAL(:,1)./(kW_peak(1,1)));
@@ -153,7 +185,17 @@ elseif timeseries_span == 2
     FEEDER.SIM.npts= 24*60;     %simulating 24 hours   (used to be: 24*60)
     FEEDER.SIM.stepsize = 10;   %60 second sim interval (used to be: 60)
     idx = strfind(ckt_direct,'.');
-    ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_24hr.dss');
+    %Select the correct master file for QSTS
+    if strcmp(time_int,'1h') == 1
+        ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_24hr.dss');
+    elseif strcmp(time_int,'1m') == 1
+        ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_24hr_60sec.dss');
+    elseif strcmp(time_int,'30s') == 1
+        ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_24hr_30sec.dss');
+    elseif strcmp(time_int,'5s') == 1
+        ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_24hr_5sec.dss');
+    end
+    
 elseif timeseries_span == 3
     %1 Week simulation
     s_kwA = strcat(s,'LS3_PhaseA.txt');

@@ -41,7 +41,7 @@ Redirect LinesByPhase.dss
 Redirect Capacitors.dss
 
 Redirect Loads_Daily.dss 
-Redirect AllocationFactors_Base.txt
+Redirect AllocationFactors.txt !Redirect AllocationFactors_Base.txt
 
 ! 
 ! Set the voltage bases

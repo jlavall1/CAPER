@@ -84,7 +84,7 @@ h.ppm(8) = uicontrol('style','popup','units','normalized',...
 
 %Extra Option for future use:
 h.ppm(9) = uicontrol('style','popup','units','normalized',...
-    'position',[0.351 -0.001 0.235 0.155],'string',{'hold','hold'},...
+    'position',[0.351 -0.001 0.235 0.155],'string',{'3600s (1 hour)','60s (1 min)','30s','5s'},...
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 h.ppm(10) = uicontrol('style','popup','units','normalized',...
      'position',[0.351 0.006 0.235 0.106],'string',{'hold','hold'},...
@@ -202,6 +202,7 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     
     set(h.ppm(5),'Value',2);    %timeseries DROPDOWN    -- daytime,1 day,2 week,3 1mnth,4
     set(h.ppm(6),'Value',2);    %What month DROPDOWN    -- FEB (29d)
+    set(h.ppm(9),'Value',2);    %What timestep length   -- (2)==1min & (4)==5sec.
     
     set(h.lsbx(1),'Value',4);   %DARR Category 4
     set(h.lsbx(2),'Value',3);   %Max Solar Energy
@@ -394,6 +395,22 @@ function m=p_run(varargin)
     elseif COUNT_1 > 1
         msgbox('More than 1 simulation category selected.');
     else
+    %Now lets see what time interval does the user want.
+    timeint_select = get(h.ppm(9),'Value');
+    if timeint_select == 1
+        time_int = '1h';
+        %1 hour timesteps.
+    elseif timeint_select == 2
+        time_int = '1m';
+        %1 min timesteps.
+    elseif timeint_select == 3
+        time_int = '30s';
+        %30sec timesteps.
+    elseif timeint_select == 4
+        time_int = '5s';
+    end
+        
+        
     STRING = strcat(s1,s2);
     %%
     %Save user's selection:
@@ -411,6 +428,7 @@ function m=p_run(varargin)
     STRING_0{1,11} = DARR_cat;
     STRING_0{1,12} = VI;
     STRING_0{1,13} = CI_cat;
+    STRING_0{1,14} = time_int;
     
     %assignin('base', 'cat_choice', cat_choice);
     %assignin('base', 'ckt_num', ckt_num);

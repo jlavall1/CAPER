@@ -176,12 +176,15 @@ while k<=100%length(Loads_Base)
     j = j + 1;
 end
 %}
-%{
-%Now lets export LTC tap changes:
-DSSText.Command = 'export mon LTC';
-monitorFile = DSSText.Result;
-MyLTC = importdata(monitorFile);
-delete(monitorFile);
+%%
+if feeder_NUM == 2
+    %Now lets export LTC tap changes:
+    DSSText.Command = 'export mon LTC';
+    monitorFile = DSSText.Result;
+    MyLTC = importdata(monitorFile);
+    delete(monitorFile);
+    
+end
 %%
 %Now lets export LTC voltages:
 DSSText.Command = 'export mon subVI';

@@ -6,8 +6,10 @@ s_b ='C:\Users\jlavall\Documents\GitHub\CAPER';
 %addpath(strcat(s_b,'\01_Sept_Code'));
 tic
 %Setup the COM server
+%{
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 DSSCircuit = DSSCircObj.ActiveCircuit;
+%}
 %Find directory of Circuit:
 % 1. Obtain user's choice of simulation:
 Import_PV_Farm_Datasets
@@ -27,6 +29,7 @@ monthly_span    = gui_response{1,10};%(1) Month selected ; 1=JAN 12=DEC.
 DARR_category   = gui_response{1,11};%(1)Stabe through (5)Unstable.
 VI_USER_span    = gui_response{1,12};
 CI_USER_slt     = gui_response{1,13};
+time_int        = gui_response{1,14}; %timestep length
 %{ 
 STRING_0{1,1} = STRING;
 STRING_0{1,2} = ckt_num;
@@ -41,7 +44,7 @@ STRING_0{1,10} = mnth_select;
 STRING_0{1,11} = DARR_cat;
 STRING_0{1,12} = VI;
 %}
-%%
+
 % 1. Add paths of background files:
 path = strcat(base_path,'\01_Sept_Code');
 addpath(path);
@@ -51,10 +54,18 @@ addpath(path);
 % 2. Generate Real Power & PV loadshape files:
 PV_Loadshape_generation
 feeder_Loadshape_generation
-
+%
 % 3. Compile the user selected circuit:
 location = cd;
-DSSText.command = ['Compile ',ckt_direct_prime]; %_prime gen in: 
+%Setup the COM server
+[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
+DSSCircuit = DSSCircObj.ActiveCircuit;
+DSSText.command = ['Compile ',ckt_direct_prime]; %_prime gen in:
+if feeder_NUM == 2
+    DSSText.command = 'New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes';
+end
+%DSSText.command = 'EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ]';
+DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
 %{
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
@@ -134,7 +145,7 @@ elseif timeseries_span == 2
     %start openDSS ---------------------------
     
     % Run 1-day simulation at 1minute interval:
-    DSSText.command='set mode=daily stepsize=1m number=1440'; %stepsize is now 1minute (60s)
+    DSSText.command=sprintf('set mode=daily stepsize=%s number=1440',time_int); %stepsize is now 1minute (60s)
     % Turn the overload report on:
     DSSText.command='Set overloadreport=true';
     DSSText.command='Set voltexcept=true';
@@ -273,7 +284,7 @@ title([strrep(fileNameNoPath,'_',' '),' Closest Line Load'],'FontSize',12,'FontW
 %}
 %%
 figure(4);
-for i=1:1:159
+for i=2:1:length(DATA_SAVE)
     if DATA_SAVE(i).Vbase == 7.199557856794634e+03
         
         plot(DATA_SAVE(i).phaseV(:,1));
@@ -281,7 +292,7 @@ for i=1:1:159
     end
 end
 figure(5);
-for i=1:1:159
+for i=2:1:length(DATA_SAVE)
     if DATA_SAVE(i).Vbase == 7.199557856794634e+03
         
         plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseV(720,1)/7.199557856794634e+03,'ro','linewidth',4);
@@ -298,8 +309,8 @@ title('AT noon sample');
 grid on
 %
 figure(6);
-for i=1:1:159
-    if DATA_SAVE(i).Vbase == 7.199557856794634e+03
+for i=2:1:length(DATA_SAVE)
+    if DATA_SAVE(i).Vbase > 7000
         plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseP(720,1),'ro','linewidth',3);
         hold on
         plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseP(720,2),'bo','linewidth',3);
@@ -309,9 +320,55 @@ for i=1:1:159
     end
 end
 xlabel('Distance from SUB (d) [km]');
-ylabel('Phase A Real Power Profile (P) [kW]');
+ylabel('Phase Real Power Profile (P) [kW]');
 title('AT noon sample');
 grid on
-axis([0 8 -50 550]);
+axis([0 15 -50 1000]);
+%Powers
+figure(7);
+plot(DATA_SAVE(1).phaseP(:,1),'r-','linewidth',3);
+hold on
+plot(DATA_SAVE(1).phaseP(:,2),'b-','linewidth',3);
+hold on
+plot(DATA_SAVE(1).phaseP(:,3),'g-','linewidth',3);
+
+xlabel('Time Interval (t) [1min]');
+ylabel('Phase Real Power Profile (P) [kW]');
+title('Feeder load profile');
+legend('Phase A','Phase B','Phase C','Location','SouthEast');
+grid on
+%axis([0 15 -50 1000]);
+
+
+%Currents
+figure(8);
+for i=1:1:3
+    if i==1
+        plot(LS_PhaseA*peak_current(1,i),'r-')
+        hold on
+        plot(DATA_SAVE(2).phaseI(:,i),'r--')
+        hold on
+    elseif i==2
+        plot(LS_PhaseB*peak_current(1,i),'b-')
+        hold on
+        plot(DATA_SAVE(2).phaseI(:,i),'b--')
+        hold on
+    elseif i==3
+        plot(LS_PhaseC*peak_current(1,i),'g-')
+        hold on
+        plot(DATA_SAVE(2).phaseI(:,i),'g--')
+        hold on
+    end
+end
+xlabel('Time Interval (t) [1m]');
+ylabel('Phase Current (I) [A]');
+title('Comparison between Loadshape & Measurements');
+%LTC ops
+figure(9);
+plot(MyLTC.data(:,end),'linewidth',3)
+xlabel('Time Interval (t) [1m]');
+ylabel('LTC Tap Position');
+axis([0 1440 0.96 1.06]);
+grid on
 
     
