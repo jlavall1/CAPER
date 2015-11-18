@@ -5,7 +5,7 @@ New Transformer.FLAY_RET_16271201 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Bu
 ~ sub=yes		
 
 New RegControl.FLAY_RET_16271201 Transformer=FLAY_RET_16271201 Winding=2 R= 0  X= 0  
-~ Vreg= 125 			!Vreg= 123.945461370235
+~ Vreg= 124 			!Vreg= 123.945461370235
 ~ Band= 1 
 ~ PTratio= 60			!59.9963154732886
 ~ CTPrim= 100   		!CTPrim=350

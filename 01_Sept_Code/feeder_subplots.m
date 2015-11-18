@@ -7,16 +7,28 @@ clc
 %str = 'C:\Users\jlavall\Desktop\Commonwealth_Circuit_Opendss\run_master_allocate.DSS';
 %str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss\run_master_allocate.DSS';
 %str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Run_Master_Allocate.DSS';
-str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Master_24hr_60sec.DSS';
+fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss';
+str = strcat(fileloc,'\Master.DSS');
 %str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Bellhaven_Circuit_Opendss\run_master_allocate.DSS';
 % 1. Start the OpenDSS COM. Needs to be done each time MATLAB is opened     
 [DSSCircObj, DSSText] = DSSStartup; 
     
-% 2. Compiling the circuit     
+% 2. Compiling the circuit & Allocate Load according to peak current in
+% desired loadshape. This will work w/ nominal values.
+peak_current = [196.597331353572,186.718068471483,238.090235458346];
+%peak_current = [100,100,100];
 DSSText.command = ['Compile ' str]; 
+DSSText.command = 'New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes';
+%DSSText.command = 'EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ]';
+DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
+DSSText.command = 'Disable Capacitor.*';
+DSSText.command = 'AllocateLoad';
+DSSText.command = 'AllocateLoad';
+DSSText.command = 'AllocateLoad';
+DSSText.command = 'Dump AllocationFactors';
+DSSText.command = 'Enable Capacitor.*';
 
-% 3. Solve the circuit. Call anytime you want the circuit to resolve     
-%DSSText.command = 'solve loadmult=0.5'; 
+% 3. 
 DSSText.command = 'solve loadmult=1.0';
 % 4. Run circuitCheck function to double-check for any errors in the circuit before using the toolbox     
 %warnSt = circuitCheck(DSSCircObj);
@@ -25,7 +37,11 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 Buses=getBusInfo(DSSCircObj);
 Lines=getLineInfo(DSSCircObj);
 Loads=getLoadInfo(DSSCircObj);
+[~,index] = sortrows([Lines.bus1Distance].'); 
+Lines_Distance = Lines(index); 
 %%
+%   This section was made to give an initial assessment of what feeder
+%   looks like V,I, P,Q vs. distance
 %{
 figure(1);
 subplot(2,2,1);

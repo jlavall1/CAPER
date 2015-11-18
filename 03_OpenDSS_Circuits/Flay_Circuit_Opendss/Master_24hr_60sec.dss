@@ -39,10 +39,6 @@ New Loadshape.LS_PhaseC npts=1440 minterval=1 mult=(file=LS2_PhaseC.txt) action=
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
 Redirect Capacitors.dss
-Redirect SwtControls.dss
-Redirect Reclosers.dss
-Redirect SectionalizerSettings.DSS
-Redirect FuseSettings.dss
 
 Redirect Loads_Daily.dss 
 Redirect AllocationFactors_Base.txt

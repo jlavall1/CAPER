@@ -54,7 +54,7 @@ feeder_Loadshape_generation
 
 % 3. Compile the user selected circuit:
 location = cd;
-DSSText.command = ['Compile ',ckt_direct_prime];
+DSSText.command = ['Compile ',ckt_direct_prime]; %_prime gen in: 
 %{
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
@@ -132,6 +132,7 @@ elseif timeseries_span == 2
     h_fin= 23;
     DOY_fin = 0;
     %start openDSS ---------------------------
+    
     % Run 1-day simulation at 1minute interval:
     DSSText.command='set mode=daily stepsize=1m number=1440'; %stepsize is now 1minute (60s)
     % Turn the overload report on:
@@ -139,6 +140,7 @@ elseif timeseries_span == 2
     DSSText.command='Set voltexcept=true';
     % Solve QSTS Solution:
     DSSText.command='solve';
+    DSSText.command='show eventlog';
 elseif timeseries_span == 3
     %(1) WEEK
     shift=0;

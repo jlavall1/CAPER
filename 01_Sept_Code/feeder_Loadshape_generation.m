@@ -31,7 +31,12 @@ elseif feeder_NUM == 2
     FEEDER = FLAY;
     clearvars FLAY
     kW_peak = [1.424871573296857e+03,1.347528364235151e+03,1.716422704604557e+03];
-    %kW_peak = [1373.635335,1296.987098,1626.668382];
+    %To be used for finding AllocationFactors for simulation:
+    eff_KW(1,1) = 0.9562;
+    eff_KW(1,2) = 0.9594;
+    eff_KW(1,3) = 0.9239;
+    V_LTC = 1.04*((12.47e3)/sqrt(3));
+    
 elseif feeder_NUM == 3
     load ROX.mat
     FEEDER = ROX;
@@ -59,7 +64,7 @@ if timeseries_span == 1
     LS_PhaseB(:,1) = LOAD_ACTUAL(:,2)./kW_peak(1,2);
     LS_PhaseC(:,1) = LOAD_ACTUAL(:,3)./kW_peak(1,3);    
 elseif timeseries_span == 2
-    %24HR Sim    -- 
+    %24HR Sim    --  Select days worth of data @ given interval:
     LOAD_ACTUAL_1(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY,23,59),1);
     LOAD_ACTUAL_1(:,2) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
     LOAD_ACTUAL_1(:,3) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY,23,59),1);
@@ -67,18 +72,22 @@ elseif timeseries_span == 2
     LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),6);
     LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),6);
     LOAD_ACTUAL(:,3) = interp(LOAD_ACTUAL_1(:,3),6);
-    %Now construct P.U.
+    %Find peak kW per phase to nominalize:
+    for i=1:1:3
+        %peak:
+        peak_KW(1,i) = max(LOAD_ACTUAL(:,i));
+        peak_AMP(1,i) = (peak_KW(1,i)*1000)/(0.98*V_LTC*eff_KW(1,i));
+        %nominal:
+        LOAD_ACTUAL(:,i)=LOAD_ACUTAL(:,i)/peak_KW(1,i);
+    end
+    %Find corresponding current to allocateLoad:
+    %(eff_KW(1,1) = 0.9562;eff_KW(1,2) = 0.9594;eff_KW(1,3) = 0.9239;V_LTC = 1.04*((12.47e3)/sqrt(3));
+    
+    
+    %{
     LS_PhaseA(:,1) = (LOAD_ACTUAL(:,1)./(kW_peak(1,1)));
     LS_PhaseB(:,1) = (LOAD_ACTUAL(:,2)./(kW_peak(1,2)));
     LS_PhaseC(:,1) = (LOAD_ACTUAL(:,3)./(kW_peak(1,3)));
-    
-    %{
-    LS_PhaseA(:,1) = LOAD_ACTUAL(:,1);
-    LS_PhaseB(:,1) = LOAD_ACTUAL(:,2);
-    LS_PhaseC(:,1) = LOAD_ACTUAL(:,3);
-    LS_PhaseA(:,1) = (LOAD_ACTUAL(:,1)./(kW_peak(1,1)))*1.5; %0.6
-    LS_PhaseB(:,1) = (LOAD_ACTUAL(:,2)./(kW_peak(1,2)))*1.5; %0.55
-    LS_PhaseC(:,1) = (LOAD_ACTUAL(:,3)./(kW_peak(1,3)))*1.7; %0.3
     %}
 elseif timeseries_span == 3
     %1 Week Sim  -- @1min incs.

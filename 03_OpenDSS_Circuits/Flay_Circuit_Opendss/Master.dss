@@ -27,13 +27,8 @@ Redirect UGLineCodes.dss
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
 Redirect Regulators.dss
-!Redirect Loads.dss 
 Redirect Loads_ALLOC.dss
 Redirect Capacitors.dss
-Redirect SwtControls.dss
-Redirect Reclosers.dss
-Redirect SectionalizerSettings.DSS
-Redirect FuseSettings.dss
 ! 
 ! Set the voltage bases
 ! 
@@ -44,17 +39,22 @@ CalcVoltageBases
 ! 
 Buscoords Buscoords.CSV
 ! 
-! Some command templates (commented out)
+! Declare Energy Meter:
 ! 
-/***** Begin Block Comment ******
-plot circuit Power max=2000 n n C1=$00FF0000
-plot circuit Voltage Max=2000 dots=n labels=n subs=y C1=$00FF0000
-plot profile
-!----------
-Interpolate  ! this will pick up buses added for regulators
-ClearBusMarkers
-AddBusMarker Bus=..... Code=5  color=Lime  size=3
-!----------
-Set Markcapacitor=yes 
-Set MarkRegulators=yes RegMarkerCode=17 RegMarkerSize=7
-*** End Block Comment  *****/
+
+/*
+!New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes
+!EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ] 
+
+! 
+! Disable Capacitors for load allocation
+Disable Capacitor.*
+! 
+AllocateLoad
+AllocateLoad
+AllocateLoad
+Dump AllocationFactors
+! 
+! Enable capacitors before solving
+Enable Capacitor.*
+*/

@@ -4,8 +4,26 @@ clc
 close all
 fileloc_base='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
 %USER_INPUT --
-feeder_NUM=8;
+action=menu('What Action?','Load.dss','LS_PhaseA.txt Generation');
+while action<1
+    action=menu('What Action?','Load.dss','LS_PhaseA.txt Generation');
+end
 
+if action == 1
+    feeder=menu('What Feeder','00 - Bellhaven','01 - Commonwealth','02 - Flay','EPRI-24');
+    while feeder<1
+        feeder=menu('What Feeder','00 - Bellhaven','01 - Commonwealth','02 - Flay','EPRI-24');
+    end
+    if feeder ~= 4
+        feeder_NUM = feeder -1;
+    else
+        feeder_NUM = 8;
+    end
+else
+    feeder_NUM = 8; %EPRI base circuit.
+end
+%--------------------------------------------------------------------------
+%Pull data from User selection:
 if feeder_NUM == 0
     fileloc=strcat(fileloc_base,'\Bellhaven_Circuit_Opendss');
     cd(fileloc);
@@ -25,8 +43,10 @@ elseif feeder_NUM == 8
     [RAW_DATA, A, CELL] = xlsread('string_data.xlsx', 'Loads_ckt24');
     [RAW_PULOAD, B, CELL2] = xlsread('string_data.xlsx','Loadshapes');
 end
+%--------------------------------------------------------------------------
+% Construction of Loads.dss string formatting:
 %
-if feeder_NUM == 8
+if feeder_NUM == 8 && action == 1
     %Only for EPRI format!
     SAME=1;
     output_text = cell(length(CELL),1);
@@ -86,7 +106,7 @@ if feeder_NUM == 8
             end
         end
     end
-elseif feeder_NUM == 2
+elseif feeder_NUM == 2 && action == 1
     output_text = cell(length(CELL),1);
     output_alloc = cell(length(CELL),1);
     for i=1:1:length(CELL) %goes through each load (row)
@@ -138,96 +158,102 @@ elseif feeder_NUM == 2
     end
 end
     
-%
-%Export strings to .txt file:
-filename=strcat(fileloc,'\Loads_text.txt');
-fileID=fopen(filename,'w');
-for j=1:1:length(output_text)
-    fprintf(fileID,'%s\r\n',output_text{j,1});
-end
-fclose(fileID);
-if feeder_NUM == 2
-    filename2=strcat(fileloc,'\Loads_Allocation.txt');
-    fileID=fopen(filename2,'w');
-    for j=1:1:length(output_alloc)
-        fprintf(fileID,'%s\r\n',output_alloc{j,1});
+if action == 1
+    %Export strings to .txt file:
+    filename=strcat(fileloc,'\Loads_text.txt');
+    fileID=fopen(filename,'w');
+    for j=1:1:length(output_text)
+        fprintf(fileID,'%s\r\n',output_text{j,1});
     end
     fclose(fileID);
+    if feeder_NUM == 2
+        filename2=strcat(fileloc,'\Loads_Allocation.txt');
+        fileID=fopen(filename2,'w');
+        for j=1:1:length(output_alloc)
+            fprintf(fileID,'%s\r\n',output_alloc{j,1});
+        end
+        fclose(fileID);
+    end
+
+    fprintf('The new loads.dss text file has been generated!\n');
 end
 
-fprintf('The new loads.dss text file has been generated!\n');
-
 %%
-%Export to .txt files:
-s=strcat(fileloc_base,'\EPRI_ckt24\');
-%Decide what type of loadshape do you want:
-TYP=4;
+if action == 2
+    %Export to .txt files:
+    s=strcat(fileloc_base,'\EPRI_ckt24\');
+    %Decide what type of loadshape do you want:
+    TYP=menu('What load dataset:','Annual | Interval= 1min.','Daily | Interval= 1min','Daily | Interval= 30sec','Daily | Interval= 30sec');
+    while TYP<1
+        TYP=menu('What load dataset:','Annual | Interval= 1min.','Daily | Interval= 1min','Daily | Interval= 30sec','Daily | Interval= 30sec');
+    end
 
-if TYP==1
-    %kW_A kW_B kW_C kW_ThreePhase kW_OTHER
-    for i=1:1:5
-        KW_1MIN(:,i)=interp(RAW_PULOAD(1:8760,i),60);
-    end
-    s_kwA = strcat(s,'LS1_PhaseA.txt');
-    s_kwB = strcat(s,'LS1_PhaseB.txt');
-    s_kwC = strcat(s,'LS1_PhaseC.txt');
-    s_kw3 = strcat(s,'LS1_ThreePhase.txt');
-    s_kwO = strcat(s,'LS1_Other.txt');
-    csvwrite(s_kwA,KW_1MIN(:,1))
-    csvwrite(s_kwB,KW_1MIN(:,2))
-    csvwrite(s_kwC,KW_1MIN(:,3))
-    csvwrite(s_kw3,KW_1MIN(:,4))
-    csvwrite(s_kwO,KW_1MIN(:,5))
-elseif TYP==2
-    %kW_A kW_B kW_C kW_ThreePhase kW_OTHER
-    for i=1:1:5
-        KW_1MIN(:,i)=interp(RAW_PULOAD(1:24,i),60); %Now we will go up to 1min intervals
-    end
-    s_kwA = strcat(s,'LS2_PhaseA.txt');
-    s_kwB = strcat(s,'LS2_PhaseB.txt');
-    s_kwC = strcat(s,'LS2_PhaseC.txt');
-    s_kw3 = strcat(s,'LS2_ThreePhase.txt');
-    s_kwO = strcat(s,'LS2_Other.txt');
-    
-    csvwrite(s_kwA,KW_1MIN(:,1))
-    csvwrite(s_kwB,KW_1MIN(:,2))
-    csvwrite(s_kwC,KW_1MIN(:,3))
-    csvwrite(s_kw3,KW_1MIN(:,4))
-    csvwrite(s_kwO,KW_1MIN(:,5))
-elseif TYP==3
-    %30sec, 24hr dataset:
+    if TYP==1
         %kW_A kW_B kW_C kW_ThreePhase kW_OTHER
-    for i=1:1:5
-        KW_1MIN(:,i)=interp(RAW_PULOAD(1:24,i),60*2); %Now we will go down to 30sec load intervals
-    end
-    s_kwA = strcat(s,'LS3_PhaseA.txt');
-    s_kwB = strcat(s,'LS3_PhaseB.txt');
-    s_kwC = strcat(s,'LS3_PhaseC.txt');
-    s_kw3 = strcat(s,'LS3_ThreePhase.txt');
-    s_kwO = strcat(s,'LS3_Other.txt');
-    
-    csvwrite(s_kwA,KW_1MIN(:,1))
-    csvwrite(s_kwB,KW_1MIN(:,2))
-    csvwrite(s_kwC,KW_1MIN(:,3))
-    csvwrite(s_kw3,KW_1MIN(:,4))
-    csvwrite(s_kwO,KW_1MIN(:,5))
-elseif TYP==4
-     %5sec, 24hr dataset:
+        for i=1:1:5
+            KW_1MIN(:,i)=interp(RAW_PULOAD(1:8760,i),60); %Annual dataset @ 1minute intervals (525600)
+        end
+        s_kwA = strcat(s,'LS1_PhaseA.txt');
+        s_kwB = strcat(s,'LS1_PhaseB.txt');
+        s_kwC = strcat(s,'LS1_PhaseC.txt');
+        s_kw3 = strcat(s,'LS1_ThreePhase.txt');
+        s_kwO = strcat(s,'LS1_Other.txt');
+        csvwrite(s_kwA,KW_1MIN(:,1))
+        csvwrite(s_kwB,KW_1MIN(:,2))
+        csvwrite(s_kwC,KW_1MIN(:,3))
+        csvwrite(s_kw3,KW_1MIN(:,4))
+        csvwrite(s_kwO,KW_1MIN(:,5))
+    elseif TYP==2
         %kW_A kW_B kW_C kW_ThreePhase kW_OTHER
-    for i=1:1:5
-        KW_1MIN(:,i)=interp(RAW_PULOAD(1:24,i),60*12); %Now we will go down to 30sec load intervals
+        for i=1:1:5
+            KW_1MIN(:,i)=interp(RAW_PULOAD(1:24,i),60); %Now we will go up to 1min intervals
+        end
+        s_kwA = strcat(s,'LS2_PhaseA.txt');
+        s_kwB = strcat(s,'LS2_PhaseB.txt');
+        s_kwC = strcat(s,'LS2_PhaseC.txt');
+        s_kw3 = strcat(s,'LS2_ThreePhase.txt');
+        s_kwO = strcat(s,'LS2_Other.txt');
+
+        csvwrite(s_kwA,KW_1MIN(:,1))
+        csvwrite(s_kwB,KW_1MIN(:,2))
+        csvwrite(s_kwC,KW_1MIN(:,3))
+        csvwrite(s_kw3,KW_1MIN(:,4))
+        csvwrite(s_kwO,KW_1MIN(:,5))
+    elseif TYP==3
+        %30sec, 24hr dataset:
+            %kW_A kW_B kW_C kW_ThreePhase kW_OTHER
+        for i=1:1:5
+            KW_1MIN(:,i)=interp(RAW_PULOAD(1:24,i),60*2); %Now we will go down to 30sec load intervals
+        end
+        s_kwA = strcat(s,'LS3_PhaseA.txt');
+        s_kwB = strcat(s,'LS3_PhaseB.txt');
+        s_kwC = strcat(s,'LS3_PhaseC.txt');
+        s_kw3 = strcat(s,'LS3_ThreePhase.txt');
+        s_kwO = strcat(s,'LS3_Other.txt');
+
+        csvwrite(s_kwA,KW_1MIN(:,1))
+        csvwrite(s_kwB,KW_1MIN(:,2))
+        csvwrite(s_kwC,KW_1MIN(:,3))
+        csvwrite(s_kw3,KW_1MIN(:,4))
+        csvwrite(s_kwO,KW_1MIN(:,5))
+    elseif TYP==4
+         %5sec, 24hr dataset:
+            %kW_A kW_B kW_C kW_ThreePhase kW_OTHER
+        for i=1:1:5
+            KW_1MIN(:,i)=interp(RAW_PULOAD(1:24,i),60*12); %Now we will go down to 30sec load intervals
+        end
+        s_kwA = strcat(s,'LS4_PhaseA.txt');
+        s_kwB = strcat(s,'LS4_PhaseB.txt');
+        s_kwC = strcat(s,'LS4_PhaseC.txt');
+        s_kw3 = strcat(s,'LS4_ThreePhase.txt');
+        s_kwO = strcat(s,'LS4_Other.txt');
+
+        csvwrite(s_kwA,KW_1MIN(:,1))
+        csvwrite(s_kwB,KW_1MIN(:,2))
+        csvwrite(s_kwC,KW_1MIN(:,3))
+        csvwrite(s_kw3,KW_1MIN(:,4))
+        csvwrite(s_kwO,KW_1MIN(:,5))
     end
-    s_kwA = strcat(s,'LS4_PhaseA.txt');
-    s_kwB = strcat(s,'LS4_PhaseB.txt');
-    s_kwC = strcat(s,'LS4_PhaseC.txt');
-    s_kw3 = strcat(s,'LS4_ThreePhase.txt');
-    s_kwO = strcat(s,'LS4_Other.txt');
-    
-    csvwrite(s_kwA,KW_1MIN(:,1))
-    csvwrite(s_kwB,KW_1MIN(:,2))
-    csvwrite(s_kwC,KW_1MIN(:,3))
-    csvwrite(s_kw3,KW_1MIN(:,4))
-    csvwrite(s_kwO,KW_1MIN(:,5))
 end
     
 
