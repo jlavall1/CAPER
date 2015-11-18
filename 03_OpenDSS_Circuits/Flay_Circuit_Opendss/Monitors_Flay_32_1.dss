@@ -1,6 +1,6 @@
 New Monitor.LTC element=Transformer.FLAY_RET_16271201 terminal=2 mode=2
 New Monitor.subVI element=Transformer.FLAY_RET_16271201 terminal=2 mode=0
-!New energymeter.fdr_05410 element=line.259363665 term=1 option=R action=C PhaseVolt=YES peakcurrent=(196.60,186.72,238.09)
+New energymeter.fdr_05410 element=line.259363665 term=1 option=R action=C PhaseVolt=YES peakcurrent=(196.60,186.72,238.09)
 !New energymeter.fdr_05410 element=line.259363665 term=1 option=R action=C PhaseVolt=YES peakcurrent=(295,280,357)
 !
 ! PCC upstream bus --
