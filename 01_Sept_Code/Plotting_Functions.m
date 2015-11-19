@@ -6,7 +6,7 @@
 %4]     
 %----------------------------------------------------------
 close all
-%{
+
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 
@@ -14,8 +14,8 @@ action=menu('Which Plot would you like to initiate?','Validation Plots','Paramet
 while action<1
     action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','Open','Open','ALL');
 end
-%}
-action = 6;
+%%
+%action = 6;
 fig = 0;
 %----------------------------------------------------------
 if action == 1 || action == 6
@@ -68,7 +68,7 @@ if action == 1 || action == 6
     grid on
     set(gca,'FontWeight','bold');
     %
-    %SUBPLOT3
+    %SUBPLOT3: Check of Currents
     fig = fig + 1;
     figure(fig);
     for i=1:1:3
@@ -97,7 +97,31 @@ if action == 1 || action == 6
     grid on
     set(gca,'FontWeight','bold');
     %
-    %SUBPLOT4
+    %SUBPLOT4: Plot Current %diff
+    fig = fig + 1;
+    figure(fig);
+    %  Calculate difference:
+    for i=1:1:length(DATA_SAVE(1).phaseP)
+        DIFF_AMP(i,1)=(DATA_SAVE(2).phaseI(i,1)-(LS_PhaseA(i,1)*peak_current(1,1)))/(LS_PhaseA(i,1)*peak_current(1,1));
+        DIFF_AMP(i,2)=(DATA_SAVE(2).phaseI(i,2)-(LS_PhaseB(i,1)*peak_current(1,2)))/(LS_PhaseB(i,1)*peak_current(1,2));
+        DIFF_AMP(i,3)=(DATA_SAVE(2).phaseI(i,3)-(LS_PhaseC(i,1)*peak_current(1,3)))/(LS_PhaseC(i,1)*peak_current(1,3));
+    end
+    plot(DIFF_AMP(:,1)*100,'r-','Linewidth',3);
+    hold on
+    plot(DIFF_AMP(:,2)*100,'g-','Linewidth',3);
+    hold on
+    plot(DIFF_AMP(:,3)*100,'b-','Linewidth',3);
+    %  Settings:
+    title('Comparison between openDSS & Commanded','FontWeight','bold','FontSize',14);
+    legend('Phase A %ERROR','Phase B %ERROR','Phase C %ERROR');
+    axis([0 length(DATA_SAVE(2).phaseI) -5 10]);
+    ylabel('Percent Error (PE) [%]','FontSize',12,'FontWeight','bold');
+    xlabel('Time Interval','FontSize',12,'FontWeight','bold');
+    grid on
+    set(gca,'FontWeight','bold');
+    
+    %
+    %SUBPLOT5: Vbase & Vstatic
     fig = fig + 1;
     figure(fig);
     plot([DATA_SAVE(2:211).Vbase],'b-')
@@ -113,7 +137,7 @@ if action == 1 || action == 6
     set(gca,'FontWeight','bold');
     
 end
-
+%%
 if action == 2 || action == 6
     %SUBPLOT1
     fig = fig + 1;
@@ -159,16 +183,17 @@ if action == 2 || action == 6
     grid on
     set(gca,'FontWeight','bold');
 end
-
+%%
 if action == 3 || action == 6
-    %Powers
-    figure(7);
+    %SUBPLOT1 -- Powers
+    fig = fig +  1;
+    figure(fig);
     plot(DATA_SAVE(1).phaseP(:,1),'r-','linewidth',3);
     hold on
     plot(DATA_SAVE(1).phaseP(:,2),'b-','linewidth',3);
     hold on
     plot(DATA_SAVE(1).phaseP(:,3),'g-','linewidth',3);
-
+    %  Settings:
     xlabel('Time Interval (t) [1min]');
     ylabel('Phase Real Power Profile (P) [kW]');
     title('Feeder load profile');
@@ -176,10 +201,26 @@ if action == 3 || action == 6
     grid on
     set(gca,'FontWeight','bold');
     %axis([0 15 -50 1000]);
-    %Currents
+    %
+    %SUBPLOT2 -- Voltage at Substation
+    fig = fig + 1;
+    figure(fig);
+    plot(DATA_SAVE(2).phaseV(:,1)/7.199557856794634e+03,'r-','linewidth',3);
+    hold on
+    plot(DATA_SAVE(2).phaseV(:,2)/7.199557856794634e+03,'b-','linewidth',3);
+    hold on
+    plot(DATA_SAVE(2).phaseV(:,3)/7.199557856794634e+03,'g-','linewidth',3);
+    %  Settings:
+    xlabel('Time Interval (t) [1min]');
+    ylabel('Phase Voltage Profile (V) [P.U.]');
+    title('Feeder Substation LTC Regulated side');
+    legend('Phase A','Phase B','Phase C','Location','SouthEast');
+    grid on
+    set(gca,'FontWeight','bold');
     
-    %LTC ops
-    figure(9);
+    %SUBPLOT3 -- LTC Operation / Tap position.
+    fig = fig + 1;
+    figure(fig);
     plot(MyLTC.data(:,end),'linewidth',3)
     xlabel('Time Interval (t) [1m]');
     ylabel('LTC Tap Position');
