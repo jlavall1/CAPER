@@ -6,6 +6,7 @@
 %4]     
 %----------------------------------------------------------
 close all
+%{
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 
@@ -13,6 +14,8 @@ action=menu('Which Plot would you like to initiate?','Validation Plots','Paramet
 while action<1
     action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','Open','Open','ALL');
 end
+%}
+action = 6;
 fig = 0;
 %----------------------------------------------------------
 if action == 1 || action == 6
