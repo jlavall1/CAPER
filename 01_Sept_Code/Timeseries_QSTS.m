@@ -66,6 +66,11 @@ if feeder_NUM == 2
 end
 %DSSText.command = 'EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ]';
 DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
+DSSText.command = 'Disable Capacitor.*';
+DSSText.command = 'AllocateLoad';
+%DSSText.command = 'AllocateLoad';
+%DSSText.command = 'AllocateLoad';
+DSSText.command = 'Enable Capacitor.*';
 %{
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
@@ -152,6 +157,7 @@ elseif timeseries_span == 2
     % Solve QSTS Solution:
     DSSText.command='solve';
     DSSText.command='show eventlog';
+    toc
 elseif timeseries_span == 3
     %(1) WEEK
     shift=0;
@@ -175,7 +181,10 @@ elseif timeseries_span == 5
     DOY_fin = 365;
 end
 %%
+tic
 Export_Monitors_timeseries
+toc
+Plotting_Functions
 %%
 %{
 %   Feeder Power
@@ -283,92 +292,6 @@ title([strrep(fileNameNoPath,'_',' '),' Closest Line Load'],'FontSize',12,'FontW
 %}
 %}
 %%
-figure(4);
-for i=2:1:length(DATA_SAVE)
-    if DATA_SAVE(i).Vbase == 7.199557856794634e+03
-        
-        plot(DATA_SAVE(i).phaseV(:,1));
-        hold on
-    end
-end
-figure(5);
-for i=2:1:length(DATA_SAVE)
-    if DATA_SAVE(i).Vbase == 7.199557856794634e+03
-        
-        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseV(720,1)/7.199557856794634e+03,'ro','linewidth',4);
-        hold on
-        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseV(720,2)/7.199557856794634e+03,'bo','linewidth',4);
-        hold on
-        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseV(720,3)/7.199557856794634e+03,'go','linewidth',4);
-        hold on
-    end
-end
-xlabel('Distance from SUB (d) [km]');
-ylabel('Phase A Voltage Profile (V) [P.U.]');
-title('AT noon sample');
-grid on
-%
-figure(6);
-for i=2:1:length(DATA_SAVE)
-    if DATA_SAVE(i).Vbase > 7000
-        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseP(720,1),'ro','linewidth',3);
-        hold on
-        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseP(720,2),'bo','linewidth',3);
-        hold on
-        plot(DATA_SAVE(i).distance,DATA_SAVE(i).phaseP(720,3),'go','linewidth',3);
-        hold on
-    end
-end
-xlabel('Distance from SUB (d) [km]');
-ylabel('Phase Real Power Profile (P) [kW]');
-title('AT noon sample');
-grid on
-axis([0 15 -50 1000]);
-%Powers
-figure(7);
-plot(DATA_SAVE(1).phaseP(:,1),'r-','linewidth',3);
-hold on
-plot(DATA_SAVE(1).phaseP(:,2),'b-','linewidth',3);
-hold on
-plot(DATA_SAVE(1).phaseP(:,3),'g-','linewidth',3);
 
-xlabel('Time Interval (t) [1min]');
-ylabel('Phase Real Power Profile (P) [kW]');
-title('Feeder load profile');
-legend('Phase A','Phase B','Phase C','Location','SouthEast');
-grid on
-%axis([0 15 -50 1000]);
-
-
-%Currents
-figure(8);
-for i=1:1:3
-    if i==1
-        plot(LS_PhaseA*peak_current(1,i),'r-')
-        hold on
-        plot(DATA_SAVE(2).phaseI(:,i),'r--')
-        hold on
-    elseif i==2
-        plot(LS_PhaseB*peak_current(1,i),'b-')
-        hold on
-        plot(DATA_SAVE(2).phaseI(:,i),'b--')
-        hold on
-    elseif i==3
-        plot(LS_PhaseC*peak_current(1,i),'g-')
-        hold on
-        plot(DATA_SAVE(2).phaseI(:,i),'g--')
-        hold on
-    end
-end
-xlabel('Time Interval (t) [1m]');
-ylabel('Phase Current (I) [A]');
-title('Comparison between Loadshape & Measurements');
-%LTC ops
-figure(9);
-plot(MyLTC.data(:,end),'linewidth',3)
-xlabel('Time Interval (t) [1m]');
-ylabel('LTC Tap Position');
-axis([0 1440 0.96 1.06]);
-grid on
 
     

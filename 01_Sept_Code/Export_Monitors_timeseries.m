@@ -177,55 +177,19 @@ while k<=100%length(Loads_Base)
 end
 %}
 %%
-if feeder_NUM == 2
+if feeder_NUM ~= 8
     %Now lets export LTC tap changes:
     DSSText.Command = 'export mon LTC';
     monitorFile = DSSText.Result;
     MyLTC = importdata(monitorFile);
     delete(monitorFile);
     
+    %Now lets export LTC voltages:
+    DSSText.Command = 'export mon subVI';
+    monitorFile = DSSText.Result;
+    MySUBV = importdata(monitorFile);
+    delete(monitorFile);
+    %Save struct of post sim. results.
+    save(filename,'DATA_SAVE');   
+    
 end
-%%
-%Now lets export LTC voltages:
-DSSText.Command = 'export mon subVI';
-monitorFile = DSSText.Result;
-MySUBV = importdata(monitorFile);
-delete(monitorFile);
-%}
-%%
-save(filename,'DATA_SAVE');
-%%
-%Plot results --
-%{
-figure(1)
-for k=1:1:100%length(Loads_Base)
-    if Loads_Base(k,1).nodes == 1
-        plot(k,DATA_SAVE(k+c_j-1).phaseV(10,1),'ro');
-    elseif Loads_Base(k,1).nodes == 2
-        plot(k,DATA_SAVE(k+c_j-1).phaseV(10,1),'go');
-    elseif Loads_Base(k,1).nodes == 3
-        plot(k,DATA_SAVE(k+c_j-1).phaseV(10,1),'bo');
-    end
-    hold on
-    %k+c_j
-end
-%}
-%%
-%{
-figure(2)
-title('Command vs. actual CHECK');
-plot(DATA_SAVE(1).phaseP,'r-')
-hold on
-plot(LOAD_ACTUAL,'b-')
-%}
-%%
-%Check V_BASE:
-figure(1);
-plot([DATA_SAVE(2:211).Vbase],'b-')
-hold on
-plot([DATA_SAVE(2:211).Vstatic],'r-')
-hold off
-legend('Simulation Base','Static Check');
-title('CHECK to see if Voltages are correct.');
-
-        

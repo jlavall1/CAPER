@@ -32,9 +32,9 @@ elseif feeder_NUM == 2
     clearvars FLAY
     kW_peak = [1.424871573296857e+03,1.347528364235151e+03,1.716422704604557e+03];
     %To be used for finding AllocationFactors for simulation:
-    eff_KW(1,1) = 0.9562;
-    eff_KW(1,2) = 0.9594;
-    eff_KW(1,3) = 0.9239;
+    eff_KW(1,1) = 0.9862;
+    eff_KW(1,2) = 0.993;
+    eff_KW(1,3) = 0.9894;
     V_LTC = 1.03*((12.47e3)/sqrt(3));
     
 elseif feeder_NUM == 3
@@ -164,7 +164,12 @@ elseif timeseries_span == 5
 end
 %%
 %Save .txt per phase --
-s = ckt_direct(1:end-23); % <--------THIS MIGHT CHANGE PER FEEDER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+if feeder_NUM == 2
+    CUTOFF=10;
+else
+    CUTOFF=23;
+end
+s = ckt_direct(1:end-CUTOFF); % <--------THIS MIGHT CHANGE PER FEEDER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 str = ckt_direct;
 idx = strfind(str,'\');
 str = str(1:idx(8)-1);
