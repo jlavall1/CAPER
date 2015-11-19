@@ -51,7 +51,7 @@ CalcVoltageBases
 !
 ! Declare where monitors will be going
 !
-Redirect Monitors_Flay_32_1.dss
+Redirect Monitors_Flay_32_2.dss
 ! 
 ! Define the bus coordinates
 ! 
