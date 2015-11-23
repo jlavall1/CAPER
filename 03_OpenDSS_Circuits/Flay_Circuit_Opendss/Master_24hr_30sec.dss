@@ -30,9 +30,9 @@ Redirect SourceRegulator_3ph.dss
 ! Declare loadshapes for 24hour simulation:
 !
 ! 1min - ONE DAY SIM
-New Loadshape.LS_PhaseA npts=17280 sinterval=5 mult=(file=LS2_PhaseA.txt) action=normalize 
-New Loadshape.LS_PhaseB npts=17280 sinterval=5 mult=(file=LS2_PhaseB.txt) action=normalize
-New Loadshape.LS_PhaseC npts=17280 sinterval=5 mult=(file=LS2_PhaseC.txt) action=normalize
+New Loadshape.LS_PhaseA npts=2880 sinterval=30 mult=(file=LS2_PhaseA.txt) action=normalize 
+New Loadshape.LS_PhaseB npts=2880 sinterval=30 mult=(file=LS2_PhaseB.txt) action=normalize
+New Loadshape.LS_PhaseC npts=2880 sinterval=30 mult=(file=LS2_PhaseC.txt) action=normalize
 ! 
 ! Circuit Element Data
 ! 

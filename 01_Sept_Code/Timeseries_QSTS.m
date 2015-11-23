@@ -88,25 +88,7 @@ cd(location);
 str = ckt_direct;
 idx = strfind(str,'\');
 str = str(1:idx(8)-1);
-%Make .dss name specific to what feeder you are simulating:
-if feeder_NUM == 0
-    %Bellhaven
-    root = 'Bell';
-    root1= 'Bell';
-elseif feeder_NUM == 1
-    %Commonwealth
-    root = 'Common';
-    root1= 'Common';
-elseif feeder_NUM == 2
-    %Flay 13.27km long --
-    root = 'Flay';
-    root1= 'Flay';
-elseif feeder_NUM == 8
-    %EPRI Circuit 24
-    root = 'ckt24';
-    root1 = 'ckt24';
-end
-
+%  ***root & root1 gen. in feeder_Loadshape_generation***
 if timeseries_span == 1
     s_pv_txt = sprintf('%s_CentralPV_6hr.dss',root);
 elseif timeseries_span == 2
@@ -135,22 +117,33 @@ solarfilename = strcat(s,s_pv_txt);
 %%
 %---------------------------------
 %Plot / observe simulation results:
+shift=0;
+h_st=0;
+h_fin=23;
 if timeseries_span == 1
     %(1) peakPV RUN
     shift=10;
     h_st = 10;
     h_fin= 15;
     DOY_fin = 0;
+    %start openDSS ---------------------------
+    
+    % Run 6hr simulation at some interval:
+    DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
+    % Turn the overload report on:
+    DSSText.command='Set overloadreport=true';
+    DSSText.command='Set voltexcept=true';
+    % Solve QSTS Solution:
+    DSSText.command='solve';
+    DSSText.command='show eventlog';
+    toc
 elseif timeseries_span == 2
     %(1) DAY, 24hr
-    shift=0;
-    h_st = 0;
-    h_fin= 23;
     DOY_fin = 0;
     %start openDSS ---------------------------
     
     % Run 1-day simulation at 1minute interval:
-    DSSText.command=sprintf('set mode=daily stepsize=%s number=1440',time_int); %stepsize is now 1minute (60s)
+    DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
     % Turn the overload report on:
     DSSText.command='Set overloadreport=true';
     DSSText.command='Set voltexcept=true';
@@ -160,25 +153,40 @@ elseif timeseries_span == 2
     toc
 elseif timeseries_span == 3
     %(1) WEEK
-    shift=0;
-    h_st = 0;
-    h_fin= 23;
     DOY_fin = 6;
+    %start openDSS ---------------------------
+    
+    % Run 1-day simulation at 1minute interval:
+    DSSText.command=sprintf('set mode=yearly stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
+    % Turn the overload report on:
+    DSSText.command='Set overloadreport=true';
+    DSSText.command='Set voltexcept=true';
+    % Solve QSTS Solution:
+    DSSText.command='solve';
+    DSSText.command='show eventlog';
+    toc    
 elseif timeseries_span == 4
     %(1) MONTH
-    shift=0;
-    h_st = 0;
-    h_fin= 23;
     MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
     MTH_DY(2,1:12) = [1,32,60,91,121,152,182,213,244,274,305,335];
     DOY_fin = MTH_DY(2,monthly_span);
+    %start openDSS ---------------------------
+    
+    % Run 1-day simulation at 1minute interval:
+    DSSText.command=sprintf('set mode=yearly stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
+    % Turn the overload report on:
+    DSSText.command='Set overloadreport=true';
+    DSSText.command='Set voltexcept=true';
+    % Solve QSTS Solution:
+    DSSText.command='solve';
+    DSSText.command='show eventlog';
+    toc    
+    
 elseif timeseries_span == 5
     %(1) YEAR
-    shift=0;
-    h_st = 0;
-    h_fin = 23;
     DOY = 1;
     DOY_fin = 365;
+    
 end
 %%
 tic

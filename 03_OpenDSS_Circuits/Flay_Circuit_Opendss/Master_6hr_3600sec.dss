@@ -27,12 +27,12 @@ Redirect UGLineCodes.dss
 Redirect SourceRegulator_3ph.dss 
 
 !
-! Declare loadshapes for 24hour simulation:
+! Declare loadshapes for 6 hour simulation:
 !
 ! 1min - ONE DAY SIM
-New Loadshape.LS_PhaseA npts=17280 sinterval=5 mult=(file=LS2_PhaseA.txt) action=normalize 
-New Loadshape.LS_PhaseB npts=17280 sinterval=5 mult=(file=LS2_PhaseB.txt) action=normalize
-New Loadshape.LS_PhaseC npts=17280 sinterval=5 mult=(file=LS2_PhaseC.txt) action=normalize
+New Loadshape.LS_PhaseA npts=6 minterval=60 mult=(file=LS1_PhaseA.txt) action=normalize 
+New Loadshape.LS_PhaseB npts=6 minterval=60 mult=(file=LS1_PhaseB.txt) action=normalize
+New Loadshape.LS_PhaseC npts=6 minterval=60 mult=(file=LS1_PhaseC.txt) action=normalize
 ! 
 ! Circuit Element Data
 ! 

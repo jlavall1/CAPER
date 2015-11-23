@@ -10,9 +10,9 @@ close all
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 
-action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','Open','Open','ALL');
+action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Open','ALL');
 while action<1
-    action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','Open','Open','ALL');
+    action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Open','ALL');
 end
 %%
 %action = 6;
@@ -227,4 +227,39 @@ if action == 3 || action == 6
     axis([0 1440 0.96 1.06]);
     grid on
     set(gca,'FontWeight','bold');
+end
+if action == 4 || action == 6
+    %SUBPLOT1 -- Simulation time
+    fig = fig + 1;
+    figure(fig);
+    Dx = [6,24,7*24,30*24];
+    Dgroup = [3600,60,30,5];
+    Dy = [9.76,11.08,12.13,16.74; ...
+        10.52,12.18,14.29,37.28; ...
+        16.34, 34.22,45.66,182.75];
+    D_monit = [7.53,11.79,15.09,39.52; ...
+        7.81,19.49,30.66,119.53; ...
+        10.43,71.27,135.58,667.82];
+    for i=1:1:3
+        plot(Dx,Dy(i,1),'ro','LineWidth',3);
+        hold on
+        plot(Dx,Dy(i,2),'go','LineWidth',3);
+        hold on
+        plot(Dx,Dy(i,3),'bo','LineWidth',3);
+        hold on
+        plot(Dx,Dy(i,4),'co','LineWidth',3);
+        hold on
+        plot(Dx,Dy(i,1:4),'k-.');
+        hold on
+        plot(Dx,D_monit(i,1),'ro','LineWidth',3);
+        hold on
+        plot(Dx,D_monit(i,2),'go','LineWidth',3);
+        hold on
+        plot(Dx,D_monit(i,3),'bo','LineWidth',3);
+        hold on
+        plot(Dx,D_monit(i,4),'co','LineWidth',3);
+        hold on
+        plot(Dx,D_monit(i,1:4),'k--');
+    end
+    
 end
