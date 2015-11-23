@@ -47,6 +47,9 @@ h.st(11) = uicontrol('style','text','unit','normalized','position',[0.68 0.792 0
 h.st(12) = uicontrol('style','text','unit','normalized','position',[0.759 0.792 0.036 0.029],...
     'min',0,'max',1,'fontsize',12,'string','Upper:',...
     'backgroundColor',bk_color);
+h.st(13) = uicontrol('style','text','unit','normalized','position',[0.6 0.324 0.157 0.036],...
+    'min',0,'max',1,'fontsize',10,'string','Central PV Pmpp: (kw)',...
+    'backgroundColor',[0.973 0.973 0.973],'FontWeight','bold'); %0.678 0.324 0.04 0.035
 %%
 %Add all popupmenu:
 h.ppm(1) = uicontrol('style','popup','units','normalized','position',[0.185 0.746 0.235 0.237],...
@@ -76,10 +79,10 @@ h.ppm(6) = uicontrol('style','popup','units','normalized',...
 
 %Selective Timeseries Analysis:
 h.ppm(7) = uicontrol('style','popup','units','normalized',...
-    'position',[0.037 -0.001 0.235 0.155],'string',{'(1) Seasonal Run','DARR Category Specific','hold'},...
+    'position',[0.037 -0.001 0.235 0.155],'string',{'DARR Cat. Days at specific PV Location','Locational Specific based on Impedance','Bus Iteration'},...
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 h.ppm(8) = uicontrol('style','popup','units','normalized',...
-     'position',[0.037 0.006 0.235 0.106],'string',{'SPRING','SUMMER','FALL','WINTER'},...
+     'position',[0.037 0.006 0.235 0.106],'string',{'10% of furthest 3-ph Impedance','20%','30%','40%','50%','60%','70%','80%','90%'},...
      'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12); 
 
 %Extra Option for future use:
@@ -87,7 +90,7 @@ h.ppm(9) = uicontrol('style','popup','units','normalized',...
     'position',[0.351 -0.001 0.235 0.155],'string',{'3600s (1 hour)','60s (1 min)','30s','5s'},...
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 h.ppm(10) = uicontrol('style','popup','units','normalized',...
-     'position',[0.351 0.006 0.235 0.106],'string',{'hold','hold'},...
+     'position',[0.351 0.006 0.235 0.106],'string',{'BASE Case','PV Case'},...
      'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12); 
 
 %%
@@ -168,6 +171,8 @@ h.editbx(1) = uicontrol('style','edit','units','normalized',...
     'position',[0.678 0.755 0.04 0.035],'string','','BackgroundColor',[1 1 1],'Fontsize',8);
 h.editbx(2) = uicontrol('style','edit','units','normalized',...
     'position',[0.758 0.755 0.04 0.035],'string','','BackgroundColor',[1 1 1],'Fontsize',8);
+h.editbx(3) = uicontrol('style','edit','units','normalized',...
+    'position',[0.757 0.324 0.04 0.035],'string','','BackgroundColor',[1 1 1],'Fontsize',8); %[0.351 0.16 0.235 0.047]
 %%
 %Add axis plot:
 %   the axes for plotting selected plot
@@ -209,6 +214,7 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     set(h.lsbx(2),'Value',3);   %Max Solar Energy
     set(h.editbx(1),'String','10.5');
     set(h.editbx(2),'String','10.8');
+    set(h.editbx(3),'String','1000');
     
     uiwait(gcf);
 %%
@@ -375,6 +381,14 @@ function m=p_run(varargin)
     else
         mnth_select = 0;
     end
+    sim1_type = get(h.ckbx(4),'Value');
+    if sim1_type == 1
+        %User wants to do a selective timeseries run.
+        QSTS_select = get(h.ppm(6),'Value');
+    else
+        QSTS_select=0;
+    end
+        
     %---- Solar Coefficient Criteria:
     DARR_cat = get(h.lsbx(1),'Value'); %DARR Category selection.
     VI(1,1) = str2double(get(h.editbx(1),'String')); %min
@@ -388,7 +402,9 @@ function m=p_run(varargin)
         CLOSE = 1;
     end
     CI_cat = get(h.lsbx(2),'Value'); %CI Energy Level selection.
-    
+    PV_BIN = get(h.ppm(10),'Value'); %1=base & 2=PV gen.
+    %Obtain userdefined PV size:
+    PV_pmpp=str2double(get(h.editbx(3),'String'));
     
     %Check if multiple selections & then string combine if OK.
     if COUNT > 1
@@ -430,7 +446,9 @@ function m=p_run(varargin)
     STRING_0{1,12} = VI;
     STRING_0{1,13} = CI_cat;
     STRING_0{1,14} = time_int;
-    
+    STRING_0{1,15} = QSTS_select;
+    STRING_0{1,16} = PV_BIN;
+    STRING_0{1,17} = PV_pmpp;
     %assignin('base', 'cat_choice', cat_choice);
     %assignin('base', 'ckt_num', ckt_num);
     %assignin('base', 'STRING', STRING);

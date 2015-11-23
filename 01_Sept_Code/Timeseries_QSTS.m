@@ -29,7 +29,10 @@ monthly_span    = gui_response{1,10};%(1) Month selected ; 1=JAN 12=DEC.
 DARR_category   = gui_response{1,11};%(1)Stabe through (5)Unstable.
 VI_USER_span    = gui_response{1,12};
 CI_USER_slt     = gui_response{1,13};
-time_int        = gui_response{1,14}; %timestep length
+time_int        = gui_response{1,14};%timestep length
+QSTS_select     = gui_response{1,15};%selective timeseries run:
+PV_ON_OFF       = gui_response{1,16};%1=off & 2=on;
+PV_pmpp         = gui_response{1,17};%kw
 %{ 
 STRING_0{1,1} = STRING;
 STRING_0{1,2} = ckt_num;
@@ -52,6 +55,7 @@ path = strcat(base_path,'\04_DSCADA');
 addpath(path);
 
 % 2. Generate Real Power & PV loadshape files:
+
 PV_Loadshape_generation
 feeder_Loadshape_generation
 %
@@ -84,36 +88,35 @@ cd(location);
 %Lines_Distance = Lines_Base(index); 
 %clear index
 %----------------------------------
-%Add PV Plant:
-str = ckt_direct;
-idx = strfind(str,'\');
-str = str(1:idx(8)-1);
-%  ***root & root1 gen. in feeder_Loadshape_generation***
-if timeseries_span == 1
-    s_pv_txt = sprintf('%s_CentralPV_6hr.dss',root);
-elseif timeseries_span == 2
-    s_pv_txt = sprintf('%s_CentralPV_24hr.dss',root); %just added the 2
-elseif timeseries_span == 3
-    s_pv_txt = sprintf('%s_CentralPV_168hr.dss',root);
-elseif timeseries_span == 4
-    if shift+1 == 28
-        s_pv_txt = sprintf('%s_CentralPV_1mnth28.dss',root);
-    elseif shift+1 == 30
-        s_pv_txt = sprintf('%s_CentralPV_1mnth30.dss',root);
-    elseif shift+1 == 31
-        s_pv_txt = sprintf('%s_CentralPV_1mnth31.dss',root);
+if PV_ON_OFF == 2
+    %Add PV Plant:
+    str = ckt_direct;
+    idx = strfind(str,'\');
+    str = str(1:idx(8)-1);
+    %  ***root & root1 gen. in feeder_Loadshape_generation***
+    if timeseries_span == 1
+        s_pv_txt = sprintf('%s_CentralPV_6hr.dss',root);
+    elseif timeseries_span == 2
+        s_pv_txt = sprintf('%s_CentralPV_24hr.dss',root); %just added the 2
+    elseif timeseries_span == 3
+        s_pv_txt = sprintf('%s_CentralPV_168hr.dss',root);
+    elseif timeseries_span == 4
+        if shift+1 == 28
+            s_pv_txt = sprintf('%s_CentralPV_1mnth28.dss',root);
+        elseif shift+1 == 30
+            s_pv_txt = sprintf('%s_CentralPV_1mnth30.dss',root);
+        elseif shift+1 == 31
+            s_pv_txt = sprintf('%s_CentralPV_1mnth31.dss',root);
+        end
+    elseif timeseries_span == 5
+        s_pv_txt = sprintf('%s_CentralPV_365dy.dss',root);
     end
-elseif timeseries_span == 5
-    s_pv_txt = sprintf('%s_CentralPV_365dy.dss',root);
+    solarfilename = strcat(s,s_pv_txt);
+    %solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
+    DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
+    DSSText.command = sprintf('edit pvsystem.PV bus1=258405729 pmpp=%s kVA=%s',num2str(PV_pmpp),num2str(PV_pmpp*1.1));
 end
-solarfilename = strcat(s,s_pv_txt);
-%solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
-%%
-%DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
-%DSSText.command = 'solve';
-%cd(location);
 %---------------------------------
-
 %%
 %---------------------------------
 %Plot / observe simulation results:

@@ -26,6 +26,7 @@ elseif feeder_NUM == 2
     load Lines_Monitor_FLAY.mat %Lines_Distance
     %For export .txt file --
     filename = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\TIME_RESULTS';
+    filename2= 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\TIME_RESULTS_PV';
     
 elseif feeder_NUM == 8
     %EPRI CKT7 --
@@ -183,13 +184,22 @@ if feeder_NUM ~= 8
     monitorFile = DSSText.Result;
     MyLTC = importdata(monitorFile);
     delete(monitorFile);
+    DATA_SAVE(1).LTC_Ops = MyLTC.data;
     
     %Now lets export LTC voltages:
     DSSText.Command = 'export mon subVI';
     monitorFile = DSSText.Result;
     MySUBV = importdata(monitorFile);
     delete(monitorFile);
-    %Save struct of post sim. results.
-    save(filename,'DATA_SAVE');   
+    DATA_SAVE(1).phaseV = MySUBV.data(:,3:2:7);
+    DATA_SAVE(1).phaseI = MySUBV.data(:,11:2:15);
+    DATA_SAVE(1).distance = 0;
     
+    %Save struct of post sim. results.
+    if PV_ON_OFF == 1
+        save(filename,'DATA_SAVE');  
+    elseif PV_ON_OFF == 2
+        DATA_PV = DATA_SAVE;
+        save(filename2,'DATA_PV');
+    end
 end

@@ -261,5 +261,22 @@ if action == 4 || action == 6
         hold on
         plot(Dx,D_monit(i,1:4),'k--');
     end
+    %SUBPLOT2 -- Voltage Deviation
+    fig = fig + 1;
+    figure(fig);
+    TVD=TVD_Calc(DATA_SAVE);
+    plot(TVD(:,1),'r-');
+    hold on
+    plot(TVD(:,2),'g-');
+    hold on
+    plot(TVD(:,3),'b-');
+    %  Settings:
+    xlabel('Time Interval (t) [1min]');
+    ylabel('Voltage Deviation Index (TVD) [P.U.^{2}]');
+    title('Feeder voltage deviation index throughout day');
+    legend('Phase A','Phase B','Phase C','Location','NorthEast');
+    grid on
+    set(gca,'FontWeight','bold');
+    
     
 end
