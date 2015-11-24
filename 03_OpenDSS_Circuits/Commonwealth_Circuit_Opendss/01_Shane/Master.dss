@@ -25,7 +25,7 @@ Redirect Loadshape.dss
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
 Redirect Regulators.dss
-Redirect Loads_NCSU.dss !Just changed to _NCSU.dss
+Redirect Loads.dss
 Redirect Capacitors.dss
 !Redirect SwtControls.dss
 !Redirect Reclosers.dss
@@ -56,5 +56,4 @@ AllocateLoad
 ! 
 ! Enable capacitors before solving
 Enable Capacitor.*
-! 
-Solve
+!
