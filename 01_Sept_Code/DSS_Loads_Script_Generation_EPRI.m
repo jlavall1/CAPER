@@ -106,53 +106,56 @@ if feeder_NUM == 8 && action == 1
             end
         end
     end
-elseif feeder_NUM == 2 && action == 1
-    output_text = cell(length(CELL),1);
-    output_alloc = cell(length(CELL),1);
-    for i=1:1:length(CELL) %goes through each load (row)
-        [startIndex,endIndex]=regexp(CELL{i,5},'.');
-        n = length(CELL{1,5});
+elseif action == 1
+    if feeder_NUM == 1 || feeder_NUM == 2
+        output_text = cell(length(CELL),1);
+        output_alloc = cell(length(CELL),1);
+        for i=1:1:length(CELL) %goes through each load (row)
+            [startIndex,endIndex]=regexp(CELL{i,5},'.');
+            n = length(CELL{1,5});
 
-        %output_text{i,1}=strcat(CELL{i,1},sprintf(' %s',CELL{i,2}));
-        output_text{i,1}=strcat(CELL{i,1},sprintf(' %s',CELL{i,2}));
-        %Create allocationFactors_Base.Txt:
-        output_alloc{i,1}=strcat(CELL{i,2},sprintf('.AllocationFactor=%0.4f',allocationFactor(i,1)));
-        
-        for j=3:1:11
-            if j == 4 || j == 10
-                %special case because numbers.
-                output_text{i,1}=strcat(output_text{i,1},sprintf(' %s',num2str(CELL{i,j})));
-            elseif j == 7
-                %Reset voltage:
-                output_text{i,1}=strcat(output_text{i,1},'7.1996'); 
-            elseif j < 11
-                %Do not change anything:
-                output_text{i,1}=strcat(output_text{i,1},sprintf(' %s',CELL{i,j}));
-            else %j=11
-                %[startIndex,endIndex]=regexp(CELL{i,5},'.');
-                %CELL{i,5}((endIndex-1):endIndex)
-                Phase=CELL{i,5}(end-1:end);
-                
-                if strcmp(Phase,'.1') == 1
-                    output_text{i,1}=strcat(output_text{i,1},' status=variable');
-                    output_text{i,1}=strcat(output_text{i,1},' Vminpu=0.7');             
-                    output_text{i,1}=strcat(output_text{i,1},' yearly=LS_PhaseA');
-                    output_text{i,1}=strcat(output_text{i,1},' daily=LS_PhaseA');
-                    output_text{i,1}=strcat(output_text{i,1},' duty=LS_PhaseA');
-                elseif strcmp(Phase,'.2') == 1
-                    output_text{i,1}=strcat(output_text{i,1},' status=variable');
-                    output_text{i,1}=strcat(output_text{i,1},' Vminpu=0.7');   
-                    output_text{i,1}=strcat(output_text{i,1},' yearly=LS_PhaseB');
-                    output_text{i,1}=strcat(output_text{i,1},' daily=LS_PhaseB');
-                    output_text{i,1}=strcat(output_text{i,1},' duty=LS_PhaseB');
-                elseif strcmp(Phase,'.3') == 1
-                    output_text{i,1}=strcat(output_text{i,1},' status=variable');
-                    output_text{i,1}=strcat(output_text{i,1},' Vminpu=0.7');   
-                    output_text{i,1}=strcat(output_text{i,1},' yearly=LS_PhaseC');
-                    output_text{i,1}=strcat(output_text{i,1},' daily=LS_PhaseC');
-                    output_text{i,1}=strcat(output_text{i,1},' duty=LS_PhaseC');
+            %output_text{i,1}=strcat(CELL{i,1},sprintf(' %s',CELL{i,2}));
+            output_text{i,1}=strcat(CELL{i,1},sprintf(' %s',CELL{i,2}));
+            %Create allocationFactors_Base.Txt:
+            if feeder_NUM == 2
+                output_alloc{i,1}=strcat(CELL{i,2},sprintf('.AllocationFactor=%0.4f',allocationFactor(i,1)));
+            end
+
+            for j=3:1:11
+                if j == 4 || j == 10
+                    %special case because numbers.
+                    output_text{i,1}=strcat(output_text{i,1},sprintf(' %s',num2str(CELL{i,j})));
+                elseif j == 7
+                    %Reset voltage:
+                    output_text{i,1}=strcat(output_text{i,1},'7.1996'); 
+                elseif j < 11
+                    %Do not change anything:
+                    output_text{i,1}=strcat(output_text{i,1},sprintf(' %s',CELL{i,j}));
+                else %j=11
+                    %[startIndex,endIndex]=regexp(CELL{i,5},'.');
+                    %CELL{i,5}((endIndex-1):endIndex)
+                    Phase=CELL{i,5}(end-1:end);
+
+                    if strcmp(Phase,'.1') == 1
+                        output_text{i,1}=strcat(output_text{i,1},' status=variable');
+                        output_text{i,1}=strcat(output_text{i,1},' Vminpu=0.7');             
+                        output_text{i,1}=strcat(output_text{i,1},' yearly=LS_PhaseA');
+                        output_text{i,1}=strcat(output_text{i,1},' daily=LS_PhaseA');
+                        output_text{i,1}=strcat(output_text{i,1},' duty=LS_PhaseA');
+                    elseif strcmp(Phase,'.2') == 1
+                        output_text{i,1}=strcat(output_text{i,1},' status=variable');
+                        output_text{i,1}=strcat(output_text{i,1},' Vminpu=0.7');   
+                        output_text{i,1}=strcat(output_text{i,1},' yearly=LS_PhaseB');
+                        output_text{i,1}=strcat(output_text{i,1},' daily=LS_PhaseB');
+                        output_text{i,1}=strcat(output_text{i,1},' duty=LS_PhaseB');
+                    elseif strcmp(Phase,'.3') == 1
+                        output_text{i,1}=strcat(output_text{i,1},' status=variable');
+                        output_text{i,1}=strcat(output_text{i,1},' Vminpu=0.7');   
+                        output_text{i,1}=strcat(output_text{i,1},' yearly=LS_PhaseC');
+                        output_text{i,1}=strcat(output_text{i,1},' daily=LS_PhaseC');
+                        output_text{i,1}=strcat(output_text{i,1},' duty=LS_PhaseC');
+                    end
                 end
-                
             end
         end
     end
