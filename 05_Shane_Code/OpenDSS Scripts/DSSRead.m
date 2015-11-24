@@ -6,6 +6,7 @@
 fid = fopen('pathdef.m');
 rootlocation = textscan(fid,'%c')';
 rootlocation = regexp(rootlocation{1}','C:[^.]*?CAPER\\','match','once');
+fclose(fid);
 
 filename = 0;
 load('COMMONWEALTH_Location.mat');
