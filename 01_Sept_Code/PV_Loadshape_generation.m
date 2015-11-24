@@ -162,6 +162,7 @@ if timeseries_span < 4
         fprintf('Did not find specificied Day\n');
         DOY=RR_distrib(1,1);
     end
+    
     %Find day with maximum CI:
     if CI_USER_slt == 1
         select_CI=min(DOY_potent(1:ii-1,3));
@@ -243,25 +244,72 @@ clearvars M_PVSITE %RR_distrib
 s_pv = strcat(s,s_pv_txt);
 csvwrite(s_pv,PV_loadshape_daily)
 %%
-%see if we can export .dss file --
-%type PV_loadshape.dat
-%{
-if timeseries_span == 1
-    PV_opendss_file=cellstr('new loadshape.PV_Loadshape npts=21600 sinterval=1 csvfile="LS_PVpeakhours.txt" Pbase=1.00 action=normalizenew pvsystem.PV bus1=258405587 irradiance=1 phases=3 kv=12.47 kVA=1100.00 pf=1.00 pmpp=1000.00 duty=PV_Loadshape');
-    filename=strcat(s,'\Flay_CentralPV_6hr.dss');
-elseif timeseries_span == 2
-    PV_opendss_file=cellstr('new loadshape.PV_Loadshape npts=86400 sinterval=1 csvfile="LS_PVdaily.txt" Pbase=1.00 action=normalizenew pvsystem.PV bus1=258405587 irradiance=1 phases=3 kv=12.47 kVA=1100.00 pf=1.00 pmpp=1000.00 duty=PV_Loadshape');
-    filename=strcat(s,'\Flay_CentralPV_24hr.dss');
+%now lets find closest bus user selected:
+if feeder_NUM == 1
+    load Common_Bus_Impedance.mat
+elseif feeder_NUM == 2
+    %addpath(strcat(base_path,'\03_OpenDSS_Circuits\Flay_Circuit_Opendss'));
+    load Flay_Bus_Impedances.mat %Buses_Zsc
+    load Flay_Static_maxPV.mat   %MAX_PV.L50 ; MAX_PV.L30 ; MAX_PV.L25 ;
+end
+%Find where user wanted Central PV
+if PV_location ~= 0
+    perc_Imp = PV_location/10;
+    %Find maximum Impedance Bus:
+    R_max = 0;
+    X_max = 0;
+    for ij=1:1:length(Buses_Zsc)
+        if Buses_Zsc(ij).numPhases == 3
+            if Buses_Zsc(ij).Zsc1(1,1) > R_max
+                R_max = Buses_Zsc(ij).Zsc1(1,1);
+            end
+            if Buses_Zsc(ij).Zsc1(1,2) > X_max
+                X_max = Buses_Zsc(ij).Zsc1(1,2);
+            end
+        end
+    end
+    %Find target PV Bus:
+    R_tar = R_max*perc_Imp;
+    diff_save(1,1) = R_max+1;
+    diff_save(1,2) = 0;
+    diff_save(1,3) = 0;
+    hi = 0;
+    for ij=1:1:length(Buses_Zsc)
+        if Buses_Zsc(ij).numPhases == 3
+            hi = hi + 1
+            diff_imp = abs(Buses_Zsc(ij).Zsc1(1,1) - R_tar);
+            if diff_imp < diff_save(1,1)
+                diff_save(1,1)=diff_imp;
+                diff_save(1,2)=ij;
+                diff_save(1,3)=Buses_Zsc(ij).distance;
+            end
+        end
+    end
+    PV_bus = Buses_Zsc(diff_save(1,2)).name;
+    fprintf('PV Located: %s\n',PV_bus);
+else
+    perc_Imp = 0;
+end
+%
+%Now lets find the maximum kW rating at specific bus (Results=PV_pmpp)
+%1]  Search for bus with exact distance:
+for ij=1:1:length(MAX_PV.L30)
+    if MAX_PV.L30(ij,4) == diff_save(1,3)
+        PV_pmpp = MAX_PV.L30(ij,1);
+        disp(ij);
+        if PV_pmpp > 5010
+            PV_pmpp=5000;
+        end
+    end
 end
 
-fid=fopen(filename,'w');
-for i=1:length(PV_opendss_file)
-    cell=cell2mat(PV_opendss_file(1,i));
-    fprintf(fid,[cell ' ']);
-end
-fclose(fid);
 
-%csvwrite(filename,PV_opendss_file);
-%}
+
+        
+
+
+
+
+
 
 

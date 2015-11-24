@@ -26,7 +26,7 @@ elseif feeder_NUM == 2
     load Lines_Monitor_FLAY.mat %Lines_Distance
     %For export .txt file --
     filename = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\TIME_RESULTS';
-    filename2= 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\TIME_RESULTS_PV';
+    monitorfile_base= 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Results';
     
 elseif feeder_NUM == 8
     %EPRI CKT7 --
@@ -186,7 +186,7 @@ if feeder_NUM ~= 8
     delete(monitorFile);
     DATA_SAVE(1).LTC_Ops = MyLTC.data;
     
-    %Now lets export LTC voltages:
+    %Now lets export LTC XFMR winding voltages:
     DSSText.Command = 'export mon subVI';
     monitorFile = DSSText.Result;
     MySUBV = importdata(monitorFile);
@@ -195,10 +195,22 @@ if feeder_NUM ~= 8
     DATA_SAVE(1).phaseI = MySUBV.data(:,11:2:15);
     DATA_SAVE(1).distance = 0;
     
+    %Now lets save all simulation settings:
+    Settings.pmpp = PV_pmpp;
+    Settings.pv_bus = PV_bus;
+    Settings.DOY = DOY;
+    Settings.WoY = (DOY - mod(DOY,7))/7+1;
+    TVD=TVD_Calc(DATA_SAVE);
+    Settings.TVD = TVD;
+    OPS=CUM_TapCount(DATA_SAVE);
+    Settings.LTCops = OPS;
+    DATA_SAVE(1).settings = Settings;
+    
     %Save struct of post sim. results.
     if PV_ON_OFF == 1
         save(filename,'DATA_SAVE');  
     elseif PV_ON_OFF == 2
+        filename2=strcat(monitorfile_base,sprintf('/%s_Imped.mat',num2str(perc_Imp*100)));
         DATA_PV = DATA_SAVE;
         save(filename2,'DATA_PV');
     end

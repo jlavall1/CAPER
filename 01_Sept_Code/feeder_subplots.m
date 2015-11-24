@@ -29,7 +29,8 @@ DSSText.command = 'Dump AllocationFactors';
 DSSText.command = 'Enable Capacitor.*';
 
 % 3. 
-DSSText.command = 'solve loadmult=1.0';
+%DSSText.command = 'solve loadmult=1.0';
+DSSText.command = 'Solve mode=faultstudy';
 % 4. Run circuitCheck function to double-check for any errors in the circuit before using the toolbox     
 %warnSt = circuitCheck(DSSCircObj);
 

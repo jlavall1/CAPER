@@ -48,7 +48,7 @@ h.st(12) = uicontrol('style','text','unit','normalized','position',[0.759 0.792 
     'min',0,'max',1,'fontsize',12,'string','Upper:',...
     'backgroundColor',bk_color);
 h.st(13) = uicontrol('style','text','unit','normalized','position',[0.6 0.324 0.157 0.036],...
-    'min',0,'max',1,'fontsize',10,'string','Central PV Pmpp: (kw)',...
+    'min',0,'max',1,'fontsize',10,'string','Week Number (out of 53)',...
     'backgroundColor',[0.973 0.973 0.973],'FontWeight','bold'); %0.678 0.324 0.04 0.035
 %%
 %Add all popupmenu:
@@ -56,7 +56,7 @@ h.ppm(1) = uicontrol('style','popup','units','normalized','position',[0.185 0.74
     'fontsize',12,'string',{'JML''s Home Computer','JML''s Laptop Computer','Brian''s Computer','Shane''s RT7','Shane''s Laptop'},...
     'BackgroundColor',[1 1 1]);
     %'callback',@setmap);
-%DER Hosting Capacity:
+%   DER Hosting Capacity:
 h.ppm(2) = uicontrol('style','popup','units','normalized',...
      'position',[0.037 .162 0.235 0.155],'string',{'Top of Voltage band on caps/vregs','Bottom of Voltage band on caps/vregs','Steady-State','Extreme UP-ramping','Extreme DOWN-ramping'},...
      'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
@@ -64,12 +64,12 @@ h.ppm(3) = uicontrol('style','popup','units','normalized',...
      'position',[0.037 0.169 0.235 0.106],'string',{'hold','hold'},...
      'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
  
-%PV Loadshapce selection:
+%   PV Loadshapce selection:
 h.ppm(4) = uicontrol('style','popup','units','normalized',...
      'position',[0.752 0.704 0.235 0.223],'string',{'1MW Shelby,NC','1MW Murphy,NC','1MW Taylorsville,NC','5.0MW Mocksville','3.5MW Ararat Rock','1.5MW Old Dominion','1MW Mayberry'},...
      'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
  
-%Timeseries Analysis:
+%   Timeseries Analysis:
 h.ppm(5) = uicontrol('style','popup','units','normalized',...
     'position',[0.351 0.162 0.235 0.155],'string',{'(1) Day, 10:00 to 16:00','(1) Day, 0:00 - 23:59','(1) Week','(1) Month','(1) Year'},... 
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
@@ -77,15 +77,14 @@ h.ppm(6) = uicontrol('style','popup','units','normalized',...
     'position',[0.351 0.169 0.235 0.106],'string',{'January','February','March','April','May','June','July','August','September','October','November','December'},... 
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 
-%Selective Timeseries Analysis:
+%   Selective Timeseries Analysis:
 h.ppm(7) = uicontrol('style','popup','units','normalized',...
-    'position',[0.037 -0.001 0.235 0.155],'string',{'DARR Cat. Days at specific PV Location','Locational Specific based on Impedance','Bus Iteration'},...
+    'position',[0.037 -0.001 0.235 0.155],'string',{'DARR Cat. Days at specific PV Location','Locational Specific based on Impedance','10-100% Bus Impedance, maxPV_kW, 1 week sims for entire year'},...
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 h.ppm(8) = uicontrol('style','popup','units','normalized',...
-     'position',[0.037 0.006 0.235 0.106],'string',{'10% of furthest 3-ph Impedance','20%','30%','40%','50%','60%','70%','80%','90%'},...
+     'position',[0.037 0.006 0.235 0.106],'string',{'10% of furthest 3-ph Impedance','20%','30%','40%','50%','60%','70%','80%','90%','100%'},...
      'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12); 
-
-%Extra Option for future use:
+%   Extra Option for future use:
 h.ppm(9) = uicontrol('style','popup','units','normalized',...
     'position',[0.351 -0.001 0.235 0.155],'string',{'3600s (1 hour)','60s (1 min)','30s','5s'},...
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
@@ -113,7 +112,6 @@ h.rb(8) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
     'position',[0.038 0.543 0.139 0.032],'string','Circuit #7','backgroundcolor',bk_color);
 h.rb(9) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
     'position',[0.038 0.51 0.139 0.032],'string','Circuit #24','backgroundcolor',bk_color);
-
 %%
 %Add all checkboxes:
 h.ckbx(1) = uicontrol('style','checkbox','units','normalized',...
@@ -203,13 +201,15 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
     set(h.ckbx(3),'Value',1);   %QSTS - duration        -- OFF
     set(h.ckbx(5),'Value',1);   %QSTS - timestep        -- ON
+    
     set(h.rb(3),'Value',1);     %ckt choice             -- Flay(3) Common(2)
     set(h.ppm(2),'Value',3);    %Simulation choice      -- Steady State(3)
     
     set(h.ppm(5),'Value',2);    %timeseries DROPDOWN    -- daytime,1 day,2 week,3 1mnth,4
     set(h.ppm(6),'Value',2);    %What month DROPDOWN    -- FEB (29d)
+    set(h.ppm(7),'Value',2);    %QSTS Select            -- (2)==Imp.
     set(h.ppm(9),'Value',2);    %What timestep length   -- (2)==1min & (4)==5sec.
-    
+    set(h.ppm(10),'Value',2);   %PV ON/OFF              -- (2)==ON
     set(h.lsbx(1),'Value',4);   %DARR Category 4
     set(h.lsbx(2),'Value',3);   %Max Solar Energy
     set(h.editbx(1),'String','10.5');
@@ -384,9 +384,15 @@ function m=p_run(varargin)
     sim1_type = get(h.ckbx(4),'Value');
     if sim1_type == 1
         %User wants to do a selective timeseries run.
-        QSTS_select = get(h.ppm(6),'Value');
+        QSTS_select = get(h.ppm(7),'Value');
+        if QSTS_select == 2 %Impedance Location
+            Location = get(h.ppm(8),'Value');
+        else
+            Location = 0;
+        end
     else
         QSTS_select=0;
+        Location = 0;
     end
         
     %---- Solar Coefficient Criteria:
@@ -449,6 +455,7 @@ function m=p_run(varargin)
     STRING_0{1,15} = QSTS_select;
     STRING_0{1,16} = PV_BIN;
     STRING_0{1,17} = PV_pmpp;
+    STRING_0{1,18} = Location;
     %assignin('base', 'cat_choice', cat_choice);
     %assignin('base', 'ckt_num', ckt_num);
     %assignin('base', 'STRING', STRING);

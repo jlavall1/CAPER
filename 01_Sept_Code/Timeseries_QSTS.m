@@ -32,7 +32,8 @@ CI_USER_slt     = gui_response{1,13};
 time_int        = gui_response{1,14};%timestep length
 QSTS_select     = gui_response{1,15};%selective timeseries run:
 PV_ON_OFF       = gui_response{1,16};%1=off & 2=on;
-PV_pmpp         = gui_response{1,17};%kw
+%PV_pmpp         = gui_response{1,17};%kw
+PV_location     = gui_response{1,18};
 %{ 
 STRING_0{1,1} = STRING;
 STRING_0{1,2} = ckt_num;
@@ -54,255 +55,151 @@ addpath(path);
 path = strcat(base_path,'\04_DSCADA');
 addpath(path);
 
+
 % 2. Generate Real Power & PV loadshape files:
+if QSTS_select == 4
+    %main algorithm to come!
+else
+    PV_Loadshape_generation
+    feeder_Loadshape_generation
 
-PV_Loadshape_generation
-feeder_Loadshape_generation
-%
-% 3. Compile the user selected circuit:
-location = cd;
-%Setup the COM server
-[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
-DSSCircuit = DSSCircObj.ActiveCircuit;
-DSSText.command = ['Compile ',ckt_direct_prime]; %_prime gen in:
-if feeder_NUM == 2
-    DSSText.command = 'New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes';
-end
-%DSSText.command = 'EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ]';
-DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
-DSSText.command = 'Disable Capacitor.*';
-DSSText.command = 'AllocateLoad';
-%DSSText.command = 'AllocateLoad';
-%DSSText.command = 'AllocateLoad';
-DSSText.command = 'Enable Capacitor.*';
-%{
-Lines_Base = getLineInfo(DSSCircObj);
-Buses_Base = getBusInfo(DSSCircObj);
-Loads_Base = getLoadInfo(DSSCircObj);
-%}
-%Xfmr_Base = get
-cd(location);
-%%
-%Sort Lines into closest from PCC --
-%[~,index] = sortrows([Lines_Base.bus1Distance].'); 
-%Lines_Distance = Lines_Base(index); 
-%clear index
-%----------------------------------
-if PV_ON_OFF == 2
-    %Add PV Plant:
-    str = ckt_direct;
-    idx = strfind(str,'\');
-    str = str(1:idx(8)-1);
-    %  ***root & root1 gen. in feeder_Loadshape_generation***
-    if timeseries_span == 1
-        s_pv_txt = sprintf('%s_CentralPV_6hr.dss',root);
-    elseif timeseries_span == 2
-        s_pv_txt = sprintf('%s_CentralPV_24hr.dss',root); %just added the 2
-    elseif timeseries_span == 3
-        s_pv_txt = sprintf('%s_CentralPV_168hr.dss',root);
-    elseif timeseries_span == 4
-        if shift+1 == 28
-            s_pv_txt = sprintf('%s_CentralPV_1mnth28.dss',root);
-        elseif shift+1 == 30
-            s_pv_txt = sprintf('%s_CentralPV_1mnth30.dss',root);
-        elseif shift+1 == 31
-            s_pv_txt = sprintf('%s_CentralPV_1mnth31.dss',root);
-        end
-    elseif timeseries_span == 5
-        s_pv_txt = sprintf('%s_CentralPV_365dy.dss',root);
+    %
+    % 3. Compile the user selected circuit:
+    location = cd;
+    %Setup the COM server
+    [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
+    DSSCircuit = DSSCircObj.ActiveCircuit;
+    DSSText.command = ['Compile ',ckt_direct_prime]; %_prime gen in:
+    if feeder_NUM == 2
+        DSSText.command = 'New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes';
     end
-    solarfilename = strcat(s,s_pv_txt);
-    %solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
-    DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
-    DSSText.command = sprintf('edit pvsystem.PV bus1=258405729 pmpp=%s kVA=%s',num2str(PV_pmpp),num2str(PV_pmpp*1.1));
-end
-%---------------------------------
-%%
-%---------------------------------
-%Plot / observe simulation results:
-shift=0;
-h_st=0;
-h_fin=23;
-if timeseries_span == 1
-    %(1) peakPV RUN
-    shift=10;
-    h_st = 10;
-    h_fin= 15;
-    DOY_fin = 0;
-    %start openDSS ---------------------------
-    
-    % Run 6hr simulation at some interval:
-    DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
-    % Turn the overload report on:
-    DSSText.command='Set overloadreport=true';
-    DSSText.command='Set voltexcept=true';
-    % Solve QSTS Solution:
-    DSSText.command='solve';
-    DSSText.command='show eventlog';
+    %DSSText.command = 'EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ]';
+    DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
+    DSSText.command = 'Disable Capacitor.*';
+    DSSText.command = 'AllocateLoad';
+    %DSSText.command = 'AllocateLoad';
+    %DSSText.command = 'AllocateLoad';
+    DSSText.command = 'Enable Capacitor.*';
+    %{
+    Lines_Base = getLineInfo(DSSCircObj);
+    Buses_Base = getBusInfo(DSSCircObj);
+    Loads_Base = getLoadInfo(DSSCircObj);
+    %}
+    %Xfmr_Base = get
+    cd(location);
+    %%
+    %Sort Lines into closest from PCC --
+    %[~,index] = sortrows([Lines_Base.bus1Distance].'); 
+    %Lines_Distance = Lines_Base(index); 
+    %clear index
+    %----------------------------------
+    if PV_ON_OFF == 2
+        %Add PV Plant:
+        str = ckt_direct;
+        idx = strfind(str,'\');
+        str = str(1:idx(8)-1);
+        %  ***root & root1 gen. in feeder_Loadshape_generation***
+        if timeseries_span == 1
+            s_pv_txt = sprintf('%s_CentralPV_6hr.dss',root);
+        elseif timeseries_span == 2
+            s_pv_txt = sprintf('%s_CentralPV_24hr.dss',root); %just added the 2
+        elseif timeseries_span == 3
+            s_pv_txt = sprintf('%s_CentralPV_168hr.dss',root);
+        elseif timeseries_span == 4
+            if shift+1 == 28
+                s_pv_txt = sprintf('%s_CentralPV_1mnth28.dss',root);
+            elseif shift+1 == 30
+                s_pv_txt = sprintf('%s_CentralPV_1mnth30.dss',root);
+            elseif shift+1 == 31
+                s_pv_txt = sprintf('%s_CentralPV_1mnth31.dss',root);
+            end
+        elseif timeseries_span == 5
+            s_pv_txt = sprintf('%s_CentralPV_365dy.dss',root);
+        end
+        solarfilename = strcat(s,s_pv_txt);
+        %solarfilename = 'C:\Users\jlavall\Documents\OpenDSS\GridPV\ExampleCircuit\Ckt24_PV_Central_7_5.dss';
+        DSSText.command = sprintf('Compile (%s)',solarfilename); %add solar scenario
+        DSSText.command = sprintf('edit pvsystem.PV bus1=%s pmpp=%s kVA=%s',PV_bus,num2str(PV_pmpp),num2str(PV_pmpp*1.1));
+    end
+    %---------------------------------
+    %%
+    %---------------------------------
+    %Plot / observe simulation results:
+    shift=0;
+    h_st=0;
+    h_fin=23;
+    if timeseries_span == 1
+        %(1) peakPV RUN
+        shift=10;
+        h_st = 10;
+        h_fin= 15;
+        DOY_fin = 0;
+        %start openDSS ---------------------------
+
+        % Run 6hr simulation at some interval:
+        DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
+        % Turn the overload report on:
+        DSSText.command='Set overloadreport=true';
+        DSSText.command='Set voltexcept=true';
+        % Solve QSTS Solution:
+        DSSText.command='solve';
+        DSSText.command='show eventlog';
+        toc
+    elseif timeseries_span == 2
+        %(1) DAY, 24hr
+        DOY_fin = 0;
+        %start openDSS ---------------------------
+
+        % Run 1-day simulation at 1minute interval:
+        DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
+        % Turn the overload report on:
+        DSSText.command='Set overloadreport=true';
+        DSSText.command='Set voltexcept=true';
+        % Solve QSTS Solution:
+        DSSText.command='solve';
+        DSSText.command='show eventlog';
+        toc
+    elseif timeseries_span == 3
+        %(1) WEEK
+        DOY_fin = 6;
+        %start openDSS ---------------------------
+
+        % Run 1-day simulation at 1minute interval:
+        DSSText.command=sprintf('set mode=yearly stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
+        % Turn the overload report on:
+        DSSText.command='Set overloadreport=true';
+        DSSText.command='Set voltexcept=true';
+        % Solve QSTS Solution:
+        DSSText.command='solve';
+        DSSText.command='show eventlog';
+        toc    
+    elseif timeseries_span == 4
+        %(1) MONTH
+        MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
+        MTH_DY(2,1:12) = [1,32,60,91,121,152,182,213,244,274,305,335];
+        DOY_fin = MTH_DY(2,monthly_span);
+        %start openDSS ---------------------------
+
+        % Run 1-day simulation at 1minute interval:
+        DSSText.command=sprintf('set mode=yearly stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
+        % Turn the overload report on:
+        DSSText.command='Set overloadreport=true';
+        DSSText.command='Set voltexcept=true';
+        % Solve QSTS Solution:
+        DSSText.command='solve';
+        DSSText.command='show eventlog';
+        toc    
+
+    elseif timeseries_span == 5
+        %(1) YEAR
+        DOY = 1;
+        DOY_fin = 365;
+
+    end
+    %%
+    tic
+    Export_Monitors_timeseries
     toc
-elseif timeseries_span == 2
-    %(1) DAY, 24hr
-    DOY_fin = 0;
-    %start openDSS ---------------------------
-    
-    % Run 1-day simulation at 1minute interval:
-    DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
-    % Turn the overload report on:
-    DSSText.command='Set overloadreport=true';
-    DSSText.command='Set voltexcept=true';
-    % Solve QSTS Solution:
-    DSSText.command='solve';
-    DSSText.command='show eventlog';
-    toc
-elseif timeseries_span == 3
-    %(1) WEEK
-    DOY_fin = 6;
-    %start openDSS ---------------------------
-    
-    % Run 1-day simulation at 1minute interval:
-    DSSText.command=sprintf('set mode=yearly stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
-    % Turn the overload report on:
-    DSSText.command='Set overloadreport=true';
-    DSSText.command='Set voltexcept=true';
-    % Solve QSTS Solution:
-    DSSText.command='solve';
-    DSSText.command='show eventlog';
-    toc    
-elseif timeseries_span == 4
-    %(1) MONTH
-    MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
-    MTH_DY(2,1:12) = [1,32,60,91,121,152,182,213,244,274,305,335];
-    DOY_fin = MTH_DY(2,monthly_span);
-    %start openDSS ---------------------------
-    
-    % Run 1-day simulation at 1minute interval:
-    DSSText.command=sprintf('set mode=yearly stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
-    % Turn the overload report on:
-    DSSText.command='Set overloadreport=true';
-    DSSText.command='Set voltexcept=true';
-    % Solve QSTS Solution:
-    DSSText.command='solve';
-    DSSText.command='show eventlog';
-    toc    
-    
-elseif timeseries_span == 5
-    %(1) YEAR
-    DOY = 1;
-    DOY_fin = 365;
-    
+    Plotting_Functions
 end
-%%
-tic
-Export_Monitors_timeseries
-toc
-Plotting_Functions
-%%
-%{
-%   Feeder Power
-DSSfilename=ckt_direct_prime;
-fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
-%plotMonitor(DSSCircObj,sprintf('fdr_%s_Mon_PQ',root1));
-DSSText.Command = sprintf('export mon fdr_%s_Mon_PQ',root1);
-monitorFile = DSSText.Result;
-MyCSV = importdata(monitorFile);
-delete(monitorFile);
-Hour = MyCSV.data(:,1); Second = MyCSV.data(:,2);
-subPowers = MyCSV.data(:,3:2:7);
-subReact = MyCSV.data(:,4:2:8);
-plot(Hour+shift+Second/3600,subPowers,'LineWidth',1.5);
-hold on
-plot(Hour+shift+Second/3600,subReact,'LineWidth',1.5);
-hold on
-ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold');
-xlabel('Hour of Simulation (H)','FontSize',12,'FontWeight','bold');
-%title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',12,'FontWeight','bold')
-title('Feeder-03''s Substation Phase P & Q','FontSize',12,'FontWeight','bold')
-legend('P_{A}','P_{B}','P_{C}','Q_{A}','Q_{B}','Q_{C}','Location','NorthWest');
-set(gca,'FontSize',10,'FontWeight','bold')
-axis([0 168 -1500 2000]);
-
-%%
-%saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
-DSSText.Command = sprintf('export mon fdr_%s_Mon_PQ',root1);
-monitorFile = DSSText.Result;
-MyLOAD = importdata(monitorFile);
-delete(monitorFile);
-%--------------------------------
-%Substation Voltage
-%DSSText.Command = 'export mon subVI';
-DSSText.Command = sprintf('export mon fdr_%s_Mon_VI',root1);
-monitorFile = DSSText.Result;
-MyCSV = importdata(monitorFile);
-delete(monitorFile);
-Hour = MyCSV.data(:,1); Second = MyCSV.data(:,2);
-subVoltages = MyCSV.data(:,3:2:7);
-subCurrents = MyCSV.data(:,11:2:15);
-
-figure(2);
-plot(Hour+shift+Second/3600,subVoltages(:,1)/((12.47e3)/sqrt(3)),'b-','LineWidth',2);
-hold on
-plot(Hour+shift+Second/3600,subVoltages(:,2)/((12.47e3)/sqrt(3)),'g-','LineWidth',2);
-hold on
-plot(Hour+shift+Second/3600,subVoltages(:,3)/((12.47e3)/sqrt(3)),'r-','LineWidth',2);
-n=length(subVoltages(:,1));
-hold on
-if feeder_NUM == 0
-    V_120=120.000002416772;
-elseif feeder_NUM == 1
-    V_120=122.98315227577;
-elseif feeder_NUM == 2
-    V_120=123.945461370235;
-end
-V_PU=(V_120*59.9963154732886)/((12.47e3)/sqrt(3));
-V_UP=V_PU+(0.5*59.9963154732886)/((12.47e3)/sqrt(3));
-V_DOWN=V_PU-(0.5*59.9963154732886)/((12.47e3)/sqrt(3));
-plot(Hour+shift+Second/3600,V_UP,'k-','LineWidth',4);
-hold on
-plot(Hour+shift+Second/3600,V_DOWN,'k-','LineWidth',4);
-%{
-hold on
-plot(Hour+shift+Second/3600,FEEDER.Voltage.A(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'r--','LineWidth',2);
-hold on
-plot(Hour+shift+Second/3600,FEEDER.Voltage.B(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'g--','LineWidth',2);
-hold on
-plot(Hour+shift+Second/3600,FEEDER.Voltage.C(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'b--','LineWidth',2);
-grid on;
-%}
-set(gca,'FontSize',10,'FontWeight','bold')
-xlabel('Hour of Simulation (H)','FontSize',12,'FontWeight','bold')
-ylabel('Voltage (V) [P.U.]','FontSize',12,'FontWeight','bold')
-axis([0 Hour(end,1)+shift+Second(end,1)/3600 V_DOWN-0.01 1.055]);
-%legend('V_{phA}-sim','V_{phB}-sim','V_{phC}-sim','V_{phA}-nonREG','V_{phB}-nonREG','V_{phC}-nonREG');
-legend('V_{phA}','V_{phB}','V_{phC}','Upper B.W.','Lower B.W.');
-title('Feeder-03''s Substation Phase Voltages','FontSize',12,'FontWeight','bold')
-saveas(gcf,[DSSfilename(1:end-4),'_Sub_Voltage.fig'])
-%
-%------------------
-figure(3);
-plot(Hour+shift+Second/3600,subCurrents);
-set(gca,'FontSize',10,'FontWeight','bold')
-xlabel('Hour','FontSize',12,'FontWeight','bold')
-ylabel('Current (A)','FontSize',12,'FontWeight','bold')
-legend('I_{A}','I_{B}','I_{C}');
-
-
-%{
-figure(3);
-DSSfilename=ckt_direct_prime;
-fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
-if feeder_NUM == 0
-    plotMonitor(DSSCircObj,'
-if feeder_NUM == 1
-    plotMonitor(DSSCircObj,'259355403_Mon_PQ');
-elseif feeder_NUM == 2
-    plotMonitor(DSSCircObj,'259181477_Mon_PQ');
-end
-ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
-title([strrep(fileNameNoPath,'_',' '),' Closest Line Load'],'FontSize',12,'FontWeight','bold')
-%saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
-%}
-%}
-%%
-
-
     

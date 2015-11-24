@@ -10,15 +10,16 @@ close all
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 
-action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Open','ALL');
+action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','ALL');
 while action<1
-    action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Open','ALL');
+    action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','ALL');
 end
 %%
 %action = 6;
+ALL = 6;
 fig = 0;
 %----------------------------------------------------------
-if action == 1 || action == 6
+if action == 1 || action == ALL
     %SUBPLOT1
     fig = fig + 1;
     figure(fig);
@@ -138,7 +139,7 @@ if action == 1 || action == 6
     
 end
 %%
-if action == 2 || action == 6
+if action == 2 || action == ALL
     %SUBPLOT1
     fig = fig + 1;
     figure(fig);
@@ -184,7 +185,7 @@ if action == 2 || action == 6
     set(gca,'FontWeight','bold');
 end
 %%
-if action == 3 || action == 6
+if action == 3 || action == ALL
     %SUBPLOT1 -- Powers
     fig = fig +  1;
     figure(fig);
@@ -228,7 +229,8 @@ if action == 3 || action == 6
     grid on
     set(gca,'FontWeight','bold');
 end
-if action == 4 || action == 6
+if action == 4 || action == ALL
+    %----------------------------------------------
     %SUBPLOT1 -- Simulation time
     fig = fig + 1;
     figure(fig);
@@ -261,6 +263,7 @@ if action == 4 || action == 6
         hold on
         plot(Dx,D_monit(i,1:4),'k--');
     end
+    %----------------------------------------------
     %SUBPLOT2 -- Voltage Deviation
     fig = fig + 1;
     figure(fig);
@@ -277,6 +280,163 @@ if action == 4 || action == 6
     legend('Phase A','Phase B','Phase C','Location','NorthEast');
     grid on
     set(gca,'FontWeight','bold');
-    
-    
+    %----------------------------------------------
+    %SUBPLOT3 -- LTC Cummalitve OperationsC
+    fig = fig + 1;
+    figure(fig);
+    OPS=CUM_TapCount(DATA_SAVE);
+    plot(OPS(:,1),'b-','LineWidth',3);
+    title('Cummaltive Load Tap Changer Operations');
+    xlabel('Time Interval (t) [1min]');
+    ylabel('Voltage Deviation Index (TVD) [P.U.^{2}]');
+    grid on
+    set(gca,'FontWeight','bold');
 end
+if action == 5 || action == ALL
+    %----------------------------------------------
+    %SUBPLOT1 -- Comparison between things:
+    sim_names=['10','20','30','40','60','70','80','90'];
+    addpath(strcat(base_path,'\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Results'));
+    n = 1;
+    load 10_Imped.mat
+    LTC_CUMM_OPS(:,n)=DATA_PV(1).settings.LTCops(:,1);
+    n = n +1;
+    load 20_Imped.mat
+    LTC_CUMM_OPS(:,n)=DATA_PV(1).settings.LTCops(:,1);
+    n = n +1;
+    load 30_Imped.mat
+    LTC_CUMM_OPS(:,n)=DATA_PV(1).settings.LTCops(:,1);
+    n = n +1;
+    load 40_Imped.mat
+    LTC_CUMM_OPS(:,n)=DATA_PV(1).settings.LTCops(:,1);
+    n = n + 1;
+    load 60_Imped.mat
+    LTC_CUMM_OPS(:,n)=DATA_PV(1).settings.LTCops(:,1);
+    n = n + 1;
+    load 70_Imped.mat
+    LTC_CUMM_OPS(:,n)=DATA_PV(1).settings.LTCops(:,1);
+    n = n + 1;
+    load 80_Imped.mat
+    LTC_CUMM_OPS(:,n)=DATA_PV(1).settings.LTCops(:,1);
+    n = n + 1;
+    load 90_Imped.mat
+    LTC_CUMM_OPS(:,n)=DATA_PV(1).settings.LTCops(:,1);
+    
+    for i=1:1:8
+        plot(LTC_CUMM_OPS(:,i),'LineWidth',2);
+        hold on
+    end
+    legend('10% of maxImp_Bus','20% of maxImp_Bus','30% of maxImp_Bus','40%','60%','70%','80%','90%');
+    
+        
+    
+        
+end
+        
+%%
+%These are just leftovers:
+%{
+%   Feeder Power
+DSSfilename=ckt_direct_prime;
+fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
+%plotMonitor(DSSCircObj,sprintf('fdr_%s_Mon_PQ',root1));
+DSSText.Command = sprintf('export mon fdr_%s_Mon_PQ',root1);
+monitorFile = DSSText.Result;
+MyCSV = importdata(monitorFile);
+delete(monitorFile);
+Hour = MyCSV.data(:,1); Second = MyCSV.data(:,2);
+subPowers = MyCSV.data(:,3:2:7);
+subReact = MyCSV.data(:,4:2:8);
+plot(Hour+shift+Second/3600,subPowers,'LineWidth',1.5);
+hold on
+plot(Hour+shift+Second/3600,subReact,'LineWidth',1.5);
+hold on
+ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold');
+xlabel('Hour of Simulation (H)','FontSize',12,'FontWeight','bold');
+%title([strrep(fileNameNoPath,'_',' '),' Net Feeder 05410 Load'],'FontSize',12,'FontWeight','bold')
+title('Feeder-03''s Substation Phase P & Q','FontSize',12,'FontWeight','bold')
+legend('P_{A}','P_{B}','P_{C}','Q_{A}','Q_{B}','Q_{C}','Location','NorthWest');
+set(gca,'FontSize',10,'FontWeight','bold')
+axis([0 168 -1500 2000]);
+
+%%
+%saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
+DSSText.Command = sprintf('export mon fdr_%s_Mon_PQ',root1);
+monitorFile = DSSText.Result;
+MyLOAD = importdata(monitorFile);
+delete(monitorFile);
+%--------------------------------
+%Substation Voltage
+%DSSText.Command = 'export mon subVI';
+DSSText.Command = sprintf('export mon fdr_%s_Mon_VI',root1);
+monitorFile = DSSText.Result;
+MyCSV = importdata(monitorFile);
+delete(monitorFile);
+Hour = MyCSV.data(:,1); Second = MyCSV.data(:,2);
+subVoltages = MyCSV.data(:,3:2:7);
+subCurrents = MyCSV.data(:,11:2:15);
+
+figure(2);
+plot(Hour+shift+Second/3600,subVoltages(:,1)/((12.47e3)/sqrt(3)),'b-','LineWidth',2);
+hold on
+plot(Hour+shift+Second/3600,subVoltages(:,2)/((12.47e3)/sqrt(3)),'g-','LineWidth',2);
+hold on
+plot(Hour+shift+Second/3600,subVoltages(:,3)/((12.47e3)/sqrt(3)),'r-','LineWidth',2);
+n=length(subVoltages(:,1));
+hold on
+if feeder_NUM == 0
+    V_120=120.000002416772;
+elseif feeder_NUM == 1
+    V_120=122.98315227577;
+elseif feeder_NUM == 2
+    V_120=123.945461370235;
+end
+V_PU=(V_120*59.9963154732886)/((12.47e3)/sqrt(3));
+V_UP=V_PU+(0.5*59.9963154732886)/((12.47e3)/sqrt(3));
+V_DOWN=V_PU-(0.5*59.9963154732886)/((12.47e3)/sqrt(3));
+plot(Hour+shift+Second/3600,V_UP,'k-','LineWidth',4);
+hold on
+plot(Hour+shift+Second/3600,V_DOWN,'k-','LineWidth',4);
+%{
+hold on
+plot(Hour+shift+Second/3600,FEEDER.Voltage.A(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'r--','LineWidth',2);
+hold on
+plot(Hour+shift+Second/3600,FEEDER.Voltage.B(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'g--','LineWidth',2);
+hold on
+plot(Hour+shift+Second/3600,FEEDER.Voltage.C(time2int(DOY,h_st,0):time2int(DOY+DOY_fin,h_fin,59),1)/((12.47e3)/sqrt(3)),'b--','LineWidth',2);
+grid on;
+%}
+set(gca,'FontSize',10,'FontWeight','bold')
+xlabel('Hour of Simulation (H)','FontSize',12,'FontWeight','bold')
+ylabel('Voltage (V) [P.U.]','FontSize',12,'FontWeight','bold')
+axis([0 Hour(end,1)+shift+Second(end,1)/3600 V_DOWN-0.01 1.055]);
+%legend('V_{phA}-sim','V_{phB}-sim','V_{phC}-sim','V_{phA}-nonREG','V_{phB}-nonREG','V_{phC}-nonREG');
+legend('V_{phA}','V_{phB}','V_{phC}','Upper B.W.','Lower B.W.');
+title('Feeder-03''s Substation Phase Voltages','FontSize',12,'FontWeight','bold')
+saveas(gcf,[DSSfilename(1:end-4),'_Sub_Voltage.fig'])
+%
+%------------------
+figure(3);
+plot(Hour+shift+Second/3600,subCurrents);
+set(gca,'FontSize',10,'FontWeight','bold')
+xlabel('Hour','FontSize',12,'FontWeight','bold')
+ylabel('Current (A)','FontSize',12,'FontWeight','bold')
+legend('I_{A}','I_{B}','I_{C}');
+
+
+%{
+figure(3);
+DSSfilename=ckt_direct_prime;
+fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);
+if feeder_NUM == 0
+    plotMonitor(DSSCircObj,'
+if feeder_NUM == 1
+    plotMonitor(DSSCircObj,'259355403_Mon_PQ');
+elseif feeder_NUM == 2
+    plotMonitor(DSSCircObj,'259181477_Mon_PQ');
+end
+ylabel('Power (kW,kVar)','FontSize',12,'FontWeight','bold')
+title([strrep(fileNameNoPath,'_',' '),' Closest Line Load'],'FontSize',12,'FontWeight','bold')
+%saveas(gcf,[DSSfilename(1:end-4),'_Net_Power.fig'])
+%}
+%}
