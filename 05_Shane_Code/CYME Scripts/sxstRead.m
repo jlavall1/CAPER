@@ -1,6 +1,7 @@
 % Snap to grid function for CYME file
 clc
-filename = 'Flay 12-01 - 2-3-15 loads (original).sxst';
+%filename = 'Flay 12-01 - 2-3-15 loads (original).sxst';
+filename = 'Commonwealth 12-05-  9-14 loads (original).sxst';
 
 % Read File
 FILE = fileread(filename);
@@ -8,10 +9,15 @@ FILE = fileread(filename);
 % Find Nodes
 n = length(strfind(FILE,'<Node>'));
 s = length(strfind(FILE,'<Section>'));
-fprintf('%d Nodes and %d Sections found\n',n,s)
+l = length(strfind(FILE,'<SpotLoad>'));
+fprintf('%d Nodes; %d Sections; %d Loads\n',n,s,l)
 
 % Extract Node Information
-nodeinfo = regexp(FILE,'<Nodes>(.*?)</Nodes>','match');
+nodeinfo = regexp(FILE,'<Node>(.*?)</Node>','match');
+for i = 1:length(nodeinfo)
+    NODE(i).ID = regexp(nodeinfo{i},'(?<=<NodeID>)(.*?)(?=</NodeID>)','match');
+end
+    
 nodeinfo = nodeinfo{1,1};
 
 NODE.ID = regexp(nodeinfo,'(?<=<NodeID>)(.*?)(?=</NodeID>)','match')';
