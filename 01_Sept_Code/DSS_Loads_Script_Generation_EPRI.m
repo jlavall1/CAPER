@@ -122,9 +122,11 @@ elseif action == 1
             end
 
             for j=3:1:11
-                if j == 4 || j == 10
+                if j == 4
                     %special case because numbers.
                     output_text{i,1}=strcat(output_text{i,1},sprintf(' %s',num2str(CELL{i,j})));
+                elseif j == 10
+                    output_text{i,1}=strcat(output_text{i,1},' 0.80'); 
                 elseif j == 7
                     %Reset voltage:
                     output_text{i,1}=strcat(output_text{i,1},'7.1996'); 

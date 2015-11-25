@@ -10,13 +10,13 @@ close all
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 
-action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','ALL');
+action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','Capacitor Ops','ALL');
 while action<1
-    action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','ALL');
+    action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','Capacitor Ops','ALL');
 end
 %%
 %action = 6;
-ALL = 6;
+ALL = 7;
 fig = 0;
 %----------------------------------------------------------
 if action == 1 || action == ALL
@@ -69,7 +69,9 @@ if action == 1 || action == ALL
     grid on
     set(gca,'FontWeight','bold');
     %
-    %SUBPLOT3: Check of Currents
+    
+    %
+    %SUBPLOT4: Check of Currents
     fig = fig + 1;
     figure(fig);
     for i=1:1:3
@@ -121,7 +123,7 @@ if action == 1 || action == ALL
     grid on
     set(gca,'FontWeight','bold');
     
-    %
+    %{
     %SUBPLOT5: Vbase & Vstatic
     fig = fig + 1;
     figure(fig);
@@ -136,6 +138,24 @@ if action == 1 || action == ALL
     ylabel('Phase Voltage (V) [V_{LN}]','FontSize',12,'FontWeight','bold');
     grid on
     set(gca,'FontWeight','bold');
+    %}
+    if feeder_NUM == 2
+        %SUBPLOT of Capacitor bus.
+        for i=1:1:length(DATA_SAVE(:))
+            if strcmp('259126903',DATA_SAVE(i).Name) == 1
+                cap_pos=i;
+            end
+        end
+    end
+    fig = fig + 1;
+    figure(fig);
+    plot(DATA_SAVE(cap_pos).phaseQ(:,1),'r-');
+    hold on
+    plot(DATA_SAVE(cap_pos).phaseQ(:,2),'g-');
+    hold on
+    plot(DATA_SAVE(cap_pos).phaseQ(:,3),'b-');
+    title('Capacitor Reactive Power');
+        
     
 end
 %%
@@ -332,7 +352,78 @@ if action == 5 || action == ALL
     
         
 end
-        
+%%
+if action == 6 || action == ALL
+    %SUBPLOT1:  Compare SCADA / DSS
+    fig = fig + 1;
+    figure(fig);
+    %-DSS
+    plot(DATA_SAVE(1).phaseQ(:,1),'r-','linewidth',2)
+    hold on
+    plot(DATA_SAVE(1).phaseQ(:,2),'r--','linewidth',2)
+    hold on
+    plot(DATA_SAVE(1).phaseQ(:,3),'r-.','linewidth',2)
+    hold on
+    %-DSCADA
+    plot(KVAR_ACTUAL(:,1),'b-','linewidth',2)
+    hold on
+    plot(KVAR_ACTUAL(:,2),'b--','linewidth',2)
+    hold on
+    plot(KVAR_ACTUAL(:,3),'b-.','linewidth',2)
+    hold on
+    title('Command vs. actual CHECK of Q','FontSize',14);
+    legend('(DSS) Phase A','(DSS) Phase B','(DSS) Phase C','(DSCADA) Phase A','(DSCADA) Phase B','(DSCADA) Phase C');
+    xlabel('Time (t) [min]','FontSize',12,'FontWeight','bold');
+    ylabel('Reactive Power/Phase (Q) [kVAR]','FontSize',12,'FontWeight','bold');
+    grid on
+    set(gca,'FontWeight','bold');
+    %
+    %SUBPLOT:  Calculated PF from SCADA
+    fig = fig +1;
+    figure(fig);
+    for i=1:1:length(KVAR_ACTUAL(:,1))
+        for ph=1:1:3
+            PF_ACTUAL(i,ph) = LOAD_ACTUAL(i,ph)/(sqrt((LOAD_ACTUAL(i,ph)^2)+(KVAR_ACTUAL(i,ph)^2)));
+            PF_openDSS(i,ph) = DATA_SAVE(1).phaseP(i,ph)/(sqrt((DATA_SAVE(1).phaseP(i,ph)^2)+(DATA_SAVE(1).phaseQ(i,ph)^2)));
+            DIFF_KVAR(i,ph)=(DATA_SAVE(1).phaseQ(i,ph)-KVAR_ACTUAL(i,ph))/KVAR_ACTUAL(i,ph);
+        end
+    end
+    plot(PF_ACTUAL(:,1),'r-','Linewidth',3);
+    hold on
+    plot(PF_ACTUAL(:,2),'g-','Linewidth',3);
+    hold on
+    plot(PF_ACTUAL(:,3),'b-','Linewidth',3);
+    hold on
+    %DSS---
+    plot(PF_openDSS(:,1),'r--','Linewidth',2);
+    hold on
+    plot(PF_openDSS(:,2),'g--','Linewidth',2);
+    hold on
+    plot(PF_openDSS(:,3),'b--','Linewidth',2);
+    hold off
+    title('Measured PF at SUB');
+    grid on
+    %
+    %SUBPLOT:  Percent Error!
+    fig = fig + 1;
+    figure(fig);
+    plot(DIFF_KVAR(:,1)*100,'r-','Linewidth',3);
+    hold on
+    plot(DIFF_KVAR(:,2)*100,'g-','Linewidth',3);
+    hold on
+    plot(DIFF_KVAR(:,3)*100,'b-','Linewidth',3);
+    %  Settings:
+    title('Comparison between openDSS & SCADA Reactive Powers','FontWeight','bold','FontSize',14);
+    legend('Phase A %ERROR','Phase B %ERROR','Phase C %ERROR');
+    axis([0 length(DATA_SAVE(1).phaseQ) 0 3]);
+    ylabel('Percent Error (PE) [%]','FontSize',12,'FontWeight','bold');
+    xlabel('Time Interval','FontSize',12,'FontWeight','bold');
+    grid on
+    set(gca,'FontWeight','bold');
+end
+
+
+
 %%
 %These are just leftovers:
 %{

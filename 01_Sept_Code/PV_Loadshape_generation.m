@@ -248,7 +248,7 @@ csvwrite(s_pv,PV_loadshape_daily)
 if feeder_NUM == 1
     load Common_Bus_Impedance.mat
 elseif feeder_NUM == 2
-    %addpath(strcat(base_path,'\03_OpenDSS_Circuits\Flay_Circuit_Opendss'));
+    addpath(strcat(base_path,'\03_OpenDSS_Circuits\Flay_Circuit_Opendss'));
     load Flay_Bus_Impedances.mat %Buses_Zsc
     load Flay_Static_maxPV.mat   %MAX_PV.L50 ; MAX_PV.L30 ; MAX_PV.L25 ;
 end
@@ -293,14 +293,19 @@ end
 %
 %Now lets find the maximum kW rating at specific bus (Results=PV_pmpp)
 %1]  Search for bus with exact distance:
-for ij=1:1:length(MAX_PV.L30)
-    if MAX_PV.L30(ij,4) == diff_save(1,3)
-        PV_pmpp = MAX_PV.L30(ij,1);
-        disp(ij);
-        if PV_pmpp > 5010
-            PV_pmpp=5000;
+if PV_ON_OFF == 2
+    for ij=1:1:length(MAX_PV.L30)
+        if MAX_PV.L30(ij,4) == diff_save(1,3)
+            PV_pmpp = MAX_PV.L30(ij,1);
+            disp(ij);
+            if PV_pmpp > 5010
+                PV_pmpp=5000;
+            end
         end
     end
+else
+    PV_pmpp = 0;
+    PV_bus = 'none';
 end
 
 

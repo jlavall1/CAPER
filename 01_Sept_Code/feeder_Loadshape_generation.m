@@ -123,6 +123,9 @@ elseif timeseries_span == 2
     LOAD_ACTUAL_1(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY,23,59),1);
     LOAD_ACTUAL_1(:,2) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
     LOAD_ACTUAL_1(:,3) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY,23,59),1);
+    KVAR_ACTUAL_1(:,1) = FEEDER.kVAR.A(time2int(DOY,0,0):time2int(DOY,23,59),1);
+    KVAR_ACTUAL_1(:,2) = FEEDER.kVAR.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
+    KVAR_ACTUAL_1(:,3) = FEEDER.kVAR.C(time2int(DOY,0,0):time2int(DOY,23,59),1);
     %Declare duration & timestep:
     if strcmp(time_int,'1h') == 1
         t_int=0;
@@ -146,12 +149,18 @@ elseif timeseries_span == 2
         LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),t_int);
         LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),t_int);
         LOAD_ACTUAL(:,3) = interp(LOAD_ACTUAL_1(:,3),t_int);
+        KVAR_ACTUAL(:,1) = interp(KVAR_ACTUAL_1(:,1),t_int);
+        KVAR_ACTUAL(:,2) = interp(KVAR_ACTUAL_1(:,2),t_int);
+        KVAR_ACTUAL(:,3) = interp(KVAR_ACTUAL_1(:,3),t_int);
     else
         jj=1;
         for ii=1:60:length(LOAD_ACTUAL_1)
             LOAD_ACTUAL(jj,1) = LOAD_ACTUAL_1(ii,1);
             LOAD_ACTUAL(jj,2) = LOAD_ACTUAL_1(ii,2);
             LOAD_ACTUAL(jj,3) = LOAD_ACTUAL_1(ii,3);
+            KVAR_ACTUAL(jj,1) = KVAR_ACTUAL_1(ii,1);
+            KVAR_ACTUAL(jj,2) = KVAR_ACTUAL_1(ii,2);
+            KVAR_ACTUAL(jj,3) = KVAR_ACTUAL_1(ii,3);
             jj = jj + 1;
         end
     end
@@ -177,6 +186,9 @@ elseif timeseries_span == 3
     LOAD_ACTUAL_1(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY+6,23,59),1);
     LOAD_ACTUAL_1(:,2) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY+6,23,59),1);
     LOAD_ACTUAL_1(:,3) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY+6,23,59),1);
+    KVAR_ACTUAL_1(:,1) = -1*FEEDER.KVAR.A(time2int(DOY,0,0):time2int(DOY+6,23,59),1);
+    KVAR_ACTUAL_1(:,2) = -1*FEEDER.KVAR.B(time2int(DOY,0,0):time2int(DOY+6,23,59),1);
+    KVAR_ACTUAL_1(:,3) = -1*FEEDER.KVAR.C(time2int(DOY,0,0):time2int(DOY+6,23,59),1);
     %2] Declare duration & timestep:
     if strcmp(time_int,'1h') == 1
         t_int=0;
@@ -200,12 +212,18 @@ elseif timeseries_span == 3
         LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),t_int);
         LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),t_int);
         LOAD_ACTUAL(:,3) = interp(LOAD_ACTUAL_1(:,3),t_int);
+        KVAR_ACTUAL(:,1) = interp(KVAR_ACTUAL_1(:,1),t_int);
+        KVAR_ACTUAL(:,2) = interp(KVAR_ACTUAL_1(:,2),t_int);
+        KVAR_ACTUAL(:,3) = interp(KVAR_ACTUAL_1(:,3),t_int);
     else
         jj=1;
         for ii=1:60:length(LOAD_ACTUAL_1)
             LOAD_ACTUAL(jj,1) = LOAD_ACTUAL_1(ii,1);
             LOAD_ACTUAL(jj,2) = LOAD_ACTUAL_1(ii,2);
             LOAD_ACTUAL(jj,3) = LOAD_ACTUAL_1(ii,3);
+            KVAR_ACTUAL(jj,1) = KVAR_ACTUAL_1(ii,1);
+            KVAR_ACTUAL(jj,2) = KVAR_ACTUAL_1(ii,2);
+            KVAR_ACTUAL(jj,3) = KVAR_ACTUAL_1(ii,3);
             jj = jj + 1;
         end
     end

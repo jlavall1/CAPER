@@ -75,6 +75,8 @@ else
     end
     %DSSText.command = 'EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ]';
     DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
+    %Edit PF on load:
+    %DSSText.command = 'batchedit Load..* PF=0.8';
     DSSText.command = 'Disable Capacitor.*';
     DSSText.command = 'AllocateLoad';
     %DSSText.command = 'AllocateLoad';
