@@ -12,8 +12,8 @@ ndat  = 525600;       % Number of Data Points
 
 % Desired Characteristics
 %  For 1day at 1min resolution - nstp = 1440; step = 60;
-date = '07/16/2014';
-nstp = 10000; % Number of steps
+date = '06/01/2014';
+nstp = 1440; % Number of steps
 step = 60;   % [s] - Resolution of step
 
 % Find desired indicies
