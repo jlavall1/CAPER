@@ -141,7 +141,6 @@ delete(MonitorFilename);
 [~,index] = min(abs(reshape(RawMonitorData.data(:,3:5),[],1)/7200 - 1.03));
 [r,~] = size(RawMonitorData.data);
 index = mod(index,r);
-time = RESULTS(index).sDate;
 
 % Record Voltages fort this time
 for i = 1:length(Lines)
@@ -204,12 +203,7 @@ title('Problem 1: Sub LTC Position','FontWeight','bold','FontSize',12);
 
 % Problem 2 Plots
 figure;
-plot([Lines.Distance],[Lines.VoltageMagPhaseA]/7200,'.k',...
-    [Lines.Distance],[Lines.VoltageMagPhaseB]/7200,'.r',...
-    [Lines.Distance],[Lines.VoltageMagPhaseC]/7200,'.b')
-grid on;
-axis([0 5 .98 1.04])
-set(gca,'FontSize',10,'FontWeight','bold')
-xlabel(gca,'Distance from Sub [km]','FontSize',12,'FontWeight','bold')
-ylabel(gca,'Voltage [pu]','FontSize',12,'FontWeight','bold')
-title(sprintf('Problem 2: Voltage Profile on %s',datestr(time)),'FontWeight','bold','FontSize',12);
+plot([Lines.Distance],[Lines.VoltageMagPhaseA],'.k',...
+    [Lines.Distance],[Lines.VoltageMagPhaseB],'.r',...
+    [Lines.VoltageMagPhaseC],'DisplayName','[Lines.VoltageMagPhaseC]');hold off;
+%plot(index,[RESULTS.SubVoltageMagPhaseB]/60,[min(index),max(index)],[123.5,123.5],[min(index),max(index)],[122.5,122.5])

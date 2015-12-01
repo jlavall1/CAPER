@@ -4,16 +4,17 @@ clear
 clc
 close all
 %Lets create the needed monitors:
-feeder_NUM = 2;
+feeder_NUM = 1;
 
 if feeder_NUM == 1
     %Commonwealth --
-    temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss';
+    %temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss';
+    temp_dir = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss';
     addpath(temp_dir)
     load Lines_Monitor.mat %Lines_Distance
     %For export .txt file --
-    filename = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Monitors_GEN.txt';
-    
+    %filename = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Monitors_GEN.txt';
+    filename = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Monitors_GEN.txt';
 elseif feeder_NUM == 2
     temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss';
     addpath(temp_dir)
@@ -108,7 +109,7 @@ end
 
 %%
 %Export strings to .txt file:
-fileID=fopen(filename,'w');
+fileID=fopen(filename,'wt');
 for j=1:1:length(Monitor)
     fprintf(fileID,'%s\r\n',Monitor{j,1});
 end
