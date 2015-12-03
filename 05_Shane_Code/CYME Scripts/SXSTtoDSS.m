@@ -6,8 +6,8 @@ filename = 0;
 
 %filename = 'Flay 12-01 - 2-3-15 loads (original).sxst';
 
-filename = 'Commonwealth 12-05-  9-14 loads (original).sxst';
-filelocation = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\05_Shane_Code\CYME Scripts\';
+%filename = 'Commonwealth 12-05-  9-14 loads (original).sxst';
+%filelocation = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\05_Shane_Code\CYME Scripts\';
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select .sxst file to convert');
 end
@@ -48,7 +48,6 @@ fclose(fID_Buses);
 sectinfo = regexp(FILE,'<Section>(.*?)</Section>','match');
 k = 1;
 fID_Lines = fopen([savelocation,'Lines.dss'],'wt');
-fID_Loads = fopen([savelocation,'Loads.dss'],'wt');
 fID_Monitors = fopen([savelocation,'Monitors.dss'],'wt'); % Only 3ph
 for i = 1:length(sectinfo)
     % MILP
@@ -176,15 +175,42 @@ for i = 1:length(sectinfo)
         Loads(k).kWh = str2double(regexp(spotloadinfo{j},'(?<=<KWH>)(.*?)(?=</KWH>)','match'));
         Loads(k).NumCust = str2double(regexp(spotloadinfo{j},'(?<=<NumberOfCustomer>)(.*?)(?=</NumberOfCustomer>)','match'));
         
-        fprintf(fID_Loads,['New Load.%s Phases=%d Bus1=%-10s kV=%.4f ',...
-            'XFKVA=%-3.0f PF=%.4f status=variable Vminpu=0.7 ',...
-            'yearly=LS_Phase%c daily=LS_Phase%c duty=LS_Phase%c\n'],...
-            Loads(k).ID,Loads(k).numPhase,Loads(k).Bus1,Loads(k).kV,Loads(k).XFKVA,...
-            Loads(k).pf,Loads(k).Phase,Loads(k).Phase,Loads(k).Phase);
-        
         k = k+1;
     end
 end
 fclose(fID_Lines);
-fclose(fID_Loads);
 fclose(fID_Monitors);
+
+% Generate Loads.dss
+fID_Loads = fopen([savelocation,'Loads.dss'],'wt');
+
+% Find per phase demand totals
+kWtotA = sum([Loads(regexp([Loads.Phase],'A')).kW]);
+kWtotB = sum([Loads(regexp([Loads.Phase],'B')).kW]);
+kWtotC = sum([Loads(regexp([Loads.Phase],'C')).kW]);
+kVARtotA = sum([Loads(regexp([Loads.Phase],'A')).kVAR]);
+kVARtotB = sum([Loads(regexp([Loads.Phase],'B')).kVAR]);
+kVARtotC = sum([Loads(regexp([Loads.Phase],'C')).kVAR]);
+
+for k = 1:lp
+    switch Loads(k).Phase
+        case 'A'
+            kWtot = kWtotA;
+            kVARtot = kVARtotA;
+        case 'B'
+            kWtot = kWtotB;
+            kVARtot = kVARtotB;
+        case 'C'
+            kWtot = kWtotC;
+            kVARtot = kVARtotC;
+    end
+    
+    % Print file
+    fprintf(fID_Loads,['New Load.%s Phases=%d Bus1=%-10s kV=%.4f ',...
+        'kW=%.8f kVAR=%.8f status=variable Vminpu=0.7 ',...
+        'yearly=LS_Phase%c daily=LS_Phase%c duty=LS_Phase%c\n'],...
+        Loads(k).ID,Loads(k).numPhase,Loads(k).Bus1,Loads(k).kV,...
+        Loads(k).kW/kWtot,Loads(k).kVAR/kVARtot,...
+        Loads(k).Phase,Loads(k).Phase,Loads(k).Phase);
+end
+fclose(fID_Loads);

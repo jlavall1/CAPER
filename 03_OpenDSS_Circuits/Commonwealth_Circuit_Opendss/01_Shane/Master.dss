@@ -1,9 +1,3 @@
-! ---------------------------------
-! Converted from CYME 
-! DATE=June 04, 2015 at 12:44:40
-! CYME_VERSION=7.10
-! CYMDIST_REVISION=05
-! ---------------------------------
 Clear
 
 ! Define the Circuit
@@ -24,6 +18,7 @@ Redirect Loadshape.dss
 ! Circuit Element Data
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
+Redirect Monitors.dss
 Redirect Regulators.dss
 Redirect Loads.dss
 Redirect Capacitors.dss
@@ -40,23 +35,7 @@ Buscoords BusCoords.dss
 
 !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 !
-! Define an energy meter -- needed for plot profine and yearly simulations
+! Define an energy meter -- needed for plot profile and yearly simulations
 !
 New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
 ~ peakcurrent=[  345.492818586166   362.418979727275   291.727365549702  ]
-
-! Define Monitors
-Redirect Monitors.dss
-
-! 
-! Disable Capacitors for load allocation
-Disable Capacitor.*
-! 
-AllocateLoad
-AllocateLoad
-AllocateLoad
-!Dump AllocationFactors
-! 
-! Enable capacitors before solving
-Enable Capacitor.*
-!
