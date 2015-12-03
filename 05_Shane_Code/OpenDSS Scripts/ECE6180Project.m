@@ -10,7 +10,7 @@ date = '05/27/2014';
 nstp = 1440; % Number of steps
 step = 60;   % [s] - Resolution of step
 
-fprintf('Simulation Starting %s - %d hrs at %d resolution\n\n',date,nstp*step/(24*60*60),step/60)
+fprintf('Simulation Starting %s - %d hrs at %d min resolution\n\n',date,nstp*step/(60*60),step/60)
 
 %% Load Historical Data
 tic
@@ -132,12 +132,11 @@ disp('Collecting Monitor Data...')
 LineNames = DSSCircuit.Lines.AllNames;
 for i = 1:length(LineNames)
     Lines(i).ID = LineNames{i};
+    DSSCircuit.SetActiveElement(['Line.',LineNames{i}]);
     Lines(i).Bus1 = regexp(DSSCircuit.ActiveCktElement.BusNames{1},'^.*?(?=[.])','match');
     Lines(i).Bus2 = regexp(DSSCircuit.ActiveCktElement.BusNames{2},'^.*?(?=[.])','match');
-    Lines(i).Amps = DSSCircuit.ActiveElement.NormalAmps;
-    
-    DSSCircuit.SetActiveElement(['Line.',LineNames{i}]);
     Lines(i).Phase = DSSCircuit.ActiveCktElement.NumPhases;
+    Lines(i).Amps = DSSCircuit.ActiveCktElement.NormalAmps;
     
     DSSCircuit.SetActiveBus(Lines(i).Bus1{1});
     Lines(i).Distance = DSSCircuit.ActiveBus.Distance;
@@ -183,20 +182,28 @@ DSSCircuit.Solution.Solve
 
 %Lines_sc=getLineInfo(DSSCircObj);
 
+DSSText.Command = 'New Fault.F1';
+
 % Record Short Circuit Impedance and organize by Rsc
 for i = 1:length(Lines)
-    DSSCircuit.SetActiveElement(['Line.',LineNames{i}])
-    
-    
+    %DSSCircuit.SetActiveElement(['Line.',LineNames{i}])
+        
     DSSCircuit.SetActiveBus(Lines(i).Bus1{1});
     Zsc = DSSCircuit.ActiveBus.Zsc1;
     Lines(i).Rsc = Zsc(1);
     Lines(i).Xsc = Zsc(2);
     
+    % Fault Line
+    DSSText.Command = sprintf('Edit Fault.F1 Bus1=%s.2',Lines(i).Bus1{1});
+    DSSCircuit.Solution.Solve
+    
+    DSSCircuit.SetActiveElement('Line.259355408');
+    Lines(i).Isc = DSSCircuit.ActiveCktElement.CurrentsMagAng(3); 
 end
 
 %Lines=getLineInfo(DSSCircObj);
-%Now you find test locations:
+%Now you find test locations
+
 
 
 
@@ -312,5 +319,8 @@ xlabel(gca,'Distance from Sub [km]','FontSize',12,'FontWeight','bold')
 ylabel(gca,'Voltage [pu]','FontSize',12,'FontWeight','bold')
 title(sprintf('Problem 2: Voltage Profile on %s',datestr(time)),'FontWeight','bold','FontSize',12);
 legend('Phase A','Phase B','Phase C')
+
+% Problem 3 Plots
+plot([Lines.Rsc],[Lines.Isc],'.')
 
 toc

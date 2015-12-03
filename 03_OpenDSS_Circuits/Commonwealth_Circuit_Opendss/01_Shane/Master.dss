@@ -16,8 +16,7 @@ Redirect UGLineCodes.dss
 Redirect Loadshape.dss
 
 ! Circuit Element Data
-Redirect UGLines.dss
-Redirect LinesByPhase.dss
+Redirect Lines.dss
 Redirect Monitors.dss
 Redirect Regulators.dss
 Redirect Loads.dss
@@ -39,3 +38,14 @@ Buscoords BusCoords.dss
 !
 New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
 ~ peakcurrent=[  345.492818586166   362.418979727275   291.727365549702  ]
+
+! Disable Capacitors for load allocation
+Disable Capacitor.*
+! 
+AllocateLoad
+AllocateLoad
+AllocateLoad
+!Dump AllocationFactors
+! 
+! Enable capacitors before solving
+Enable Capacitor.*
