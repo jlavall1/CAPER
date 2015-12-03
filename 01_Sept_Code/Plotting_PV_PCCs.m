@@ -97,6 +97,11 @@ if ckt_num == 1 %commonwealth
 elseif ckt_num == 7 %EPRI-7
     load config_LEGALBUSES_CKT7.mat
     load config_LEGALDISTANCE_CKT7.mat
+elseif ckt_num == 2 %Flay
+    load config_LEGALBUSES_FLAY.mat
+    load config_LEGALDISTANCE_FLAY.mat
+    peak_current = [196.597331353572,186.718068471483,238.090235458346];
+    energy_line = '259363665';
 end
 j = 1;
 for i=1:1:length(legal_buses);
@@ -134,6 +139,15 @@ elseif plot_choice == 2
 elseif plot_choice == 3
     titlestring=sprintf('PV-PCC''s Interation # range from: %1.2f to %1.2f km ',user_def(1,1),user_def(1,2));
 end
+
+
+DSSText.command = sprintf('New EnergyMeter.CircuitMeter LINE.%s terminal=1 option=R PhaseVoltageReport=yes',energy_line);
+%DSSText.command = 'EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ]';
+DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
+DSSText.command = 'solve';
+
+
+
 
 %This is to print the feeder
 hf1 = figure(2);
