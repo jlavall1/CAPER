@@ -30,6 +30,7 @@ if action == 1 || action == 4
     % Organize into structs
     n = length(RAW_DATA);
     if ckt_num > 2
+        %ROX | 
         FEED1.Voltage.A = RAW_DATA(:, 6);
         FEED1.Voltage.B = RAW_DATA(:, 8);
         FEED1.Voltage.C = RAW_DATA(:, 10);
