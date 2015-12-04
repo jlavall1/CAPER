@@ -41,7 +41,8 @@ elseif feeder_NUM == 2
     FEEDER = FLAY;
     clearvars FLAY
     kW_peak = [1.424871573296857e+03,1.347528364235151e+03,1.716422704604557e+03];
-    fixed_cap=600/3;
+    Caps.Fixed(1)=600/3;
+    Caps.Swtch(1)=450/3;
     %To be used for finding AllocationFactors for simulation:
     eff_KW(1,1) = 0.9862;
     eff_KW(1,2) = 0.993;
@@ -299,21 +300,24 @@ elseif timeseries_span == 5
    end
 end
 %%
+%0]  Alter KVAR if switchcaps are present:
+if Caps.Swtch(1) ~= 0
+    KVAR_ACTUAL=Find_Cap_Ops(KVAR_ACTUAL,sim_num,s_step,Caps);
+end
 %1]  Generate Load Shape:
 filelocation=strcat(s,'\');
 fileID = fopen([filelocation,'Loadshape.dss'],'wt');
-fprintf(fileID,['New loadshape.LS_PhaseA npts=%d sinterval=%d pmult=(',...
+fprintf(fileID,['New loadshape.LS_PhaseA npts=%s sinterval=%s pmult=(',...
     sprintf('%f ',LOAD_ACTUAL(:,1)),') qmult=(',...
-    sprintf('%f ',KVAR_ACTUAL(:,1)+fixed_cap),')\n\n'],sim_num,s_step);
-fprintf(fileID,['New loadshape.LS_PhaseB npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',KVAR_ACTUAL(:,1)+Caps.Fixed(1)),')\n\n'],num2str(sim_num),num2str(s_step));
+fprintf(fileID,['New loadshape.LS_PhaseB npts=%s sinterval=%s pmult=(',...
     sprintf('%f ',LOAD_ACTUAL(:,2)),') qmult=(',...
-    sprintf('%f ',KVAR_ACTUAL(:,2)+fixed_cap),')\n\n'],sim_num,s_step);
-fprintf(fileID,['New loadshape.LS_PhaseC npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',KVAR_ACTUAL(:,2)+Caps.Fixed(1)),')\n\n'],num2str(sim_num),num2str(s_step));
+fprintf(fileID,['New loadshape.LS_PhaseC npts=%s sinterval=%s pmult=(',...
     sprintf('%f ',LOAD_ACTUAL(:,3)),') qmult=(',...
-    sprintf('%f ',KVAR_ACTUAL(:,3)+fixed_cap),')\n\n'],sim_num,s_step);
+    sprintf('%f ',KVAR_ACTUAL(:,3)+Caps.Fixed(1)),')\n\n'],num2str(sim_num),num2str(s_step));
 fclose(fileID);
 % 2]  Tell program where DSS Files are:
-
 if feeder_NUM == 2
     CUTOFF=10;
 else
@@ -326,7 +330,7 @@ str = str(1:idx(8)-1);
 idx = strfind(ckt_direct,'.');
 ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_General.dss');
 
-
+%%
 %{
 %Now lets find new allocation Factors:
 %  Runs static powerflow 

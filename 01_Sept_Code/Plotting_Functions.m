@@ -72,6 +72,7 @@ if action == 1 || action == ALL
     
     %
     %SUBPLOT4: Check of Currents
+    %{
     fig = fig + 1;
     figure(fig);
     for i=1:1:3
@@ -99,8 +100,10 @@ if action == 1 || action == ALL
     legend('LS-phA','DSS-phA','LS-phB','DSS-phB','LS-phC','DSS-phC','Location','NorthWest');
     grid on
     set(gca,'FontWeight','bold');
+    %}
     %
     %SUBPLOT4: Plot Current %diff
+    %{
     fig = fig + 1;
     figure(fig);
     %  Calculate difference:
@@ -123,7 +126,7 @@ if action == 1 || action == ALL
     grid on
     set(gca,'FontWeight','bold');
     
-    %{
+    
     %SUBPLOT5: Vbase & Vstatic
     fig = fig + 1;
     figure(fig);

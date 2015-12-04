@@ -77,7 +77,7 @@ else
     %}
     %Xfmr_Base = get
     cd(location);
-    %%
+    %
     %Sort Lines into closest from PCC --
     %[~,index] = sortrows([Lines_Base.bus1Distance].'); 
     %Lines_Distance = Lines_Base(index); 
@@ -112,7 +112,7 @@ else
         DSSText.command = sprintf('edit pvsystem.PV bus1=%s pmpp=%s kVA=%s',PV_bus,num2str(PV_pmpp),num2str(PV_pmpp*1.1));
     end
     %---------------------------------
-    %%
+%%
     %---------------------------------
     %Plot / observe simulation results:
     shift=0;
@@ -143,8 +143,8 @@ else
         % Run 1-day simulation at 1minute interval:
         DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
         % Turn the overload report on:
-        DSSText.command='Set overloadreport=true';
-        DSSText.command='Set voltexcept=true';
+        %DSSText.command='Set overloadreport=true';
+        %DSSText.command='Set voltexcept=true';
         % Solve QSTS Solution:
         DSSText.command='solve';
         DSSText.command='show eventlog';
