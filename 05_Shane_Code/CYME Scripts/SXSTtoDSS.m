@@ -2,12 +2,12 @@
 clear
 clc
 
+filelocation = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\07_CYME\';
 filename = 0;
 
 %filename = 'Flay 12-01 - 2-3-15 loads (original).sxst';
+filename = 'Commonwealth 12-05-  9-14 loads (original).sxst';
 
-%filename = 'Commonwealth 12-05-  9-14 loads (original).sxst';
-%filelocation = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\05_Shane_Code\CYME Scripts\';
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select .sxst file to convert');
 end
@@ -205,15 +205,23 @@ for k = 1:lp
             kVARtot = kVARtotC;
     end
     
-    % Print Timeseries Loads
+    % Print Loads (Demand)
+    fprintf(fID_Loads,['New Load.%s Phases=%d Bus1=%-10s kV=%.4f ',...
+        'kW=%.8f kVAR=%.8f status=variable Vminpu=0.7\n'],...
+        Loads(k).ID,Loads(k).numPhase,Loads(k).Bus1,Loads(k).kV,...
+        Loads(k).kW,Loads(k).kVAR);
+    
+    %{
+    % Print Loads (Normalized Demand w/ Loadshape pointers)
     fprintf(fID_Loads,['New Load.%s Phases=%d Bus1=%-10s kV=%.4f ',...
         'kW=%.8f kVAR=%.8f status=variable Vminpu=0.7 ',...
         'yearly=LS_Phase%c daily=LS_Phase%c duty=LS_Phase%c\n'],...
         Loads(k).ID,Loads(k).numPhase,Loads(k).Bus1,Loads(k).kV,...
         Loads(k).kW/kWtot,Loads(k).kVAR/kVARtot,...
         Loads(k).Phase,Loads(k).Phase,Loads(k).Phase);
+    %}
     
-    % Print Fault Loads
+    % Print Loads (XFKVA & PF)
     fprintf(fID_LoadsFault,['New Load.%s Phases=%d Bus1=%-10s kV=%.4f ',...
         'XFKVA=%3.1f PF=%.4f Vminpu=0.7\n'],...
         Loads(k).ID,Loads(k).numPhase,Loads(k).Bus1,Loads(k).kV,...

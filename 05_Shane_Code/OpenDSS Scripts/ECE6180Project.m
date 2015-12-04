@@ -12,8 +12,22 @@ step = 60;   % [s] - Resolution of step
 
 fprintf('Simulation Starting %s - %d hrs at %d min resolution\n\n',date,nstp*step/(60*60),step/60)
 
-%% Load Historical Data
+%% Initialize OpenDSS
 tic
+disp('Initializing OpenDSS...')
+
+% Load DSS file location
+load('COMMONWEALTH_Location.mat');
+
+% Setup the COM server
+[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
+DSSCircuit = DSSCircObj.ActiveCircuit;
+
+% Compile Circuit
+DSSText.command = ['Compile ',[filelocation,filename]];
+
+%% Load Historical Data
+toc
 disp('Loading Historical Data...')
 load('CMNWLTH.mat');
 
@@ -55,11 +69,48 @@ for i=1:nstp
 end
 clear CMNWLTH
 
-% Load DSS file location
-load('COMMONWEALTH_Location.mat');
+%% Generate Load Shapes
+% Read in DSS Load data for peak normalization
+LoadNames = DSSCircuit.Loads.AllNames;
+for i = 1:length(LoadNames)
+    % Separate out ID from Phase Designation
+    Loads(i).ID = LoadNames{i};
+    Phase = regexp(LoadNames{i},'(?<=[_]).*?$','match');
+    switch Phase{1}
+        case '1'
+            Loads(i).Phase = 'A';
+        case '2'
+            Loads(i).Phase = 'B';
+        case '3'
+            Loads(i).Phase = 'C';
+    end
+    DSSCircuit.SetActiveElement(['Load.',LoadNames{i}]);
+    Powers = DSSCircuit.ActiveCktElement.Powers;
+    Loads(i).kW = Powers(1);
+    Loads(i).kVAR = Powers(2);
+end
 
-% Generate Load Shape
-fileID = fopen([filelocation,'Loadshape.dss'],'wt');
+% Find per phase demand totals
+kWtotA = sum([Loads(regexp([Loads.Phase],'A')).kW]);
+kWtotB = sum([Loads(regexp([Loads.Phase],'B')).kW]);
+kWtotC = sum([Loads(regexp([Loads.Phase],'C')).kW]);
+kVARtotA = sum([Loads(regexp([Loads.Phase],'A')).kVAR]);
+kVARtotB = sum([Loads(regexp([Loads.Phase],'B')).kVAR]);
+kVARtotC = sum([Loads(regexp([Loads.Phase],'C')).kVAR]);
+
+% Define Load shapes ***Add 300kvar per phase for capacitors
+DSSText.Command = sprintf(['New loadshape.LS_PhaseA npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA.RealPowerPhaseA]/kWtotA),') qmult=(',...
+    sprintf('%f ',([DATA.ReactivePowerPhaseA]+300)/kVARtotA),')'],nstp,step);
+DSSText.Command = sprintf(['New loadshape.LS_PhaseB npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA.RealPowerPhaseB]/kWtotB),') qmult=(',...
+    sprintf('%f ',([DATA.ReactivePowerPhaseB]+300)/kVARtotB),')\n\n'],nstp,step);
+DSSText.Command = sprintf(['New loadshape.LS_PhaseC npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA.RealPowerPhaseC]/kWtotC),') qmult=(',...
+    sprintf('%f ',([DATA.ReactivePowerPhaseC]+300)/kVARtotC),')\n\n'],nstp,step);
+
+%{
+% Print Loadshape to file
 fprintf(fileID,['New loadshape.LS_PhaseA npts=%d sinterval=%d pmult=(',...
     sprintf('%f ',[DATA.RealPowerPhaseA]),') qmult=(',...
     sprintf('%f ',[DATA.ReactivePowerPhaseA]+300),')\n\n'],nstp,step);
@@ -70,27 +121,77 @@ fprintf(fileID,['New loadshape.LS_PhaseC npts=%d sinterval=%d pmult=(',...
     sprintf('%f ',[DATA.RealPowerPhaseC]),') qmult=(',...
     sprintf('%f ',[DATA.ReactivePowerPhaseC]+300),')\n\n'],nstp,step);
 fclose(fileID);
+%}
 
-%% Initialize OpenDSS
+% Add Load shapes to Loads
+for i = 1:length(Loads)
+    DSSText.Command = sprintf('Edit Load.%s yearly=LS_Phase%c daily=LS_Phase%c duty=LS_Phase%c',...
+        Loads(i).ID,Loads(i).Phase,Loads(i).Phase,Loads(i).Phase);
+end 
+
+%% Generate Monitors
 toc
-disp('Initializing OpenDSS...')
+disp('Defining Monitors...')
 
-% Setup the COM server
-[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
-DSSCircuit = DSSCircObj.ActiveCircuit;
+% Initialize Fault Study Mode To read Zsc
+DSSText.Command = 'Solve Mode=FaultStudy';
 
-% Compile Circuit
-DSSText.command = ['Compile ',[filelocation,filename]];
+% Organize Lines by distance and discard non-3ph and laterals
+LineNames = DSSCircuit.Lines.AllNames;
+% Remove these lines (3ph and 336AAC Laterals)
+Remove = {'258896341' '258896356' '258896361' '455183899' '455183905' '258908179' ...
+    '263534356' '263534361' '258896491' '275423519' '275423535' '258896496' ...
+    '264379695' '264379700' '716733195' '716733190'};
+for i = 1:length(Remove)
+    LineNames = LineNames(~strcmp(Remove{i},LineNames));
+end
+
+% Read in Line Data from DSS
+for i = 1:length(LineNames)
+    Lines(i).ID = LineNames{i};
+    DSSCircuit.SetActiveElement(['Line.',LineNames{i}]);
+    Lines(i).Bus1 = regexp(DSSCircuit.ActiveCktElement.BusNames{1},'^.*?(?=[.])','match');
+    Lines(i).Bus2 = regexp(DSSCircuit.ActiveCktElement.BusNames{2},'^.*?(?=[.])','match');
+    Lines(i).Phase = DSSCircuit.ActiveCktElement.NumPhases;
+    Lines(i).Amps = DSSCircuit.ActiveCktElement.NormalAmps;
+    
+    % Find Upstream Bus
+    DSSCircuit.SetActiveBus(Lines(i).Bus1{1});
+    Lines(i).Distance = DSSCircuit.ActiveBus.Distance;
+    DSSCircuit.SetActiveBus(Lines(i).Bus2{1});
+    [Lines(i).Distance,index] = min([DSSCircuit.ActiveBus.Distance,Lines(i).Distance]);
+    if index == 2
+        DSSCircuit.SetActiveBus(Lines(i).Bus1{1}); % Go back to origional Bus
+    end
+    
+    % Record Zsc
+    Zsc = DSSCircuit.ActiveBus.Zsc1;
+    Lines(i).Rsc = Zsc(1);
+    Lines(i).Xsc = Zsc(2);
+end
+% Remove Unwanted lines and sort
+Lines = Lines([Lines.Phase] == 3); % Only 3 phase
+Lines = Lines([Lines.Amps] > 480); % Only >480A Current Rating
+[~,index] = sortrows([Lines.Distance].');
+Lines = Lines(index);
+
+% Place Monitors on all remaining Lines
+for i = 1:length(Lines)
+    DSSText.Command = sprintf('New Monitor.%s_Mon_VI element=Line.%s term=1 mode=32',...
+            Lines(i).ID,Lines(i).ID);
+    DSSText.Command = sprintf('New Monitor.%s_Mon_PQ element=Line.%s term=1 mode=1 PPolar=No',...
+            Lines(i).ID,Lines(i).ID);
+end
+
+%% Run Timeseries and Record Results (Problem 1)
+toc
+disp('Running Time-series Simulation...')
 
 % Configure Simulation
 DSSText.command = 'set mode = daily';
 DSSCircuit.Solution.Number = 1;
 DSSCircuit.Solution.Stepsize = step;
 DSSCircuit.Solution.dblHour = 0.0;
-
-%% Record Timeseries Results from Historical Loadshape (Problem 1)
-toc
-disp('Running Time-series Simulation...')
 
 for t = 1:nstp
     % Solve at current time step
@@ -128,24 +229,6 @@ end
 %% Collect Monitor Data and Perform Analysis (Problem 2)
 toc
 disp('Collecting Monitor Data...')
-% Organize Lines by distance and discard non-3ph
-LineNames = DSSCircuit.Lines.AllNames;
-for i = 1:length(LineNames)
-    Lines(i).ID = LineNames{i};
-    DSSCircuit.SetActiveElement(['Line.',LineNames{i}]);
-    Lines(i).Bus1 = regexp(DSSCircuit.ActiveCktElement.BusNames{1},'^.*?(?=[.])','match');
-    Lines(i).Bus2 = regexp(DSSCircuit.ActiveCktElement.BusNames{2},'^.*?(?=[.])','match');
-    Lines(i).Phase = DSSCircuit.ActiveCktElement.NumPhases;
-    Lines(i).Amps = DSSCircuit.ActiveCktElement.NormalAmps;
-    
-    DSSCircuit.SetActiveBus(Lines(i).Bus1{1});
-    Lines(i).Distance = DSSCircuit.ActiveBus.Distance;
-end
-Lines = Lines([Lines.Phase] == 3); % Only 3 phase
-Lines = Lines([Lines.Amps] > 480); % Only >480A Current Rating
-[~,index] = sortrows([Lines.Distance].');
-Lines = Lines(index);
-
 % Find Line that is at halfway point on Feeder
 [~,index] = min(abs([Lines.Distance] - max([Lines.Distance])/2));
 
@@ -155,7 +238,7 @@ MonitorFilename = DSSText.Result;
 RawMonitorData  = importdata(MonitorFilename);
 delete(MonitorFilename);
 
-[~,index] = min(abs(reshape(RawMonitorData.data(:,3:5),[],1)/7200 - 1.03));
+[~,index] = min(abs(reshape(RawMonitorData.data(:,3:5),[],1)/7200 - 1.025));
 [r,~] = size(RawMonitorData.data);
 index = mod(index-1,r)+1;
 time = RESULTS(index).sDate;
@@ -176,37 +259,39 @@ end
 toc
 disp('Conducting Fault Analysis...')
 
-% Initialize Fault Study Mode
-DSSText.command = 'Set Mode=FaultStudy';
+% Configure Simulation
+DSSText.command = 'Set Mode=Snapshot';
 DSSCircuit.Solution.Solve
 
-%Lines_sc=getLineInfo(DSSCircObj);
-
-DSSText.Command = 'New Fault.F1';
+% Begin Fault Study
+DSSText.Command = 'New Fault.F1 enabled=no';
 
 % Record Short Circuit Impedance and organize by Rsc
 for i = 1:length(Lines)
-    %DSSCircuit.SetActiveElement(['Line.',LineNames{i}])
-        
-    DSSCircuit.SetActiveBus(Lines(i).Bus1{1});
-    Zsc = DSSCircuit.ActiveBus.Zsc1;
-    Lines(i).Rsc = Zsc(1);
-    Lines(i).Xsc = Zsc(2);
+    % Fault Phase p on Bus1 of Line i
+    DSSText.Command = 'Solve Mode=Snapshot';
+    DSSText.Command = sprintf('Edit Fault.F1 Bus1=%s.%d enabled=yes',Lines(i).Bus1{1},2);
+    DSSText.Command = 'Solve Mode=dynamic number=1';
     
-    % Fault Line
-    DSSText.Command = sprintf('Edit Fault.F1 Bus1=%s.2',Lines(i).Bus1{1});
-    DSSCircuit.Solution.Solve
-    
-    DSSCircuit.SetActiveElement('Line.259355408');
-    Lines(i).Isc = DSSCircuit.ActiveCktElement.CurrentsMagAng(3); 
+    DSSCircuit.SetActiveElement('Fault.F1');
+    Lines(i).IscB = DSSCircuit.ActiveCktElement.CurrentsMagAng(1);
+    DSSText.Command = 'Edit Fault.F1 enabled=no';
 end
 
-%Lines=getLineInfo(DSSCircObj);
-%Now you find test locations
+% 3 Phase Fault at Substaion
+DSSText.Command = 'Solve Mode=Snapshot';
+DSSText.Command = 'Edit Fault.F1 Bus1=commonwealth_ret_01311205.1.2.3 Phase=3 enabled=yes';
+DSSText.Command = 'Solve Mode=dynamic number=1';
 
-
-
-
+% Analysis
+DSSCircuit.SetActiveElement('Fault.F1');
+Current = DSSCircuit.ActiveElement.CurrentsMagAng([1 3 5]);
+fprintf('\nSubstation 3 Phase to Ground Fault Currents:\nPhaseA: %.0f A\t\tPhaseB: %.0f A\t\tPhaseC: %.0f A\n',...
+    Current);
+k = 1.6;
+MVAsc = sqrt(3)*k*sum(Current)/1000;
+fprintf('Short Circuit Breaker MVA(k=%.1f): %.0f MVA\nReccommended Breaker Size: %.0f MVA\n\n',...
+    k,MVAsc,25*ceil(MVAsc/25));
 
 %% Generate Plots
 toc
@@ -309,11 +394,13 @@ title('Problem 1: Substation LTC Position','FontWeight','bold','FontSize',12);
 
 % Problem 2 Plots
 figure;
-plot([Lines.Distance],[Lines.VoltageMagPhaseA]/7200,'.k',...
-    [Lines.Distance],[Lines.VoltageMagPhaseB]/7200,'.r',...
-    [Lines.Distance],[Lines.VoltageMagPhaseC]/7200,'.b')
+plot([Lines.Distance],[Lines.VoltageMagPhaseA]/7200,'-k','LineWidth',2)
+hold on
+plot([Lines.Distance],[Lines.VoltageMagPhaseB]/7200,'-r','LineWidth',2)
+plot([Lines.Distance],[Lines.VoltageMagPhaseC]/7200,'-b','LineWidth',2)
+hold off
 grid on;
-axis([0 5 .98 1.04])
+axis([0 4.5 .98 1.04])
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Distance from Sub [km]','FontSize',12,'FontWeight','bold')
 ylabel(gca,'Voltage [pu]','FontSize',12,'FontWeight','bold')
@@ -321,6 +408,22 @@ title(sprintf('Problem 2: Voltage Profile on %s',datestr(time)),'FontWeight','bo
 legend('Phase A','Phase B','Phase C')
 
 % Problem 3 Plots
-plot([Lines.Rsc],[Lines.Isc],'.')
+figure;
+subplot(1,2,1)
+plot([Lines.Distance],[Lines.Rsc],'.k')
+grid on;
+xlim([0,5])
+set(gca,'FontSize',10,'FontWeight','bold')
+xlabel(gca,'Distance From Substation [km]','FontSize',12,'FontWeight','bold')
+ylabel(gca,'Short Circuit Resistance [\Omega]','FontSize',12,'FontWeight','bold')
+title('Problem 3: SLG Fault Study on Phase B','FontWeight','bold','FontSize',12);
+
+subplot(1,2,2)
+plot([Lines.Rsc],[Lines.IscB],'.k')
+grid on;
+set(gca,'FontSize',10,'FontWeight','bold')
+xlabel(gca,'Short Circuit Resistance [\Omega]','FontSize',12,'FontWeight','bold')
+ylabel(gca,'Short Circuit Current [A]','FontSize',12,'FontWeight','bold')
+title('Problem 3: SLG Fault Study on Phase B','FontWeight','bold','FontSize',12);
 
 toc

@@ -12,12 +12,11 @@ Redirect WireData.dss
 Redirect LineSpacing.dss
 Redirect UGLineCodes.dss
 
-! Define Load Shapes (24hrs at 1min resolution)
-Redirect Loadshape.dss
+! Define Load Shapes
+!Redirect Loadshape.dss
 
 ! Circuit Element Data
 Redirect Lines.dss
-Redirect Monitors.dss
 Redirect Regulators.dss
 Redirect Loads.dss
 Redirect Capacitors.dss
@@ -40,12 +39,12 @@ New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageRepo
 ~ peakcurrent=[  345.492818586166   362.418979727275   291.727365549702  ]
 
 ! Disable Capacitors for load allocation
-Disable Capacitor.*
+!Disable Capacitor.*
 ! 
-AllocateLoad
-AllocateLoad
-AllocateLoad
+!AllocateLoad
+!AllocateLoad
+!AllocateLoad
 !Dump AllocationFactors
 ! 
 ! Enable capacitors before solving
-Enable Capacitor.*
+!Enable Capacitor.*

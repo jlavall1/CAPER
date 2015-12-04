@@ -18,7 +18,7 @@ Redirect Loadshape.dss
 ! Circuit Element Data
 Redirect Lines.dss
 Redirect Regulators.dss
-Redirect Loads.dss
+Redirect Loads_Fault.dss
 Redirect Capacitors.dss
 
 ! Set the voltage bases
