@@ -1,25 +1,50 @@
-% Snap to grid function for CYME file
+% SXSTtoDSS reads in a CYME file (.sxst) and generates the following files
+% *Master.dss - OpenDSS redirect information for defining circuit
+% Lines.dss - OpenDSS line definitions
+% Loads.dss - OpenDSS load definitions
+% Buses.dss - Bus Coordinates for plotting circuit
+% *Capacitors.dss - OpenDSS capacitor definitions
+% *Regulators.dss - OpenDSS regulator definitions
+% *FuseContrl.dss - OpenDSS fuse control settings
+% *SwitContrl.dss - OpenDSS switch control settings
+% *ReclContrl.dss - OpenDSS recloser control settings
+
+% All Files will be saved in folowing location:
+%   SXSTdir\filename.sxst_DSS\ {here}
+
 clear
 clc
 
-filelocation = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\07_CYME\';
-filename = 0;
+fid = fopen('pathdef.m');
+rootlocation = textscan(fid,'%c')';
+rootlocation = regexp(rootlocation{1}','C:[^.]*?CAPER\\','match','once');
+fclose(fid);
+rootlocation = [rootlocation,'07_CYME\'];
 
+filelocation = rootlocation; filename = 0;
+% ****To skip UIGETFILE uncomment desired filename****
+% ******(Must be in rootlocation CAPER\07_CYME)*******
 %filename = 'Flay 12-01 - 2-3-15 loads (original).sxst';
-filename = 'Commonwealth 12-05-  9-14 loads (original).sxst';
-
+%filename = 'Commonwealth 12-05-  9-14 loads (original).sxst';
+%filename = 'Kud1207 (original).sxst'
+%filename = 'Bellhaven 12-04 - 8-14 loads.xst (original).sxst'
+filename = 'Commonwealth_ret_01311205.sxst';
 while ~filename
-    [filename,filelocation] = uigetfile({'*.*','All Files'},'Select .sxst file to convert');
+    [filename,filelocation] = uigetfile({'*.*','All Files'},'Select SXST file to Convert',...
+        rootlocation);
 end
+
+% Generate Save Location
 savelocation = [filelocation,filename,'_DSS\'];
 if ~exist(savelocation,'dir')
     mkdir(savelocation)
 end
 
-% Read File
+tic
+% Read SXST File
 FILE = fileread([filelocation,filename]);
 
-% Print specs
+% Print Circuit Specs
 n = length(strfind(FILE,'<Node>'));
 s = length(strfind(FILE,'<Section>'));
 l = length(strfind(FILE,'<SpotLoad>'));
@@ -27,9 +52,9 @@ lp = length(strfind(FILE,'<CustomerLoadValue>'));
 fprintf('%d Nodes; %d Sections; %d Loads (%d by phase)\n',n,s,l,lp)
 
 % Extract Node Information
-%  Output - Busses.dss (text file containing BusID, X, and Y Coords)
+%  Output - Buses.dss (text file containing BusID, X, and Y Coords)
 nodeinfo = regexp(FILE,'<Node>(.*?)</Node>','match');
-fID_Buses = fopen([savelocation,'Busses.dss'],'wt');
+fID_Buses = fopen([savelocation,'Buses.dss'],'wt');
 for i = 1:length(nodeinfo)
     % MILP
     NODE(i).ID = regexp(nodeinfo{i},'(?<=<NodeID>)(.*?)(?=</NodeID>)','match');
@@ -229,3 +254,6 @@ for k = 1:lp
 end
 fclose(fID_Loads);
 fclose(fID_LoadsFault);
+
+fprintf('Conversion Complete. Files saved to %s',savelocation)
+toc
