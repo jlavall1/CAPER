@@ -50,7 +50,7 @@ str = strcat(fileloc,'\Master.DSS');
 
 % 1. Start the OpenDSS COM. Needs to be done each time MATLAB is opened     
 [DSSCircObj, DSSText] = DSSStartup; 
-DSSText.command = ['Compile ' str];     
+%DSSText.command = ['Compile ' str];     
 % 2. Compiling the circuit & Allocate Load according to peak current in
 % desired loadshape. This will work w/ nominal values.
 
@@ -123,7 +123,7 @@ fprintf('Overall End Distance: %3.3f km\n',max_distance);
 
 fprintf('3-ph End Distance: %3.3f km\n\n',max_3ph_distance);
 fprintf('Load Center Located @ Bus: %s\n',Lines_Distance(load_center,1).name);
-
+%{
 DSSText.command = 'Solve mode=faultstudy';
 Lines=getLineInfo(DSSCircObj);
 [~,index] = sortrows([Lines.bus1Distance].'); 
@@ -139,7 +139,7 @@ for i=1:1:n
 end
 %}
 fprintf('Load Center Resistance: %3.3f ohm\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
-
+%}
 %-------------------------------------------------------------------------
 %Find Voltage headroom:
 

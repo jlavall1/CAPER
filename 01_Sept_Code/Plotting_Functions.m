@@ -368,14 +368,23 @@ if action == 6 || action == ALL
     plot(DATA_SAVE(1).phaseQ(:,3),'r-.','linewidth',2)
     hold on
     %-DSCADA
-    plot(KVAR_ACTUAL(:,1),'b-','linewidth',2)
+    plot(KVAR_ACTUAL.data(:,1),'b-','linewidth',2)
     hold on
-    plot(KVAR_ACTUAL(:,2),'b--','linewidth',2)
+    plot(KVAR_ACTUAL.data(:,2),'b--','linewidth',2)
     hold on
-    plot(KVAR_ACTUAL(:,3),'b-.','linewidth',2)
+    plot(KVAR_ACTUAL.data(:,3),'b-.','linewidth',2)
     hold on
+    %-CAP_DSS
+    plot([MEAS.CAP_Q_PhA],'k-','LineWidth',3)
+    hold on
+    plot([MEAS.CAP_Q_PhB],'k-','LineWidth',3)
+    hold on
+    plot([MEAS.CAP_Q_PhC],'k-','LineWidth',3)
+    hold on
+    
+    
     title('Command vs. actual CHECK of Q','FontSize',14);
-    legend('(DSS) Phase A','(DSS) Phase B','(DSS) Phase C','(DSCADA) Phase A','(DSCADA) Phase B','(DSCADA) Phase C');
+    legend('(DSS) Phase A','(DSS) Phase B','(DSS) Phase C','(DSCADA) Phase A','(DSCADA) Phase B','(DSCADA) Phase C','(DSS) Cap_{phA}','(DSS) Cap_{phB}','(DSS) Cap_{phC}');
     xlabel('Time (t) [min]','FontSize',12,'FontWeight','bold');
     ylabel('Reactive Power/Phase (Q) [kVAR]','FontSize',12,'FontWeight','bold');
     grid on
@@ -384,11 +393,12 @@ if action == 6 || action == ALL
     %SUBPLOT:  Calculated PF from SCADA
     fig = fig +1;
     figure(fig);
-    for i=1:1:length(KVAR_ACTUAL(:,1))
+    for i=1:1:length(KVAR_ACTUAL.data(:,1))
         for ph=1:1:3
-            PF_ACTUAL(i,ph) = LOAD_ACTUAL(i,ph)/(sqrt((LOAD_ACTUAL(i,ph)^2)+(KVAR_ACTUAL(i,ph)^2)));
+            % PF_ACTUAL(i,ph) = LOAD_ACTUAL(i,ph)/(sqrt((LOAD_ACTUAL(i,ph)^2)+(KVAR_ACTUAL(i,ph)^2)));
+            PF_ACTUAL(i,ph) = KVAR_ACTUAL.data(i,6);
             PF_openDSS(i,ph) = DATA_SAVE(1).phaseP(i,ph)/(sqrt((DATA_SAVE(1).phaseP(i,ph)^2)+(DATA_SAVE(1).phaseQ(i,ph)^2)));
-            DIFF_KVAR(i,ph)=(DATA_SAVE(1).phaseQ(i,ph)-KVAR_ACTUAL(i,ph))/KVAR_ACTUAL(i,ph);
+            DIFF_KVAR(i,ph)=(DATA_SAVE(1).phaseQ(i,ph)-KVAR_ACTUAL.data(i,ph));%/KVAR_ACTUAL.data(i,ph);
         end
     end
     plot(PF_ACTUAL(:,1),'r-','Linewidth',3);
@@ -410,15 +420,15 @@ if action == 6 || action == ALL
     %SUBPLOT:  Percent Error!
     fig = fig + 1;
     figure(fig);
-    plot(DIFF_KVAR(:,1)*100,'r-','Linewidth',3);
+    plot(DIFF_KVAR(:,1),'r-','Linewidth',3);
     hold on
-    plot(DIFF_KVAR(:,2)*100,'g-','Linewidth',3);
+    plot(DIFF_KVAR(:,2),'g-','Linewidth',3);
     hold on
-    plot(DIFF_KVAR(:,3)*100,'b-','Linewidth',3);
+    plot(DIFF_KVAR(:,3),'b-','Linewidth',3);
     %  Settings:
     title('Comparison between openDSS & SCADA Reactive Powers','FontWeight','bold','FontSize',14);
     legend('Phase A %ERROR','Phase B %ERROR','Phase C %ERROR');
-    axis([0 length(DATA_SAVE(1).phaseQ) 0 3]);
+    %axis([0 length(DATA_SAVE(1).phaseQ) 0 3]);
     ylabel('Percent Error (PE) [%]','FontSize',12,'FontWeight','bold');
     xlabel('Time Interval','FontSize',12,'FontWeight','bold');
     grid on

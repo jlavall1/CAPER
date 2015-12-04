@@ -1,0 +1,37 @@
+! ---------------------------------
+!! Converted from CYME 
+! DATE=June 04, 2015 at 12:41:59
+! CYME_VERSION=7.10
+! CYMDIST_REVISION=05
+! ---------------------------------
+! 
+clear
+Compile 'Master_24hr.DSS' 
+! 
+! Recommendation: Add an energymeter here to first line in feeder
+!New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes
+!EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ] 
+! 
+/***** Begin Block Comment ******
+Disable Capacitor.*
+! 
+AllocateLoad
+AllocateLoad
+AllocateLoad
+!Dump AllocationFactors
+! 
+! Enable capacitors before solving
+Enable Capacitor.*
+*** End Block Comment  *****/
+Solve
+Show Eventlog
+closedi
+! 
+!Show V LN Node
+! Some Optional commands
+/***** Begin Block Comment ******
+plot circuit Power    max=2000 n n C1=$00FF0000  1ph=3
+plot circuit Voltage Max=2000 dots=n labels=n subs=y C1=$00FF0000
+! 
+plot profile phases=all    ' Requires an energymeter
+*** End Block Comment  *****/

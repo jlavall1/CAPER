@@ -12,11 +12,13 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 %}
 %Find directory of Circuit:
 % 1. Obtain user's choice of simulation:
+%{
 Import_PV_Farm_Datasets
 DER_Planning_GUI_1
 Delete_PV_Farm_Datasets
 gui_response = STRING_0;
-
+%}
+load time_60s_base_Flay.mat
 ckt_direct      = gui_response{1,1}; %entire directory string of where the cktfile is locatted
 feeder_NUM      = gui_response{1,2};
 scenerio_NUM    = gui_response{1,3}; %1=VREG-top ; 2=VREG-bot ; 3=steadystate ; 4=RR_up ; 5=RR_down
@@ -57,11 +59,20 @@ addpath(path);
 
 
 % 2. Generate Real Power & PV loadshape files:
-if QSTS_select == 4
+%if QSTS_select == 4
     %main algorithm to come!
-else
+%else
     PV_Loadshape_generation
     feeder_Loadshape_generation_Dynamic %ckt_direct_prime (generated)
+    figure(1)
+    plot(KVAR_ACTUAL.data(:,5),'r-');
+    hold on
+    plot(KVAR_ACTUAL.data(:,4)*-1*Caps.Swtch*3,'b-');
+    figure(2)
+    plot(KVAR_ACTUAL.data(:,6),'r-');
+    hold on
+    plot(KVAR_ACTUAL.data(:,4),'b-');
+    
 
     %
     % 3. Compile the user selected circuit:
@@ -70,10 +81,16 @@ else
     [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
     DSSCircuit = DSSCircObj.ActiveCircuit;
     DSSText.command = ['Compile ',ckt_direct_prime]; %_prime gen in:
+    Cap_info = getCapacitorInfo(DSSCircObj);
+    Lines_info = getLineInfo(DSSCircObj);
+    [~,index] = sortrows([Lines_info.bus1Distance].');
+    Lines_info = Lines_info(index);
+    Buses_info = getBusInfo(DSSCircObj);
+    Loads_info = getLoadInfo(DSSCircObj);
+ %%   
     %{
-    Lines_Base = getLineInfo(DSSCircObj);
-    Buses_Base = getBusInfo(DSSCircObj);
-    Loads_Base = getLoadInfo(DSSCircObj);
+    
+    
     %}
     %Xfmr_Base = get
     cd(location);
@@ -141,14 +158,18 @@ else
         %start openDSS ---------------------------
 
         % Run 1-day simulation at 1minute interval:
-        DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
-        % Turn the overload report on:
-        %DSSText.command='Set overloadreport=true';
-        %DSSText.command='Set voltexcept=true';
+        %DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,sim_num); %stepsize is now 1minute (60s)
+        %DSSText.command='show eventlog';
+        
         % Solve QSTS Solution:
-        DSSText.command='solve';
-        DSSText.command='show eventlog';
-        toc
+        DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,'1');
+        DSSCircuit.Solution.dblHour = 0.0;
+        for t = 1:1:str2num(sim_num)
+            % Solve at current time step
+            DSSCircuit.Solution.Solve
+            % Switching Capacitor Control
+            Cap_Control_1
+        end
     elseif timeseries_span == 3
         %(1) WEEK
         DOY_fin = 6;
@@ -191,5 +212,5 @@ else
     Export_Monitors_timeseries
     toc
     Plotting_Functions
-end
+%end
     

@@ -24,13 +24,16 @@ Redirect Wiredata.dss
 Redirect linespacing.dss
 Redirect UGLineCodes.dss
 ! 
-! Circuit Element Data
+! Circuit Connections
 ! 
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
+! 
+! Circuit Element Data
+! 
 Redirect Regulators.dss
-Redirect Loads_ALLOC.dss
-Redirect Capacitors.dss
+Redirect Loads_Fault.dss
+!Redirect Capacitors_no_Swtch.dss
 ! 
 ! Set the voltage bases
 ! 

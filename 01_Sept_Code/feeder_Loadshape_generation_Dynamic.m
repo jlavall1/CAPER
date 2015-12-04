@@ -109,9 +109,9 @@ if timeseries_span == 1
             LOAD_ACTUAL(jj,1) = LOAD_ACTUAL_1(ii,1);
             LOAD_ACTUAL(jj,2) = LOAD_ACTUAL_1(ii,2);
             LOAD_ACTUAL(jj,3) = LOAD_ACTUAL_1(ii,3);
-            KVAR_ACTUAL(jj,1) = KVAR_ACTUAL_1(ii,1);
-            KVAR_ACTUAL(jj,2) = KVAR_ACTUAL_1(ii,2);
-            KVAR_ACTUAL(jj,3) = KVAR_ACTUAL_1(ii,3);
+            KVAR_ACTUAL(jj,1).data = KVAR_ACTUAL_1(ii,1);
+            KVAR_ACTUAL(jj,2).data = KVAR_ACTUAL_1(ii,2);
+            KVAR_ACTUAL(jj,3).data = KVAR_ACTUAL_1(ii,3);
             jj = jj + 1;
         end
     end
@@ -151,18 +151,18 @@ elseif timeseries_span == 2
         LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),t_int);
         LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),t_int);
         LOAD_ACTUAL(:,3) = interp(LOAD_ACTUAL_1(:,3),t_int);
-        KVAR_ACTUAL(:,1) = interp(KVAR_ACTUAL_1(:,1),t_int);
-        KVAR_ACTUAL(:,2) = interp(KVAR_ACTUAL_1(:,2),t_int);
-        KVAR_ACTUAL(:,3) = interp(KVAR_ACTUAL_1(:,3),t_int);
+        KVAR_ACTUAL.data(:,1) = interp(KVAR_ACTUAL_1(:,1),t_int);
+        KVAR_ACTUAL.data(:,2) = interp(KVAR_ACTUAL_1(:,2),t_int);
+        KVAR_ACTUAL.data(:,3) = interp(KVAR_ACTUAL_1(:,3),t_int);
     else
         jj=1;
         for ii=1:60:length(LOAD_ACTUAL_1)
             LOAD_ACTUAL(jj,1) = LOAD_ACTUAL_1(ii,1);
             LOAD_ACTUAL(jj,2) = LOAD_ACTUAL_1(ii,2);
             LOAD_ACTUAL(jj,3) = LOAD_ACTUAL_1(ii,3);
-            KVAR_ACTUAL(jj,1) = KVAR_ACTUAL_1(ii,1);
-            KVAR_ACTUAL(jj,2) = KVAR_ACTUAL_1(ii,2);
-            KVAR_ACTUAL(jj,3) = KVAR_ACTUAL_1(ii,3);
+            KVAR_ACTUAL.data(jj,1) = KVAR_ACTUAL_1(ii,1);
+            KVAR_ACTUAL.data(jj,2) = KVAR_ACTUAL_1(ii,2);
+            KVAR_ACTUAL.data(jj,3) = KVAR_ACTUAL_1(ii,3);
             jj = jj + 1;
         end
     end
@@ -198,18 +198,18 @@ elseif timeseries_span == 3
         LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),t_int);
         LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),t_int);
         LOAD_ACTUAL(:,3) = interp(LOAD_ACTUAL_1(:,3),t_int);
-        KVAR_ACTUAL(:,1) = interp(KVAR_ACTUAL_1(:,1),t_int);
-        KVAR_ACTUAL(:,2) = interp(KVAR_ACTUAL_1(:,2),t_int);
-        KVAR_ACTUAL(:,3) = interp(KVAR_ACTUAL_1(:,3),t_int);
+        KVAR_ACTUAL.data(:,1) = interp(KVAR_ACTUAL_1(:,1),t_int);
+        KVAR_ACTUAL.data(:,2) = interp(KVAR_ACTUAL_1(:,2),t_int);
+        KVAR_ACTUAL.data(:,3) = interp(KVAR_ACTUAL_1(:,3),t_int);
     else
         jj=1;
         for ii=1:60:length(LOAD_ACTUAL_1)
             LOAD_ACTUAL(jj,1) = LOAD_ACTUAL_1(ii,1);
             LOAD_ACTUAL(jj,2) = LOAD_ACTUAL_1(ii,2);
             LOAD_ACTUAL(jj,3) = LOAD_ACTUAL_1(ii,3);
-            KVAR_ACTUAL(jj,1) = KVAR_ACTUAL_1(ii,1);
-            KVAR_ACTUAL(jj,2) = KVAR_ACTUAL_1(ii,2);
-            KVAR_ACTUAL(jj,3) = KVAR_ACTUAL_1(ii,3);
+            KVAR_ACTUAL.data(jj,1) = KVAR_ACTUAL_1(ii,1);
+            KVAR_ACTUAL.data(jj,2) = KVAR_ACTUAL_1(ii,2);
+            KVAR_ACTUAL.data(jj,3) = KVAR_ACTUAL_1(ii,3);
             jj = jj + 1;
         end
     end
@@ -302,20 +302,20 @@ end
 %%
 %0]  Alter KVAR if switchcaps are present:
 if Caps.Swtch(1) ~= 0
-    KVAR_ACTUAL=Find_Cap_Ops(KVAR_ACTUAL,sim_num,s_step,Caps);
+    KVAR_ACTUAL=Find_Cap_Ops(KVAR_ACTUAL,sim_num,s_step,Caps,LOAD_ACTUAL);
 end
 %1]  Generate Load Shape:
 filelocation=strcat(s,'\');
 fileID = fopen([filelocation,'Loadshape.dss'],'wt');
 fprintf(fileID,['New loadshape.LS_PhaseA npts=%s sinterval=%s pmult=(',...
     sprintf('%f ',LOAD_ACTUAL(:,1)),') qmult=(',...
-    sprintf('%f ',KVAR_ACTUAL(:,1)+Caps.Fixed(1)),')\n\n'],num2str(sim_num),num2str(s_step));
+    sprintf('%f ',KVAR_ACTUAL.DSS(:,1)),')\n\n'],num2str(sim_num),num2str(s_step));
 fprintf(fileID,['New loadshape.LS_PhaseB npts=%s sinterval=%s pmult=(',...
     sprintf('%f ',LOAD_ACTUAL(:,2)),') qmult=(',...
-    sprintf('%f ',KVAR_ACTUAL(:,2)+Caps.Fixed(1)),')\n\n'],num2str(sim_num),num2str(s_step));
+    sprintf('%f ',KVAR_ACTUAL.DSS(:,2)),')\n\n'],num2str(sim_num),num2str(s_step));
 fprintf(fileID,['New loadshape.LS_PhaseC npts=%s sinterval=%s pmult=(',...
     sprintf('%f ',LOAD_ACTUAL(:,3)),') qmult=(',...
-    sprintf('%f ',KVAR_ACTUAL(:,3)+Caps.Fixed(1)),')\n\n'],num2str(sim_num),num2str(s_step));
+    sprintf('%f ',KVAR_ACTUAL.DSS(:,3)),')\n\n'],num2str(sim_num),num2str(s_step));
 fclose(fileID);
 % 2]  Tell program where DSS Files are:
 if feeder_NUM == 2
