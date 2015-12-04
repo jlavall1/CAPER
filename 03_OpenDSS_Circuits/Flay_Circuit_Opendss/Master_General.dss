@@ -1,0 +1,67 @@
+! ---------------------------------
+!! Converted from CYME 
+! DATE=June 04, 2015 at 12:41:59
+! CYME_VERSION=7.10
+! CYMDIST_REVISION=05
+! ---------------------------------
+! 
+! 
+! Define the Circuit
+! 
+clear
+
+New Circuit.FLAY_RET_16271201 Bus1=FLAY_RET_16271201
+~ BasekV= 12.47  pu= 1.03287884475196  angle= 0 !pu= 1.03287884475196
+~ Z1=[ 0.34933 ,  1.69963 ] ! Actual ohms
+~ Z2=[ 0.34933 ,  1.69963 ]
+~ Z0=[ 0.09228 ,  0.84 ]
+! 
+! Library Data
+! 
+Redirect Wiredata.dss
+Redirect linespacing.dss
+Redirect UGLineCodes.dss
+!
+! Substation definiation
+!
+Redirect Loadshape.dss
+
+! 
+! Circuit Element Data
+! 
+Redirect SourceRegulator_3ph.dss 
+Redirect UGLines.dss
+Redirect LinesByPhase.dss
+Redirect Loads_matchQ.dss 
+Redirect Capacitors.dss
+!
+! Set the voltage bases
+!
+Set voltagebases = [ 12.47 0.480, 0.208, 0.24, 0.12]
+CalcVoltageBases
+!
+! Declare where monitors will be going
+!
+Redirect Monitors_Flay_32_2.dss
+! 
+! Define the bus coordinates
+! 
+Buscoords Buscoords.CSV
+!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!
+! Define an energy meter -- needed for plot profile and yearly simulations
+!
+New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes
+EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ] 
+
+! 
+! Disable Capacitors for load allocation
+Disable Capacitor.*
+! 
+AllocateLoad
+AllocateLoad
+AllocateLoad
+!Dump AllocationFactors
+! 
+! Enable capacitors before solving
+Enable Capacitor.*
