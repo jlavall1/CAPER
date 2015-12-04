@@ -1,4 +1,23 @@
 % ECE 6180                      Project                     Shane Kimble
+%{
+I. Time-series Power Flow
+    1. Compile the system and run a 24hour simulation
+        i. Show Substation Real Power Consumption.
+        ii. LTC P.U. Phase Voltage across substation windings,
+        iii. LTC tap position vs. time. 
+    2. Place V, I &P,Q monitors at three-phase nodes (monitor modes 0 & 1). 
+       Re-run 24hour simulation and complete the following:
+        i. Construct a post-analysis algorithm that will organize data into 
+           structs by node distance from substation. 
+        ii. Find point in time when voltage headroom halfway down the feeder 
+           is minimum (or the closest to 1.04PU). Then plot the  Phase 
+           Voltages in P.U. vs. distance away from substation.
+
+II. Fault Analysis
+    1. Initiate single snapshot faults SLG faults on highest loaded phase
+    2. Three phase fault at the substation, then find the circuit breaker
+       rating.
+%}
 
 clear
 clc
@@ -10,7 +29,8 @@ date = '05/27/2014';
 nstp = 1440; % Number of steps
 step = 60;   % [s] - Resolution of step
 
-fprintf('Simulation Starting %s - %d hrs at %d min resolution\n\n',date,nstp*step/(60*60),step/60)
+fprintf('Simulation Starting %s - %d hrs at %d min resolution\n\n',...
+    date,nstp*step/(60*60),step/60)
 
 %% Initialize OpenDSS
 tic
@@ -49,7 +69,8 @@ end
 % Parce out Data
 for i=1:nstp
     DATA(i).Date = datestr(floor(index(i)*(res/86400)) + datenum(start));
-    DATA(i).Time = [sprintf('%02d',mod(floor(index(i)*res/3600),24)),':',sprintf('%02d',mod(floor(index(i)*res/60),60))];
+    DATA(i).Time = [sprintf('%02d',mod(floor(index(i)*res/3600),24)),':',...
+        sprintf('%02d',mod(floor(index(i)*res/60),60))];
     
     DATA(i).VoltagePhaseA = CMNWLTH.Voltage.A(index(i));
     DATA(i).VoltagePhaseB = CMNWLTH.Voltage.B(index(i));
@@ -355,9 +376,9 @@ title('Problem 1: Real Power Error','FontWeight','bold','FontSize',12);
 legend('Phase A','Phase B','Phase C')
 
 subplot(2,2,4)
-plot([RESULTS.sDate],abs([RESULTS.SubRealPowerPhaseA]-[DATA.RealPowerPhaseA])/std([DATA.RealPowerPhaseA]),'-k',...
-    [RESULTS.sDate],abs([RESULTS.SubRealPowerPhaseB]-[DATA.RealPowerPhaseB])/std([DATA.RealPowerPhaseB]),'-r',...
-    [RESULTS.sDate],abs([RESULTS.SubRealPowerPhaseC]-[DATA.RealPowerPhaseC])/std([DATA.RealPowerPhaseC]),'-b')
+plot([RESULTS.sDate],abs([RESULTS.SubReactivePowerPhaseA]-[DATA.ReactivePowerPhaseA])/std([DATA.ReactivePowerPhaseA]),'-k',...
+    [RESULTS.sDate],abs([RESULTS.SubReactivePowerPhaseB]-[DATA.ReactivePowerPhaseB])/std([DATA.ReactivePowerPhaseB]),'-r',...
+    [RESULTS.sDate],abs([RESULTS.SubReactivePowerPhaseC]-[DATA.ReactivePowerPhaseC])/std([DATA.ReactivePowerPhaseC]),'-b')
 grid on;
 datetick('x','HH')
 axis([X(1) X(2) 0 2])
@@ -410,7 +431,7 @@ legend('Phase A','Phase B','Phase C')
 % Problem 3 Plots
 figure;
 subplot(1,2,1)
-plot([Lines.Distance],[Lines.Rsc],'.k')
+plot([Lines.Distance],[Lines.Rsc],'-k','LineWidth',2)
 grid on;
 xlim([0,5])
 set(gca,'FontSize',10,'FontWeight','bold')
@@ -419,7 +440,7 @@ ylabel(gca,'Short Circuit Resistance [\Omega]','FontSize',12,'FontWeight','bold'
 title('Problem 3: SLG Fault Study on Phase B','FontWeight','bold','FontSize',12);
 
 subplot(1,2,2)
-plot([Lines.Rsc],[Lines.IscB],'.k')
+plot([Lines.Rsc],[Lines.IscB],'-k','LineWidth',2)
 grid on;
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Short Circuit Resistance [\Omega]','FontSize',12,'FontWeight','bold')
