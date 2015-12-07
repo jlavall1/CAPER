@@ -84,19 +84,19 @@ if timeseries_span == 1
     if strcmp(time_int,'1h') == 1
         t_int=0;
         sim_num='6';
-        fprintf('Sim. timestep=1hr\n');
+        fprintf('\tSim. timestep=1hr\n');
     elseif strcmp(time_int,'1m') == 1
         t_int=1;
         sim_num='360'; %6*60
-        fprintf('Sim. timestep=60s\n');
+        fprintf('\tSim. timestep=60s\n');
     elseif strcmp(time_int,'30s') == 1
         t_int=2;
         sim_num='720'; %6*60*2
-        fprintf('Sim. timestep=30s\n');
+        fprintf('\tSim. timestep=30s\n');
     elseif strcmp(time_int,'5s') == 1
         t_int=12;
         sim_num='4320'; %6*60*12
-        fprintf('Sim. timestep=5s\n');
+        fprintf('\tSim. timestep=5s\n');
     end   
     %3] Re-size original 1min data accordingly:
     if t_int ~= 0
@@ -302,7 +302,7 @@ end
 %%
 %0]  Alter KVAR if switchcaps are present:
 if Caps.Swtch(1) ~= 0
-    KVAR_ACTUAL=Find_Cap_Ops(KVAR_ACTUAL,sim_num,s_step,Caps,LOAD_ACTUAL);
+    [KVAR_ACTUAL,cap_pos]=Find_Cap_Ops(KVAR_ACTUAL,sim_num,s_step,Caps,LOAD_ACTUAL,cap_pos);
 end
 %1]  Generate Load Shape:
 filelocation=strcat(s,'\');

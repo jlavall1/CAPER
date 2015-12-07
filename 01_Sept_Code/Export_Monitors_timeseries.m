@@ -207,11 +207,28 @@ if feeder_NUM ~= 8
     DATA_SAVE(1).settings = Settings;
     
     %Save struct of post sim. results.
-    if PV_ON_OFF == 1
-        save(filename,'DATA_SAVE');  
-    elseif PV_ON_OFF == 2
-        filename2=strcat(monitorfile_base,sprintf('/%s_Imped.mat',num2str(perc_Imp*100)));
-        DATA_PV = DATA_SAVE;
-        save(filename2,'DATA_PV');
+    if QSTS_select ~= 4
+        if PV_ON_OFF == 1
+            save(filename,'DATA_SAVE');  
+        elseif PV_ON_OFF == 2
+            filename2=strcat(monitorfile_base,sprintf('/%s_Imped.mat',num2str(perc_Imp*100)));
+            DATA_PV = DATA_SAVE;
+            save(filename2,'DATA_PV');
+        end
+    elseif QSTS_select == 4
+        %Save any additional information for that day:
+        DATA_SAVE(1).KVAR_ACTUAL = KVAR_ACTUAL;
+        DATA_SAVE(1).KW_ACTUAL = LOAD_ACTUAL;
+        
+        %Save the .mat file:
+        if PV_ON_OFF == 2  
+            filename2=strcat(monitorfile_base,sprintf('/DOY_%s_PV_%s_Imped.mat',num2str(DOY),num2str(perc_Imp*100)));
+            DATA_PV = DATA_SAVE;
+            save(filename2,'DATA_PV');
+        else
+            filename2=strcat(monitorfile_base,sprintf('/DOY_%s_BASE.mat',num2str(DOY)));
+            DATA_BASE = DATA_SAVE;
+            save(filename2,'DATA_BASE');
+        end
     end
 end

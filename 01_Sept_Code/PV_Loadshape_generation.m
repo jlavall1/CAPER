@@ -239,7 +239,7 @@ elseif timeseries_span == 5
     PV_loadshape_daily = interp(PV1_loadshape_daily(:,1),6); %60sec. to 10sec dataset --   
     s_pv_txt = '\LS_PVannual.txt';
 end
-clearvars M_PVSITE %RR_distrib
+%clearvars M_PVSITE %RR_distrib
 %Write .csv file for simulation --
 s_pv = strcat(s,s_pv_txt);
 csvwrite(s_pv,PV_loadshape_daily)
