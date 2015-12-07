@@ -64,6 +64,8 @@ tot = 0;
 k=1;
 s=1;
 w=1;
+ss=0;
+z=1;
 % Finds maxes for each month
 for i=1:12
     
@@ -85,7 +87,7 @@ for i=1:12
     WINDOW.KVAR.A(i,3) = 100e3;
     WINDOW.KVAR.B(i,3) = 100e3;
     WINDOW.KVAR.C(i,3) = 100e3;
-
+    
 
     for j=tot+1:Points(i)+tot
         
@@ -114,6 +116,15 @@ for i=1:12
             WINDOW.KVAR.B(k,1) = FEEDER.kVAR.B(j,1);
             WINDOW.KVAR.C(k,1) = FEEDER.kVAR.C(j,1);
 
+            
+%                 for ss=ss+1:6+ss
+%                 if WINDOW.KW.A(ss,1) < WINDOW.KW.A(z,5)
+%                     WINDOW.KW.A(z,5) = WINDOW.KW.A(ss,1);
+%                 end
+%             end
+% 
+%             z=z+1;
+%             ss=ss+1;
             if DOY > 120 && DOY <= 304 %SUMMER
                 
                 % First column is every data point within window
@@ -196,8 +207,10 @@ for i=1:12
             if FEEDER.kVAR.C(j,1) < WINDOW.KVAR.C(i,3)
                 WINDOW.KVAR.C(i,3) = FEEDER.kVAR.C(j,1);
             end
-            
-            
+
+
+
+
             if FEEDER.kW.A(j,1) > MAX.MONTH.KW.A(i,1)
                 MAX.MONTH.KW.A(i,1) = FEEDER.kW.A(j,1);
                 
@@ -261,14 +274,24 @@ for i=1:12
             end
             k=k+1;
             
-            
+
         end
         
     end
     tot = tot + Points(i);
-    
-end
 
+end
+            
+            
+            for z=1:21900
+                mina = min(WINDOW.KW.A(ss+1:ss+6,1));
+                minb = min(WINDOW.KW.B(ss+1:ss+6,1));
+                minc = min(WINDOW.KW.C(ss+1:ss+6,1));
+                WINDOW.MIN.KW.A(z,1) = mina+minb+minc;
+                ss=ss+6;
+            end
+            
+            
 %% Hours 10 - 16 window dataset
 
 % Second column is data sorted low to high
