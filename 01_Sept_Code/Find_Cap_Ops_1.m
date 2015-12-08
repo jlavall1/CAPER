@@ -1,26 +1,104 @@
-function [ KVAR_ACTUAL,cap_pos ] = Find_Cap_Ops(KVAR_ACTUAL,sim_num,s_step,Caps,KW_ACTUAL,cap_pos)
+function [ KVAR_ACTUAL,error,op_count] = Find_Cap_Ops_1(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,KW_ACTUAL,KW_ACTUAL_1,cap_pos)
 %Goal: Find Capacitor operations based on profile
 sim_num = str2num(sim_num);
 %sim_num=1440
 %s_step=60s
-hold_max = 0;
-neg_peak_count = 0;
-pos_peak_count = 0;
+
 %1] Calculate delta_t=10intervals Q slope.
-j = 1;
-for i=1:1:sim_num-10
+k = 1; %Used to loook to the next day for last 10 points
+error = 0;
+op_count = 0;
+for i=1:1:sim_num
     for ph=1:1:3
-        KVAR_diff = KVAR_ACTUAL.data(i+10,ph)-KVAR_ACTUAL.data(i,ph); %Look 10 minutes in the future
-        KVAR_ACTUAL.data(i,ph+6)=KVAR_diff;
-        if KVAR_diff < -.5*Caps.Swtch
-            neg_peak_count = neg_peak_count + 1;
-            neg_peak_time(j,1) = i;
-        elseif KVAR_diff > .5*Caps.Swtch
-            pos_peak_count = pos_peak_count + 1;
-            pos_peak_time(j,1) = i;
+        if i <= sim_num-10
+            KVAR_diff = KVAR_ACTUAL.data(i+10,ph)-KVAR_ACTUAL.data(i,ph); %Look 10 minutes in the future
+            KW_diff = KW_ACTUAL(i+10,ph)-KW_ACTUAL(i,ph);
+        else
+            KVAR_diff = KVAR_ACTUAL_1.data(k,ph)-KVAR_ACTUAL.data(i,ph); %Look 10 minutes in the future
+            KW_diff = KW_ACTUAL_1(k,ph)-KW_ACTUAL(i,ph);
         end
+        KVAR_ACTUAL.data(i,ph+6)=KVAR_diff;
+        KVAR_ACTUAL.dP(i,ph)=KW_diff;
+    end
+    if i > sim_num-10
+        k = k + 1;
     end
 end
+instance_neg = 0;
+count_neg = 0;
+instance_pos = 0;
+count_pos = 0;
+%2] Interp dQ's.
+KVAR_diff = 0;
+KVAR_mag = 0;
+KW_diff = 0;
+for i=1:1:sim_num
+    for ph=1:1:3
+        KVAR_diff = KVAR_diff + KVAR_ACTUAL.data(i,ph+6);
+        KVAR_mag= KVAR_mag+ abs(KVAR_ACTUAL.data(i,ph+6));
+        KW_diff = KW_diff + KVAR_ACTUAL.dP(i,ph);
+    end
+    KVAR_ACTUAL.data(i,10) = KVAR_diff; %3ph dQ
+    KVAR_ACTUAL.data(i,11) = KVAR_mag;  % |dQ_3ph|
+    KVAR_ACTUAL.dP(i,4) = abs(KW_diff); %3ph dP    
+    if KVAR_ACTUAL.dP(i,4) < 250 %To filter out any events:
+        
+        if KVAR_diff < 0 && KVAR_mag > .45*Caps.Swtch*3
+            count_neg = count_neg + 1;
+            if count_neg > 1
+                if instance_neg == 0
+                    instance_neg = i;
+                    cap_pos = cap_pos +1;
+                    op_count = op_count + 1;
+                    if cap_pos > 1
+                        cap_pos = 1;
+                        error = 1;
+                    end
+                elseif instance_neg+20 < i
+                    instance_neg = i;
+                    cap_pos = cap_pos + 1;
+                    op_count = op_count + 1;
+                    if cap_pos > 1
+                        cap_pos = 1;
+                        error = 1;
+                    end
+                end
+                count_neg=0;
+            end
+            
+        elseif KVAR_diff > 0 && KVAR_mag > .45*Caps.Swtch*3
+            count_pos = count_pos + 1;
+            if count_pos > 1
+                if instance_pos == 0
+                    instance_pos = i;
+                    cap_pos = cap_pos - 1;
+                    op_count = op_count + 1;
+                    if cap_pos < 0
+                        cap_pos = 0;
+                        error = 1;
+                    end
+
+                elseif instance_pos+20 < i
+                    instance_pos = i;
+                    cap_pos = cap_pos - 1;
+                    op_count = op_count + 1;
+                    if cap_pos < 0
+                        cap_pos = 0;
+                        error = 1;
+                    end
+                end
+                count_pos=0;
+            end
+        end
+    end
+    %KVAR_ACTUAL.sw_cap(i,ph)=cap_pos;
+    KVAR_ACTUAL.data(i,4)=cap_pos;
+    KVAR_diff = 0;
+    KW_diff = 0;
+    KVAR_mag = 0;
+end
+
+%{
 %2] Understand how many peaks there were.
 disp(neg_peak_count)
 if neg_peak_count/3 < 16 && neg_peak_count > 0
@@ -148,6 +226,7 @@ for i=1:1:sim_num
     KVAR_ACTUAL.data(i,4)=cap_pos;
     KVAR_ACTUAL.sw_cap(i,1)=cap_pos;
 end
+%}
 
 %5] generate 3ph reactive power:
 for i=1:1:sim_num
@@ -168,15 +247,15 @@ ph_perc=350./DIFF;
 
 
 
-KVAR_ACTUAL.DSS(:,1)=KVAR_ACTUAL.data(:,1)+(Caps.Fixed(1)+KVAR_ACTUAL.sw_cap(:,1)*Caps.Swtch(1))*(1+(1-ph_perc(1,1)));
-KVAR_ACTUAL.DSS(:,2)=KVAR_ACTUAL.data(:,2)+(Caps.Fixed(1)+KVAR_ACTUAL.sw_cap(:,1)*Caps.Swtch(1))*(1+(1-ph_perc(1,2)));
-KVAR_ACTUAL.DSS(:,3)=KVAR_ACTUAL.data(:,3)+(Caps.Fixed(1)+KVAR_ACTUAL.sw_cap(:,1)*Caps.Swtch(1))*(1+(1-ph_perc(1,3)));
+KVAR_ACTUAL.DSS(:,1)=KVAR_ACTUAL.data(:,1)+(Caps.Fixed(1)+KVAR_ACTUAL.data(:,4)*Caps.Swtch(1))*(1+(1-ph_perc(1,1)));
+KVAR_ACTUAL.DSS(:,2)=KVAR_ACTUAL.data(:,2)+(Caps.Fixed(1)+KVAR_ACTUAL.data(:,4)*Caps.Swtch(1))*(1+(1-ph_perc(1,2)));
+KVAR_ACTUAL.DSS(:,3)=KVAR_ACTUAL.data(:,3)+(Caps.Fixed(1)+KVAR_ACTUAL.data(:,4)*Caps.Swtch(1))*(1+(1-ph_perc(1,3)));
 
 
 %disp(KVAR_neg_peak)
 %disp(KVAR_pos_peak)
-fprintf('\t\t--Capacitor Ops--\nOpened Count=%3.0f & Closed Count=%3.f\n',pos_peak_count,neg_peak_count);
-fprintf('Op. Time= %d & Op. Time= %d\n',time_opened(1),time_closed(1));
+%fprintf('\t\t--Capacitor Ops--\nOpened Count=%3.0f & Closed Count=%3.f\n',pos_peak_count,neg_peak_count);
+%fprintf('Op. Time= %d & Op. Time= %d\n',time_opened(1),time_closed(1));
 
         
 

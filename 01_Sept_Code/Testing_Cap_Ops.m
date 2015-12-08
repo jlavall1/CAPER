@@ -1,10 +1,11 @@
 %Testing Cap_Ops Finder:
 clear
 clc
+close all
 base_path = 'C:\Users\jlavall\Documents\GitHub\CAPER';
 path = strcat(base_path,'\04_DSCADA\Feeder_Data');
 time_int = '1m';
-cap_pos = 1;
+cap_pos = 1; %used to be 1
 addpath(path);
 load FLAY.mat
 FEEDER = FLAY;
@@ -20,16 +21,10 @@ V_LTC = 1.03*((12.47e3)/sqrt(3));
 % -- Flay 13.27km long --
 root = 'Flay';
 root1= 'Flay';
-for DOY=1:1:365
+for DOY=1:1:364
     fprintf('\n%d DOY\n',DOY);
-    %1] Select data for 24hour period --
-    LOAD_ACTUAL_1(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY,23,59),1);
-    LOAD_ACTUAL_1(:,2) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
-    LOAD_ACTUAL_1(:,3) = FEEDER.kW.C(time2int(DOY,0,0):time2int(DOY,23,59),1);
-    KVAR_ACTUAL_1(:,1) = FEEDER.kVAR.A(time2int(DOY,0,0):time2int(DOY,23,59),1);
-    KVAR_ACTUAL_1(:,2) = FEEDER.kVAR.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
-    KVAR_ACTUAL_1(:,3) = FEEDER.kVAR.C(time2int(DOY,0,0):time2int(DOY,23,59),1);
-    %2] Declare duration & timestep:
+    
+    %1] Declare duration & timestep:
     if strcmp(time_int,'1h') == 1
         t_int=0;
         s_step=3600;
@@ -51,72 +46,24 @@ for DOY=1:1:365
         sim_num='17280';
         fprintf('Sim. timestep=5s\n');
     end
-    %3]Re-size original 1min data accordingly:
-    if t_int ~= 0
-        LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),t_int);
-        LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),t_int);
-        LOAD_ACTUAL(:,3) = interp(LOAD_ACTUAL_1(:,3),t_int);
-        KVAR_ACTUAL.data(:,1) = interp(KVAR_ACTUAL_1(:,1),t_int);
-        KVAR_ACTUAL.data(:,2) = interp(KVAR_ACTUAL_1(:,2),t_int);
-        KVAR_ACTUAL.data(:,3) = interp(KVAR_ACTUAL_1(:,3),t_int);
-    else
-        jj=1;
-        for ii=1:60:length(LOAD_ACTUAL_1)
-            LOAD_ACTUAL(jj,1) = LOAD_ACTUAL_1(ii,1);
-            LOAD_ACTUAL(jj,2) = LOAD_ACTUAL_1(ii,2);
-            LOAD_ACTUAL(jj,3) = LOAD_ACTUAL_1(ii,3);
-            KVAR_ACTUAL.data(jj,1) = KVAR_ACTUAL_1(ii,1);
-            KVAR_ACTUAL.data(jj,2) = KVAR_ACTUAL_1(ii,2);
-            KVAR_ACTUAL.data(jj,3) = KVAR_ACTUAL_1(ii,3);
-            jj = jj + 1;
-        end
-    end
-    %4]Check to see if there are any NaN:
-    j = 1;
-    error_len= zeros(1,3);
-    error_srt = 0;
-    for ph=1:1:3
-        for i=1:1:str2num(sim_num)
-            if isnan(KVAR_ACTUAL.data(i,ph)) == 1
-                save(j,ph) = i;
-                if j ~= 1
-                    if save(j-1,ph) == i-1
-                        error_len(1,ph) = error_len(1,ph) + 1;
-                        if error_srt == 0
-                            error_srt = i-1;
-                        end
-                    end
-                end
-                j = j + 1;
-            end
-        end
-        j = 1;
-    end
-    disp(error_len)
-    fprintf('Error started: %d\n',error_srt);
-    %   Linearize data gaps:
-    if error_srt ~= 0
-        for ph=1:1:3
-            y1 = KVAR_ACTUAL.data(error_srt-1,ph);
-            y2 = KVAR_ACTUAL.data(error_srt+error_len(1,ph)+1,ph);
-            m = (y2-y1)/(error_len(1,ph)+1);
-            for i=0:1:error_len(1,ph)
-                KVAR_ACTUAL.data(error_srt+i,ph) = KVAR_ACTUAL.data(error_srt+i-1,ph)+m;
-            end
-        end
-    end
-            
-    
-    %5]Find CAP ops:
+    [LOAD_ACTUAL,KVAR_ACTUAL]=Pull_DSCADA(DOY,FEEDER,t_int,sim_num);
+    [LOAD_ACTUAL_1,KVAR_ACTUAL_1]=Pull_DSCADA(DOY+1,FEEDER,t_int,sim_num);
+    %2]Find CAP ops:
     if Caps.Swtch(1) ~= 0
-        [KVAR_ACTUAL,cap_pos]=Find_Cap_Ops(KVAR_ACTUAL,sim_num,s_step,Caps,LOAD_ACTUAL,cap_pos);
+        [KVAR_ACTUAL,E,OPS]=Find_Cap_Ops_1(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,LOAD_ACTUAL,LOAD_ACTUAL_1,cap_pos);
     end
+    cap_pos = KVAR_ACTUAL.data(1440,4);
     CAP_OPS(DOY).data = KVAR_ACTUAL.data;
+    %CAP_OPS(DOY).
+    CAP_OPS(DOY).dP = KVAR_ACTUAL.dP;
+    CAP_OPS(DOY).kW = LOAD_ACTUAL;
+    CAP_OPS(DOY).error = E;
+    CAP_OPS(DOY).oper = OPS;
 end
-%%
+%{
 figure(1)
 s = 1;
-for i=1:1:50
+for i=1:1:364
     Y = CAP_OPS(i).data(1:1440,4);
     X = [s:1:1440+s-1]';
     %plot(s+j,CAP_OPS(i).data(j,4));
@@ -124,5 +71,63 @@ for i=1:1:50
     hold on
     s = s + 1440;
 end
+axis([0 s -1 2])
+figure(2)
+s = 1;
+for i=1:1:50
+    Y = CAP_OPS(i).data(1:1440,7);
+    X = [s:1:1440+s-1]';
+    %plot(s+j,CAP_OPS(i).data(j,4));
+    plot(X,Y)
+    hold on
+    s = s + 1440;
+end
+%%
+figure(3)
+%Test DOY=51:
+T_DAY = 265;
+plot(CAP_OPS(T_DAY).data(:,1),'r-')
+hold on
+plot(CAP_OPS(T_DAY).data(:,2),'g-')
+hold on
+plot(CAP_OPS(T_DAY).data(:,3),'b-')
+hold on
+plot(CAP_OPS(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
+%%
+figure(4)
+s = 1;
+for i=120:1:200
+    Y = CAP_OPS(i).data(1:1440,10);
+    X = [s:1:1440+s-1]';
+    %plot(s+j,CAP_OPS(i).data(j,4));
+    plot(X,Y)
+    hold on
+    s = s + 1440;
+end
+%%
+%}
+%%
+fig = 0;
+%close all
+for i=150:1:365
+    if CAP_OPS(i).oper == 0
+        fig = fig + 1;
+        figure(fig)
+        T_DAY = i;
+        plot(CAP_OPS(T_DAY).data(:,1),'r-')
+        hold on
+        plot(CAP_OPS(T_DAY).data(:,2),'g-')
+        hold on
+        plot(CAP_OPS(T_DAY).data(:,3),'b-')
+        hold on
+        plot(CAP_OPS(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
+        hold off
+        title(sprintf('DOY=%d',i));
+    end
+end
+        
+        
+        
+
     
     
