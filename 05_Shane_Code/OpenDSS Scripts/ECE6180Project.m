@@ -36,8 +36,23 @@ fprintf('Simulation Starting %s - %d hrs at %d min resolution\n\n',...
 tic
 disp('Initializing OpenDSS...')
 
-% Load DSS file location
-load('COMMONWEALTH_Location.mat');
+% Find CAPER directory
+fid = fopen('pathdef.m','r');
+rootlocation = textscan(fid,'%c')';
+rootlocation = regexp(rootlocation{1}','C:[^.]*?CAPER\\','match','once');
+fclose(fid);
+rootlocation = [rootlocation,'07_CYME\'];
+
+% Read in filelocation
+filename = 0;
+% ******To skip UIGETFILE uncomment desired filename*******
+% ***(Must be in rootlocation CAPER03_OpenDSS_Circuits\)***
+%filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
+filename = 'Master.dss'; filelocation = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\01_Shane\';
+while ~filename
+    [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
+        rootlocation);
+end
 
 % Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
@@ -45,6 +60,7 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 
 % Compile Circuit
 DSSText.command = ['Compile ',[filelocation,filename]];
+DSSCircuit.Solution.Solve
 
 %% Load Historical Data
 toc
@@ -91,6 +107,7 @@ end
 clear CMNWLTH
 
 %% Generate Load Shapes
+%{
 % Read in DSS Load data for peak normalization
 LoadNames = DSSCircuit.Loads.AllNames;
 for i = 1:length(LoadNames)
@@ -120,35 +137,36 @@ kVARtotB = sum([Loads(regexp([Loads.Phase],'B')).kVAR]);
 kVARtotC = sum([Loads(regexp([Loads.Phase],'C')).kVAR]);
 
 % Define Load shapes ***Add 300kvar per phase for capacitors
-DSSText.Command = sprintf(['New loadshape.LS_PhaseA npts=%d sinterval=%d pmult=(',...
+DSSText.Command = sprintf(['Edit Loadshape.DailyA npts=%d sinterval=%d pmult=(',...
     sprintf('%f ',[DATA.RealPowerPhaseA]/kWtotA),') qmult=(',...
     sprintf('%f ',([DATA.ReactivePowerPhaseA]+300)/kVARtotA),')'],nstp,step);
-DSSText.Command = sprintf(['New loadshape.LS_PhaseB npts=%d sinterval=%d pmult=(',...
+DSSText.Command = sprintf(['Edit Loadshape.DailyB npts=%d sinterval=%d pmult=(',...
     sprintf('%f ',[DATA.RealPowerPhaseB]/kWtotB),') qmult=(',...
-    sprintf('%f ',([DATA.ReactivePowerPhaseB]+300)/kVARtotB),')\n\n'],nstp,step);
-DSSText.Command = sprintf(['New loadshape.LS_PhaseC npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',([DATA.ReactivePowerPhaseB]+300)/kVARtotB),')'],nstp,step);
+DSSText.Command = sprintf(['Edit Loadshape.DailyC npts=%d sinterval=%d pmult=(',...
     sprintf('%f ',[DATA.RealPowerPhaseC]/kWtotC),') qmult=(',...
-    sprintf('%f ',([DATA.ReactivePowerPhaseC]+300)/kVARtotC),')\n\n'],nstp,step);
+    sprintf('%f ',([DATA.ReactivePowerPhaseC]+300)/kVARtotC),')'],nstp,step);
 
-%{
-% Print Loadshape to file
-fprintf(fileID,['New loadshape.LS_PhaseA npts=%d sinterval=%d pmult=(',...
-    sprintf('%f ',[DATA.RealPowerPhaseA]),') qmult=(',...
-    sprintf('%f ',[DATA.ReactivePowerPhaseA]+300),')\n\n'],nstp,step);
-fprintf(fileID,['New loadshape.LS_PhaseB npts=%d sinterval=%d pmult=(',...
-    sprintf('%f ',[DATA.RealPowerPhaseB]),') qmult=(',...
-    sprintf('%f ',[DATA.ReactivePowerPhaseB]+300),')\n\n'],nstp,step);
-fprintf(fileID,['New loadshape.LS_PhaseC npts=%d sinterval=%d pmult=(',...
-    sprintf('%f ',[DATA.RealPowerPhaseC]),') qmult=(',...
-    sprintf('%f ',[DATA.ReactivePowerPhaseC]+300),')\n\n'],nstp,step);
-fclose(fileID);
 %}
 
-% Add Load shapes to Loads
-for i = 1:length(Loads)
-    DSSText.Command = sprintf('Edit Load.%s yearly=LS_Phase%c daily=LS_Phase%c duty=LS_Phase%c',...
-        Loads(i).ID,Loads(i).Phase,Loads(i).Phase,Loads(i).Phase);
-end 
+% Find Peak Demand by Phase for normalization
+LoadTotals = LoadsByPhase(DSSCircObj);
+
+% Define Load shapes ***Add 300kvar per phase for capacitors
+DSSText.Command = sprintf(['Edit Loadshape.DailyA npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA.RealPowerPhaseA]/LoadTotals.kWA),') qmult=(',...
+    sprintf('%f ',([DATA.ReactivePowerPhaseA]+300)/LoadTotals.kVARA),')'],nstp,step);
+DSSText.Command = sprintf(['Edit Loadshape.DailyB npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA.RealPowerPhaseB]/LoadTotals.kWB),') qmult=(',...
+    sprintf('%f ',([DATA.ReactivePowerPhaseB]+300)/LoadTotals.kVARB),')'],nstp,step);
+DSSText.Command = sprintf(['Edit Loadshape.DailyC npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA.RealPowerPhaseC]/LoadTotals.kWC),') qmult=(',...
+    sprintf('%f ',([DATA.ReactivePowerPhaseC]+300)/LoadTotals.kVARC),')'],nstp,step);
+
+
+
+
+
 
 %% Generate Monitors
 toc
@@ -368,7 +386,7 @@ plot([RESULTS.sDate],100*abs([RESULTS.SubRealPowerPhaseA]-[DATA.RealPowerPhaseA]
     [RESULTS.sDate],100*abs([RESULTS.SubRealPowerPhaseC]-[DATA.RealPowerPhaseC])./[DATA.RealPowerPhaseC],'-b')
 grid on;
 datetick('x',format)
-axis([X(1) X(2) 0 5])
+%axis([X(1) X(2) 0 5])
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Time [hr]','FontSize',12,'FontWeight','bold')
 ylabel(gca,'Error [%]','FontSize',12,'FontWeight','bold')
@@ -381,7 +399,7 @@ plot([RESULTS.sDate],abs([RESULTS.SubReactivePowerPhaseA]-[DATA.ReactivePowerPha
     [RESULTS.sDate],abs([RESULTS.SubReactivePowerPhaseC]-[DATA.ReactivePowerPhaseC])/std([DATA.ReactivePowerPhaseC]),'-b')
 grid on;
 datetick('x','HH')
-axis([X(1) X(2) 0 2])
+%axis([X(1) X(2) 0 2])
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Time [hr]','FontSize',12,'FontWeight','bold')
 ylabel(gca,'Error [\sigma_{actual}]','FontSize',12,'FontWeight','bold')
@@ -395,7 +413,7 @@ plot([RESULTS.sDate],[RESULTS.SubVoltageMagPhaseA]/60,'-k',...
     [RESULTS.sDate],[RESULTS.SubVoltageMagPhaseC]/60,'-b',...
     X,[122.5 122.5],'--r',X,[123.5 123.5],'--r')
 grid on;
-axis([X(1) X(2) 122 124])
+%axis([X(1) X(2) 122 124])
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Time [hr]','FontSize',12,'FontWeight','bold')
 datetick('x','HH')
@@ -406,7 +424,7 @@ legend('Phase A','Phase B','Phase C') %,'Location','northwest')
 subplot(1,2,1)
 plot([RESULTS.sDate],[RESULTS.SubLTCTapPosition],'-k')
 grid on;
-axis([X(1) X(2) .995 1.01])
+%axis([X(1) X(2) .995 1.01])
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Time [hr]','FontSize',12,'FontWeight','bold')
 datetick('x','HH')
@@ -421,7 +439,7 @@ plot([Lines.Distance],[Lines.VoltageMagPhaseB]/7200,'-r','LineWidth',2)
 plot([Lines.Distance],[Lines.VoltageMagPhaseC]/7200,'-b','LineWidth',2)
 hold off
 grid on;
-axis([0 4.5 .98 1.04])
+%axis([0 4.5 .98 1.04])
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Distance from Sub [km]','FontSize',12,'FontWeight','bold')
 ylabel(gca,'Voltage [pu]','FontSize',12,'FontWeight','bold')

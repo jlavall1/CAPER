@@ -1,17 +1,24 @@
-% SXSTtoDSS reads in a CYME file (.sxst) and generates the following files
-% *Master.dss - OpenDSS redirect information for defining circuit
+%{
+SXSTtoDSS reads in a CYME file (.sxst) and generates the following files
+Master.dss - OpenDSS redirect information for defining circuit
+Shapes.dss - OpenDSS Daily and Yearly Loadshape definitions
+BusesCoords.dss - Bus Coordinates for plotting circuit
+
+\Elements
 % Lines.dss - OpenDSS line definitions
+% LinesNO.dss - OpenDSS line definitions for Normally Open points for loops
 % Loads.dss - OpenDSS load definitions
-% Buses.dss - Bus Coordinates for plotting circuit
 % *Capacitors.dss - OpenDSS capacitor definitions
 % *Regulators.dss - OpenDSS regulator definitions
+
+\Controls
 % *FuseContrl.dss - OpenDSS fuse control settings
 % *SwitContrl.dss - OpenDSS switch control settings
 % *ReclContrl.dss - OpenDSS recloser control settings
 
 % All Files will be saved in folowing location:
 %   SXSTdir\filename.sxst_DSS\ {here}
-
+%}
 clear
 clc
 
@@ -38,6 +45,8 @@ end
 savelocation = [filelocation,filename,'_DSS\'];
 if ~exist(savelocation,'dir')
     mkdir(savelocation)
+    mkdir([savelocation,'Elements\'])
+    mkdir([savelocation,'Controls\'])
 end
 
 tic
@@ -45,215 +54,253 @@ tic
 FILE = fileread([filelocation,filename]);
 
 % Print Circuit Specs
+sc = length(strfind(FILE,'<Source>'));
+
 n = length(strfind(FILE,'<Node>'));
 s = length(strfind(FILE,'<Section>'));
+no = length(strfind(FILE,'<NormalStatus>Open</NormalStatus>'));
+
 l = length(strfind(FILE,'<SpotLoad>'));
 lp = length(strfind(FILE,'<CustomerLoadValue>'));
-fprintf('%d Nodes; %d Sections; %d Loads (%d by phase)\n',n,s,l,lp)
+fprintf('%d Source(s)\n%d Nodes; %d Sections; (%d N.O. Switches)\n%d Loads (%d by phase)\n',sc,n,l,no,l,lp)
 
-% Extract Node Information
+%% Generate Loadshape File
+fID_Shape = fopen([savelocation,'Shapes.dss'],'wt');
+fprintf(fID_Shape,['New loadshape.DailyA\n',...
+    'New loadshape.DailyB\n',...
+    'New loadshape.DailyC\n\n',...
+    'New loadshape.DutyA\n',...
+    'New loadshape.DutyB\n',...
+    'New loadshape.DutyC\n\n',...
+    'New loadshape.YearlyA\n',...
+    'New loadshape.YearlyB\n',...
+    'New loadshape.YearlyC']);
+fclose(fID_Shape);
+
+%% Extract Node Information
 %  Output - Buses.dss (text file containing BusID, X, and Y Coords)
-nodeinfo = regexp(FILE,'<Node>(.*?)</Node>','match');
-fID_Buses = fopen([savelocation,'Buses.dss'],'wt');
-for i = 1:length(nodeinfo)
-    % MILP
-    NODE(i).ID = regexp(nodeinfo{i},'(?<=<NodeID>)(.*?)(?=</NodeID>)','match');
+Buses = struct('Info',regexp(FILE,'<Node>(.*?)</Node>','match'));
+fID_Buses = fopen([savelocation,'BusCoords.dss'],'wt');
+for b = 1:n
+    Buses(b).ID = regexp(Buses(b).Info,'(?<=<NodeID>)(.*?)(?=</NodeID>)','match'); Buses(b).ID = Buses(b).ID{1};
+    Buses(b).XCoord = str2double(regexp(Buses(b).Info,'(?<=<X>)(.*?)(?=</X>)','match'));
+    Buses(b).YCoord = str2double(regexp(Buses(b).Info,'(?<=<Y>)(.*?)(?=</Y>)','match'));
     
-    % DSS
-    Buses(i).ID = regexp(nodeinfo{i},'(?<=<NodeID>)(.*?)(?=</NodeID>)','match');
-    Buses(i).XCoord = str2double(regexp(nodeinfo{i},'(?<=<X>)(.*?)(?=</X>)','match'));
-    Buses(i).YCoord = str2double(regexp(nodeinfo{i},'(?<=<Y>)(.*?)(?=</Y>)','match'));
-    
-    fprintf(fID_Buses,'%-30s %-15.2f %-15.2f\n',Buses(i).ID{1},Buses(i).XCoord,Buses(i).YCoord);
+    fprintf(fID_Buses,'%-30s %-15.2f %-15.2f\n',Buses(b).ID,Buses(b).XCoord,Buses(b).YCoord);
 end
 fclose(fID_Buses);
+Buses = rmfield(Buses,'Info');
 
-% Extract Section Information
+%% Extract Section Information
 %  Output - Lines.dss, Loads.dss
-sectinfo = regexp(FILE,'<Section>(.*?)</Section>','match');
-k = 1;
-fID_Lines = fopen([savelocation,'Lines.dss'],'wt');
-fID_Monitors = fopen([savelocation,'Monitors.dss'],'wt'); % Only 3ph
-for i = 1:length(sectinfo)
-    % MILP
-    SECTION(i).FROMNODE = regexp(sectinfo{i},'(?<=<FromNodeID>)(.*?)(?=</FromNodeID>)','match');
-    SECTION(i).TONODE = regexp(sectinfo{i},'(?<=<ToNodeID>)(.*?)(?=</ToNodeID>)','match');
-    SECTION(i).PHASE = regexp(sectinfo{i},'(?<=<Phase>)(.*?)(?=</Phase>)','match','once');
 
-    % DSS
-    Lines(i).ID = regexp(sectinfo{i},'(?<=<SectionID>)(.*?)(?=</SectionID>)','match');
-    Lines(i).Phase = regexp(sectinfo{i},'(?<=<Phase>)(.*?)(?=</Phase>)','match','once');
+% Initialize counters
+ld = 1; % Loads
+sw = 1; % Switches
+fs = 1; % Fuses
+cp = 1; % Capacitors
+rg = 1; % Regulators
+rc = 1; % Reclosers
+
+Lines = struct('Info',regexp(FILE,'<Section>(.*?)</Section>','match'));
+fID_Lines = fopen([savelocation,'Elements\Lines.dss'],'wt');
+fID_Loads = fopen([savelocation,'Elements\Loads.dss'],'wt');
+for l = 1:s
+    Lines(l).ID = regexp(Lines(l).Info,'(?<=<SectionID>)(.*?)(?=</SectionID>)','match'); Lines(l).ID = Lines(l).ID{1};
+    Lines(l).Phase = regexp(Lines(l).Info,'(?<=<Phase>)(.*?)(?=</Phase>)','match','once');
+    Lines(l).numPhase = length(Lines(l).Phase);
+    
     % String to be appended to bus info
     append = '';
-    if ~isempty(strfind(Lines(i).Phase,'A'))
+    if ~isempty(strfind(Lines(l).Phase,'A'))
         append = [append,'.1'];
     end
-    if ~isempty(strfind(Lines(i).Phase,'B'))
+    if ~isempty(strfind(Lines(l).Phase,'B'))
         append = [append,'.2'];
     end
-    if ~isempty(strfind(Lines(i).Phase,'C'))
+    if ~isempty(strfind(Lines(l).Phase,'C'))
         append = [append,'.3'];
     end
     
-    Lines(i).Phase = length(Lines(i).Phase);
-    % Monitor all 3ph lines
-    if Lines(i).Phase == 3
-        fprintf(fID_Monitors,'New Monitor.%s_Mon_VI element=Line.%s term=1 mode=32\n',...
-            Lines(i).ID{1},Lines(i).ID{1});
-        fprintf(fID_Monitors,'New Monitor.%s_Mon_PQ element=Line.%s term=1 mode=1 PPolar=No\n',...
-            Lines(i).ID{1},Lines(i).ID{1});
+    bus1 = regexp(Lines(l).Info,'(?<=<FromNodeID>)(.*?)(?=</FromNodeID>)','match');
+    bus2 = regexp(Lines(l).Info,'(?<=<ToNodeID>)(.*?)(?=</ToNodeID>)','match');
+    Lines(l).Bus1 = [bus1{1},append];
+    Lines(l).Bus2 = [bus2{1},append];
+    
+    % Switches (counter = sw)
+    switchinfo = regexp(Lines(l).Info,'<Switch>(.*?)</Switch>','match');
+    if ~isempty(switchinfo)
+        Lines(l).Switch = 1;
+        Lines(l).Enable = regexp(switchinfo,'(?<=<NormalStatus>)(.*?)(?=</NormalStatus>)','match');
+        Lines(l).Enable = strrep(Lines(l).Enable{1},'Closed','yes');
+        Lines(l).Enable = strrep(Lines(l).Enable{1},'Open','no');
+    else
+        Lines(l).Switch = 0;
+        Lines(l).Enable = 'yes';
     end
     
-    bus1 = regexp(sectinfo{i},'(?<=<FromNodeID>)(.*?)(?=</FromNodeID>)','match');
-    bus2 = regexp(sectinfo{i},'(?<=<ToNodeID>)(.*?)(?=</ToNodeID>)','match');
-    Lines(i).Bus1 = [bus1{1},append];
-    Lines(i).Bus2 = [bus2{1},append];
-            
-    % Extract Device Info
     %  Overhead By Phase
-    overheadinfo = regexp(sectinfo{i},'<OverheadByPhase>(.*?)</OverheadByPhase>','match');
+    overheadinfo = regexp(Lines(l).Info,'<OverheadByPhase>(.*?)</OverheadByPhase>','match');
     if ~isempty(overheadinfo)
-        % DSS
-        Lines(i).Length = str2double(regexp(overheadinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
-        Lines(i).Spacing = strrep(regexp(overheadinfo{1},'(?<=<ConductorSpacingID>)(.*?)(?=</ConductorSpacingID>)','match'),'&apos;','''');
+        Lines(l).Length = str2double(regexp(overheadinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
+        Lines(l).Spacing = strrep(regexp(overheadinfo{1},'(?<=<ConductorSpacingID>)(.*?)(?=</ConductorSpacingID>)','match'),'&apos;',''''); Lines(l).Spacing = Lines(l).Spacing{1};
         wires = regexp(overheadinfo{1},'(?<=<PhaseConductorID[ABC]>)(.*?)(?=</PhaseConductorID[ABC]>)','match');
         wires = [wires(~strcmp(wires,'NONE')),regexp(overheadinfo{1},'(?<=<NeutralConductorID>)(.*?)(?=</NeutralConductorID>)','match')];
-        Lines(i).Wires = ['[''',strjoin(wires,''' '''),''']'];
+        Lines(l).Wires = ['[''',strjoin(wires,''' '''),''']'];
         
+        % Print to file Lines.dss
         fprintf(fID_Lines,['New Line.%s Phases= %d Bus1=%-15s Bus2=%-15s ',...
             'Length=%-6.2f units=m  Spacing=%s wires=%s\n'],...
-            Lines(i).ID{1},Lines(i).Phase,Lines(i).Bus1,Lines(i).Bus2,...
-            Lines(i).Length,Lines(i).Spacing{1},Lines(i).Wires);
+            Lines(l).ID,Lines(l).numPhase,Lines(l).Bus1,Lines(l).Bus2,...
+            Lines(l).Length,Lines(l).Spacing,Lines(l).Wires);
     end
     
     %  Underground
-    undergroundinfo = regexp(sectinfo{i},'<Underground>(.*?)</Underground>','match');
+    undergroundinfo = regexp(Lines(l).Info,'<Underground>(.*?)</Underground>','match');
     if ~isempty(undergroundinfo)
-        % DSS
-        Lines(i).Length = str2double(regexp(undergroundinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
-        Lines(i).LineCode = regexp(undergroundinfo{1},'(?<=<CableID>)(.*?)(?=</CableID>)','match');
+        Lines(l).Length = str2double(regexp(undergroundinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
+        Lines(l).LineCode = regexp(undergroundinfo{1},'(?<=<CableID>)(.*?)(?=</CableID>)','match'); Lines(l).LineCode = Lines(l).LineCode{1};
         
+        % Print to file Lines.dss
         fprintf(fID_Lines,['New Line.%s Bus1=%-15s Bus2=%-15s LineCode=%s ',...
-            'Phases= %d Length=%-6.2f units=m\n'],Lines(i).ID{1},Lines(i).Bus1,...
-            Lines(i).Bus2,Lines(i).LineCode{1},Lines(i).Phase,Lines(i).Length);
+            'Phases= %d Length=%-6.2f units=m enable=%s\n'],Lines(l).ID,...
+            Lines(l).Bus1,Lines(l).Bus2,Lines(l).LineCode,Lines(l).numPhase,...
+            Lines(l).Length,Lines(l).Enable);
     end
-    
-    %  Spot Loads
-    loadinfo = regexp(sectinfo{i},'<SpotLoad>(.*?)</SpotLoad>','match');
-    spotloadinfo = regexp(sectinfo{i},'<CustomerLoadValue>(.*?)</CustomerLoadValue>','match');
-    for j = 1:length(spotloadinfo)
-        % MILP
-        %<NormalPriority>0</NormalPriority>
-        %<EmergencyPriority>0</EmergencyPriority>
-        
-        % DSS
-        phase = regexp(spotloadinfo{j},'(?<=<Phase>)(.*?)(?=</Phase>)','match');
+
+    %% Extract Device Information
+    %  Spot Loads (counter = ld)
+    loadinfo = regexp(Lines(l).Info,'<SpotLoad>(.*?)</SpotLoad>','match');
+    spotloadinfo = regexp(Lines(l).Info,'<CustomerLoadValue>(.*?)</CustomerLoadValue>','match');
+    for i = 1:length(spotloadinfo)
+        Phase = regexp(spotloadinfo{i},'(?<=<Phase>)(.*?)(?=</Phase>)','match');
         % String to be appended to load info
         append = '';
-        if ~isempty(strfind(phase{1},'A'))
+        if ~isempty(strfind(Phase{1},'A'))
             append = [append,'_1'];
         end
-        if ~isempty(strfind(phase{1},'B'))
+        if ~isempty(strfind(Phase{1},'B'))
             append = [append,'_2'];
         end
-        if ~isempty(strfind(phase{1},'C'))
+        if ~isempty(strfind(Phase{1},'C'))
             append = [append,'_3'];
         end
         
         Location = regexp(loadinfo{1},'(?<=<Location>)(.*?)(?=</Location>)','match');
         switch Location{1}
             case 'From'
-                Loads(k).ID = [bus1{1},append];
+                Loads(ld).ID = [bus1{1},append];
             case 'To'
-                Loads(k).ID = [bus2{1},append];
+                Loads(ld).ID = [bus2{1},append];
         end
         
-        Loads(k).Phase = phase{1};
-        Loads(k).numPhase = length(phase);
-        Loads(k).Bus1 = strrep(Loads(k).ID,'_','.');
-        Loads(k).kV = 7.2; % kV
-        Loads(k).XFKVA = str2double(regexp(spotloadinfo{j},'(?<=<ConnectedKVA>)(.*?)(?=</ConnectedKVA>)','match'));
+        Loads(ld).Phase = Phase{1};
+        Loads(ld).NumPhase = length(Phase);
+        Loads(ld).Bus1 = strrep(Loads(ld).ID,'_','.');
+        Loads(ld).kV = 7.2; % kV
+        Loads(ld).XFKVA = str2double(regexp(spotloadinfo{i},'(?<=<ConnectedKVA>)(.*?)(?=</ConnectedKVA>)','match'));
         
-        LoadType = regexp(spotloadinfo{j},'(?<=<LoadValue Type="LoadValue)(.*?)(?=">)','match');
+        LoadType = regexp(spotloadinfo{i},'(?<=<LoadValue Type="LoadValue)(.*?)(?=">)','match');
         
         switch LoadType{1}
             case 'KW_KVAR'
-                Loads(k).kW = str2double(regexp(spotloadinfo{j},'(?<=<KW>)(.*?)(?=</KW>)','match'));
-                Loads(k).kVAR = str2double(regexp(spotloadinfo{j},'(?<=<KVAR>)(.*?)(?=</KVAR>)','match'));
-                Loads(k).kVA = sqrt(Loads(k).kW^2 + Loads(k).kVAR^2);
-                Loads(k).pf  = cos(atan(Loads(k).kVAR/Loads(k).kW));
+                Loads(ld).kW = str2double(regexp(spotloadinfo{i},'(?<=<KW>)(.*?)(?=</KW>)','match'));
+                Loads(ld).kVAR = str2double(regexp(spotloadinfo{i},'(?<=<KVAR>)(.*?)(?=</KVAR>)','match'));
+                Loads(ld).kVA = sqrt(Loads(ld).kW^2 + Loads(ld).kVAR^2);
+                Loads(ld).pf  = cos(atan(Loads(ld).kVAR/Loads(ld).kW));
             case 'KVA_PF'
-                Loads(k).kVA = str2double(regexp(spotloadinfo{j},'(?<=<KVA>)(.*?)(?=</KVA>)','match'));
-                Loads(k).pf  = str2double(regexp(spotloadinfo{j},'(?<=<PF>)(.*?)(?=</PF>)','match'))/100;
-                Loads(k).kW   = Loads(k).kVA*Loads(k).pf;
-                Loads(k).kVAR = Loads(k).kVA*sqrt(1-Loads(k).pf^2);
+                Loads(ld).kVA = str2double(regexp(spotloadinfo{i},'(?<=<KVA>)(.*?)(?=</KVA>)','match'));
+                Loads(ld).pf  = str2double(regexp(spotloadinfo{i},'(?<=<PF>)(.*?)(?=</PF>)','match'))/100;
+                Loads(ld).kW   = Loads(ld).kVA*Loads(ld).pf;
+                Loads(ld).kVAR = Loads(ld).kVA*sqrt(1-Loads(ld).pf^2);
             case 'KW_PF'
-                Loads(k).kW = str2double(regexp(spotloadinfo{j},'(?<=<KW>)(.*?)(?=</KW>)','match'));
-                Loads(k).pf  = str2double(regexp(spotloadinfo{j},'(?<=<PF>)(.*?)(?=</PF>)','match'))/100;
-                Loads(k).kVA = Loads(k).kW/loads(k).pf;
-                Loads(k).kVAR = Loads(k).kVA*sqrt(1-Loads(k).pf^2);
+                Loads(ld).kW = str2double(regexp(spotloadinfo{i},'(?<=<KW>)(.*?)(?=</KW>)','match'));
+                Loads(ld).pf  = str2double(regexp(spotloadinfo{i},'(?<=<PF>)(.*?)(?=</PF>)','match'))/100;
+                Loads(ld).kVA = Loads(ld).kW/loads(ld).pf;
+                Loads(ld).kVAR = Loads(ld).kVA*sqrt(1-Loads(ld).pf^2);
             otherwise
                 error('Unknown Load Type')
         end
         
-        Loads(k).kWh = str2double(regexp(spotloadinfo{j},'(?<=<KWH>)(.*?)(?=</KWH>)','match'));
-        Loads(k).NumCust = str2double(regexp(spotloadinfo{j},'(?<=<NumberOfCustomer>)(.*?)(?=</NumberOfCustomer>)','match'));
+        Loads(ld).kWh = str2double(regexp(spotloadinfo{i},'(?<=<KWH>)(.*?)(?=</KWH>)','match'));
+        Loads(ld).NumCust = str2double(regexp(spotloadinfo{i},'(?<=<NumberOfCustomer>)(.*?)(?=</NumberOfCustomer>)','match'));
         
-        k = k+1;
+        % Print Load
+        fprintf(fID_Loads,['New Load.%s Bus1=%-10s Phases=%d kV=%.4f ',...
+        'kW=%.6f yearly=Yearly%c daily=Daily%c kVAR=%.6f\n'],...
+        Loads(ld).ID,Loads(ld).Bus1,Loads(ld).NumPhase,Loads(ld).kV,...
+        Loads(ld).kW,repmat(Loads(ld).Phase,1,2),Loads(ld).kVAR);
+        
+        ld = ld+1;
     end
+    
+    % Fuses (counter = fs)
+    
+    % Capacitors (counter = cp)
+    
+    % Regulators (counter = rg)
+    
+    % Reclosers (counter = rc)
+    
 end
 fclose(fID_Lines);
-fclose(fID_Monitors);
-
-% Generate Loads.dss
-fID_Loads = fopen([savelocation,'Loads.dss'],'wt');
-fID_LoadsFault = fopen([savelocation,'Loads_Fault.dss'],'wt');
-
-% Find per phase demand totals
-kWtotA = sum([Loads(regexp([Loads.Phase],'A')).kW]);
-kWtotB = sum([Loads(regexp([Loads.Phase],'B')).kW]);
-kWtotC = sum([Loads(regexp([Loads.Phase],'C')).kW]);
-kVARtotA = sum([Loads(regexp([Loads.Phase],'A')).kVAR]);
-kVARtotB = sum([Loads(regexp([Loads.Phase],'B')).kVAR]);
-kVARtotC = sum([Loads(regexp([Loads.Phase],'C')).kVAR]);
-
-for k = 1:lp
-    switch Loads(k).Phase
-        case 'A'
-            kWtot = kWtotA;
-            kVARtot = kVARtotA;
-        case 'B'
-            kWtot = kWtotB;
-            kVARtot = kVARtotB;
-        case 'C'
-            kWtot = kWtotC;
-            kVARtot = kVARtotC;
-    end
-    
-    % Print Loads (Demand)
-    fprintf(fID_Loads,['New Load.%s Phases=%d Bus1=%-10s kV=%.4f ',...
-        'kW=%.8f kVAR=%.8f status=variable Vminpu=0.7\n'],...
-        Loads(k).ID,Loads(k).numPhase,Loads(k).Bus1,Loads(k).kV,...
-        Loads(k).kW,Loads(k).kVAR);
-    
-    %{
-    % Print Loads (Normalized Demand w/ Loadshape pointers)
-    fprintf(fID_Loads,['New Load.%s Phases=%d Bus1=%-10s kV=%.4f ',...
-        'kW=%.8f kVAR=%.8f status=variable Vminpu=0.7 ',...
-        'yearly=LS_Phase%c daily=LS_Phase%c duty=LS_Phase%c\n'],...
-        Loads(k).ID,Loads(k).numPhase,Loads(k).Bus1,Loads(k).kV,...
-        Loads(k).kW/kWtot,Loads(k).kVAR/kVARtot,...
-        Loads(k).Phase,Loads(k).Phase,Loads(k).Phase);
-    %}
-    
-    % Print Loads (XFKVA & PF)
-    fprintf(fID_LoadsFault,['New Load.%s Phases=%d Bus1=%-10s kV=%.4f ',...
-        'XFKVA=%3.1f PF=%.4f Vminpu=0.7\n'],...
-        Loads(k).ID,Loads(k).numPhase,Loads(k).Bus1,Loads(k).kV,...
-        Loads(k).XFKVA,Loads(k).pf);
-end
 fclose(fID_Loads);
-fclose(fID_LoadsFault);
+Lines = rmfield(Lines,'Info');
 
-fprintf('Conversion Complete. Files saved to %s',savelocation)
+%% Generate Master File
+Sources = struct('Info',regexp(FILE,'<Source>(.*?)</Source>','match'));
+if sc > 1
+    warning('Does not support multiple sources')
+end
+
+% Read Source Info
+Sources.ID = regexp(Sources.Info,'(?<=<SourceNodeID>)(.*?)(?=</SourceNodeID>)','match'); Sources.ID = Sources.ID{1};
+Sources.BaseKVLL = str2double(regexp(Sources.Info,'(?<=<KVLL>)(.*?)(?=</KVLL>)','match'));
+Sources.SetKVLL = str2double(regexp(Sources.Info,'(?<=<DesiredVoltage>)(.*?)(?=</DesiredVoltage>)','match'));
+Sources.SetVpu = Sources.SetKVLL/Sources.BaseKVLL;
+Sources.SetAngle = str2double(regexp(Sources.Info,'(?<=<OperatingAngle1>)(.*?)(?=</OperatingAngle1>)','match'));
+Sources.R1 = str2double(regexp(Sources.Info,'(?<=<PositiveSequenceResistance>)(.*?)(?=</PositiveSequenceResistance>)','match'));
+Sources.X1 = str2double(regexp(Sources.Info,'(?<=<PositiveSequenceReactance>)(.*?)(?=</PositiveSequenceReactance>)','match'));
+Sources.R2 = str2double(regexp(Sources.Info,'(?<=<NegativeSequenceResistance>)(.*?)(?=</NegativeSequenceResistance>)','match'));
+Sources.X2 = str2double(regexp(Sources.Info,'(?<=<NegativeSequenceReactance>)(.*?)(?=</NegativeSequenceReactance>)','match'));
+Sources.R0 = str2double(regexp(Sources.Info,'(?<=<ZeroSequenceResistance>)(.*?)(?=</ZeroSequenceResistance>)','match'));
+Sources.X0 = str2double(regexp(Sources.Info,'(?<=<ZeroSequenceReactance>)(.*?)(?=</ZeroSequenceReactance>)','match'));
+Sources.PeakAmps = str2double(regexp(Sources.Info,'(?<=<AMP>)(.*?)(?=</AMP>)','match'));
+
+% Print Master File
+fID_Master = fopen([savelocation,'Master.dss'],'wt');
+fprintf(fID_Master,['Clear\n\n! Define the Circuit\n',...
+    sprintf('New Circuit.%s Bus1=%s',Sources(1).ID,Sources(1).ID),'\n',...
+    sprintf('~ BasekV=%.2f  pu=%.4f  angle=%.2f',Sources.BaseKVLL,Sources.SetVpu,Sources.SetAngle),'\n',...
+    sprintf('~ Z1=[ %.4f %.4f ]',Sources.R1,Sources.X1),'\n',...
+    sprintf('~ Z2=[ %.4f %.4f ]',Sources.R2,Sources.X2),'\n',...
+    sprintf('~ Z0=[ %.4f %.4f ]',Sources.R0,Sources.X0),'\n\n',...
+    '! Library Data\n',...
+    'Redirect Libraries\\WireData.dss\n',...
+    'Redirect Libraries\\LineSpacing.dss\n',...
+    'Redirect Libraries\\UGLineCodes.dss\n\n'...
+    '! Loadshapes\n',...
+    'Redirect Shapes.dss\n\n',...
+    '! Circuit Element Data\n',...
+    'Redirect Elements\\Lines_.dss\n',...
+    'Redirect Elements\\Loads.dss\n',...
+    'Redirect Elements\\Capacitors.dss\n',...
+    'Redirect Elements\\Regulators.dss\n\n',...
+    '! Circuit Control Settings\n',...
+    '!Redirect Controls\\FuseContrl.dss\n',...
+    '!Redirect Controls\\SwitContrl.dss\n',...
+    '!Redirect Controls\\ReclContrl.dss\n\n',...
+    '! Set the voltage bases\n',...
+    'Set voltagebases = [ 12.47 7.20 0.480 0.208 0.240 0.120 ]\n',...
+    'CalcVoltageBases\n\n',...
+    '! Define the bus coordinates\n',...
+    'Buscoords BusCoords.dss\n\n',...
+    '! Define an energy meter\n',...
+    'New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes\n',...
+    sprintf('~ peakcurrent=[ %.2f   %.2f   %.2f ]',Sources.PeakAmps)]);
+fclose(fID_Master);
+
+
+fclose('all');
+fprintf('Conversion Complete. Files saved to %s\n',savelocation)
 toc

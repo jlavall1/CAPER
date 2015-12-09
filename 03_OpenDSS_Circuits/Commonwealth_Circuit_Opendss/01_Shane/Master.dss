@@ -8,12 +8,12 @@ New Circuit.COMMONWEALTH_RET_01311205 Bus1=COMMONWEALTH_RET_01311205
 ~ Z0=[ 0.024887 ,  0.605013 ]
 
 ! Library Data
-Redirect WireData.dss
-Redirect LineSpacing.dss
-Redirect UGLineCodes.dss
+Redirect Libraries\WireData.dss
+Redirect Libraries\LineSpacing.dss
+Redirect Libraries\UGLineCodes.dss
 
-! Define Load Shapes
-!Redirect Loadshape.dss
+! Define Load/Growth Shapes
+Redirect Shapes.dss
 
 ! Circuit Element Data
 Redirect Lines.dss

@@ -8,9 +8,9 @@ New Circuit.COMMONWEALTH_RET_01311205 Bus1=COMMONWEALTH_RET_01311205
 ~ Z0=[ 0.024887 ,  0.605013 ]
 
 ! Library Data
-Redirect WireData.dss
-Redirect LineSpacing.dss
-Redirect UGLineCodes.dss
+Redirect Libraries\WireData.dss
+Redirect Libraries\LineSpacing.dss
+Redirect Libraries\UGLineCodes.dss
 
 ! Circuit Element Data
 Redirect Lines.dss
@@ -27,20 +27,3 @@ Redirect Regulators.dss
 ! Set the voltage bases
 Set voltagebases = [ 12.47 0.480, 0.208, 0.240, 0.120]
 CalcVoltageBases
-
-!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!
-! Define an energy meter -- needed for plot profile and yearly simulations
-!
-!New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
-!~ peakcurrent=[  345.492818586166   362.418979727275   291.727365549702  ]
-
-! Disable Capacitors for load allocation
-!Disable Capacitor.*
-! 
-!AllocateLoad
-!AllocateLoad
-!AllocateLoad
-! 
-! Enable capacitors before solving
-!Enable Capacitor.*
