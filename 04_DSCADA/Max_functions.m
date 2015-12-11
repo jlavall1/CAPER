@@ -221,6 +221,7 @@ for i=1:12
                 MAX.MONTH.KW.A(i,3) = floor(DOY);
                 MAX.MONTH.KW.A(i,4) = floor(HOUR);     
                 MAX.MONTH.KW.A(i,5) = floor(MIN);
+                MAX.MONTH.KW.A(1,6) = max(MAX.MONTH.KW.A(:,1));
             end
             
 
@@ -232,6 +233,7 @@ for i=1:12
                 MAX.MONTH.KW.B(i,3) = floor(DOY);
                 MAX.MONTH.KW.B(i,4) = floor(HOUR);     
                 MAX.MONTH.KW.B(i,5) = floor(MIN);
+                MAX.MONTH.KW.B(1,6) = max(MAX.MONTH.KW.B(:,1));
 
             end
             if FEEDER.kW.C(j,1) > MAX.MONTH.KW.C(i,1)
@@ -241,6 +243,7 @@ for i=1:12
                 MAX.MONTH.KW.C(i,3) = floor(DOY);
                 MAX.MONTH.KW.C(i,4) = floor(HOUR);     
                 MAX.MONTH.KW.C(i,5) = floor(MIN);
+                MAX.MONTH.KW.C(1,6) = max(MAX.MONTH.KW.C(:,1));
 
             end
 
