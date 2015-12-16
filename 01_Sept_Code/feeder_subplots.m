@@ -110,84 +110,92 @@ DSSText.command = 'Disable Capacitor.*';
 DSSText.command = 'AllocateLoad';
 DSSText.command = 'AllocateLoad';
 DSSText.command = 'AllocateLoad';
-DSSText.command = 'Dump AllocationFactors';
+%DSSText.command = 'Dump AllocationFactors';
 DSSText.command = 'Enable Capacitor.*';
-%}
-% 3. 
-DSSText.command = sprintf('solve loadmult=%s',num2str(ratio));
-%DSSText.command = 'Solve mode=faultstudy';
-% 4. Run circuitCheck function to double-check for any errors in the circuit before using the toolbox     
-%warnSt = circuitCheck(DSSCircObj);
+ 
+if load_LVL < 3
+    DSSText.command = sprintf('solve loadmult=%s',num2str(ratio));
+    % 4. Run circuitCheck function to double-check for any errors in the circuit before using the toolbox     
+    warnSt = circuitCheck(DSSCircObj);
 
-DSSCircuit = DSSCircObj.ActiveCircuit;
-Buses=getBusInfo(DSSCircObj);
-Lines=getLineInfo(DSSCircObj);
-Loads=getLoadInfo(DSSCircObj);
-[~,index] = sortrows([Lines.bus1Distance].'); 
-Lines_Distance = Lines(index); 
-%-------------------------------------------------------------------------
-%Find Conductor total distance:
-total_length=0;
-min_voltage=1.1;
-max_3ph_distance=0;
-max_distance=-1;
-n=length(Lines_Distance);
-feeder_LD = Lines_Distance(1,1).bus1PowerReal;
-load_center=0;
-P_diff_min=100e6;
+    DSSCircuit = DSSCircObj.ActiveCircuit;
+    Buses=getBusInfo(DSSCircObj);
+    Lines=getLineInfo(DSSCircObj);
+    Loads=getLoadInfo(DSSCircObj);
+    [~,index] = sortrows([Lines.bus1Distance].'); 
+    Lines_Distance = Lines(index); 
 
-for i=1:1:n
-    total_length=total_length + Lines_Distance(i,1).length;
-    if Lines_Distance(i,1).numPhases == 3
-        VOLT=max(Lines_Distance(i,1).bus1PhaseVoltagesPU(1,:));
-        if min_voltage > VOLT
-            min_voltage=VOLT;
-            if min_voltage < .8
-                min_voltage=1.1;
+    %-------------------------------------------------------------------------
+    %Find Conductor total distance:
+    total_length=0;
+    min_voltage=1.1;
+    max_3ph_distance=0;
+    max_distance=-1;
+    n=length(Lines_Distance);
+    feeder_LD = Lines_Distance(1,1).bus1PowerReal;
+    load_center=0;
+    P_diff_min=100e6;
+
+    for i=1:1:n
+        total_length=total_length + Lines_Distance(i,1).length;
+        if Lines_Distance(i,1).numPhases == 3
+            VOLT=max(Lines_Distance(i,1).bus1PhaseVoltagesPU(1,:));
+            if min_voltage > VOLT
+                min_voltage=VOLT;
+                if min_voltage < .8
+                    min_voltage=1.1;
+                end
+            end
+
+            if Lines_Distance(i,1).bus1Distance > max_3ph_distance
+                max_3ph_distance = Lines_Distance(i,1).bus1Distance;
             end
         end
-        
-        if Lines_Distance(i,1).bus1Distance > max_3ph_distance
-            max_3ph_distance = Lines_Distance(i,1).bus1Distance;
+        if Lines_Distance(i,1).bus1Distance > max_distance
+            max_distance=Lines_Distance(i,1).bus1Distance;
+            max_dist_bus=i;
+        end
+        P_diff = abs(feeder_LD*0.5-abs(Lines_Distance(i,1).bus1PowerReal));
+        if P_diff < P_diff_min && i ~= 1
+            load_center=i;
+            P_diff_min=P_diff;
         end
     end
-    if Lines_Distance(i,1).bus1Distance > max_distance
-        max_distance=Lines_Distance(i,1).bus1Distance;
-        max_dist_bus=i;
+    fprintf('(Solved at %s%%)\n\n',num2str(ratio*100));
+    fprintf('Peak Load (MW): %3.3f\n',Lines_Distance(1,1).bus1PowerReal/1000);
+    fprintf('Total Length: %3.3f mi\n',(total_length*0.621371)/1000);
+    fprintf('Peak Load Headroom: %3.3f P.U.\n',(1.05-min_voltage));
+    fprintf('Overall End Distance: %3.3f km\n',max_distance);
+
+    fprintf('3-ph End Distance: %3.3f km\n\n',max_3ph_distance);
+    fprintf('End Feeder  Located @ Bus: %s\n',Lines_Distance(max_dist_bus,1).name);
+    fprintf('Load Center Located @ Bus: %s\n',Lines_Distance(load_center,1).name);
+elseif load_LVL == 3
+    DSSText.command = 'Solve mode=faultstudy';
+    warnSt = circuitCheck(DSSCircObj);
+    Lines=getLineInfo(DSSCircObj);
+    [~,index] = sortrows([Lines.bus1Distance].'); 
+    Lines_Distance = Lines(index); 
+    n=length(Lines_Distance);
+    %fprintf('Overall End Reistance: %3.3f ohm\n',Lines_Distance(max_dist_bus,1).bus1Zsc1(1,1));
+
+    dist_diff_min=100;
+    %{
+    for i=1:1:n
+        dist_diff=abs((max_3ph_distance*0.5)-Lines_Distance(i,1).bus1Distance);
+        if dist_diff < dist_diff_min
+            load_center = i;
+        end
     end
-    P_diff = abs(feeder_LD*0.5-abs(Lines_Distance(i,1).bus1PowerReal));
-    if P_diff < P_diff_min && i ~= 1
-        load_center=i;
-        P_diff_min=P_diff;
+    %}
+    
+    figure(1);
+    for j=1:1:n
+        plot(Lines_Distance(j,1).bus1Distance,Lines_Distance(j,1).bus1Zsc1(1,1),'bo');
+        hold on
     end
+    %fprintf('Load Center Resistance: %3.3f ohm\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
 end
-fprintf('(Solved at %s%%)\n\n',num2str(ratio*100));
-fprintf('Peak Load (MW): %3.3f\n',Lines_Distance(1,1).bus1PowerReal/1000);
-fprintf('Total Length: %3.3f mi\n',(total_length*0.621371)/1000);
-fprintf('Peak Load Headroom: %3.3f P.U.\n',(1.05-min_voltage));
-fprintf('Overall End Distance: %3.3f km\n',max_distance);
-
-fprintf('3-ph End Distance: %3.3f km\n\n',max_3ph_distance);
-fprintf('End Feeder  Located @ Bus: %s\n',Lines_Distance(max_dist_bus,1).name);
-fprintf('Load Center Located @ Bus: %s\n',Lines_Distance(load_center,1).name);
-%%
-%{
-DSSText.command = 'Solve mode=faultstudy';
-Lines=getLineInfo(DSSCircObj);
-[~,index] = sortrows([Lines.bus1Distance].'); 
-Lines_Distance = Lines(index); 
-fprintf('Overall End Reistance: %3.3f ohm\n',Lines_Distance(max_dist_bus,1).bus1Zsc1(1,1));
-
-dist_diff_min=100;
-for i=1:1:n
-    dist_diff=abs((max_3ph_distance*0.5)-Lines_Distance(i,1).bus1Distance);
-    if dist_diff < dist_diff_min
-        load_center = i;
-    end
-end
-
-fprintf('Load Center Resistance: %3.3f ohm\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
-%}
 %-------------------------------------------------------------------------
 %Find Voltage headroom:
 
