@@ -3,10 +3,15 @@
 clear
 clc
 
-feeder_NUM=menu('Which Feeder?','1) Bell','2) Common','3) Flay','4) Rox','5) Holly','6) ERaleight');
+feeder_NUM=menu('Which Feeder?','1) Bell','2) Common','3) Flay','4) Rox','5) Holly','6) ERaleigh');
 while feeder_NUM<1
-    feeder_NUM=menu('Which Feeder?','1) Bell','2) Common','3) Flay','4) Rox','5) Holly','6) ERaleight');
+    feeder_NUM=menu('Which Feeder?','1) Bell','2) Common','3) Flay','4) Rox','5) Holly','6) ERaleigh');
 end
+load_LVL=menu('What kind of simulation?','100%','Min. Load Level','Fault Study');
+while load_LVL<1
+    load_LVL=menu('What kind of simulation?','100%','Min. Load Level','Fault Study');
+end
+
 
 %str = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\run_master_allocate.DSS';
 %str = 'C:\Users\jlavall\Desktop\Commonwealth_Circuit_Opendss\run_master_allocate.DSS';
@@ -17,37 +22,78 @@ end
 if feeder_NUM == 1
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Bellhaven_Circuit_Opendss';
     peak_current = [424.489787369243,385.714277946091,446.938766508963];
+    peak_kW = 2940.857+2699.883+3092.130;
+    min_kW = 1937.500;
+    if load_LVL == 1
+        ratio = 1.0;
+    elseif load_LVL == 2
+        ratio = min_kW/peak_kW;
+    end
     energy_line = '258839833';
     fprintf('Characteristics for:\t1 - BELLHAVEN\n\n');
 elseif feeder_NUM == 2
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss';
     peak_current = [345.492818586166,362.418979727275,291.727365549702];
+    peak_kW = 2473.691+2609.370+2099.989;
+    min_kW = 2445.941;
+    if load_LVL == 1
+        ratio = 1.0;
+    elseif load_LVL == 2
+        ratio=min_kW/peak_kW;
+    end
+    
     energy_line = '259355408';
     fprintf('Characteristics for:\t1 - COMMONWEALTH\n\n');
 elseif feeder_NUM == 3
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss';
     peak_current = [196.597331353572,186.718068471483,238.090235458346];
+    peak_kW = 1343.768+1276.852+1653.2766;
+    min_kW = 1200;
+    if load_LVL == 1
+        ratio = 1.0;
+    elseif load_LVL == 2
+        ratio= min_kW/peak_kW;
+    end
+    
     energy_line = '259363665';
     fprintf('Characteristics for:\t1 - FLAY\n\n');
 elseif feeder_NUM == 4
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss';
     peak_current = [232.766663065503,242.994085721044,238.029663479192];
+    peak_kW = 3189.476+3319.354+3254.487;
+    min_kW = 3157.978;
+    if load_LVL == 1
+        ratio = 1.0;
+    elseif load_LVL == 2
+        ratio = min_kW/peak_kW;
+    end
+    
     energy_line = 'PH997__2571841';
     fprintf('Characteristics for:\t1 - ROXBORO\n\n');
 elseif feeder_NUM == 5
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\HollySprings_Circuit_Opendss';
     peak_current = [263.73641240095,296.245661392728,201.389207853812];
+    peak_kW=3189.476+3319.354+3254.488;
+    min_kW = 2022.5799;
+    if load_LVL == 1
+        ratio = 1.0;
+    elseif load_LVL == 2
+        ratio = min_kW/peak_kW;
+    end
+    
     energy_line = '10EF34__2663676';
     fprintf('Characteristics for:\t1 - HOLLY SPRINGS\n\n');
 elseif feeder_NUM == 6
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\ERaleigh_Circuit_Opendss';
     peak_current = [214.80136594272,223.211693408696,217.825750072964];
+    peak_kW=0;
+    min_kW = 1351.478;
+    ratio=1.0;
     energy_line = 'PDP28__2843462';
     fprintf('Characteristics for:\t1 - E.RALEIGH\n\n');
 end
 
 str = strcat(fileloc,'\Master.DSS');
-
 % 1. Start the OpenDSS COM. Needs to be done each time MATLAB is opened     
 [DSSCircObj, DSSText] = DSSStartup; 
 %DSSText.command = ['Compile ' str];     
@@ -68,7 +114,7 @@ DSSText.command = 'Dump AllocationFactors';
 DSSText.command = 'Enable Capacitor.*';
 %}
 % 3. 
-DSSText.command = 'solve loadmult=1.0';
+DSSText.command = sprintf('solve loadmult=%s',num2str(ratio));
 %DSSText.command = 'Solve mode=faultstudy';
 % 4. Run circuitCheck function to double-check for any errors in the circuit before using the toolbox     
 %warnSt = circuitCheck(DSSCircObj);
@@ -115,21 +161,23 @@ for i=1:1:n
         P_diff_min=P_diff;
     end
 end
-
+fprintf('(Solved at %s%%)\n\n',num2str(ratio*100));
 fprintf('Peak Load (MW): %3.3f\n',Lines_Distance(1,1).bus1PowerReal/1000);
 fprintf('Total Length: %3.3f mi\n',(total_length*0.621371)/1000);
 fprintf('Peak Load Headroom: %3.3f P.U.\n',(1.05-min_voltage));
 fprintf('Overall End Distance: %3.3f km\n',max_distance);
 
 fprintf('3-ph End Distance: %3.3f km\n\n',max_3ph_distance);
+fprintf('End Feeder  Located @ Bus: %s\n',Lines_Distance(max_dist_bus,1).name);
 fprintf('Load Center Located @ Bus: %s\n',Lines_Distance(load_center,1).name);
+%%
 %{
 DSSText.command = 'Solve mode=faultstudy';
 Lines=getLineInfo(DSSCircObj);
 [~,index] = sortrows([Lines.bus1Distance].'); 
 Lines_Distance = Lines(index); 
 fprintf('Overall End Reistance: %3.3f ohm\n',Lines_Distance(max_dist_bus,1).bus1Zsc1(1,1));
-%{
+
 dist_diff_min=100;
 for i=1:1:n
     dist_diff=abs((max_3ph_distance*0.5)-Lines_Distance(i,1).bus1Distance);
@@ -137,7 +185,7 @@ for i=1:1:n
         load_center = i;
     end
 end
-%}
+
 fprintf('Load Center Resistance: %3.3f ohm\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
 %}
 %-------------------------------------------------------------------------

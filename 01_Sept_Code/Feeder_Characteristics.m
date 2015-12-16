@@ -29,10 +29,29 @@ feeder_CAP_Switch(1,n)=900+900;
 feeder_length_mi(1,n)=5.652*0.621371;
 feeder_length_ohm(1,n)=2.206;
 feeder_volt_peak_head(1,n)=0.101;
+feeder_volt_min_head(1,n)=0.058;
 
 feeder_conductor(1,n)=20.515; %mi
 Load_Center_Resistance(1,n)=0.934; %ohm
 
+load Annual_daytime_load_BELL.mat   %WINDOW.DAYTIME.KW.A
+KW_3PH=WINDOW.DAYTIME.KW.A(:,1)+WINDOW.DAYTIME.KW.B(:,1)+WINDOW.DAYTIME.KW.C(:,1);
+KW_3PH_MAX=0;
+KW_3PH_MIN=100e6;
+for i=1:1:length(KW_3PH)
+    if KW_3PH(i,1) < KW_3PH_MIN
+        KW_3PH_MIN = KW_3PH(i,1);
+    end
+    if KW_3PH(i,1) > KW_3PH_MAX
+        KW_3PH_MAX = KW_3PH(i,1);
+    end
+end
+feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
+
+
+
+
+%%
 %2 - Commonwealth
 n = n + 1;
 load Annual_ls_CMNWLTH.mat
@@ -43,10 +62,24 @@ feeder_CAP_Switch(1,n)=0;
 feeder_length_mi(1,n)=5.505*0.621371;
 feeder_length_ohm(1,n)=2.3899;
 feeder_volt_peak_head(1,n)=0.042;
+feeder_volt_min_head(1,n)=0.026;
 feeder_conductor(1,n)=16.055; %mi
 Load_Center_Resistance(1,n)=0.658; %ohm
 
-
+load Annual_daytime_load_CMNWLTH.mat   %WINDOW.DAYTIME.KW.A
+KW_3PH=WINDOW.DAYTIME.KW.A(:,1)+WINDOW.DAYTIME.KW.B(:,1)+WINDOW.DAYTIME.KW.C(:,1);
+KW_3PH_MAX=0;
+KW_3PH_MIN=100e6;
+for i=1:1:length(KW_3PH)
+    if KW_3PH(i,1) < KW_3PH_MIN
+        KW_3PH_MIN = KW_3PH(i,1);
+    end
+    if KW_3PH(i,1) > KW_3PH_MAX
+        KW_3PH_MAX = KW_3PH(i,1);
+    end
+end
+feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
+%%
 %3 - Flay
 n = n + 1;
 load Annual_ls_FLAY.mat
@@ -57,38 +90,104 @@ feeder_CAP_Switch(1,n)=450;
 feeder_length_mi(1,n)=13.4747*0.621371;
 feeder_length_ohm(1,n)=11.1166;
 feeder_volt_peak_head(1,n)=0.045;
+feeder_volt_min_head(1,n)=0.032;
 feeder_conductor(1,n)=55.876; %mi
 Load_Center_Resistance(1,n)=1.008; %ohm
 
+load Annual_daytime_load_FLAY.mat   %WINDOW.DAYTIME.KW.A
+KW_3PH=WINDOW.DAYTIME.KW.A(:,1)+WINDOW.DAYTIME.KW.B(:,1)+WINDOW.DAYTIME.KW.C(:,1);
+KW_3PH_MAX=0;
+KW_3PH_MIN=100e6;
+for i=1:1:length(KW_3PH)
+    if KW_3PH(i,1) < KW_3PH_MIN
+        KW_3PH_MIN = KW_3PH(i,1);
+    end
+    if KW_3PH(i,1) > KW_3PH_MAX
+        KW_3PH_MAX = KW_3PH(i,1);
+    end
+end
+%feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
+feeder_ValleyMW(1,n)=1200/1e3;
+%%
 %4 - Roxboro
 n = n + 1;
-feeder_PeakMW(1,n)=9.763; %MW
+load Annual_ls_ROX.mat
+%feeder_PeakMW(1,n)=9.763; %MW
+feeder_PeakMW(1,n)=(MAX.YEAR.KW.A+MAX.YEAR.KW.B+MAX.YEAR.KW.C)/1000;
 feeder_CAP_Fixed(1,n)=1200*3;
 feeder_CAP_Switch(1,n)=0;
 feeder_length_mi(1,n)=18.9893*0.621371;
 feeder_length_ohm(1,n)=17.33;
 feeder_volt_peak_head(1,n)=.037;
+feeder_volt_min_head(1,n)=0.024;
 feeder_conductor(1,n)=87.416; %mi
 Load_Center_Resistance(1,n)=0.691; %ohm
 
+load Annual_daytime_load_ROX.mat   %WINDOW.DAYTIME.KW.A
+KW_3PH=WINDOW.DAYTIME.KW.A(:,1)+WINDOW.DAYTIME.KW.B(:,1)+WINDOW.DAYTIME.KW.C(:,1);
+KW_3PH_MAX=0;
+KW_3PH_MIN=100e6;
+for i=1:1:length(KW_3PH)
+    if KW_3PH(i,1) < KW_3PH_MIN
+        KW_3PH_MIN = KW_3PH(i,1);
+    end
+    if KW_3PH(i,1) > KW_3PH_MAX
+        KW_3PH_MAX = KW_3PH(i,1);
+    end
+end
+feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
+%%
 %5 - Hollysprings
 n = n + 1;
-feeder_PeakMW(1,n)=10.35; %MW
+load Annual_ls_HOLLY.mat
+%feeder_PeakMW(1,n)=10.35; %MW
+feeder_PeakMW(1,n)=(MAX.YEAR.KW.A+MAX.YEAR.KW.B+MAX.YEAR.KW.C)/1000;
 feeder_CAP_Fixed(1,n)=1200*2;
 feeder_CAP_Switch(1,n)=0;
 feeder_length_mi(1,n)=21.1358*0.621371;
-feeder_length_ohm(1,n)=0;
+feeder_length_ohm(1,n)=0; %4.211
 feeder_volt_peak_head(1,n)=0.026;
-Load_Center_Resistance(1,n)=1.008; %ohm
+feeder_volt_min_head(1,n)=0.019;
+Load_Center_Resistance(1,n)=1.008; %ohm (this is not correct)
+
+load Annual_daytime_load_HOLLY.mat   %WINDOW.DAYTIME.KW.A
+KW_3PH=WINDOW.DAYTIME.KW.A(:,1)+WINDOW.DAYTIME.KW.B(:,1)+WINDOW.DAYTIME.KW.C(:,1);
+KW_3PH_MAX=0;
+KW_3PH_MIN=100e6;
+for i=1:1:length(KW_3PH)
+    if KW_3PH(i,1) < KW_3PH_MIN
+        KW_3PH_MIN = KW_3PH(i,1);
+    end
+    if KW_3PH(i,1) > KW_3PH_MAX
+        KW_3PH_MAX = KW_3PH(i,1);
+    end
+end
+feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
 
 
 feeder_conductor(1,n)=60.358; %mi
-
+%%
 %6 - East Raleigh
 n = n + 1;
+load Annual_ls_ERALEIGH.mat
+feeder_PeakMW(1,n)=(MAX.YEAR.KW.A+MAX.YEAR.KW.B+MAX.YEAR.KW.C)/1000;
 feeder_CAP_Fixed(1,n)=600;
 feeder_CAP_Switch(1,n)=0;
 feeder_length_mi(1,n)=0;
+
+load Annual_daytime_load_ERALEIGH.mat   %WINDOW.DAYTIME.KW.A
+KW_3PH=WINDOW.DAYTIME.KW.A(:,1)+WINDOW.DAYTIME.KW.B(:,1)+WINDOW.DAYTIME.KW.C(:,1);
+KW_3PH_MAX=0;
+KW_3PH_MIN=100e6;
+for i=1:1:length(KW_3PH)
+    if KW_3PH(i,1) < KW_3PH_MIN
+        KW_3PH_MIN = KW_3PH(i,1);
+    end
+    if KW_3PH(i,1) > KW_3PH_MAX
+        KW_3PH_MAX = KW_3PH(i,1);
+    end
+end
+feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
 
 %%
 figure(1);

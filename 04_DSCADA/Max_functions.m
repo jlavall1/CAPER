@@ -12,7 +12,7 @@ addpath(maindir);
 path = strcat(maindir,'\Feeder_Data');
 addpath(path);
 
-
+tic
 if feeder_NUM == 0
     load BELL.mat
     FEEDER = BELL;
@@ -39,14 +39,18 @@ elseif feeder_NUM == 3
     str_FDR = '_ROX.mat';
 elseif feeder_NUM == 4
     load HOLLY.mat
+    FEEDER = HOLLY;
     str_FDR = '_HOLLY.mat';
 elseif feeder_NUM == 5
-    load ERalh.mat
-    str_FDR = '_ERalh.mat';
+    load ERALEIGH.mat
+    FEEDER = ERALEIGH;
+    str_FDR = '_ERALEIGH.mat';
 end
-
+fprintf('Load Data:\n');
+toc
 %%
 % Finds max P & Q for year
+tic
 MAX.YEAR.KW.A = max(FEEDER.kW.A);
 MAX.YEAR.KW.B = max(FEEDER.kW.B);
 MAX.YEAR.KW.C = max(FEEDER.kW.C);
@@ -282,9 +286,10 @@ for i=1:12
         
     end
     tot = tot + Points(i);
-
+    fprintf('\tMonth %d Complete.\n',i);
 end
-            
+fprintf('Found different maxs:\n');
+toc
             
             for z=1:21900
                 mina = min(WINDOW.KW.A(ss+1:ss+6,1));

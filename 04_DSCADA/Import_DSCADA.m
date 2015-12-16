@@ -25,12 +25,12 @@ if action == 1 || action == 4
     elseif ckt_num == 4
         [RAW_DATA, ~, ~] = xlsread('DEP_CAPER_FEEDER_LOADS.xlsx', 'feltonsville');
     elseif ckt_num == 5
-        [RAW_DATA, ~, ~] = xlsread('DEP_CAPER_FEEDER_LOADS.xlsx', 'Wilmington');
+        [RAW_DATA, ~, ~] = xlsread('DEP_CAPER_FEEDER_LOADS.xlsx', 'WilmingtonSt');
     end
     % Organize into structs
     n = length(RAW_DATA);
     if ckt_num > 2
-        %ROX | 
+        %ROX | HOLLY | E.Raleigh
         FEED1.Voltage.A = RAW_DATA(:, 6);
         FEED1.Voltage.B = RAW_DATA(:, 8);
         FEED1.Voltage.C = RAW_DATA(:, 10);
@@ -288,22 +288,28 @@ end
 
 %%
 % Interpolate 10minute data into 1minute --
+if ckt_num < 3
+    int_min = 10; %DEC
+else
+    int_min = 15; %DEP
+end
+
 if action == 3
-    FEED.Voltage.A = interp(FEED1.Voltage.A(1:end-1,1),10);
-    FEED.Voltage.B = interp(FEED1.Voltage.B(1:end-1,1),10);
-    FEED.Voltage.C = interp(FEED1.Voltage.C(1:end-1,1),10);
+    FEED.Voltage.A = interp(FEED1.Voltage.A(1:end-1,1),int_min);
+    FEED.Voltage.B = interp(FEED1.Voltage.B(1:end-1,1),int_min);
+    FEED.Voltage.C = interp(FEED1.Voltage.C(1:end-1,1),int_min);
 
-    FEED.Amp.A = interp(FEED1.Amp.A(1:end-1,1),10);
-    FEED.Amp.B = interp(FEED1.Amp.B(1:end-1,1),10);
-    FEED.Amp.C = interp(FEED1.Amp.C(1:end-1,1),10);
+    FEED.Amp.A = interp(FEED1.Amp.A(1:end-1,1),int_min);
+    FEED.Amp.B = interp(FEED1.Amp.B(1:end-1,1),int_min);
+    FEED.Amp.C = interp(FEED1.Amp.C(1:end-1,1),int_min);
 
-    FEED.kW.A = interp(FEED1.kW.A(1:end-1,1),10);
-    FEED.kW.B = interp(FEED1.kW.B(1:end-1,1),10);
-    FEED.kW.C = interp(FEED1.kW.C(1:end-1,1),10);
+    FEED.kW.A = interp(FEED1.kW.A(1:end-1,1),int_min);
+    FEED.kW.B = interp(FEED1.kW.B(1:end-1,1),int_min);
+    FEED.kW.C = interp(FEED1.kW.C(1:end-1,1),int_min);
 
-    FEED.kVAR.A = interp(FEED1.kVAR.A(1:end-1,1),10);
-    FEED.kVAR.B = interp(FEED1.kVAR.B(1:end-1,1),10);
-    FEED.kVAR.C = interp(FEED1.kVAR.C(1:end-1,1),10);
+    FEED.kVAR.A = interp(FEED1.kVAR.A(1:end-1,1),int_min);
+    FEED.kVAR.B = interp(FEED1.kVAR.B(1:end-1,1),int_min);
+    FEED.kVAR.C = interp(FEED1.kVAR.C(1:end-1,1),int_min);
 elseif action < 3 && action ~= 2
     FEED.Voltage.A = FEED1.Voltage.A(:,1);
     FEED.Voltage.B = FEED1.Voltage.B(:,1);
@@ -321,7 +327,28 @@ elseif action < 3 && action ~= 2
     FEED.kVAR.B = FEED1.kVAR.B(:,1);
     FEED.kVAR.C = FEED1.kVAR.C(:,1);
 end
-    
+%%
+% Linearize any missing datapoints again:
+if action == 3
+    KW_ACTUAL.data(:,1)=FEED.kW.A;
+    KW_ACTUAL.data(:,2)=FEED.kW.B;
+    KW_ACTUAL.data(:,3)=FEED.kW.C;
+    KVAR_ACTUAL.data(:,1)=FEED.kVAR.A;
+    KVAR_ACTUAL.data(:,2)=FEED.kVAR.B;
+    KVAR_ACTUAL.data(:,3)=FEED.kVAR.C;
+    %Check (twice) to see if there are any NaN in KVAR:
+    Check_NaN_kW
+    Check_NaN_kW
+    Check_NaN_kVAR
+    Check_NaN_kVAR
+    FEED.kW.A=KW_ACTUAL.data(:,1);
+    FEED.kW.B=KW_ACTUAL.data(:,2);
+    FEED.kW.C=KW_ACTUAL.data(:,3);
+    FEED.kVAR.A=KVAR_ACTUAL.data(:,1);
+    FEED.kVAR.B=KVAR_ACTUAL.data(:,2);
+    FEED.kVAR.C=KVAR_ACTUAL.data(:,3);
+ 
+end
 %%
 if action == 1 || action == 3 || action == 4
 % Save newly created variable:

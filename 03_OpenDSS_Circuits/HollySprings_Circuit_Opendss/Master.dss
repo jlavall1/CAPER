@@ -32,7 +32,6 @@ Redirect Capacitors.dss
 Redirect SwtControls.dss
 Redirect Reclosers.dss
 Redirect BreakerSettings.dss
-Redirect SectionalizerSettings.DSS
 Redirect FuseSettings.dss
 ! 
 ! Set the voltage bases
