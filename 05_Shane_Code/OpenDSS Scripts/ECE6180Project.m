@@ -21,7 +21,7 @@ II. Fault Analysis
 
 clear
 clc
-close('all')
+%close('all')
 
 % Desired Characteristics
 %  For 1day at 1min resolution - nstp = 1440; step = 60;
