@@ -1,3 +1,4 @@
+New Line.PDP28__2843462 Bus1=T5120B01_1_reg.1.2.3 Bus2=1823870.1.2.3 Switch=y
 New Transformer.T5120B01_1_1 Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[T5120B01_1.1 T5120B01_1_reg.1] kVs=[ 7.19955785679463   7.19955785679463 ]
 New RegControl.T5120B01_1_1 Transformer=T5120B01_1_1 Winding=2 Vreg= 124.041700613527  Band= 0.5 PTratio= 110  CTPrim= 100  R= 0  X= 0 
 New Transformer.T5120B01_1_2 Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[T5120B01_1.2 T5120B01_1_reg.2] kVs=[ 7.19955785679463   7.19955785679463 ]

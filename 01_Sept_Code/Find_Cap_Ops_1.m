@@ -34,14 +34,25 @@ KVAR_mag = 0;
 KW_diff = 0;
 for i=1:1:sim_num
     for ph=1:1:3
+        %Calculate 3-Phase Terms:
         KVAR_diff = KVAR_diff + KVAR_ACTUAL.data(i,ph+6);
         KVAR_mag= KVAR_mag+ abs(KVAR_ACTUAL.data(i,ph+6));
         KW_diff = KW_diff + KVAR_ACTUAL.dP(i,ph);
+        
+        %Caclulate single-phase PF:
+        Q=KVAR_ACTUAL.data(i,ph);
+        P=KW_ACTUAL(i,ph);
+        S=sqrt(Q^2+P^2);
+        PF = abs(P)/S;
+        KVAR_ACTUAL.PF(i,ph)=PF;
     end
+    KVAR_ACTUAL.PF(i,4)=(KVAR_ACTUAL.PF(i,1)+KVAR_ACTUAL.PF(i,2)+KVAR_ACTUAL.PF(i,3))/3;
+    
     KVAR_ACTUAL.data(i,10) = KVAR_diff; %3ph dQ
     KVAR_ACTUAL.data(i,11) = KVAR_mag;  % |dQ_3ph|
-    KVAR_ACTUAL.dP(i,4) = abs(KW_diff); %3ph dP    
-    if KVAR_ACTUAL.dP(i,4) < 250 %To filter out any events:
+    KVAR_ACTUAL.dP(i,4) = abs(KW_diff); %3ph dP
+    
+    if KVAR_ACTUAL.dP(i,4) < 250 %&& KVAR_ACTUAL.PF(i,4) < 0.98 %To filter out any events:
         
         if KVAR_diff < 0 && KVAR_mag > .45*Caps.Swtch*3
             count_neg = count_neg + 1;
@@ -93,9 +104,27 @@ for i=1:1:sim_num
     end
     %KVAR_ACTUAL.sw_cap(i,ph)=cap_pos;
     KVAR_ACTUAL.data(i,4)=cap_pos;
+    KVAR_ACTUAL.PF(i,5)=cap_pos;
     KVAR_diff = 0;
     KW_diff = 0;
     KVAR_mag = 0;
+end
+%Shift cap_ops over 5 into the future:
+i = 2;
+min_shift = 9*sim_num/1440;
+while i <= sim_num
+    if KVAR_ACTUAL.data(i,4) ~= KVAR_ACTUAL.data(i-1,4)
+        %Op occured...
+        save_pos = KVAR_ACTUAL.data(i-1,4);
+        KVAR_ACTUAL.data(i,4)=save_pos;
+        if i < sim_num-min_shift+2
+            for j=0:1:min_shift
+                KVAR_ACTUAL.data(i+j,4)=save_pos;
+            end
+            i = i + min_shift + 1;
+        end
+    end
+    i = i + 1;
 end
 
 %{
@@ -237,28 +266,37 @@ for i=1:1:sim_num
     PF = abs(P_3ph)/S;
     KVAR_ACTUAL.data(i,6) = PF;
 end
-KVAR_ACTUAL.names={'phA','phB','phC','Cap_Status','3ph_Q','3ph,PF','dQA','dQB','dQC'};
+KVAR_ACTUAL.datanames={'phA','phB','phC','Cap_Status','3ph_Q','3ph,PF','dQA','dQB','dQC','dQ3ph','|dQ3ph|'};
 
 %6] generate reactive power for DSS loads:
 KVAR_ON=[2.173495346357307e+02,1.976303522549747e+02,2.802254460650596e+02];
 KVAR_OFF=[5.773752746613869e+02,5.602529605242753e+02,6.308542533514893e+02];
 DIFF=KVAR_OFF-KVAR_ON;
-ph_perc=350./DIFF;
+%ph_perc=350./DIFF;
+ph_perc=[.925,.9698,.9];
 
+%Find actual reactive power being consumed by loads:
+KVAR_ACTUAL.DSS(:,1)=KVAR_ACTUAL.data(:,1)+(Caps.Fixed(1)+KVAR_ACTUAL.data(:,4)*Caps.Swtch(1))*ph_perc(1,1);
+KVAR_ACTUAL.DSS(:,2)=KVAR_ACTUAL.data(:,2)+(Caps.Fixed(1)+KVAR_ACTUAL.data(:,4)*Caps.Swtch(1))*ph_perc(1,2);
+KVAR_ACTUAL.DSS(:,3)=KVAR_ACTUAL.data(:,3)+(Caps.Fixed(1)+KVAR_ACTUAL.data(:,4)*Caps.Swtch(1))*ph_perc(1,3);
+%Smooth any crazy jumps:
+for i=1:1:sim_num-1
+    KVAR_ACTUAL.DSS(i,4)=KVAR_ACTUAL.DSS(i+1,1)-KVAR_ACTUAL.DSS(i,1);
+end
 
-
-KVAR_ACTUAL.DSS(:,1)=KVAR_ACTUAL.data(:,1)+(Caps.Fixed(1)+KVAR_ACTUAL.data(:,4)*Caps.Swtch(1))*(1+(1-ph_perc(1,1)));
-KVAR_ACTUAL.DSS(:,2)=KVAR_ACTUAL.data(:,2)+(Caps.Fixed(1)+KVAR_ACTUAL.data(:,4)*Caps.Swtch(1))*(1+(1-ph_perc(1,2)));
-KVAR_ACTUAL.DSS(:,3)=KVAR_ACTUAL.data(:,3)+(Caps.Fixed(1)+KVAR_ACTUAL.data(:,4)*Caps.Swtch(1))*(1+(1-ph_perc(1,3)));
-
-
-%disp(KVAR_neg_peak)
-%disp(KVAR_pos_peak)
-%fprintf('\t\t--Capacitor Ops--\nOpened Count=%3.0f & Closed Count=%3.f\n',pos_peak_count,neg_peak_count);
-%fprintf('Op. Time= %d & Op. Time= %d\n',time_opened(1),time_closed(1));
-
-        
-
+for i=1:1:sim_num
+    if KVAR_ACTUAL.DSS(i,4) > 80 || KVAR_ACTUAL.DSS(i,4) < -80
+        for ph=1:1:3
+            y2=KVAR_ACTUAL.DSS(i+4,ph);
+            y1=KVAR_ACTUAL.DSS(i-5,ph); %9
+            m=(y2-y1)/10;
+            for ee=0:1:8
+                KVAR_ACTUAL.DSS(i+ee-4,ph) = KVAR_ACTUAL.DSS(i+ee-5,ph)+m;
+            end
+        end
+        i = i + 8;
+    end
+end
 
 end
 

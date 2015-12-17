@@ -171,9 +171,14 @@ feeder_conductor(1,n)=60.358; %mi
 n = n + 1;
 load Annual_ls_ERALEIGH.mat
 feeder_PeakMW(1,n)=(MAX.YEAR.KW.A+MAX.YEAR.KW.B+MAX.YEAR.KW.C)/1000;
-feeder_CAP_Fixed(1,n)=600;
+feeder_CAP_Fixed(1,n)=200;
 feeder_CAP_Switch(1,n)=0;
-feeder_length_mi(1,n)=0;
+feeder_length_mi(1,n)=1.753*0.621371;
+feeder_length_ohm(1,n)=0.308; %ohms
+feeder_volt_peak_head(1,n)=0.022;
+feeder_volt_min_head(1,n)=0.015;
+
+Load_Center_Resistance(1,n)=0.1454; %ohms
 
 load Annual_daytime_load_ERALEIGH.mat   %WINDOW.DAYTIME.KW.A
 KW_3PH=WINDOW.DAYTIME.KW.A(:,1)+WINDOW.DAYTIME.KW.B(:,1)+WINDOW.DAYTIME.KW.C(:,1);
@@ -188,45 +193,62 @@ for i=1:1:length(KW_3PH)
     end
 end
 feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
+feeder_conductor(1,n)=1.531; %mi
 
 %%
+Labels={'Bellhaven','Commonwealth','Flay','Roxboro','Holly Springs','E.Raleigh'};
 figure(1);
 %-----------------------------
 subplot(3,4,1);
+ax = gca;
 barh(feeder_Volt);
-axis([0 40 0 7]); 
+axis([0 40 0 7]);
+ax.XTick = [0 10 20 30 40];
+ax.YTickLabel = Labels;
 xlabel('Voltage Class (kV)');
 ylabel('Feeder','FontSize',16);
 %-----------------------------
 subplot(3,4,2);
 barh(feeder_PeakMW);
 axis([0 15 0 7]);
+
 xlabel('Peak Load (MW)');
 %-----------------------------
 subplot(3,4,3);
+ax = gca;
 barh(feeder_ValleyMW);
 axis([0 5 0 7]);
+ax.XTick = [0 1 2 3 4 5];
 xlabel('Valley Day Load (MW)');
 %-----------------------------
 subplot(3,4,4);
+ax = gca;
 barh(feeder_CAP_Fixed);
 axis([0 4000 0 7]);
+ax.XTick = [0 1000 2000 3000 4000];
 xlabel('Fixed Caps (kVAR)');
 %-----------------------------
 subplot(3,4,5);
+ax = gca;
 barh(feeder_LTC_VREG);
 axis([0 8 0 7]);
+ax.XTick = [0 2 4 6 8];
+ax.YTickLabel = Labels;
 xlabel('LTC & Line Regulators');
 ylabel('Feeder','FontSize',16);
 %-----------------------------
 subplot(3,4,6);
+ax = gca;
 barh(feeder_volt_peak_head);
-axis([0 0.12 0 7]);
+axis([0 0.125 0 7]);
+ax.XTick = [0 0.025 0.05 0.075 0.100 0.125];
 xlabel('Peak Load Headroom (Vpu)');
 %-----------------------------
 subplot(3,4,7);
+ax = gca;
 barh(feeder_volt_min_head);
-axis([0 0.06 0 7]);
+axis([0 0.125 0 7]);
+ax.XTick = [0 0.025 0.05 0.075 0.100 0.125];
 xlabel('Valley Load Headroom (Vpu)');
 %-----------------------------
 subplot(3,4,8);
@@ -235,8 +257,10 @@ axis([0 4000 0 7]);
 xlabel('Swtch Caps (kVAR)');
 %-----------------------------
 subplot(3,4,9);
+ax = gca;
 barh(feeder_length_mi);
 axis([0 15 0 7]);
+ax.YTickLabel = Labels;
 xlabel('End Distance (mi)');
 ylabel('Feeder','FontSize',16);
 %-----------------------------

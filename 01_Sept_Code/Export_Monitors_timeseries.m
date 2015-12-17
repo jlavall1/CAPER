@@ -61,7 +61,7 @@ COUNT = 1;
     j = j + 1;
     
 %Now do general pull:
-while k <= n %n __ 90
+while k <= 3%n %n __ 90
     numPh = Lines_Distance(k,1).numPhases; 
     if numPh == 3
         for i=1:1:2
@@ -194,6 +194,7 @@ if feeder_NUM ~= 8
     DATA_SAVE(1).phaseV = MySUBV.data(:,3:2:7);
     DATA_SAVE(1).phaseI = MySUBV.data(:,11:2:15);
     DATA_SAVE(1).distance = 0;
+    DATA_SAVE(1).DOY = DOY;
     
     %Now lets save all simulation settings:
     Settings.pmpp = PV_pmpp;
@@ -205,7 +206,7 @@ if feeder_NUM ~= 8
     OPS=CUM_TapCount(DATA_SAVE);
     Settings.LTCops = OPS;
     DATA_SAVE(1).settings = Settings;
-    
+    %{
     %Save struct of post sim. results.
     if QSTS_select ~= 4
         if PV_ON_OFF == 1
@@ -217,8 +218,8 @@ if feeder_NUM ~= 8
         end
     elseif QSTS_select == 4
         %Save any additional information for that day:
-        DATA_SAVE(1).KVAR_ACTUAL = KVAR_ACTUAL;
-        DATA_SAVE(1).KW_ACTUAL = LOAD_ACTUAL;
+        %DATA_SAVE(1).KVAR_ACTUAL = KVAR_ACTUAL;
+        %DATA_SAVE(1).KW_ACTUAL = LOAD_ACTUAL;
         
         %Save the .mat file:
         if PV_ON_OFF == 2  
@@ -231,4 +232,5 @@ if feeder_NUM ~= 8
             save(filename2,'DATA_BASE');
         end
     end
+    %}
 end

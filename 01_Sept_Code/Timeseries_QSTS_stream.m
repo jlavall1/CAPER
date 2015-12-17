@@ -20,6 +20,7 @@ gui_response = STRING_0;
 %}
 %load time_60s_base_Flay.mat
 load time_60s_base_Annual_Flay.mat
+gui_response = STRING_0;
 ckt_direct      = gui_response{1,1}; %entire directory string of where the cktfile is locatted
 feeder_NUM      = gui_response{1,2};
 scenerio_NUM    = gui_response{1,3}; %1=VREG-top ; 2=VREG-bot ; 3=steadystate ; 4=RR_up ; 5=RR_down
@@ -64,8 +65,10 @@ if QSTS_select == 0
     %Algorithm will only conduct one simulation span not multiple:
     QSTS_1_Span
 elseif QSTS_select == 4
+    %Pre-main Algo:
+    Pre_QSTS_365_Span
     %Annual run of base case for LTC operations:
-    QSTS_365_Span
+    QSTS_365_Span %just added _Quick
 end
     
     

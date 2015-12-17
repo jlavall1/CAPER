@@ -241,7 +241,7 @@ elseif timeseries_span == 5
 end
 %clearvars M_PVSITE %RR_distrib
 %Write .csv file for simulation --
-s_pv = strcat(s,s_pv_txt)
+s_pv = strcat(s,s_pv_txt);
 csvwrite(s_pv,PV_loadshape_daily)
 %%
 %now lets find closest bus user selected:

@@ -10,13 +10,13 @@ close all
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 
-action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','Capacitor Ops','ALL');
+action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','Capacitor Ops','CAPER Report','ALL');
 while action<1
-    action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','Capacitor Ops','ALL');
+    action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','Capacitor Ops','CAPER Report','ALL');
 end
 %%
 %action = 6;
-ALL = 7;
+ALL = 8;
 fig = 0;
 %----------------------------------------------------------
 if action == 1 || action == ALL
@@ -434,9 +434,155 @@ if action == 6 || action == ALL
     grid on
     set(gca,'FontWeight','bold');
 end
+%%
+if action == 7 || action == ALL
+    addpath('C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Results');
+    %load DOY_1_364_BASE.mat
+    load DOY_1_364_PV2.mat
+    CAP_OPS_1=CAP_OPS;
+    load DOY_1_364_PV3.mat
+    CAP_OPS_2=CAP_OPS;
+    %load DOY_1_364_POST.mat
+    load DOY_1_364_BASE_N
+%SUBPLOT1:  Compare SCADA / DSS
+    fig = fig + 1;
+    figure(fig);
+    %-DSS
+    for DOY=1:1:364
+        plot([DOY,DOY,DOY],CAP_OPS(DOY).PE_avg(1,1:3),'bo','LineWidth',2);
+        hold on
+        plot([DOY,DOY,DOY],CAP_OPS(DOY).PE_avg(1,4:6),'ro','LineWidth',2);
+        hold on
+    end
+    %  Settings:
+    xlabel('Day of Year (DAY) [24hr sim]','FontWeight','bold','FontSize',12);
+    ylabel('Error Magnitude in Powers (P, Q) [kW, kVAR]','FontWeight','bold','FontSize',12);
+    title('Difference between DSCADA measurements & DSS Results','FontWeight','bold','FontSize',12);
+    legend('1-ph Real Powers (P)','1-ph Reactive Power (Q)','Location','NorthEast');
+    grid on
+    set(gca,'FontWeight','bold');
+    
+%SUBPLOT2:  Capacitor Ops from original data:
+    fig = fig + 1;
+    figure(fig);
+    s = 1;
+    for i=1:1:364
+        Y = CAP_OPS(i).data(1:1440,4);
+        X = [s:1:1440+s-1]';
+        X = X/1440;
+        %plot(s+j,CAP_OPS(i).data(j,4));
+        plot(X,Y,'k-','LineWidth',3)
+        hold on
+        s = s + 1440;
+    end
+    %  Settings:
+    axis([0 365 -0.5 1.5])
+    title('State of 450kVAR Swtch Cap. on Feeder 3','FontWeight','bold','FontSize',14);
+    xlabel('Day of Year (DOY)','FontWeight','bold','FontSize',14);
+    ylabel('1=Closed & 0=Opened','FontWeight','bold','FontSize',14);
+    grid on
+    set(gca,'FontWeight','bold');
+%SUBPLOT3:  Compare PV Scenerio w/ CAPS
+    fig = fig + 1;
+    figure(fig);
+    MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
+    MNTH= 1;
+    DAY = 1;
+    DOY = 1;
+    LTC_AG=zeros(12,4);
+    LTC_AG_1=zeros(12,4);
+    LTC_AG_2=zeros(12,4);
+    CAP_AG=zeros(12,4);
+    CAP_AG_1=zeros(12,4);
+    CAP_AG_2=zeros(12,4);
+    while MNTH < 13
+        while DAY < MTH_LN(1,MNTH)+1
+            if DOY < 365
+                %Base case:
+                LTC_AG(MNTH) = LTC_AG(MNTH) + CAP_OPS(DOY).LTC_OP_NUM;
+                CAP_AG(MNTH) = CAP_AG(MNTH) + CAP_OPS(DOY).oper; %Should be: CAP_OP_NUM
+                %Case 1:
+                LTC_AG_1(MNTH) = LTC_AG_1(MNTH) + CAP_OPS_1(DOY).LTC_OP_NUM;
+                CAP_AG_1(MNTH) = CAP_AG_1(MNTH) + CAP_OPS_1(DOY).CAP_OP_NUM;
+                %Case 2:
+                LTC_AG_2(MNTH) = LTC_AG_2(MNTH) + CAP_OPS_2(DOY).LTC_OP_NUM;
+                CAP_AG_2(MNTH) = CAP_AG_2(MNTH) + CAP_OPS_2(DOY).CAP_OP_NUM;
+                
+                DOY = DOY + 1;
+                DAY = DAY + 1;
+            elseif DOY == 365
+                DAY = 40;
+            end
+        end
+        DAY = 1;
+        MNTH = MNTH + 1;
+    end
+    combined = [LTC_AG(:,1),LTC_AG_1(:,1),LTC_AG_2(:,1)];
+    xdata=[1,2,3,4,5,6,7,8,9,10,11,12];
+    hb = bar(xdata,combined,'grouped');
+    %  Settings:
+    %axis([0 13 0 50])
+    %set(gca,'Ylabel','Number of Operations');
+    title('LTC Operations: Base Case & With PV','FontWeight','bold','FontSize',14);
+    ylabel('Number of Operations','FontWeight','bold','FontSize',14);
+    set(gca,'XTickLabel',{'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'});
+    set(gca,'FontWeight','bold');
+    legend('Base Case','PV @ 0.25*Rsc_{max}','PV @ 0.50*Rsc_{max}');
+%SUBPLOT4:  Compare PV Scenerio w/ LTC
+    fig = fig + 1;
+    figure(fig);
+    combined = [CAP_AG(:,1),CAP_AG_1(:,1)];
+    xdata=[1,2,3,4,5,6,7,8,9,10,11,12];
+    hb1 = bar(xdata,combined,'grouped');
+    %  Settings:
+    title('Capacitor Operations: Base Case & With PV','FontWeight','bold','FontSize',14);
+    ylabel('Number of Operations','FontWeight','bold','FontSize',14);
+    set(gca,'XTickLabel',{'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'});
+    set(gca,'FontWeight','bold');
+    legend('Base Case');
+%SUBPLOT5:  Find worst day & display
+    fig = fig + 1;
+    %{
+    max_op_inc=zeros(1,2);
+    for i=1:1:364
+        diff = CAP_OPS(i).LTC_OP_NUM-CAP_OPS_1(i).LTC_OP_NUM;
+        if diff > max_op_inc(1,1)
+            max_op_inc(1,1)=diff;
+            max_op_inc(1,2)=i;
+        end
+    end
+    %}
+    %DAY_S=max_op_inc(1,2);
+    DAY_S=50;  %50== Worst case:
+    for DAY_S=30:1:60
+        figure(fig);
+        
+        X=[1:1:1440]';
+        X=X/60;
+        h(1:3)=plot(X,CAP_OPS(DAY_S).DSS_LTC_V(:,1:3)/60,'b-','LineWidth',3);
+        hold on
+        h(4:6)=plot(X,CAP_OPS_1(DAY_S).DSS_LTC_V(:,1:3)/60,'r-','LineWidth',3);
+        hold on
+        plot(X,CAP_OPS(DAY_S).DSS_LTC_V(:,1:3)/60,'b-','LineWidth',3);
+        BW_U=ones(1440,1)*(124.5);
+        BW_L=ones(1440,1)*(123.5);
+        h(7:9)=plot(X,BW_U,'k--','LineWidth',2);
+        hold on
+        plot(X,BW_L,'k--','LineWidth',2);
+        %  Settings:
+        axis([0 24 123 125]);
+        title('2/9 (VI=23.6 & CI=0.39)','FontWeight','bold','FontSize',14);
+        ylabel('Voltage (120 V Base)','FontWeight','bold','FontSize',14);
+        xlabel('Hour of Day (h) [Hr]','FontWeight','bold','FontSize',14);
+        set(gca,'FontWeight','bold');
+        legend([h(1),h(4),h(7)],'Base Case','PV @ 0.25*Rsc_{max}','LTC B.W.');
+        %grid on
+        
+        fig = fig + 1;
+    end
+            
 
-
-
+end
 %%
 %These are just leftovers:
 %{

@@ -51,6 +51,7 @@ elseif feeder_NUM == 2
     % -- Flay 13.27km long --
     root = 'Flay';
     root1= 'Flay';
+    polar = -1;
 elseif feeder_NUM == 3
     load ROX.mat
     FEEDER = ROX;
@@ -151,21 +152,24 @@ elseif timeseries_span == 2
         LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),t_int);
         LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),t_int);
         LOAD_ACTUAL(:,3) = interp(LOAD_ACTUAL_1(:,3),t_int);
-        KVAR_ACTUAL.data(:,1) = interp(KVAR_ACTUAL_1(:,1),t_int);
-        KVAR_ACTUAL.data(:,2) = interp(KVAR_ACTUAL_1(:,2),t_int);
-        KVAR_ACTUAL.data(:,3) = interp(KVAR_ACTUAL_1(:,3),t_int);
+        KVAR_ACTUAL.data(:,1) = polar*interp(KVAR_ACTUAL_1(:,1),t_int);
+        KVAR_ACTUAL.data(:,2) = polar*interp(KVAR_ACTUAL_1(:,2),t_int);
+        KVAR_ACTUAL.data(:,3) = polar*interp(KVAR_ACTUAL_1(:,3),t_int);
     else
         jj=1;
         for ii=1:60:length(LOAD_ACTUAL_1)
             LOAD_ACTUAL(jj,1) = LOAD_ACTUAL_1(ii,1);
             LOAD_ACTUAL(jj,2) = LOAD_ACTUAL_1(ii,2);
             LOAD_ACTUAL(jj,3) = LOAD_ACTUAL_1(ii,3);
-            KVAR_ACTUAL.data(jj,1) = KVAR_ACTUAL_1(ii,1);
-            KVAR_ACTUAL.data(jj,2) = KVAR_ACTUAL_1(ii,2);
-            KVAR_ACTUAL.data(jj,3) = KVAR_ACTUAL_1(ii,3);
+            KVAR_ACTUAL.data(jj,1) = polar*KVAR_ACTUAL_1(ii,1);
+            KVAR_ACTUAL.data(jj,2) = polar*KVAR_ACTUAL_1(ii,2);
+            KVAR_ACTUAL.data(jj,3) = polar*KVAR_ACTUAL_1(ii,3);
             jj = jj + 1;
         end
     end
+    %4]w/ kVAR & kW, check & filter any NaN's remaining:
+    NaN_Filtering_Estimation
+    
     
 elseif timeseries_span == 3
     %1] Select data for 7 days:
@@ -304,6 +308,9 @@ end
 if Caps.Swtch(1) ~= 0
     [KVAR_ACTUAL,cap_pos]=Find_Cap_Ops(KVAR_ACTUAL,sim_num,s_step,Caps,LOAD_ACTUAL,cap_pos);
 end
+
+
+
 %1]  Generate Load Shape:
 filelocation=strcat(s,'\');
 fileID = fopen([filelocation,'Loadshape.dss'],'wt');

@@ -5,7 +5,7 @@ close all
 base_path = 'C:\Users\jlavall\Documents\GitHub\CAPER';
 path = strcat(base_path,'\04_DSCADA\Feeder_Data');
 time_int = '1m';
-cap_pos = 1; %used to be 1
+cap_pos = 0; %used to be 1
 addpath(path);
 load FLAY.mat
 FEEDER = FLAY;
@@ -52,26 +52,51 @@ for DOY=1:1:364
     if Caps.Swtch(1) ~= 0
         [KVAR_ACTUAL,E,OPS]=Find_Cap_Ops_1(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,LOAD_ACTUAL,LOAD_ACTUAL_1,cap_pos);
     end
+    %3]Update capacitor position for next day:
     cap_pos = KVAR_ACTUAL.data(1440,4);
+    
+    %4]Save all results from Find_Cap_Ops in struct:
     CAP_OPS(DOY).data = KVAR_ACTUAL.data;
-    %CAP_OPS(DOY).
     CAP_OPS(DOY).dP = KVAR_ACTUAL.dP;
     CAP_OPS(DOY).kW = LOAD_ACTUAL;
     CAP_OPS(DOY).error = E;
     CAP_OPS(DOY).oper = OPS;
+    CAP_OPS(DOY).PF = KVAR_ACTUAL.PF;
+    CAP_OPS(DOY).DSS= KVAR_ACTUAL.DSS;
+    
+    %5]Capture the PF when operation occurs:
+    PF=zeros(1,3);
+    hold_PF = 1;
+    for m=1:1:str2num(sim_num)-1
+        if CAP_OPS(DOY).oper ~= 0
+            if CAP_OPS(DOY).data(m,4) ~= CAP_OPS(DOY).data(m+1,4)
+                PF(1,hold_PF)=CAP_OPS(DOY).data(m,6);
+                hold_PF = hold_PF + 1;
+            end
+        end
+    end
+    CAP_OPS(DOY).PF_op=PF;
 end
-%{
+CAP_OPS(1).datanames=KVAR_ACTUAL.datanames;
+
+
+%%
 figure(1)
 s = 1;
 for i=1:1:364
     Y = CAP_OPS(i).data(1:1440,4);
     X = [s:1:1440+s-1]';
+    X = X/1440;
     %plot(s+j,CAP_OPS(i).data(j,4));
     plot(X,Y)
     hold on
     s = s + 1440;
 end
-axis([0 s -1 2])
+axis([0 365 -0.5 1.5])
+title('State of 450kVAR Swtch Cap');
+xlabel('Day of Year (DOY)');
+ylabel('1=Closed & 0=Opened');
+
 figure(2)
 s = 1;
 for i=1:1:50
@@ -109,22 +134,32 @@ end
 %%
 fig = 0;
 %close all
-for i=150:1:365
-    if CAP_OPS(i).oper == 0
+
+for i=1:1:364
+    if CAP_OPS(i).oper ~= 0
         fig = fig + 1;
         figure(fig)
         T_DAY = i;
-        plot(CAP_OPS(T_DAY).data(:,1),'r-')
+        plot(CAP_OPS(T_DAY).data(:,1),'r-','LineWidth',3)
         hold on
-        plot(CAP_OPS(T_DAY).data(:,2),'g-')
+        plot(CAP_OPS(T_DAY).data(:,2),'g-','LineWidth',3)
         hold on
-        plot(CAP_OPS(T_DAY).data(:,3),'b-')
+        plot(CAP_OPS(T_DAY).data(:,3),'b-','LineWidth',3)
         hold on
         plot(CAP_OPS(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
-        hold off
+        hold on
+        plot(CAP_OPS(T_DAY).DSS(:,1),'r--')
+        hold on
+        plot(CAP_OPS(T_DAY).DSS(:,2),'g--')
+        hold on
+        plot(CAP_OPS(T_DAY).DSS(:,3),'b--')
+        hold on
+        
         title(sprintf('DOY=%d',i));
+        
     end
 end
+
         
         
         

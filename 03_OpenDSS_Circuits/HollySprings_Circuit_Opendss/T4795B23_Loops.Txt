@@ -1,0 +1,22 @@
+Loops and Paralleled Lines in all EnergyMeter Zones
+
+(circuitmeter) Line.12118_D099K_2627014: LOOPED TO     Line.12118__2636802
+(circuitmeter) Line.12118__2636802: LOOPED TO     Line.12118_d099k_2627014
+(circuitmeter) Line.7375K_7NW53_2654649: LOOPED TO     Line.7375k__2654664
+(circuitmeter) Line.7375K__2654664: LOOPED TO     Line.7375k_7nw53_2654649
+(circuitmeter) Line.183Y06_14Q049_104695318: LOOPED TO     Line.17bt58_14q049_104695248
+(circuitmeter) Line.14Q049__104261805: LOOPED TO     Line.bus_103041237
+(circuitmeter) Line.17BR88__104028973: LOOPED TO     Line.17bt58_17br88_104028963
+(circuitmeter) Line.17BT58_17BR88_104028963: LOOPED TO     Line.17br88__104028973
+(circuitmeter) Line.17BT58_14Q049_104695248: LOOPED TO     Line.14q049__104261805
+(circuitmeter) Line.BUS_103041237: LOOPED TO     Line.14q049__104261805
+(circuitmeter) Line.BUS_2707103: LOOPED TO     Line.bus_2707101
+(circuitmeter) Line.14G318_14NJ19_103098882: LOOPED TO     Line.14g318__2700765
+(circuitmeter) Line.18KQ23_14Q050_105985263: LOOPED TO     Line.18kq22_14q050_105985241
+(circuitmeter) Line.14G318_14L467_2680581: LOOPED TO     Line.14g318__2700768
+(circuitmeter) Line.18KQ22_14Q050_105985241: LOOPED TO     Line.14q050__103267066
+(circuitmeter) Line.14G318__2700765: LOOPED TO     Line.14g318_14nj19_103098882
+(circuitmeter) Line.14G318__2700768: LOOPED TO     Line.14g318_14l467_2680581
+(circuitmeter) Line.154511__103157934: LOOPED TO     Line.14g317_154511_103157946
+(circuitmeter) Line.14G317_154511_103157946: LOOPED TO     Line.154511__103157934
+(circuitmeter) Line.BUS_2707101: LOOPED TO     Line.bus_2707104
