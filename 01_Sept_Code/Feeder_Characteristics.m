@@ -144,11 +144,11 @@ load Annual_ls_HOLLY.mat
 feeder_PeakMW(1,n)=(MAX.YEAR.KW.A+MAX.YEAR.KW.B+MAX.YEAR.KW.C)/1000;
 feeder_CAP_Fixed(1,n)=1200*2;
 feeder_CAP_Switch(1,n)=0;
-feeder_length_mi(1,n)=21.1358*0.621371;
-feeder_length_ohm(1,n)=0; %4.211
+feeder_length_mi(1,n)=8.202*0.621371;
+feeder_length_ohm(1,n)=8; %4.211
 feeder_volt_peak_head(1,n)=0.026;
-feeder_volt_min_head(1,n)=0.019;
-Load_Center_Resistance(1,n)=1.008; %ohm (this is not correct)
+feeder_volt_min_head(1,n)=0.018;
+Load_Center_Resistance(1,n)=0.915; %ohm (this is not correct)
 
 load Annual_daytime_load_HOLLY.mat   %WINDOW.DAYTIME.KW.A
 KW_3PH=WINDOW.DAYTIME.KW.A(:,1)+WINDOW.DAYTIME.KW.B(:,1)+WINDOW.DAYTIME.KW.C(:,1);
@@ -205,79 +205,90 @@ barh(feeder_Volt);
 axis([0 40 0 7]);
 ax.XTick = [0 10 20 30 40];
 ax.YTickLabel = Labels;
-xlabel('Voltage Class (kV)');
+set(gca,'FontWeight','bold');
+xlabel('Voltage Class (kV)','FontWeight','bold');
 ylabel('Feeder','FontSize',16);
 %-----------------------------
 subplot(3,4,2);
 barh(feeder_PeakMW);
 axis([0 15 0 7]);
-
-xlabel('Peak Load (MW)');
+set(gca,'FontWeight','bold');
+xlabel('Peak Load (MW)','FontWeight','bold');
 %-----------------------------
 subplot(3,4,3);
 ax = gca;
 barh(feeder_ValleyMW);
 axis([0 5 0 7]);
+set(gca,'FontWeight','bold');
 ax.XTick = [0 1 2 3 4 5];
-xlabel('Valley Day Load (MW)');
+xlabel('Valley Day Load (MW)','FontWeight','bold');
 %-----------------------------
 subplot(3,4,4);
 ax = gca;
 barh(feeder_CAP_Fixed);
 axis([0 4000 0 7]);
+set(gca,'FontWeight','bold');
 ax.XTick = [0 1000 2000 3000 4000];
-xlabel('Fixed Caps (kVAR)');
+xlabel('Fixed Caps (kVAR)','FontWeight','bold');
 %-----------------------------
 subplot(3,4,5);
 ax = gca;
 barh(feeder_LTC_VREG);
 axis([0 8 0 7]);
+set(gca,'FontWeight','bold');
 ax.XTick = [0 2 4 6 8];
 ax.YTickLabel = Labels;
-xlabel('LTC & Line Regulators');
+xlabel('LTC & Line Regulators','FontWeight','bold');
 ylabel('Feeder','FontSize',16);
 %-----------------------------
 subplot(3,4,6);
 ax = gca;
 barh(feeder_volt_peak_head);
 axis([0 0.125 0 7]);
+set(gca,'FontWeight','bold');
 ax.XTick = [0 0.025 0.05 0.075 0.100 0.125];
-xlabel('Peak Load Headroom (Vpu)');
+xlabel('Peak Load Headroom (Vpu)','FontWeight','bold');
 %-----------------------------
 subplot(3,4,7);
 ax = gca;
 barh(feeder_volt_min_head);
 axis([0 0.125 0 7]);
+set(gca,'FontWeight','bold');
 ax.XTick = [0 0.025 0.05 0.075 0.100 0.125];
-xlabel('Valley Load Headroom (Vpu)');
+xlabel('Valley Load Headroom (Vpu)','FontWeight','bold');
 %-----------------------------
 subplot(3,4,8);
 barh(feeder_CAP_Switch);
 axis([0 4000 0 7]);
-xlabel('Swtch Caps (kVAR)');
+set(gca,'FontWeight','bold');
+xlabel('Swtch Caps (kVAR)','FontWeight','bold');
 %-----------------------------
 subplot(3,4,9);
 ax = gca;
 barh(feeder_length_mi);
 axis([0 15 0 7]);
+set(gca,'FontWeight','bold');
 ax.YTickLabel = Labels;
-xlabel('End Distance (mi)');
+xlabel('End Distance (mi)','FontWeight','bold');
 ylabel('Feeder','FontSize',16);
 %-----------------------------
 subplot(3,4,10);
 barh(feeder_length_ohm);
 axis([0 20 0 7]);
-xlabel('End Resistance (ohm)');
+set(gca,'FontWeight','bold');
+xlabel('End Resistance (ohm)','FontWeight','bold');
 %-----------------------------
 subplot(3,4,11);
 barh(feeder_conductor);
 axis([0 100 0 7]);
-xlabel('Feeder Conductor (mi)');
+set(gca,'FontWeight','bold');
+xlabel('Feeder Conductor (mi)','FontWeight','bold');
 %-----------------------------
 subplot(3,4,12);
 barh(Load_Center_Resistance);
 axis([0 3 0 7]);
-xlabel('Load Center Resistance (ohm)');
+set(gca,'FontWeight','bold');
+xlabel('Load Center Resistance (ohm)','FontWeight','bold');
 
 
 

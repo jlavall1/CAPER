@@ -25,7 +25,7 @@ end
 
 output_text = cell(length(CELL),1);
 for i=1:1:length(CELL)
-    [startIndex,endIndex]=regexp(CELL{i,5},'.');
+    [startIndex,endIndex]=regexp(CELL{i,5},'.','match');
     n = length(CELL{1,5});
     ref = CELL{i,5}(n-1:n);
     if strcmp(ref,'.1')==1

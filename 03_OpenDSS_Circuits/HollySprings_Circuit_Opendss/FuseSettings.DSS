@@ -24,7 +24,7 @@ New Line.U534BH__2673914 Bus1=1140364 Bus2=26555795 Switch=T
 New Fuse.U534BH__2673914 MonitoredObj=Line.U534BH__2673914 MonitoredTerm=1 SwitchedObj=Line.U534BH__2673914 SwitchedTerm=1 RatedCurrent= 65  enabled=F
 New Line.5R683__2636805 Bus1=26281696 Bus2=26281697 Switch=T
 New Fuse.5R683__2636805 MonitoredObj=Line.5R683__2636805 MonitoredTerm=1 SwitchedObj=Line.5R683__2636805 SwitchedTerm=1 RatedCurrent= 1  enabled=F
-New Line.A465K__2636800 Bus1=26281718 Bus2=25734585 Switch=T
+New Line.A465K__2636800 Bus1=26281718.1.3 Bus2=25734585.1.3 Phases=2 Switch=T
 New Fuse.A465K__2636800 MonitoredObj=Line.A465K__2636800 MonitoredTerm=1 SwitchedObj=Line.A465K__2636800 SwitchedTerm=1 RatedCurrent= 65  enabled=F
 New Line.17BT58__104029636 Bus1=103294839 Bus2=103294850 Switch=T
 New Fuse.17BT58__104029636 MonitoredObj=Line.17BT58__104029636 MonitoredTerm=1 SwitchedObj=Line.17BT58__104029636 SwitchedTerm=1 RatedCurrent= 1  enabled=F
@@ -80,9 +80,9 @@ New Line.7228K__2661200 Bus1=1104450 Bus2=25631627 Switch=T
 New Fuse.7228K__2661200 MonitoredObj=Line.7228K__2661200 MonitoredTerm=1 SwitchedObj=Line.7228K__2661200 SwitchedTerm=1 RatedCurrent= 65  enabled=F
 New Line.7228K__2661201 Bus1=1104450 Bus2=25631626 Switch=T
 New Fuse.7228K__2661201 MonitoredObj=Line.7228K__2661201 MonitoredTerm=1 SwitchedObj=Line.7228K__2661201 SwitchedTerm=1 RatedCurrent= 65  enabled=F
-New Line.9WF54__2663234 Bus1=25876074 Bus2=25876075 Switch=T
+New Line.9WF54__2663234 Bus1=25876074.3 Bus2=25876075.3 Phases=1 Switch=T
 New Fuse.9WF54__2663234 MonitoredObj=Line.9WF54__2663234 MonitoredTerm=1 SwitchedObj=Line.9WF54__2663234 SwitchedTerm=1 RatedCurrent= 65  enabled=F
-New Line.9WF54__2663232 Bus1=25876074 Bus2=25876083 Switch=T
+New Line.9WF54__2663232 Bus1=25876074.3 Bus2=25876083.3 Phases=1 Switch=T
 New Fuse.9WF54__2663232 MonitoredObj=Line.9WF54__2663232 MonitoredTerm=1 SwitchedObj=Line.9WF54__2663232 SwitchedTerm=1 RatedCurrent= 65  enabled=F
 New Line.D884K__2676762 Bus1=25783320 Bus2=26709737 Switch=T
 New Fuse.D884K__2676762 MonitoredObj=Line.D884K__2676762 MonitoredTerm=1 SwitchedObj=Line.D884K__2676762 SwitchedTerm=1 RatedCurrent= 65  enabled=F
@@ -102,11 +102,11 @@ New Line.7363K__103949354 Bus1=1104967 Bus2=103341133 Switch=T
 New Fuse.7363K__103949354 MonitoredObj=Line.7363K__103949354 MonitoredTerm=1 SwitchedObj=Line.7363K__103949354 SwitchedTerm=1 RatedCurrent= 1  enabled=F
 New Line.A460K__2668250 Bus1=26281712 Bus2=26281713 Switch=T
 New Fuse.A460K__2668250 MonitoredObj=Line.A460K__2668250 MonitoredTerm=1 SwitchedObj=Line.A460K__2668250 SwitchedTerm=1 RatedCurrent= 1  enabled=F
-New Line.7140K__2636797 Bus1=1106100 Bus2=25734578 Switch=T
+New Line.7140K__2636797 Bus1=1106100.3 Bus2=25734578.3 Phases=1 Switch=T
 New Fuse.7140K__2636797 MonitoredObj=Line.7140K__2636797 MonitoredTerm=1 SwitchedObj=Line.7140K__2636797 SwitchedTerm=1 RatedCurrent= 65  enabled=F
-New Line.5DN79__2664343 Bus1=25903757 Bus2=25098741 Switch=T
+New Line.5DN79__2664343 Bus1=25903757.2 Bus2=25098741.2 Phases=1 Switch=T
 New Fuse.5DN79__2664343 MonitoredObj=Line.5DN79__2664343 MonitoredTerm=1 SwitchedObj=Line.5DN79__2664343 SwitchedTerm=1 RatedCurrent= 50  enabled=F
-New Line.7140K__2636798 Bus1=1106100 Bus2=25734577 Switch=T
+New Line.7140K__2636798 Bus1=1106100.3 Bus2=25734577.3 Phases=1 Switch=T
 New Fuse.7140K__2636798 MonitoredObj=Line.7140K__2636798 MonitoredTerm=1 SwitchedObj=Line.7140K__2636798 SwitchedTerm=1 RatedCurrent= 65  enabled=F
 New Line.7375K__2654664 Bus1=1104998 Bus2=25734556 Switch=T
 New Fuse.7375K__2654664 MonitoredObj=Line.7375K__2654664 MonitoredTerm=1 SwitchedObj=Line.7375K__2654664 SwitchedTerm=1 RatedCurrent= 1  enabled=F
@@ -132,7 +132,7 @@ New Line.U535BH__2636918 Bus1=1140295 Bus2=25667563 Switch=T
 New Fuse.U535BH__2636918 MonitoredObj=Line.U535BH__2636918 MonitoredTerm=1 SwitchedObj=Line.U535BH__2636918 SwitchedTerm=1 RatedCurrent= 1  enabled=F
 New Line.A984BH__2656904 Bus1=1140864 Bus2=25429365 Switch=T
 New Fuse.A984BH__2656904 MonitoredObj=Line.A984BH__2656904 MonitoredTerm=1 SwitchedObj=Line.A984BH__2656904 SwitchedTerm=1 RatedCurrent= 65  enabled=F
-New Line.5DN79__2652223 Bus1=25098741 Bus2=25734549 Switch=T
+New Line.5DN79__2652223 Bus1=25098741.2 Bus2=25734549.2 Phases=1 Switch=T
 New Fuse.5DN79__2652223 MonitoredObj=Line.5DN79__2652223 MonitoredTerm=1 SwitchedObj=Line.5DN79__2652223 SwitchedTerm=1 RatedCurrent= 50  enabled=F
 New Line.U895BH__2662446 Bus1=25885429 Bus2=25836857 Switch=T
 New Fuse.U895BH__2662446 MonitoredObj=Line.U895BH__2662446 MonitoredTerm=1 SwitchedObj=Line.U895BH__2662446 SwitchedTerm=1 RatedCurrent= 65  enabled=F
@@ -174,7 +174,7 @@ New Line.U537BH__2636919 Bus1=1140287 Bus2=1140288 Switch=T
 New Fuse.U537BH__2636919 MonitoredObj=Line.U537BH__2636919 MonitoredTerm=1 SwitchedObj=Line.U537BH__2636919 SwitchedTerm=1 RatedCurrent= 40  enabled=F
 New Line.5S377__2662532 Bus1=1104678 Bus2=25844900 Switch=T
 New Fuse.5S377__2662532 MonitoredObj=Line.5S377__2662532 MonitoredTerm=1 SwitchedObj=Line.5S377__2662532 SwitchedTerm=1 RatedCurrent= 20  enabled=F
-New Line.A465K__2636799 Bus1=26281718 Bus2=26281719 Switch=T
+New Line.A465K__2636799 Bus1=26281718.1.3 Bus2=26281719.1.3 Phases=2 Switch=T
 New Fuse.A465K__2636799 MonitoredObj=Line.A465K__2636799 MonitoredTerm=1 SwitchedObj=Line.A465K__2636799 SwitchedTerm=1 RatedCurrent= 65  enabled=F
 New Line.G9L65__2680789 Bus1=25885430 Bus2=26896045 Switch=T
 New Fuse.G9L65__2680789 MonitoredObj=Line.G9L65__2680789 MonitoredTerm=1 SwitchedObj=Line.G9L65__2680789 SwitchedTerm=1 RatedCurrent= 65  enabled=F
@@ -188,9 +188,9 @@ New Line.13WA55__2678088 Bus1=1140779 Bus2=26776441 Switch=T
 New Fuse.13WA55__2678088 MonitoredObj=Line.13WA55__2678088 MonitoredTerm=1 SwitchedObj=Line.13WA55__2678088 SwitchedTerm=1 RatedCurrent= 65  enabled=F
 New Line.ABK62K__2636928 Bus1=1104989 Bus2=25734636 Switch=T
 New Fuse.ABK62K__2636928 MonitoredObj=Line.ABK62K__2636928 MonitoredTerm=1 SwitchedObj=Line.ABK62K__2636928 SwitchedTerm=1 RatedCurrent= 1  enabled=F
-New Line.12118__2636802 Bus1=26281709 Bus2=26281710 Switch=T
+New Line.12118__2636802 Bus1=26281709.1.3 Bus2=26281710.1.3 Phases=2 Switch=T
 New Fuse.12118__2636802 MonitoredObj=Line.12118__2636802 MonitoredTerm=1 SwitchedObj=Line.12118__2636802 SwitchedTerm=1 RatedCurrent= 1  enabled=F
-New Line.12118__2636803 Bus1=26281709 Bus2=25734597 Switch=T
+New Line.12118__2636803 Bus1=26281709.1.3 Bus2=25734597.1.3 Phases=2 Switch=T
 New Fuse.12118__2636803 MonitoredObj=Line.12118__2636803 MonitoredTerm=1 SwitchedObj=Line.12118__2636803 SwitchedTerm=1 RatedCurrent= 1  enabled=F
 New Line.7233K__2636929 Bus1=1104671 Bus2=1104672 Switch=T
 New Fuse.7233K__2636929 MonitoredObj=Line.7233K__2636929 MonitoredTerm=1 SwitchedObj=Line.7233K__2636929 SwitchedTerm=1 RatedCurrent= 1  enabled=F

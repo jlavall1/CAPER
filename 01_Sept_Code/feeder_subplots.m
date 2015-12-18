@@ -2,6 +2,7 @@
 % str = input(prompt,'s');
 clear
 clc
+close all
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 
@@ -197,13 +198,15 @@ elseif load_LVL == 3
     fprintf('KW Load Center Resistance: %3.3f ohms\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
     fprintf('Distance Load Center Resistance: %3.3f ohms\n',Lines_Distance(distance_diff(1,2),1).bus1Zsc1(1,1));
     %Plot Rsc1 vs km from sub:
+%%
     figure(1);
     count = 0;
     sum = 0;
     for j=1:1:n
         sum = sum + Lines_Distance(j,1).bus1Zsc1(1,1);
-        if Lines_Distance(j,1).bus1Zsc1(1,1) > 100
+        if Lines_Distance(j,1).bus1Zsc1(1,1) > 100 || Lines_Distance(j,1).bus1Zsc1(1,1) < -100
             count = count + 1;
+            fprintf('Error Located %d\n',j);
         end
         plot(Lines_Distance(j,1).bus1Distance,Lines_Distance(j,1).bus1Zsc1(1,1),'bo');
         hold on

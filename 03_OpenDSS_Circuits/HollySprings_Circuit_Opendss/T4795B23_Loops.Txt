@@ -1,7 +1,5 @@
 Loops and Paralleled Lines in all EnergyMeter Zones
 
-(circuitmeter) Line.12118_D099K_2627014: LOOPED TO     Line.12118__2636802
-(circuitmeter) Line.12118__2636802: LOOPED TO     Line.12118_d099k_2627014
 (circuitmeter) Line.7375K_7NW53_2654649: LOOPED TO     Line.7375k__2654664
 (circuitmeter) Line.7375K__2654664: LOOPED TO     Line.7375k_7nw53_2654649
 (circuitmeter) Line.183Y06_14Q049_104695318: LOOPED TO     Line.17bt58_14q049_104695248
