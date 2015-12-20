@@ -29,7 +29,8 @@ Redirect LinesByPhase.dss
 Redirect Regulators.dss
 Redirect Loads.dss
 Redirect Capacitors.dss
-Redirect SwtControls.dss
+!Redirect SwtControls.dss
+Redirect Swt_Formed_T.dss
 Redirect Reclosers.dss
 Redirect BreakerSettings.dss
 Redirect SectionalizerSettings.DSS
