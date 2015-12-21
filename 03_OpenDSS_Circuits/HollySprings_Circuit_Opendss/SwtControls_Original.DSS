@@ -1,0 +1,1832 @@
+New Line.105495__103374096 Bus1=103007630 Bus2=103135359 Switch=T
+New SwtControl.105495__103374096 SwitchedObj=LINE.105495__103374096 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L570__2701321 Bus1=26679485 Bus2=27137075 Switch=T
+New SwtControl.13L570__2701321 SwitchedObj=LINE.13L570__2701321 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106804__2701104 Bus1=27136858 Bus2=25836854 Switch=T
+New SwtControl.106804__2701104 SwitchedObj=LINE.106804__2701104 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106804__2701105 Bus1=25836854 Bus2=27136859 Switch=T
+New SwtControl.106804__2701105 SwitchedObj=LINE.106804__2701105 SwitchedTerm=2 Action=Closed Lock=no
+New Line.144378__2701336 Bus1=26776430 Bus2=27137090 Switch=T
+New SwtControl.144378__2701336 SwitchedObj=LINE.144378__2701336 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106804__2701106 Bus1=25836854 Bus2=27136860 Switch=T
+New SwtControl.106804__2701106 SwitchedObj=LINE.106804__2701106 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L570__2701322 Bus1=27137076 Bus2=26679485 Switch=T
+New SwtControl.13L570__2701322 SwitchedObj=LINE.13L570__2701322 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC33__105326050 Bus1=103626605 Bus2=103626606 Switch=T
+New SwtControl.18GC33__105326050 SwitchedObj=LINE.18GC33__105326050 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106800__2701100 Bus1=25836861 Bus2=27136854 Switch=T
+New SwtControl.106800__2701100 SwitchedObj=LINE.106800__2701100 SwitchedTerm=2 Action=Closed Lock=no
+New Line.186Q94__104672522 Bus1=103527277 Bus2=103527276 Switch=T
+New SwtControl.186Q94__104672522 SwitchedObj=LINE.186Q94__104672522 SwitchedTerm=2 Action=Closed Lock=no
+New Line.186Q94__104672521 Bus1=103527276 Bus2=103527275 Switch=T
+New SwtControl.186Q94__104672521 SwitchedObj=LINE.186Q94__104672521 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN18__104282587 Bus1=103383300 Bus2=103383301 Switch=T
+New SwtControl.17MN18__104282587 SwitchedObj=LINE.17MN18__104282587 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN18__104282586 Bus1=103383301 Bus2=103383302 Switch=T
+New SwtControl.17MN18__104282586 SwitchedObj=LINE.17MN18__104282586 SwitchedTerm=2 Action=Closed Lock=no
+New Line.CBR27__2700959 Bus1=1105418 Bus2=27136713 Switch=T
+New SwtControl.CBR27__2700959 SwitchedObj=LINE.CBR27__2700959 SwitchedTerm=2 Action=Closed Lock=no
+New Line.CBR27__2700958 Bus1=27136712 Bus2=1105418 Switch=T
+New SwtControl.CBR27__2700958 SwitchedObj=LINE.CBR27__2700958 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y96__104696222 Bus1=103537190 Bus2=103537122 Switch=T
+New SwtControl.183Y96__104696222 SwitchedObj=LINE.183Y96__104696222 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q055__103041320 Bus1=103016834 Bus2=103016849 Switch=T
+New SwtControl.14Q055__103041320 SwitchedObj=LINE.14Q055__103041320 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q055__103041321 Bus1=103016839 Bus2=103016834 Switch=T
+New SwtControl.14Q055__103041321 SwitchedObj=LINE.14Q055__103041321 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G2403__2693084 Bus1=1140149 Bus2=26999407 Switch=T
+New SwtControl.G2403__2693084 SwitchedObj=LINE.G2403__2693084 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G2402__2693085 Bus1=25747796 Bus2=26999408 Switch=T
+New SwtControl.G2402__2693085 SwitchedObj=LINE.G2402__2693085 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR30__2693046 Bus1=25426802 Bus2=26999369 Switch=T
+New SwtControl.8DR30__2693046 SwitchedObj=LINE.8DR30__2693046 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G2402__2693086 Bus1=26999409 Bus2=25747796 Switch=T
+New SwtControl.G2402__2693086 SwitchedObj=LINE.G2402__2693086 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G2403__2693083 Bus1=26999406 Bus2=1140149 Switch=T
+New SwtControl.G2403__2693083 SwitchedObj=LINE.G2403__2693083 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR30__2693045 Bus1=26999368 Bus2=25426802 Switch=T
+New SwtControl.8DR30__2693045 SwitchedObj=LINE.8DR30__2693045 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR36__2693047 Bus1=25497403 Bus2=26999370 Switch=T
+New SwtControl.8DR36__2693047 SwitchedObj=LINE.8DR36__2693047 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX73__2692946 Bus1=25734565 Bus2=103079718 Switch=T
+New SwtControl.7NX73__2692946 SwitchedObj=LINE.7NX73__2692946 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX73__2692947 Bus1=26999270 Bus2=25734565 Switch=T
+New SwtControl.7NX73__2692947 SwitchedObj=LINE.7NX73__2692947 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WF49__2701060 Bus1=25876081 Bus2=27136814 Switch=T
+New SwtControl.9WF49__2701060 SwitchedObj=LINE.9WF49__2701060 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L21__2701174 Bus1=26755198 Bus2=27136928 Switch=T
+New SwtControl.102L21__2701174 SwitchedObj=LINE.102L21__2701174 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L21__2701175 Bus1=27136929 Bus2=26755198 Switch=T
+New SwtControl.102L21__2701175 SwitchedObj=LINE.102L21__2701175 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH67__104218262 Bus1=103359063 Bus2=103359064 Switch=T
+New SwtControl.17KH67__104218262 SwitchedObj=LINE.17KH67__104218262 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH67__104218263 Bus1=103359062 Bus2=103359063 Switch=T
+New SwtControl.17KH67__104218263 SwitchedObj=LINE.17KH67__104218263 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L19__2701170 Bus1=27136924 Bus2=26755197 Switch=T
+New SwtControl.102L19__2701170 SwitchedObj=LINE.102L19__2701170 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR36__2693048 Bus1=26999371 Bus2=25497403 Switch=T
+New SwtControl.8DR36__2693048 SwitchedObj=LINE.8DR36__2693048 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.8DT97__2693891 Bus1=27000214 Bus2=T4795B23_10000002 Switch=T
+!New SwtControl.8DT97__2693891 SwitchedObj=LINE.8DT97__2693891 SwitchedTerm=2 Action=Open Lock=no
+!New Line.102L19__2701171 Bus1=26755197 Bus2=27136925 Switch=T
+!New SwtControl.102L19__2701171 SwitchedObj=LINE.102L19__2701171 SwitchedTerm=2 Action=Open Lock=no
+New Line.14G317__2679983 Bus1=27146923 Bus2=103016798 Switch=T
+New SwtControl.14G317__2679983 SwitchedObj=LINE.14G317__2679983 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14G317__2679982 Bus1=103036415 Bus2=27146922 Switch=T
+New SwtControl.14G317__2679982 SwitchedObj=LINE.14G317__2679982 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U602BH__2692833 Bus1=26999156 Bus2=1139987 Switch=T
+New SwtControl.U602BH__2692833 SwitchedObj=LINE.U602BH__2692833 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U600BH__2692822 Bus1=26999145 Bus2=1140076 Switch=T
+New SwtControl.U600BH__2692822 SwitchedObj=LINE.U600BH__2692822 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L465__2700819 Bus1=103045212 Bus2=26887559 Switch=T
+New SwtControl.14L465__2700819 SwitchedObj=LINE.14L465__2700819 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U600BH__2692821 Bus1=1140076 Bus2=26999144 Switch=T
+New SwtControl.U600BH__2692821 SwitchedObj=LINE.U600BH__2692821 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM84__2693537 Bus1=25631609 Bus2=26999860 Switch=T
+New SwtControl.9AM84__2693537 SwitchedObj=LINE.9AM84__2693537 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L18__2701168 Bus1=25750597 Bus2=27136922 Switch=T
+New SwtControl.102L18__2701168 SwitchedObj=LINE.102L18__2701168 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM84__2693536 Bus1=26999859 Bus2=25631609 Switch=T
+New SwtControl.9AM84__2693536 SwitchedObj=LINE.9AM84__2693536 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.9AM85__2693535 Bus1=25631608 Bus2=26999858 Switch=T
+!New SwtControl.9AM85__2693535 SwitchedObj=LINE.9AM85__2693535 SwitchedTerm=2 Action=Open Lock=no
+New Line.9AM89__2693539 Bus1=25631613 Bus2=26999862 Switch=T
+New SwtControl.9AM89__2693539 SwitchedObj=LINE.9AM89__2693539 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L18__2701169 Bus1=27136923 Bus2=25750597 Switch=T
+New SwtControl.102L18__2701169 SwitchedObj=LINE.102L18__2701169 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM85__2693534 Bus1=26999857 Bus2=25631608 Switch=T
+New SwtControl.9AM85__2693534 SwitchedObj=LINE.9AM85__2693534 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM89__2693538 Bus1=26999861 Bus2=25631613 Switch=T
+New SwtControl.9AM89__2693538 SwitchedObj=LINE.9AM89__2693538 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U602BH__2692835 Bus1=1139987 Bus2=26999158 Switch=T
+New SwtControl.U602BH__2692835 SwitchedObj=LINE.U602BH__2692835 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.9WF47__2700945 Bus1=27136699 Bus2=25876080 Switch=T
+!New SwtControl.9WF47__2700945 SwitchedObj=LINE.9WF47__2700945 SwitchedTerm=2 Action=Open Lock=no
+New Line.U602BH__2692834 Bus1=1139987 Bus2=26999157 Switch=T
+New SwtControl.U602BH__2692834 SwitchedObj=LINE.U602BH__2692834 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WF47__2700944 Bus1=27136698 Bus2=25876080 Switch=T
+New SwtControl.9WF47__2700944 SwitchedObj=LINE.9WF47__2700944 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WF47__2700946 Bus1=25876080 Bus2=27136700 Switch=T
+New SwtControl.9WF47__2700946 SwitchedObj=LINE.9WF47__2700946 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L810__2700860 Bus1=103048713 Bus2=103048712 Switch=T
+New SwtControl.14L810__2700860 SwitchedObj=LINE.14L810__2700860 SwitchedTerm=2 Action=Closed Lock=no
+New Line.C1F95__2700899 Bus1=27136653 Bus2=25734580 Switch=T
+New SwtControl.C1F95__2700899 SwitchedObj=LINE.C1F95__2700899 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14NJ19__103098846 Bus1=103041526 Bus2=103041531 Switch=T
+New SwtControl.14NJ19__103098846 SwitchedObj=LINE.14NJ19__103098846 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q054__103041306 Bus1=103016829 Bus2=103016827 Switch=T
+New SwtControl.14Q054__103041306 SwitchedObj=LINE.14Q054__103041306 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14MD35__103098783 Bus1=103048715 Bus2=T4795B23_10000005 Switch=T
+New SwtControl.14MD35__103098783 SwitchedObj=LINE.14MD35__103098783 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q054__103041305 Bus1=103016827 Bus2=103016838 Switch=T
+New SwtControl.14Q054__103041305 SwitchedObj=LINE.14Q054__103041305 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L466__2700821 Bus1=103125256 Bus2=26887560 Switch=T
+New SwtControl.14L466__2700821 SwitchedObj=LINE.14L466__2700821 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L466__2700822 Bus1=26887560 Bus2=27136576 Switch=T
+New SwtControl.14L466__2700822 SwitchedObj=LINE.14L466__2700822 SwitchedTerm=2 Action=Closed Lock=no
+New Line.186Q95__104672520 Bus1=103527273 Bus2=103527272 Switch=T
+New SwtControl.186Q95__104672520 SwitchedObj=LINE.186Q95__104672520 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.8DW53__103222930 Bus1=103079712 Bus2=103079707 Switch=T
+!New SwtControl.8DW53__103222930 SwitchedObj=LINE.8DW53__103222930 SwitchedTerm=2 Action=Open Lock=no
+New Line.17MN19__104282580 Bus1=103383279 Bus2=103383280 Switch=T
+New SwtControl.17MN19__104282580 SwitchedObj=LINE.17MN19__104282580 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7TX20__2701182 Bus1=27136936 Bus2=25360255 Switch=T
+New SwtControl.7TX20__2701182 SwitchedObj=LINE.7TX20__2701182 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E480__103404104 Bus1=26128170 Bus2=103125594 Switch=T
+New SwtControl.11E480__103404104 SwitchedObj=LINE.11E480__103404104 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7TX20__2701181 Bus1=25360255 Bus2=27136935 Switch=T
+New SwtControl.7TX20__2701181 SwitchedObj=LINE.7TX20__2701181 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA88__2700964 Bus1=25873704 Bus2=27136718 Switch=T
+New SwtControl.9WA88__2700964 SwitchedObj=LINE.9WA88__2700964 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G250K__2692955 Bus1=26999278 Bus2=25734637 Switch=T
+New SwtControl.G250K__2692955 SwitchedObj=LINE.G250K__2692955 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G250K__2692956 Bus1=25734637 Bus2=26999279 Switch=T
+New SwtControl.G250K__2692956 SwitchedObj=LINE.G250K__2692956 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U588BH__2693010 Bus1=1140108 Bus2=26999333 Switch=T
+New SwtControl.U588BH__2693010 SwitchedObj=LINE.U588BH__2693010 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA88__2700963 Bus1=27136717 Bus2=25873704 Switch=T
+New SwtControl.9WA88__2700963 SwitchedObj=LINE.9WA88__2700963 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y12__104695296 Bus1=103536834 Bus2=103536786 Switch=T
+New SwtControl.183Y12__104695296 SwitchedObj=LINE.183Y12__104695296 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y12__104695295 Bus1=103536786 Bus2=103536832 Switch=T
+New SwtControl.183Y12__104695295 SwitchedObj=LINE.183Y12__104695295 SwitchedTerm=2 Action=Closed Lock=no
+New Line.PME14__2692868 Bus1=26999191 Bus2=25024992 Switch=T
+New SwtControl.PME14__2692868 SwitchedObj=LINE.PME14__2692868 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y95__104696227 Bus1=103537123 Bus2=103537191 Switch=T
+New SwtControl.183Y95__104696227 SwitchedObj=LINE.183Y95__104696227 SwitchedTerm=2 Action=Closed Lock=no
+New Line.PME14__2692869 Bus1=25024992 Bus2=26999192 Switch=T
+New SwtControl.PME14__2692869 SwitchedObj=LINE.PME14__2692869 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5LT91__2692884 Bus1=26999207 Bus2=25024996 Switch=T
+New SwtControl.5LT91__2692884 SwitchedObj=LINE.5LT91__2692884 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5LT91__2692885 Bus1=25024996 Bus2=26999208 Switch=T
+New SwtControl.5LT91__2692885 SwitchedObj=LINE.5LT91__2692885 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13F675__2701378 Bus1=103121261 Bus2=103121256 Switch=T
+New SwtControl.13F675__2701378 SwitchedObj=LINE.13F675__2701378 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN74__103913538 Bus1=103265086 Bus2=103265159 Switch=T
+New SwtControl.15TN74__103913538 SwitchedObj=LINE.15TN74__103913538 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y95__104696228 Bus1=103537194 Bus2=103537123 Switch=T
+New SwtControl.183Y95__104696228 SwitchedObj=LINE.183Y95__104696228 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN74__103913539 Bus1=103265162 Bus2=103265086 Switch=T
+New SwtControl.15TN74__103913539 SwitchedObj=LINE.15TN74__103913539 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A543BH__2692847 Bus1=26999170 Bus2=1139897 Switch=T
+New SwtControl.A543BH__2692847 SwitchedObj=LINE.A543BH__2692847 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q24__2693040 Bus1=26999363 Bus2=25734529 Switch=T
+New SwtControl.84Q24__2693040 SwitchedObj=LINE.84Q24__2693040 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A543BH__2692846 Bus1=1139897 Bus2=26999169 Switch=T
+New SwtControl.A543BH__2692846 SwitchedObj=LINE.A543BH__2692846 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D111K__2700919 Bus1=27136673 Bus2=25734605 Switch=T
+New SwtControl.D111K__2700919 SwitchedObj=LINE.D111K__2700919 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U612BH__2692830 Bus1=26999153 Bus2=1140051 Switch=T
+New SwtControl.U612BH__2692830 SwitchedObj=LINE.U612BH__2692830 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13F675__2701377 Bus1=103121242 Bus2=103121228 Switch=T
+New SwtControl.13F675__2701377 SwitchedObj=LINE.13F675__2701377 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH92__2701371 Bus1=27137125 Bus2=26907384 Switch=T
+New SwtControl.14LH92__2701371 SwitchedObj=LINE.14LH92__2701371 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH66__104218264 Bus1=103359051 Bus2=103359052 Switch=T
+New SwtControl.17KH66__104218264 SwitchedObj=LINE.17KH66__104218264 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH66__104218265 Bus1=103359052 Bus2=103359053 Switch=T
+New SwtControl.17KH66__104218265 SwitchedObj=LINE.17KH66__104218265 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH92__2701372 Bus1=26907384 Bus2=27137126 Switch=T
+New SwtControl.14LH92__2701372 SwitchedObj=LINE.14LH92__2701372 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q053__103041285 Bus1=103025150 Bus2=103016818 Switch=T
+New SwtControl.14Q053__103041285 SwitchedObj=LINE.14Q053__103041285 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX76__2693873 Bus1=26709810 Bus2=27000196 Switch=T
+New SwtControl.13PX76__2693873 SwitchedObj=LINE.13PX76__2693873 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q053__103041284 Bus1=103016818 Bus2=103016828 Switch=T
+New SwtControl.14Q053__103041284 SwitchedObj=LINE.14Q053__103041284 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN22__104282577 Bus1=103383281 Bus2=103383282 Switch=T
+New SwtControl.17MN22__104282577 SwitchedObj=LINE.17MN22__104282577 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN22__104282578 Bus1=103383282 Bus2=103383283 Switch=T
+New SwtControl.17MN22__104282578 SwitchedObj=LINE.17MN22__104282578 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX76__2693874 Bus1=27000197 Bus2=26709810 Switch=T
+New SwtControl.13PX76__2693874 SwitchedObj=LINE.13PX76__2693874 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GE31__105436272 Bus1=103631265 Bus2=103631268 Switch=T
+New SwtControl.18GE31__105436272 SwitchedObj=LINE.18GE31__105436272 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK62__2693050 Bus1=25586104 Bus2=26999373 Switch=T
+New SwtControl.8EK62__2693050 SwitchedObj=LINE.8EK62__2693050 SwitchedTerm=2 Action=Closed Lock=no
+New Line.133Y84__2701192 Bus1=27136946 Bus2=26567440 Switch=T
+New SwtControl.133Y84__2701192 SwitchedObj=LINE.133Y84__2701192 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GE31__105436271 Bus1=103631269 Bus2=103631265 Switch=T
+New SwtControl.18GE31__105436271 SwitchedObj=LINE.18GE31__105436271 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK62__2693051 Bus1=25586104 Bus2=26999374 Switch=T
+New SwtControl.8EK62__2693051 SwitchedObj=LINE.8EK62__2693051 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK63__2693052 Bus1=25833129 Bus2=26999375 Switch=T
+New SwtControl.8EK63__2693052 SwitchedObj=LINE.8EK63__2693052 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK63__2693053 Bus1=26999376 Bus2=25833129 Switch=T
+New SwtControl.8EK63__2693053 SwitchedObj=LINE.8EK63__2693053 SwitchedTerm=2 Action=Closed Lock=no
+New Line.133Y84__2701191 Bus1=26567440 Bus2=27136945 Switch=T
+New SwtControl.133Y84__2701191 SwitchedObj=LINE.133Y84__2701191 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LJ00__2701349 Bus1=26896049 Bus2=27137103 Switch=T
+New SwtControl.14LJ00__2701349 SwitchedObj=LINE.14LJ00__2701349 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LJ00__2701348 Bus1=27137102 Bus2=26896049 Switch=T
+New SwtControl.14LJ00__2701348 SwitchedObj=LINE.14LJ00__2701348 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9W757__2701504 Bus1=25858575 Bus2=27137258 Switch=T
+New SwtControl.9W757__2701504 SwitchedObj=LINE.9W757__2701504 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9W757__2701505 Bus1=27137259 Bus2=25858575 Switch=T
+New SwtControl.9W757__2701505 SwitchedObj=LINE.9W757__2701505 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14FX05__2700739 Bus1=26859626 Bus2=27136493 Switch=T
+New SwtControl.14FX05__2700739 SwitchedObj=LINE.14FX05__2700739 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LJ03__2701353 Bus1=26896052 Bus2=27137107 Switch=T
+New SwtControl.14LJ03__2701353 SwitchedObj=LINE.14LJ03__2701353 SwitchedTerm=2 Action=Closed Lock=no
+New Line.187W45__104783620 Bus1=103571153 Bus2=103571156 Switch=T
+New SwtControl.187W45__104783620 SwitchedObj=LINE.187W45__104783620 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LJ03__2701352 Bus1=27137106 Bus2=26896052 Switch=T
+New SwtControl.14LJ03__2701352 SwitchedObj=LINE.14LJ03__2701352 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK65__2693058 Bus1=25586117 Bus2=26999381 Switch=T
+New SwtControl.8EK65__2693058 SwitchedObj=LINE.8EK65__2693058 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN16__104282583 Bus1=103383285 Bus2=103383286 Switch=T
+New SwtControl.17MN16__104282583 SwitchedObj=LINE.17MN16__104282583 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK65__2693059 Bus1=26999382 Bus2=25586117 Switch=T
+New SwtControl.8EK65__2693059 SwitchedObj=LINE.8EK65__2693059 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.9W756__2701506 Bus1=25858574 Bus2=27137260 Switch=T
+!New SwtControl.9W756__2701506 SwitchedObj=LINE.9W756__2701506 SwitchedTerm=2 Action=Open Lock=no
+New Line.17MN16__104282582 Bus1=103383286 Bus2=103383287 Switch=T
+New SwtControl.17MN16__104282582 SwitchedObj=LINE.17MN16__104282582 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9W756__2701507 Bus1=27137261 Bus2=25858574 Switch=T
+New SwtControl.9W756__2701507 SwitchedObj=LINE.9W756__2701507 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.G261K__2693037 Bus1=1105100 Bus2=26999360 Switch=T
+!New SwtControl.G261K__2693037 SwitchedObj=LINE.G261K__2693037 SwitchedTerm=2 Action=Open Lock=no
+!New Line.17BT58__104029638 Bus1=103559715 Bus2=103294835 Switch=T
+!New SwtControl.17BT58__104029638 SwitchedObj=LINE.17BT58__104029638 SwitchedTerm=2 Action=Open Lock=no
+New Line.8DT83__2693389 Bus1=25734569 Bus2=26999712 Switch=T
+New SwtControl.8DT83__2693389 SwitchedObj=LINE.8DT83__2693389 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17BT58__104029639 Bus1=103294957 Bus2=103294837 Switch=T
+New SwtControl.17BT58__104029639 SwitchedObj=LINE.17BT58__104029639 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX02__2692942 Bus1=25734562 Bus2=26999265 Switch=T
+New SwtControl.7NX02__2692942 SwitchedObj=LINE.7NX02__2692942 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT83__2693388 Bus1=26999711 Bus2=25734569 Switch=T
+New SwtControl.8DT83__2693388 SwitchedObj=LINE.8DT83__2693388 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX02__2692943 Bus1=26999266 Bus2=25734562 Switch=T
+New SwtControl.7NX02__2692943 SwitchedObj=LINE.7NX02__2692943 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX89__2693860 Bus1=27000183 Bus2=26709745 Switch=T
+New SwtControl.13PX89__2693860 SwitchedObj=LINE.13PX89__2693860 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.6MG63__2678615 Bus1=26803517 Bus2=26803518 Switch=T
+!New SwtControl.6MG63__2678615 SwitchedObj=LINE.6MG63__2678615 SwitchedTerm=2 Action=Open Lock=no
+New Line.13PX88__2693857 Bus1=27000180 Bus2=26709740 Switch=T
+New SwtControl.13PX88__2693857 SwitchedObj=LINE.13PX88__2693857 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G261K__2693038 Bus1=26999361 Bus2=1105100 Switch=T
+New SwtControl.G261K__2693038 SwitchedObj=LINE.G261K__2693038 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX94__2693852 Bus1=26709797 Bus2=27000175 Switch=T
+New SwtControl.13PX94__2693852 SwitchedObj=LINE.13PX94__2693852 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D102K__2701015 Bus1=25734598 Bus2=27136769 Switch=T
+New SwtControl.D102K__2701015 SwitchedObj=LINE.D102K__2701015 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX94__2693851 Bus1=27000174 Bus2=26709797 Switch=T
+New SwtControl.13PX94__2693851 SwitchedObj=LINE.13PX94__2693851 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R721__2685192 Bus1=26991510 Bus2=25490385 Switch=T
+New SwtControl.8R721__2685192 SwitchedObj=LINE.8R721__2685192 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D102K__2701014 Bus1=27136768 Bus2=25734598 Switch=T
+New SwtControl.D102K__2701014 SwitchedObj=LINE.D102K__2701014 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9W754__2701508 Bus1=103014538 Bus2=25858578 Switch=T
+New SwtControl.9W754__2701508 SwitchedObj=LINE.9W754__2701508 SwitchedTerm=2 Action=Closed Lock=no
+New Line.10EH22__2701092 Bus1=27136846 Bus2=25917435 Switch=T
+New SwtControl.10EH22__2701092 SwitchedObj=LINE.10EH22__2701092 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX88__2693858 Bus1=26709740 Bus2=27000181 Switch=T
+New SwtControl.13PX88__2693858 SwitchedObj=LINE.13PX88__2693858 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E483__2701113 Bus1=26128186 Bus2=27136867 Switch=T
+New SwtControl.11E483__2701113 SwitchedObj=LINE.11E483__2701113 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT86__2692948 Bus1=25734566 Bus2=26999271 Switch=T
+New SwtControl.8DT86__2692948 SwitchedObj=LINE.8DT86__2692948 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT86__2692949 Bus1=25734566 Bus2=26999272 Switch=T
+New SwtControl.8DT86__2692949 SwitchedObj=LINE.8DT86__2692949 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12129__2693815 Bus1=27000138 Bus2=1105038 Switch=T
+New SwtControl.12129__2693815 SwitchedObj=LINE.12129__2693815 SwitchedTerm=2 Action=Closed Lock=no
+New Line.126697__2693607 Bus1=26356916 Bus2=26999930 Switch=T
+New SwtControl.126697__2693607 SwitchedObj=LINE.126697__2693607 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18FA93__105436421 Bus1=103631345 Bus2=103631336 Switch=T
+New SwtControl.18FA93__105436421 SwitchedObj=LINE.18FA93__105436421 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D106K__2700910 Bus1=25734600 Bus2=27136664 Switch=T
+New SwtControl.D106K__2700910 SwitchedObj=LINE.D106K__2700910 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E483__2701114 Bus1=27136868 Bus2=26128186 Switch=T
+New SwtControl.11E483__2701114 SwitchedObj=LINE.11E483__2701114 SwitchedTerm=2 Action=Closed Lock=no
+New Line.126697__2693608 Bus1=26999931 Bus2=26356916 Switch=T
+New SwtControl.126697__2693608 SwitchedObj=LINE.126697__2693608 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT84__2693063 Bus1=26999386 Bus2=25734568 Switch=T
+New SwtControl.8DT84__2693063 SwitchedObj=LINE.8DT84__2693063 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT84__2693062 Bus1=25734568 Bus2=26999385 Switch=T
+New SwtControl.8DT84__2693062 SwitchedObj=LINE.8DT84__2693062 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E480__2701123 Bus1=27136877 Bus2=26128170 Switch=T
+New SwtControl.11E480__2701123 SwitchedObj=LINE.11E480__2701123 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U609BH__2692827 Bus1=26999150 Bus2=1139872 Switch=T
+New SwtControl.U609BH__2692827 SwitchedObj=LINE.U609BH__2692827 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18NP34__106231437 Bus1=103666861 Bus2=103666848 Switch=T
+New SwtControl.18NP34__106231437 SwitchedObj=LINE.18NP34__106231437 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G253K__2700930 Bus1=27136684 Bus2=25734640 Switch=T
+New SwtControl.G253K__2700930 SwitchedObj=LINE.G253K__2700930 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G253K__2700931 Bus1=25734640 Bus2=27136685 Switch=T
+New SwtControl.G253K__2700931 SwitchedObj=LINE.G253K__2700931 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX93__2693849 Bus1=27000172 Bus2=26709791 Switch=T
+New SwtControl.13PX93__2693849 SwitchedObj=LINE.13PX93__2693849 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH65__104218260 Bus1=103359056 Bus2=103359057 Switch=T
+New SwtControl.17KH65__104218260 SwitchedObj=LINE.17KH65__104218260 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18NP34__106231438 Bus1=103666848 Bus2=103666859 Switch=T
+New SwtControl.18NP34__106231438 SwitchedObj=LINE.18NP34__106231438 SwitchedTerm=2 Action=Open Lock=no
+New Line.U609BH__2692828 Bus1=1139872 Bus2=26999151 Switch=T
+New SwtControl.U609BH__2692828 SwitchedObj=LINE.U609BH__2692828 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH65__104218261 Bus1=103359055 Bus2=103359056 Switch=T
+New SwtControl.17KH65__104218261 SwitchedObj=LINE.17KH65__104218261 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK60__2701055 Bus1=27136809 Bus2=26387839 Switch=T
+New SwtControl.12AK60__2701055 SwitchedObj=LINE.12AK60__2701055 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK60__2701054 Bus1=26387839 Bus2=27136808 Switch=T
+New SwtControl.12AK60__2701054 SwitchedObj=LINE.12AK60__2701054 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14FX08__2700746 Bus1=103322576 Bus2=26859622 Switch=T
+New SwtControl.14FX08__2700746 SwitchedObj=LINE.14FX08__2700746 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA93__2701524 Bus1=27137278 Bus2=25873713 Switch=T
+New SwtControl.9WA93__2701524 SwitchedObj=LINE.9WA93__2701524 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA93__2701523 Bus1=25873713 Bus2=27137277 Switch=T
+New SwtControl.9WA93__2701523 SwitchedObj=LINE.9WA93__2701523 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D860K__2693066 Bus1=1105214 Bus2=26999389 Switch=T
+New SwtControl.D860K__2693066 SwitchedObj=LINE.D860K__2693066 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L346__2700816 Bus1=27136570 Bus2=26887528 Switch=T
+New SwtControl.14L346__2700816 SwitchedObj=LINE.14L346__2700816 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D860K__2693067 Bus1=26999390 Bus2=1105214 Switch=T
+New SwtControl.D860K__2693067 SwitchedObj=LINE.D860K__2693067 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L342__2700818 Bus1=26887523 Bus2=27136572 Switch=T
+New SwtControl.14L342__2700818 SwitchedObj=LINE.14L342__2700818 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D862K__2692910 Bus1=1105379 Bus2=26999233 Switch=T
+New SwtControl.D862K__2692910 SwitchedObj=LINE.D862K__2692910 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17DH83__104079498 Bus1=103307204 Bus2=103307205 Switch=T
+New SwtControl.17DH83__104079498 SwitchedObj=LINE.17DH83__104079498 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y93__104696246 Bus1=103537127 Bus2=103537208 Switch=T
+New SwtControl.183Y93__104696246 SwitchedObj=LINE.183Y93__104696246 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L342__2700817 Bus1=27136571 Bus2=26887523 Switch=T
+New SwtControl.14L342__2700817 SwitchedObj=LINE.14L342__2700817 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y93__104696245 Bus1=103543459 Bus2=103537127 Switch=T
+New SwtControl.183Y93__104696245 SwitchedObj=LINE.183Y93__104696245 SwitchedTerm=2 Action=Closed Lock=no
+New Line.105P72__2680188 Bus1=26835313 Bus2=25856674 Switch=T
+New SwtControl.105P72__2680188 SwitchedObj=LINE.105P72__2680188 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G251K__2692957 Bus1=25734638 Bus2=26999280 Switch=T
+New SwtControl.G251K__2692957 SwitchedObj=LINE.G251K__2692957 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DW53__103222931 Bus1=103079711 Bus2=103079706 Switch=T
+New SwtControl.8DW53__103222931 SwitchedObj=LINE.8DW53__103222931 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G251K__2692958 Bus1=26999281 Bus2=25734638 Switch=T
+New SwtControl.G251K__2692958 SwitchedObj=LINE.G251K__2692958 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132351__2693142 Bus1=26555727 Bus2=26999465 Switch=T
+New SwtControl.132351__2693142 SwitchedObj=LINE.132351__2693142 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NW66__2692937 Bus1=26999260 Bus2=25734559 Switch=T
+New SwtControl.7NW66__2692937 SwitchedObj=LINE.7NW66__2692937 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NW66__2692936 Bus1=25734559 Bus2=26999259 Switch=T
+New SwtControl.7NW66__2692936 SwitchedObj=LINE.7NW66__2692936 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132351__2693141 Bus1=26999464 Bus2=26555727 Switch=T
+New SwtControl.132351__2693141 SwitchedObj=LINE.132351__2693141 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX82__2693791 Bus1=26709841 Bus2=27000114 Switch=T
+New SwtControl.13PX82__2693791 SwitchedObj=LINE.13PX82__2693791 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132360__2693158 Bus1=26999481 Bus2=26555789 Switch=T
+New SwtControl.132360__2693158 SwitchedObj=LINE.132360__2693158 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX82__2693790 Bus1=27000113 Bus2=26709841 Switch=T
+New SwtControl.13PX82__2693790 SwitchedObj=LINE.13PX82__2693790 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D114K__2701029 Bus1=25734586 Bus2=27136783 Switch=T
+New SwtControl.D114K__2701029 SwitchedObj=LINE.D114K__2701029 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132360__2693159 Bus1=26555789 Bus2=26999482 Switch=T
+New SwtControl.132360__2693159 SwitchedObj=LINE.132360__2693159 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D114K__2701028 Bus1=27136782 Bus2=25734586 Switch=T
+New SwtControl.D114K__2701028 SwitchedObj=LINE.D114K__2701028 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L472__103913766 Bus1=103282197 Bus2=26887569 Switch=T
+New SwtControl.14L472__103913766 SwitchedObj=LINE.14L472__103913766 SwitchedTerm=2 Action=Closed Lock=no
+New Line.107H65__2693080 Bus1=25894028 Bus2=26999403 Switch=T
+New SwtControl.107H65__2693080 SwitchedObj=LINE.107H65__2693080 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L576__2701331 Bus1=27137085 Bus2=26679492 Switch=T
+New SwtControl.13L576__2701331 SwitchedObj=LINE.13L576__2701331 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L576__2701332 Bus1=26679492 Bus2=27137086 Switch=T
+New SwtControl.13L576__2701332 SwitchedObj=LINE.13L576__2701332 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7X078__2701190 Bus1=25360254 Bus2=27136944 Switch=T
+New SwtControl.7X078__2701190 SwitchedObj=LINE.7X078__2701190 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G9Z21__103450799 Bus1=25859631 Bus2=103136725 Switch=T
+New SwtControl.G9Z21__103450799 SwitchedObj=LINE.G9Z21__103450799 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L571__2701324 Bus1=27137078 Bus2=26679486 Switch=T
+New SwtControl.13L571__2701324 SwitchedObj=LINE.13L571__2701324 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106805__2701101 Bus1=27136855 Bus2=25836859 Switch=T
+New SwtControl.106805__2701101 SwitchedObj=LINE.106805__2701101 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106805__2701102 Bus1=25836859 Bus2=27136856 Switch=T
+New SwtControl.106805__2701102 SwitchedObj=LINE.106805__2701102 SwitchedTerm=2 Action=Closed Lock=no
+New Line.144380__2701343 Bus1=27137097 Bus2=26776418 Switch=T
+New SwtControl.144380__2701343 SwitchedObj=LINE.144380__2701343 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L571__2701323 Bus1=26679486 Bus2=27137077 Switch=T
+New SwtControl.13L571__2701323 SwitchedObj=LINE.13L571__2701323 SwitchedTerm=2 Action=Closed Lock=no
+New Line.144380__2701344 Bus1=26776418 Bus2=27137098 Switch=T
+New SwtControl.144380__2701344 SwitchedObj=LINE.144380__2701344 SwitchedTerm=2 Action=Closed Lock=no
+New Line.144381__2701339 Bus1=27137093 Bus2=26776411 Switch=T
+New SwtControl.144381__2701339 SwitchedObj=LINE.144381__2701339 SwitchedTerm=2 Action=Closed Lock=no
+New Line.116C33__2700966 Bus1=27136720 Bus2=25873717 Switch=T
+New SwtControl.116C33__2700966 SwitchedObj=LINE.116C33__2700966 SwitchedTerm=2 Action=Closed Lock=no
+New Line.116C33__2700967 Bus1=25873717 Bus2=27136721 Switch=T
+New SwtControl.116C33__2700967 SwitchedObj=LINE.116C33__2700967 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5R684__2701009 Bus1=27136763 Bus2=26281698 Switch=T
+New SwtControl.5R684__2701009 SwitchedObj=LINE.5R684__2701009 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106801__2701103 Bus1=27136857 Bus2=25836871 Switch=T
+New SwtControl.106801__2701103 SwitchedObj=LINE.106801__2701103 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12133__2700960 Bus1=27136714 Bus2=1105420 Switch=T
+New SwtControl.12133__2700960 SwitchedObj=LINE.12133__2700960 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN20__104282573 Bus1=103383290 Bus2=103383291 Switch=T
+New SwtControl.17MN20__104282573 SwitchedObj=LINE.17MN20__104282573 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7WL55__2701149 Bus1=25360338 Bus2=27136903 Switch=T
+New SwtControl.7WL55__2701149 SwitchedObj=LINE.7WL55__2701149 SwitchedTerm=2 Action=Closed Lock=no
+New Line.NV06__2692870 Bus1=26999193 Bus2=25024993 Switch=T
+New SwtControl.NV06__2692870 SwitchedObj=LINE.NV06__2692870 SwitchedTerm=2 Action=Closed Lock=no
+New Line.NV06__2692871 Bus1=25024993 Bus2=26999194 Switch=T
+New SwtControl.NV06__2692871 SwitchedObj=LINE.NV06__2692871 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L569__2701320 Bus1=27137074 Bus2=26679484 Switch=T
+New SwtControl.13L569__2701320 SwitchedObj=LINE.13L569__2701320 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN20__104282574 Bus1=103383289 Bus2=103383290 Switch=T
+New SwtControl.17MN20__104282574 SwitchedObj=LINE.17MN20__104282574 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y07__104695264 Bus1=103536804 Bus2=103536773 Switch=T
+New SwtControl.183Y07__104695264 SwitchedObj=LINE.183Y07__104695264 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y07__104695265 Bus1=103536773 Bus2=103536805 Switch=T
+New SwtControl.183Y07__104695265 SwitchedObj=LINE.183Y07__104695265 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH82__104696193 Bus1=103672968 Bus2=103537114 Switch=T
+New SwtControl.18PH82__104696193 SwitchedObj=LINE.18PH82__104696193 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L15__2701164 Bus1=25750593 Bus2=27136918 Switch=T
+New SwtControl.102L15__2701164 SwitchedObj=LINE.102L15__2701164 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12132__2700884 Bus1=1105334 Bus2=27136638 Switch=T
+New SwtControl.12132__2700884 SwitchedObj=LINE.12132__2700884 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L15__2701165 Bus1=27136919 Bus2=25750593 Switch=T
+New SwtControl.102L15__2701165 SwitchedObj=LINE.102L15__2701165 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT90__2693024 Bus1=25734535 Bus2=26999347 Switch=T
+New SwtControl.8DT90__2693024 SwitchedObj=LINE.8DT90__2693024 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A538BH__2692842 Bus1=1139960 Bus2=26999165 Switch=T
+New SwtControl.A538BH__2692842 SwitchedObj=LINE.A538BH__2692842 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A538BH__2692843 Bus1=26999166 Bus2=1139960 Switch=T
+New SwtControl.A538BH__2692843 SwitchedObj=LINE.A538BH__2692843 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12132__2700883 Bus1=27136637 Bus2=1105334 Switch=T
+New SwtControl.12132__2700883 SwitchedObj=LINE.12132__2700883 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM82__2693549 Bus1=25631621 Bus2=26999872 Switch=T
+New SwtControl.9AM82__2693549 SwitchedObj=LINE.9AM82__2693549 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH82__104696194 Bus1=103537114 Bus2=103537160 Switch=T
+New SwtControl.18PH82__104696194 SwitchedObj=LINE.18PH82__104696194 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM82__2693548 Bus1=26999871 Bus2=25631621 Switch=T
+New SwtControl.9AM82__2693548 SwitchedObj=LINE.9AM82__2693548 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC38__105326046 Bus1=103626603 Bus2=103626602 Switch=T
+New SwtControl.18GC38__105326046 SwitchedObj=LINE.18GC38__105326046 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT90__2693023 Bus1=26999346 Bus2=25734535 Switch=T
+New SwtControl.8DT90__2693023 SwitchedObj=LINE.8DT90__2693023 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC38__105326045 Bus1=103626602 Bus2=103626601 Switch=T
+New SwtControl.18GC38__105326045 SwitchedObj=LINE.18GC38__105326045 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM83__2693543 Bus1=25631615 Bus2=26999866 Switch=T
+New SwtControl.9AM83__2693543 SwitchedObj=LINE.9AM83__2693543 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A536BH__2692838 Bus1=26999161 Bus2=1139948 Switch=T
+New SwtControl.A536BH__2692838 SwitchedObj=LINE.A536BH__2692838 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM83__2693542 Bus1=26999865 Bus2=25631615 Switch=T
+New SwtControl.9AM83__2693542 SwitchedObj=LINE.9AM83__2693542 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A536BH__2692839 Bus1=1139948 Bus2=26999162 Switch=T
+New SwtControl.A536BH__2692839 SwitchedObj=LINE.A536BH__2692839 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D105K__2700907 Bus1=27136661 Bus2=25734599 Switch=T
+New SwtControl.D105K__2700907 SwitchedObj=LINE.D105K__2700907 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.G2401__2692854 Bus1=26999177 Bus2=1140163 Switch=T
+!New SwtControl.G2401__2692854 SwitchedObj=LINE.G2401__2692854 SwitchedTerm=2 Action=Open Lock=no
+New Line.G2401__2692855 Bus1=26999178 Bus2=1140163 Switch=T
+New SwtControl.G2401__2692855 SwitchedObj=LINE.G2401__2692855 SwitchedTerm=2 Action=Closed Lock=no
+New Line.10DQ79__2676996 Bus1=26331048 Bus2=26331050 Switch=T
+New SwtControl.10DQ79__2676996 SwitchedObj=LINE.10DQ79__2676996 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT93__2693187 Bus1=25734536 Bus2=26999510 Switch=T
+New SwtControl.8DT93__2693187 SwitchedObj=LINE.8DT93__2693187 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT94__2693185 Bus1=26999508 Bus2=25734537 Switch=T
+New SwtControl.8DT94__2693185 SwitchedObj=LINE.8DT94__2693185 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM81__2693547 Bus1=25631620 Bus2=26999870 Switch=T
+New SwtControl.9AM81__2693547 SwitchedObj=LINE.9AM81__2693547 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G2400__2692852 Bus1=26999175 Bus2=1140165 Switch=T
+New SwtControl.G2400__2692852 SwitchedObj=LINE.G2400__2692852 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX16__2692944 Bus1=26999267 Bus2=25734564 Switch=T
+New SwtControl.7NX16__2692944 SwitchedObj=LINE.7NX16__2692944 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.9AM80__2693545 Bus1=25631619 Bus2=26999868 Switch=T
+!New SwtControl.9AM80__2693545 SwitchedObj=LINE.9AM80__2693545 SwitchedTerm=2 Action=Open Lock=no
+New Line.9AM81__2693546 Bus1=26999869 Bus2=25631620 Switch=T
+New SwtControl.9AM81__2693546 SwitchedObj=LINE.9AM81__2693546 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G2400__2692853 Bus1=1140165 Bus2=26999176 Switch=T
+New SwtControl.G2400__2692853 SwitchedObj=LINE.G2400__2692853 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX16__2692945 Bus1=25734564 Bus2=26999268 Switch=T
+New SwtControl.7NX16__2692945 SwitchedObj=LINE.7NX16__2692945 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM80__2693544 Bus1=26999867 Bus2=25631619 Switch=T
+New SwtControl.9AM80__2693544 SwitchedObj=LINE.9AM80__2693544 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT94__2693186 Bus1=25734537 Bus2=26999509 Switch=T
+New SwtControl.8DT94__2693186 SwitchedObj=LINE.8DT94__2693186 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT95__2693184 Bus1=25734538 Bus2=26999507 Switch=T
+New SwtControl.8DT95__2693184 SwitchedObj=LINE.8DT95__2693184 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106803__2701093 Bus1=27136847 Bus2=25836872 Switch=T
+New SwtControl.106803__2701093 SwitchedObj=LINE.106803__2701093 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.D105K__2700908 Bus1=25734599 Bus2=27136662 Switch=T
+!New SwtControl.D105K__2700908 SwitchedObj=LINE.D105K__2700908 SwitchedTerm=2 Action=Open Lock=no
+New Line.ABE44K__2693065 Bus1=1105216 Bus2=26999388 Switch=T
+New SwtControl.ABE44K__2693065 SwitchedObj=LINE.ABE44K__2693065 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G252K__2700925 Bus1=25734639 Bus2=27136679 Switch=T
+New SwtControl.G252K__2700925 SwitchedObj=LINE.G252K__2700925 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U606BH__2692823 Bus1=1139989 Bus2=26999146 Switch=T
+New SwtControl.U606BH__2692823 SwitchedObj=LINE.U606BH__2692823 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT93__2693189 Bus1=25734536 Bus2=26999512 Switch=T
+New SwtControl.8DT93__2693189 SwitchedObj=LINE.8DT93__2693189 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT95__2693183 Bus1=26999506 Bus2=25734538 Switch=T
+New SwtControl.8DT95__2693183 SwitchedObj=LINE.8DT95__2693183 SwitchedTerm=2 Action=Closed Lock=no
+New Line.ABE44K__2693064 Bus1=26999387 Bus2=1105216 Switch=T
+New SwtControl.ABE44K__2693064 SwitchedObj=LINE.ABE44K__2693064 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G252K__2700926 Bus1=27136680 Bus2=25734639 Switch=T
+New SwtControl.G252K__2700926 SwitchedObj=LINE.G252K__2700926 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT93__2693188 Bus1=26999511 Bus2=25734536 Switch=T
+New SwtControl.8DT93__2693188 SwitchedObj=LINE.8DT93__2693188 SwitchedTerm=2 Action=Closed Lock=no
+New Line.C0H28__2692908 Bus1=1105435 Bus2=26999231 Switch=T
+New SwtControl.C0H28__2692908 SwitchedObj=LINE.C0H28__2692908 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U604BH__2692837 Bus1=26999160 Bus2=1139985 Switch=T
+New SwtControl.U604BH__2692837 SwitchedObj=LINE.U604BH__2692837 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT96__2693182 Bus1=26999505 Bus2=25859415 Switch=T
+New SwtControl.8DT96__2693182 SwitchedObj=LINE.8DT96__2693182 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U604BH__2692836 Bus1=1139985 Bus2=26999159 Switch=T
+New SwtControl.U604BH__2692836 SwitchedObj=LINE.U604BH__2692836 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106802__2701088 Bus1=25836860 Bus2=27136842 Switch=T
+New SwtControl.106802__2701088 SwitchedObj=LINE.106802__2701088 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U606BH__2692824 Bus1=26999147 Bus2=1139989 Switch=T
+New SwtControl.U606BH__2692824 SwitchedObj=LINE.U606BH__2692824 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106802__2701089 Bus1=27136843 Bus2=25836860 Switch=T
+New SwtControl.106802__2701089 SwitchedObj=LINE.106802__2701089 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WF46__2701038 Bus1=27136792 Bus2=25876077 Switch=T
+New SwtControl.9WF46__2701038 SwitchedObj=LINE.9WF46__2701038 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WF46__2701039 Bus1=25876077 Bus2=27136793 Switch=T
+New SwtControl.9WF46__2701039 SwitchedObj=LINE.9WF46__2701039 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L471__2700848 Bus1=26887566 Bus2=27136602 Switch=T
+New SwtControl.14L471__2700848 SwitchedObj=LINE.14L471__2700848 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN73__103913534 Bus1=103265085 Bus2=103265155 Switch=T
+New SwtControl.15TN73__103913534 SwitchedObj=LINE.15TN73__103913534 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L467__2700824 Bus1=26887562 Bus2=103125252 Switch=T
+New SwtControl.14L467__2700824 SwitchedObj=LINE.14L467__2700824 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN73__103913535 Bus1=103265158 Bus2=103265085 Switch=T
+New SwtControl.15TN73__103913535 SwitchedObj=LINE.15TN73__103913535 SwitchedTerm=2 Action=Closed Lock=no
+New Line.C0H28__2692907 Bus1=26999230 Bus2=1105435 Switch=T
+New SwtControl.C0H28__2692907 SwitchedObj=LINE.C0H28__2692907 SwitchedTerm=2 Action=Closed Lock=no
+New Line.C1F95__2700900 Bus1=25734580 Bus2=27136654 Switch=T
+New SwtControl.C1F95__2700900 SwitchedObj=LINE.C1F95__2700900 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G258K__2700938 Bus1=1105332 Bus2=27136692 Switch=T
+New SwtControl.G258K__2700938 SwitchedObj=LINE.G258K__2700938 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G258K__2700939 Bus1=27136693 Bus2=1105332 Switch=T
+New SwtControl.G258K__2700939 SwitchedObj=LINE.G258K__2700939 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.18LL87__105931319 Bus1=103649895 Bus2=103649896 Switch=T
+!New SwtControl.18LL87__105931319 SwitchedObj=LINE.18LL87__105931319 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L467__2700823 Bus1=27136577 Bus2=26887562 Switch=T
+New SwtControl.14L467__2700823 SwitchedObj=LINE.14L467__2700823 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D864K__2700881 Bus1=27136635 Bus2=1105452 Switch=T
+New SwtControl.D864K__2700881 SwitchedObj=LINE.D864K__2700881 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L470__2700830 Bus1=26887565 Bus2=27136584 Switch=T
+New SwtControl.14L470__2700830 SwitchedObj=LINE.14L470__2700830 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D864K__2700882 Bus1=1105452 Bus2=27136636 Switch=T
+New SwtControl.D864K__2700882 SwitchedObj=LINE.D864K__2700882 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L463__2700861 Bus1=103400446 Bus2=103400443 Switch=T
+New SwtControl.14L463__2700861 SwitchedObj=LINE.14L463__2700861 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132414__2693116 Bus1=26999439 Bus2=26555830 Switch=T
+New SwtControl.132414__2693116 SwitchedObj=LINE.132414__2693116 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132414__2693117 Bus1=26555830 Bus2=26999440 Switch=T
+New SwtControl.132414__2693117 SwitchedObj=LINE.132414__2693117 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132416__2693138 Bus1=26999461 Bus2=26555820 Switch=T
+New SwtControl.132416__2693138 SwitchedObj=LINE.132416__2693138 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NW93__2692941 Bus1=26999264 Bus2=25734561 Switch=T
+New SwtControl.7NW93__2692941 SwitchedObj=LINE.7NW93__2692941 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NW93__2692940 Bus1=25734561 Bus2=26999263 Switch=T
+New SwtControl.7NW93__2692940 SwitchedObj=LINE.7NW93__2692940 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7TX21__2701177 Bus1=25360251 Bus2=27136931 Switch=T
+New SwtControl.7TX21__2701177 SwitchedObj=LINE.7TX21__2701177 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D115K__2701027 Bus1=25734587 Bus2=27136781 Switch=T
+New SwtControl.D115K__2701027 SwitchedObj=LINE.D115K__2701027 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D115K__2701026 Bus1=27136780 Bus2=25734587 Switch=T
+New SwtControl.D115K__2701026 SwitchedObj=LINE.D115K__2701026 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7TX21__2701179 Bus1=27136933 Bus2=25360251 Switch=T
+New SwtControl.7TX21__2701179 SwitchedObj=LINE.7TX21__2701179 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U588BH__2693009 Bus1=26999332 Bus2=1140108 Switch=T
+New SwtControl.U588BH__2693009 SwitchedObj=LINE.U588BH__2693009 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.7TX21__2701178 Bus1=25360251 Bus2=27136932 Switch=T
+!New SwtControl.7TX21__2701178 SwitchedObj=LINE.7TX21__2701178 SwitchedTerm=2 Action=Open Lock=no
+New Line.84Q25__2693034 Bus1=25734525 Bus2=26999357 Switch=T
+New SwtControl.84Q25__2693034 SwitchedObj=LINE.84Q25__2693034 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q26__2693031 Bus1=25734528 Bus2=26999354 Switch=T
+New SwtControl.84Q26__2693031 SwitchedObj=LINE.84Q26__2693031 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q25__2693033 Bus1=25734525 Bus2=26999356 Switch=T
+New SwtControl.84Q25__2693033 SwitchedObj=LINE.84Q25__2693033 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q26__2693030 Bus1=25734528 Bus2=26999353 Switch=T
+New SwtControl.84Q26__2693030 SwitchedObj=LINE.84Q26__2693030 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q25__2693032 Bus1=26999355 Bus2=25734525 Switch=T
+New SwtControl.84Q25__2693032 SwitchedObj=LINE.84Q25__2693032 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D111K__2700920 Bus1=25734605 Bus2=27136674 Switch=T
+New SwtControl.D111K__2700920 SwitchedObj=LINE.D111K__2700920 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A549BH__2692841 Bus1=1140071 Bus2=26999164 Switch=T
+New SwtControl.A549BH__2692841 SwitchedObj=LINE.A549BH__2692841 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A541BH__2692845 Bus1=26999168 Bus2=1139951 Switch=T
+New SwtControl.A541BH__2692845 SwitchedObj=LINE.A541BH__2692845 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A549BH__2692840 Bus1=26999163 Bus2=1140071 Switch=T
+New SwtControl.A549BH__2692840 SwitchedObj=LINE.A549BH__2692840 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A541BH__2692844 Bus1=1139951 Bus2=26999167 Switch=T
+New SwtControl.A541BH__2692844 SwitchedObj=LINE.A541BH__2692844 SwitchedTerm=2 Action=Closed Lock=no
+New Line.184Q58__104712820 Bus1=103543473 Bus2=103543472 Switch=T
+New SwtControl.184Q58__104712820 SwitchedObj=LINE.184Q58__104712820 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q24__2693039 Bus1=25734529 Bus2=26999362 Switch=T
+New SwtControl.84Q24__2693039 SwitchedObj=LINE.84Q24__2693039 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DW53__103222932 Bus1=103079707 Bus2=103079713 Switch=T
+New SwtControl.8DW53__103222932 SwitchedObj=LINE.8DW53__103222932 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH95__2701357 Bus1=27137111 Bus2=26896054 Switch=T
+New SwtControl.14LH95__2701357 SwitchedObj=LINE.14LH95__2701357 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH95__2701356 Bus1=27137110 Bus2=26896054 Switch=T
+New SwtControl.14LH95__2701356 SwitchedObj=LINE.14LH95__2701356 SwitchedTerm=2 Action=Open Lock=no
+New Line.12128__2700912 Bus1=25734601 Bus2=27136666 Switch=T
+New SwtControl.12128__2700912 SwitchedObj=LINE.12128__2700912 SwitchedTerm=2 Action=Closed Lock=no
+New Line.2YC86__2700879 Bus1=27136633 Bus2=1105450 Switch=T
+New SwtControl.2YC86__2700879 SwitchedObj=LINE.2YC86__2700879 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC35__105326044 Bus1=103626611 Bus2=103626610 Switch=T
+New SwtControl.18GC35__105326044 SwitchedObj=LINE.18GC35__105326044 SwitchedTerm=2 Action=Open Lock=no
+New Line.12128__2700911 Bus1=27136665 Bus2=25734601 Switch=T
+New SwtControl.12128__2700911 SwitchedObj=LINE.12128__2700911 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH93__2701370 Bus1=26907383 Bus2=27137124 Switch=T
+New SwtControl.14LH93__2701370 SwitchedObj=LINE.14LH93__2701370 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC35__105326043 Bus1=103626609 Bus2=103626610 Switch=T
+New SwtControl.18GC35__105326043 SwitchedObj=LINE.18GC35__105326043 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX78__2693880 Bus1=27000203 Bus2=26709824 Switch=T
+New SwtControl.13PX78__2693880 SwitchedObj=LINE.13PX78__2693880 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15QR59__103849343 Bus1=103249223 Bus2=103249189 Switch=T
+New SwtControl.15QR59__103849343 SwitchedObj=LINE.15QR59__103849343 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX77__2693876 Bus1=27000199 Bus2=26709815 Switch=T
+New SwtControl.13PX77__2693876 SwitchedObj=LINE.13PX77__2693876 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX77__2693875 Bus1=26709815 Bus2=27000198 Switch=T
+New SwtControl.13PX77__2693875 SwitchedObj=LINE.13PX77__2693875 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE37__2701140 Bus1=27136894 Bus2=25359988 Switch=T
+New SwtControl.6TE37__2701140 SwitchedObj=LINE.6TE37__2701140 SwitchedTerm=2 Action=Closed Lock=no
+New Line.CBN13__2700957 Bus1=1105733 Bus2=27136711 Switch=T
+New SwtControl.CBN13__2700957 SwitchedObj=LINE.CBN13__2700957 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L810__103098773 Bus1=103048711 Bus2=T4795B23_10000004 Switch=T
+New SwtControl.14L810__103098773 SwitchedObj=LINE.14L810__103098773 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK62__2693049 Bus1=26999372 Bus2=25586104 Switch=T
+New SwtControl.8EK62__2693049 SwitchedObj=LINE.8EK62__2693049 SwitchedTerm=2 Action=Closed Lock=no
+New Line.CBN13__2700956 Bus1=27136710 Bus2=1105733 Switch=T
+New SwtControl.CBN13__2700956 SwitchedObj=LINE.CBN13__2700956 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15QR59__103849345 Bus1=103249189 Bus2=103249218 Switch=T
+New SwtControl.15QR59__103849345 SwitchedObj=LINE.15QR59__103849345 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE35__2701141 Bus1=27136895 Bus2=25359972 Switch=T
+New SwtControl.6TE35__2701141 SwitchedObj=LINE.6TE35__2701141 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.CBN16__2700953 Bus1=1105719 Bus2=27136707 Switch=T
+!New SwtControl.CBN16__2700953 SwitchedObj=LINE.CBN16__2700953 SwitchedTerm=2 Action=Open Lock=no
+New Line.CBN16__2700952 Bus1=27136706 Bus2=1105719 Switch=T
+New SwtControl.CBN16__2700952 SwitchedObj=LINE.CBN16__2700952 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE35__2701142 Bus1=25359972 Bus2=27136896 Switch=T
+New SwtControl.6TE35__2701142 SwitchedObj=LINE.6TE35__2701142 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR38__104508465 Bus1=103462488 Bus2=103462493 Switch=T
+New SwtControl.8DR38__104508465 SwitchedObj=LINE.8DR38__104508465 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12127__2700914 Bus1=25734602 Bus2=27136668 Switch=T
+New SwtControl.12127__2700914 SwitchedObj=LINE.12127__2700914 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12126__2700916 Bus1=25734603 Bus2=27136670 Switch=T
+New SwtControl.12126__2700916 SwitchedObj=LINE.12126__2700916 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106797__2701119 Bus1=27136873 Bus2=25836866 Switch=T
+New SwtControl.106797__2701119 SwitchedObj=LINE.106797__2701119 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12127__2700913 Bus1=27136667 Bus2=25734602 Switch=T
+New SwtControl.12127__2700913 SwitchedObj=LINE.12127__2700913 SwitchedTerm=2 Action=Closed Lock=no
+New Line.158E26__103192138 Bus1=103072060 Bus2=103072055 Switch=T
+New SwtControl.158E26__103192138 SwitchedObj=LINE.158E26__103192138 SwitchedTerm=2 Action=Closed Lock=no
+New Line.CBN14__2700955 Bus1=1105735 Bus2=27136709 Switch=T
+New SwtControl.CBN14__2700955 SwitchedObj=LINE.CBN14__2700955 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12126__2700915 Bus1=27136669 Bus2=25734603 Switch=T
+New SwtControl.12126__2700915 SwitchedObj=LINE.12126__2700915 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT82__2693391 Bus1=26999714 Bus2=25734570 Switch=T
+New SwtControl.8DT82__2693391 SwitchedObj=LINE.8DT82__2693391 SwitchedTerm=2 Action=Closed Lock=no
+New Line.CBN14__2700954 Bus1=27136708 Bus2=1105735 Switch=T
+New SwtControl.CBN14__2700954 SwitchedObj=LINE.CBN14__2700954 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12125__2700917 Bus1=27136671 Bus2=25734604 Switch=T
+New SwtControl.12125__2700917 SwitchedObj=LINE.12125__2700917 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT82__2693390 Bus1=25734570 Bus2=26999713 Switch=T
+New SwtControl.8DT82__2693390 SwitchedObj=LINE.8DT82__2693390 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132356__2701086 Bus1=27136840 Bus2=26555762 Switch=T
+New SwtControl.132356__2701086 SwitchedObj=LINE.132356__2701086 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.132356__2701087 Bus1=27136841 Bus2=26555762 Switch=T
+!New SwtControl.132356__2701087 SwitchedObj=LINE.132356__2701087 SwitchedTerm=2 Action=Open Lock=no
+!New Line.18LL90__105931322 Bus1=103649889 Bus2=103649888 Switch=T
+!New SwtControl.18LL90__105931322 SwitchedObj=LINE.18LL90__105931322 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.18LL90__105931321 Bus1=103649888 Bus2=103649887 Switch=T
+!New SwtControl.18LL90__105931321 SwitchedObj=LINE.18LL90__105931321 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR41__2693056 Bus1=26999379 Bus2=25426804 Switch=T
+New SwtControl.8DR41__2693056 SwitchedObj=LINE.8DR41__2693056 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14FX04__2700770 Bus1=26859628 Bus2=27136524 Switch=T
+New SwtControl.14FX04__2700770 SwitchedObj=LINE.14FX04__2700770 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR41__2693057 Bus1=25426804 Bus2=26999380 Switch=T
+New SwtControl.8DR41__2693057 SwitchedObj=LINE.8DR41__2693057 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15QR56__103849303 Bus1=103249181 Bus2=103249208 Switch=T
+New SwtControl.15QR56__103849303 SwitchedObj=LINE.15QR56__103849303 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12125__2700918 Bus1=25734604 Bus2=27136672 Switch=T
+New SwtControl.12125__2700918 SwitchedObj=LINE.12125__2700918 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L809__103098742 Bus1=103041486 Bus2=103041479 Switch=T
+New SwtControl.14L809__103098742 SwitchedObj=LINE.14L809__103098742 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14FX07__2700743 Bus1=26859623 Bus2=27136497 Switch=T
+New SwtControl.14FX07__2700743 SwitchedObj=LINE.14FX07__2700743 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14FX07__2700744 Bus1=27136498 Bus2=26859623 Switch=T
+New SwtControl.14FX07__2700744 SwitchedObj=LINE.14FX07__2700744 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX95__2693853 Bus1=27000176 Bus2=26709803 Switch=T
+New SwtControl.13PX95__2693853 SwitchedObj=LINE.13PX95__2693853 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15QR56__103849304 Bus1=103249210 Bus2=103249181 Switch=T
+New SwtControl.15QR56__103849304 SwitchedObj=LINE.15QR56__103849304 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT86__2692950 Bus1=103079727 Bus2=25734566 Switch=T
+New SwtControl.8DT86__2692950 SwitchedObj=LINE.8DT86__2692950 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E484__2701111 Bus1=26128192 Bus2=27136865 Switch=T
+New SwtControl.11E484__2701111 SwitchedObj=LINE.11E484__2701111 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX89__2693859 Bus1=26709745 Bus2=27000182 Switch=T
+New SwtControl.13PX89__2693859 SwitchedObj=LINE.13PX89__2693859 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15QR58__103849329 Bus1=103249217 Bus2=103249185 Switch=T
+New SwtControl.15QR58__103849329 SwitchedObj=LINE.15QR58__103849329 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18KP64__105820258 Bus1=103645578 Bus2=103645577 Switch=T
+New SwtControl.18KP64__105820258 SwitchedObj=LINE.18KP64__105820258 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT85__2692951 Bus1=25734567 Bus2=26999274 Switch=T
+New SwtControl.8DT85__2692951 SwitchedObj=LINE.8DT85__2692951 SwitchedTerm=2 Action=Closed Lock=no
+New Line.126696__2693605 Bus1=26356911 Bus2=26999928 Switch=T
+New SwtControl.126696__2693605 SwitchedObj=LINE.126696__2693605 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18KP64__105820259 Bus1=103645579 Bus2=103645578 Switch=T
+New SwtControl.18KP64__105820259 SwitchedObj=LINE.18KP64__105820259 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT85__2692952 Bus1=26999275 Bus2=25734567 Switch=T
+New SwtControl.8DT85__2692952 SwitchedObj=LINE.8DT85__2692952 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E484__2701112 Bus1=27136866 Bus2=26128192 Switch=T
+New SwtControl.11E484__2701112 SwitchedObj=LINE.11E484__2701112 SwitchedTerm=2 Action=Closed Lock=no
+New Line.126696__2693606 Bus1=26999929 Bus2=26356911 Switch=T
+New SwtControl.126696__2693606 SwitchedObj=LINE.126696__2693606 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX80__2693882 Bus1=27000205 Bus2=26709829 Switch=T
+New SwtControl.13PX80__2693882 SwitchedObj=LINE.13PX80__2693882 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX95__2693854 Bus1=26709803 Bus2=27000177 Switch=T
+New SwtControl.13PX95__2693854 SwitchedObj=LINE.13PX95__2693854 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX96__2693862 Bus1=27000185 Bus2=26709751 Switch=T
+New SwtControl.13PX96__2693862 SwitchedObj=LINE.13PX96__2693862 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.13PX80__2693881 Bus1=27000204 Bus2=26709829 Switch=T
+!New SwtControl.13PX80__2693881 SwitchedObj=LINE.13PX80__2693881 SwitchedTerm=2 Action=Open Lock=no
+New Line.13PX85__2693856 Bus1=26709857 Bus2=27000179 Switch=T
+New SwtControl.13PX85__2693856 SwitchedObj=LINE.13PX85__2693856 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX96__2693861 Bus1=26709751 Bus2=27000184 Switch=T
+New SwtControl.13PX96__2693861 SwitchedObj=LINE.13PX96__2693861 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX85__2693855 Bus1=27000178 Bus2=26709857 Switch=T
+New SwtControl.13PX85__2693855 SwitchedObj=LINE.13PX85__2693855 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM90__2693541 Bus1=25631614 Bus2=26999864 Switch=T
+New SwtControl.9AM90__2693541 SwitchedObj=LINE.9AM90__2693541 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM90__2693540 Bus1=26999863 Bus2=25631614 Switch=T
+New SwtControl.9AM90__2693540 SwitchedObj=LINE.9AM90__2693540 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK62__2701081 Bus1=27136835 Bus2=26387826 Switch=T
+New SwtControl.12AK62__2701081 SwitchedObj=LINE.12AK62__2701081 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK62__2701080 Bus1=26387826 Bus2=27136834 Switch=T
+New SwtControl.12AK62__2701080 SwitchedObj=LINE.12AK62__2701080 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK65__2701053 Bus1=27136807 Bus2=26387805 Switch=T
+New SwtControl.12AK65__2701053 SwitchedObj=LINE.12AK65__2701053 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK65__2701052 Bus1=26387805 Bus2=27136806 Switch=T
+New SwtControl.12AK65__2701052 SwitchedObj=LINE.12AK65__2701052 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q050__103267066 Bus1=103091336 Bus2=103091333 Switch=T
+New SwtControl.14Q050__103267066 SwitchedObj=LINE.14Q050__103267066 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E481__2701122 Bus1=27136876 Bus2=26128176 Switch=T
+New SwtControl.11E481__2701122 SwitchedObj=LINE.11E481__2701122 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D100K__2701019 Bus1=25734594 Bus2=27136773 Switch=T
+New SwtControl.D100K__2701019 SwitchedObj=LINE.D100K__2701019 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN71__103913518 Bus1=103265149 Bus2=103265082 Switch=T
+New SwtControl.15TN71__103913518 SwitchedObj=LINE.15TN71__103913518 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D100K__2701018 Bus1=27136772 Bus2=25734594 Switch=T
+New SwtControl.D100K__2701018 SwitchedObj=LINE.D100K__2701018 SwitchedTerm=2 Action=Closed Lock=no
+New Line.PBB35__2693006 Bus1=1140265 Bus2=26999329 Switch=T
+New SwtControl.PBB35__2693006 SwitchedObj=LINE.PBB35__2693006 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN71__103913517 Bus1=103265082 Bus2=103265146 Switch=T
+New SwtControl.15TN71__103913517 SwitchedObj=LINE.15TN71__103913517 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D106K__2700909 Bus1=27136663 Bus2=25734600 Switch=T
+New SwtControl.D106K__2700909 SwitchedObj=LINE.D106K__2700909 SwitchedTerm=2 Action=Closed Lock=no
+New Line.PBB35__2693004 Bus1=26999327 Bus2=1140265 Switch=T
+New SwtControl.PBB35__2693004 SwitchedObj=LINE.PBB35__2693004 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.PBB36__2693000 Bus1=25234913 Bus2=26999323 Switch=T
+!New SwtControl.PBB36__2693000 SwitchedObj=LINE.PBB36__2693000 SwitchedTerm=2 Action=Open Lock=no
+New Line.PBB36__2693001 Bus1=26999324 Bus2=25234913 Switch=T
+New SwtControl.PBB36__2693001 SwitchedObj=LINE.PBB36__2693001 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7TX18__2701163 Bus1=25360256 Bus2=27136917 Switch=T
+New SwtControl.7TX18__2701163 SwitchedObj=LINE.7TX18__2701163 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G2636__2692881 Bus1=25025000 Bus2=26999204 Switch=T
+New SwtControl.G2636__2692881 SwitchedObj=LINE.G2636__2692881 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7TX18__2701162 Bus1=103125604 Bus2=25360256 Switch=T
+New SwtControl.7TX18__2701162 SwitchedObj=LINE.7TX18__2701162 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G2636__2692880 Bus1=26999203 Bus2=25025000 Switch=T
+New SwtControl.G2636__2692880 SwitchedObj=LINE.G2636__2692880 SwitchedTerm=2 Action=Closed Lock=no
+New Line.10D187__2679679 Bus1=25905475 Bus2=26835312 Switch=T
+New SwtControl.10D187__2679679 SwitchedObj=LINE.10D187__2679679 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM79__2693531 Bus1=25631618 Bus2=26999854 Switch=T
+New SwtControl.9AM79__2693531 SwitchedObj=LINE.9AM79__2693531 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM79__2693530 Bus1=26999853 Bus2=25631618 Switch=T
+New SwtControl.9AM79__2693530 SwitchedObj=LINE.9AM79__2693530 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX29__2693026 Bus1=26999349 Bus2=25734532 Switch=T
+New SwtControl.7NX29__2693026 SwitchedObj=LINE.7NX29__2693026 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX29__2693025 Bus1=25734532 Bus2=26999348 Switch=T
+New SwtControl.7NX29__2693025 SwitchedObj=LINE.7NX29__2693025 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM78__2693533 Bus1=25631617 Bus2=26999856 Switch=T
+New SwtControl.9AM78__2693533 SwitchedObj=LINE.9AM78__2693533 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM78__2693532 Bus1=26999855 Bus2=25631617 Switch=T
+New SwtControl.9AM78__2693532 SwitchedObj=LINE.9AM78__2693532 SwitchedTerm=2 Action=Closed Lock=no
+New Line.PBB38__2692849 Bus1=1139895 Bus2=26999172 Switch=T
+New SwtControl.PBB38__2692849 SwitchedObj=LINE.PBB38__2692849 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7MX02__2701145 Bus1=27136899 Bus2=25356096 Switch=T
+New SwtControl.7MX02__2701145 SwitchedObj=LINE.7MX02__2701145 SwitchedTerm=2 Action=Closed Lock=no
+New Line.PBB38__2692848 Bus1=26999171 Bus2=1139895 Switch=T
+New SwtControl.PBB38__2692848 SwitchedObj=LINE.PBB38__2692848 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7MX03__2701147 Bus1=27136901 Bus2=25356093 Switch=T
+New SwtControl.7MX03__2701147 SwitchedObj=LINE.7MX03__2701147 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U589BH__2693007 Bus1=26999330 Bus2=1140263 Switch=T
+New SwtControl.U589BH__2693007 SwitchedObj=LINE.U589BH__2693007 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7MX03__2701146 Bus1=25356093 Bus2=27136900 Switch=T
+New SwtControl.7MX03__2701146 SwitchedObj=LINE.7MX03__2701146 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132357__2693136 Bus1=26555768 Bus2=26999459 Switch=T
+New SwtControl.132357__2693136 SwitchedObj=LINE.132357__2693136 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132357__2693137 Bus1=26999460 Bus2=26555768 Switch=T
+New SwtControl.132357__2693137 SwitchedObj=LINE.132357__2693137 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L343__2700813 Bus1=26887524 Bus2=27136567 Switch=T
+New SwtControl.14L343__2700813 SwitchedObj=LINE.14L343__2700813 SwitchedTerm=2 Action=Closed Lock=no
+New Line.NV02BH__2692879 Bus1=25024999 Bus2=26999202 Switch=T
+New SwtControl.NV02BH__2692879 SwitchedObj=LINE.NV02BH__2692879 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132354__2693122 Bus1=26999445 Bus2=26555750 Switch=T
+New SwtControl.132354__2693122 SwitchedObj=LINE.132354__2693122 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L343__2700812 Bus1=27136566 Bus2=26887524 Switch=T
+New SwtControl.14L343__2700812 SwitchedObj=LINE.14L343__2700812 SwitchedTerm=2 Action=Closed Lock=no
+New Line.NV02BH__2692878 Bus1=26999201 Bus2=25024999 Switch=T
+New SwtControl.NV02BH__2692878 SwitchedObj=LINE.NV02BH__2692878 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132354__2693123 Bus1=26555750 Bus2=26999446 Switch=T
+New SwtControl.132354__2693123 SwitchedObj=LINE.132354__2693123 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q056__103041353 Bus1=103016847 Bus2=103016861 Switch=T
+New SwtControl.14Q056__103041353 SwitchedObj=LINE.14Q056__103041353 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17BR88__104028972 Bus1=103294680 Bus2=103294681 Switch=T
+New SwtControl.17BR88__104028972 SwitchedObj=LINE.17BR88__104028972 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7MX03__2701148 Bus1=25356093 Bus2=27136902 Switch=T
+New SwtControl.7MX03__2701148 SwitchedObj=LINE.7MX03__2701148 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17BR88__104028973 Bus1=103294679 Bus2=103294680 Switch=T
+New SwtControl.17BR88__104028973 SwitchedObj=LINE.17BR88__104028973 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D862K__2692909 Bus1=26999232 Bus2=1105379 Switch=T
+New SwtControl.D862K__2692909 SwitchedObj=LINE.D862K__2692909 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D116K__2701025 Bus1=25734588 Bus2=27136779 Switch=T
+New SwtControl.D116K__2701025 SwitchedObj=LINE.D116K__2701025 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D116K__2701024 Bus1=27136778 Bus2=25734588 Switch=T
+New SwtControl.D116K__2701024 SwitchedObj=LINE.D116K__2701024 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E481__103404133 Bus1=26128176 Bus2=103125599 Switch=T
+New SwtControl.11E481__103404133 SwitchedObj=LINE.11E481__103404133 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q056__103041354 Bus1=103016850 Bus2=103016847 Switch=T
+New SwtControl.14Q056__103041354 SwitchedObj=LINE.14Q056__103041354 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7TX17__2701161 Bus1=25360267 Bus2=27136915 Switch=T
+New SwtControl.7TX17__2701161 SwitchedObj=LINE.7TX17__2701161 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7TX17__2701160 Bus1=103125605 Bus2=25360267 Switch=T
+New SwtControl.7TX17__2701160 SwitchedObj=LINE.7TX17__2701160 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D112K__2700922 Bus1=25734606 Bus2=27136676 Switch=T
+New SwtControl.D112K__2700922 SwitchedObj=LINE.D112K__2700922 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U589BH__2693008 Bus1=1140263 Bus2=26999331 Switch=T
+New SwtControl.U589BH__2693008 SwitchedObj=LINE.U589BH__2693008 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18FA94__105436416 Bus1=103631344 Bus2=103631333 Switch=T
+New SwtControl.18FA94__105436416 SwitchedObj=LINE.18FA94__105436416 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7WL58__2701159 Bus1=27136913 Bus2=25360263 Switch=T
+New SwtControl.7WL58__2701159 SwitchedObj=LINE.7WL58__2701159 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.D118K__2701011 Bus1=27136765 Bus2=25734590 Switch=T
+!New SwtControl.D118K__2701011 SwitchedObj=LINE.D118K__2701011 SwitchedTerm=2 Action=Open Lock=no
+New Line.7WL58__2701158 Bus1=25360263 Bus2=27136912 Switch=T
+New SwtControl.7WL58__2701158 SwitchedObj=LINE.7WL58__2701158 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D112K__2700921 Bus1=27136675 Bus2=25734606 Switch=T
+New SwtControl.D112K__2700921 SwitchedObj=LINE.D112K__2700921 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D118K__2701010 Bus1=27136764 Bus2=25734590 Switch=T
+New SwtControl.D118K__2701010 SwitchedObj=LINE.D118K__2701010 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L575__2701318 Bus1=26679490 Bus2=27137072 Switch=T
+New SwtControl.13L575__2701318 SwitchedObj=LINE.13L575__2701318 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18FA94__105436415 Bus1=103631332 Bus2=103631339 Switch=T
+New SwtControl.18FA94__105436415 SwitchedObj=LINE.18FA94__105436415 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7X079__2701187 Bus1=27136941 Bus2=25360352 Switch=T
+New SwtControl.7X079__2701187 SwitchedObj=LINE.7X079__2701187 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106798__2701097 Bus1=25836864 Bus2=27136851 Switch=T
+New SwtControl.106798__2701097 SwitchedObj=LINE.106798__2701097 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106798__2701098 Bus1=27136852 Bus2=25836864 Switch=T
+New SwtControl.106798__2701098 SwitchedObj=LINE.106798__2701098 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L575__2701317 Bus1=27137071 Bus2=26679490 Switch=T
+New SwtControl.13L575__2701317 SwitchedObj=LINE.13L575__2701317 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132350__2693128 Bus1=26999451 Bus2=26555726 Switch=T
+New SwtControl.132350__2693128 SwitchedObj=LINE.132350__2693128 SwitchedTerm=2 Action=Closed Lock=no
+New Line.134088__103388666 Bus1=103121479 Bus2=103121474 Switch=T
+New SwtControl.134088__103388666 SwitchedObj=LINE.134088__103388666 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132350__2693129 Bus1=26555726 Bus2=26999452 Switch=T
+New SwtControl.132350__2693129 SwitchedObj=LINE.132350__2693129 SwitchedTerm=2 Action=Closed Lock=no
+New Line.134088__103388667 Bus1=103121475 Bus2=103121503 Switch=T
+New SwtControl.134088__103388667 SwitchedObj=LINE.134088__103388667 SwitchedTerm=2 Action=Closed Lock=no
+New Line.134088__103388665 Bus1=103121475 Bus2=103121504 Switch=T
+New SwtControl.134088__103388665 SwitchedObj=LINE.134088__103388665 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106807__2701110 Bus1=27136864 Bus2=25836870 Switch=T
+New SwtControl.106807__2701110 SwitchedObj=LINE.106807__2701110 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L572__2701325 Bus1=26679487 Bus2=27137079 Switch=T
+New SwtControl.13L572__2701325 SwitchedObj=LINE.13L572__2701325 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE40__2701144 Bus1=27136898 Bus2=25359989 Switch=T
+New SwtControl.6TE40__2701144 SwitchedObj=LINE.6TE40__2701144 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L572__2701326 Bus1=27137080 Bus2=26679487 Switch=T
+New SwtControl.13L572__2701326 SwitchedObj=LINE.13L572__2701326 SwitchedTerm=2 Action=Closed Lock=no
+New Line.144381__2701340 Bus1=26776411 Bus2=27137094 Switch=T
+New SwtControl.144381__2701340 SwitchedObj=LINE.144381__2701340 SwitchedTerm=2 Action=Closed Lock=no
+New Line.144379__2701341 Bus1=27137095 Bus2=26776425 Switch=T
+New SwtControl.144379__2701341 SwitchedObj=LINE.144379__2701341 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE40__2701143 Bus1=25359989 Bus2=27136897 Switch=T
+New SwtControl.6TE40__2701143 SwitchedObj=LINE.6TE40__2701143 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106806__2701107 Bus1=27136861 Bus2=25836853 Switch=T
+New SwtControl.106806__2701107 SwitchedObj=LINE.106806__2701107 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.144379__2701342 Bus1=26776425 Bus2=27137096 Switch=T
+!New SwtControl.144379__2701342 SwitchedObj=LINE.144379__2701342 SwitchedTerm=2 Action=Open Lock=no
+New Line.7X078__2701189 Bus1=25360254 Bus2=27136943 Switch=T
+New SwtControl.7X078__2701189 SwitchedObj=LINE.7X078__2701189 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106806__2701108 Bus1=25836853 Bus2=27136862 Switch=T
+New SwtControl.106806__2701108 SwitchedObj=LINE.106806__2701108 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7X078__2701188 Bus1=27136942 Bus2=25360254 Switch=T
+New SwtControl.7X078__2701188 SwitchedObj=LINE.7X078__2701188 SwitchedTerm=2 Action=Closed Lock=no
+New Line.107H65__2693079 Bus1=26999402 Bus2=25894028 Switch=T
+New SwtControl.107H65__2693079 SwitchedObj=LINE.107H65__2693079 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18KP63__105820254 Bus1=103645566 Bus2=103645565 Switch=T
+New SwtControl.18KP63__105820254 SwitchedObj=LINE.18KP63__105820254 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18KP63__105820255 Bus1=103645567 Bus2=103645566 Switch=T
+New SwtControl.18KP63__105820255 SwitchedObj=LINE.18KP63__105820255 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH64__104679532 Bus1=103529680 Bus2=103359454 Switch=T
+New SwtControl.17KH64__104679532 SwitchedObj=LINE.17KH64__104679532 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L569__2701319 Bus1=26679484 Bus2=27137073 Switch=T
+New SwtControl.13L569__2701319 SwitchedObj=LINE.13L569__2701319 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17DH84__104079500 Bus1=103307201 Bus2=103307200 Switch=T
+New SwtControl.17DH84__104079500 SwitchedObj=LINE.17DH84__104079500 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17DH84__104079501 Bus1=103307202 Bus2=103307201 Switch=T
+New SwtControl.17DH84__104079501 SwitchedObj=LINE.17DH84__104079501 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G260K__2700943 Bus1=27136697 Bus2=1105149 Switch=T
+New SwtControl.G260K__2700943 SwitchedObj=LINE.G260K__2700943 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R719__2685194 Bus1=26991512 Bus2=25490382 Switch=T
+New SwtControl.8R719__2685194 SwitchedObj=LINE.8R719__2685194 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G260K__2700942 Bus1=1105149 Bus2=27136696 Switch=T
+New SwtControl.G260K__2700942 SwitchedObj=LINE.G260K__2700942 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R719__2685195 Bus1=25490382 Bus2=26991513 Switch=T
+New SwtControl.8R719__2685195 SwitchedObj=LINE.8R719__2685195 SwitchedTerm=2 Action=Closed Lock=no
+New Line.10CY29__2680786 Bus1=26803448 Bus2=103041862 Switch=T
+New SwtControl.10CY29__2680786 SwitchedObj=LINE.10CY29__2680786 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7WL56__2701155 Bus1=27136909 Bus2=25360258 Switch=T
+New SwtControl.7WL56__2701155 SwitchedObj=LINE.7WL56__2701155 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5ZV69__2692857 Bus1=1139802 Bus2=26999180 Switch=T
+New SwtControl.5ZV69__2692857 SwitchedObj=LINE.5ZV69__2692857 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7WL56__2701154 Bus1=25360258 Bus2=27136908 Switch=T
+New SwtControl.7WL56__2701154 SwitchedObj=LINE.7WL56__2701154 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7WL57__2701153 Bus1=25360259 Bus2=27136907 Switch=T
+New SwtControl.7WL57__2701153 SwitchedObj=LINE.7WL57__2701153 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5ZV69__2692856 Bus1=26999179 Bus2=1139802 Switch=T
+New SwtControl.5ZV69__2692856 SwitchedObj=LINE.5ZV69__2692856 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7WL57__2701152 Bus1=27136906 Bus2=25360259 Switch=T
+New SwtControl.7WL57__2701152 SwitchedObj=LINE.7WL57__2701152 SwitchedTerm=2 Action=Closed Lock=no
+New Line.86093__2700208 Bus1=27135962 Bus2=25429364 Switch=T
+New SwtControl.86093__2700208 SwitchedObj=LINE.86093__2700208 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R719__2685193 Bus1=25490382 Bus2=103125609 Switch=T
+New SwtControl.8R719__2685193 SwitchedObj=LINE.8R719__2685193 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC33__105326049 Bus1=103626606 Bus2=103626607 Switch=T
+New SwtControl.18GC33__105326049 SwitchedObj=LINE.18GC33__105326049 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L16__2701166 Bus1=25750595 Bus2=27136920 Switch=T
+New SwtControl.102L16__2701166 SwitchedObj=LINE.102L16__2701166 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L16__2701167 Bus1=27136921 Bus2=25750595 Switch=T
+New SwtControl.102L16__2701167 SwitchedObj=LINE.102L16__2701167 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7WL54__2701157 Bus1=25360261 Bus2=27136911 Switch=T
+New SwtControl.7WL54__2701157 SwitchedObj=LINE.7WL54__2701157 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7WL54__2701156 Bus1=27136910 Bus2=25360261 Switch=T
+New SwtControl.7WL54__2701156 SwitchedObj=LINE.7WL54__2701156 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR38__104508466 Bus1=103462489 Bus2=103462494 Switch=T
+New SwtControl.8DR38__104508466 SwitchedObj=LINE.8DR38__104508466 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WF48__2701008 Bus1=27136762 Bus2=25876078 Switch=T
+New SwtControl.9WF48__2701008 SwitchedObj=LINE.9WF48__2701008 SwitchedTerm=2 Action=Closed Lock=no
+New Line.119P96__2693154 Bus1=26139234 Bus2=26999477 Switch=T
+New SwtControl.119P96__2693154 SwitchedObj=LINE.119P96__2693154 SwitchedTerm=2 Action=Closed Lock=no
+New Line.119P96__2693153 Bus1=26999476 Bus2=26139234 Switch=T
+New SwtControl.119P96__2693153 SwitchedObj=LINE.119P96__2693153 SwitchedTerm=2 Action=Closed Lock=no
+New Line.119M15__2701128 Bus1=27136882 Bus2=26331052 Switch=T
+New SwtControl.119M15__2701128 SwitchedObj=LINE.119M15__2701128 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D101K__2701017 Bus1=25734593 Bus2=27136771 Switch=T
+New SwtControl.D101K__2701017 SwitchedObj=LINE.D101K__2701017 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D101K__2701016 Bus1=27136770 Bus2=25734593 Switch=T
+New SwtControl.D101K__2701016 SwitchedObj=LINE.D101K__2701016 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX10__2693077 Bus1=25734533 Bus2=26999400 Switch=T
+New SwtControl.7NX10__2693077 SwitchedObj=LINE.7NX10__2693077 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX11__2693072 Bus1=26999395 Bus2=25734563 Switch=T
+New SwtControl.7NX11__2693072 SwitchedObj=LINE.7NX11__2693072 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR55__2693054 Bus1=25426806 Bus2=26999377 Switch=T
+New SwtControl.8DR55__2693054 SwitchedObj=LINE.8DR55__2693054 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT91__2693190 Bus1=26999513 Bus2=25734540 Switch=T
+New SwtControl.8DT91__2693190 SwitchedObj=LINE.8DT91__2693190 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX10__2693076 Bus1=25734533 Bus2=103079726 Switch=T
+New SwtControl.7NX10__2693076 SwitchedObj=LINE.7NX10__2693076 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR55__2693055 Bus1=26999378 Bus2=25426806 Switch=T
+New SwtControl.8DR55__2693055 SwitchedObj=LINE.8DR55__2693055 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.A488BH__2692832 Bus1=1140293 Bus2=26999155 Switch=T
+!New SwtControl.A488BH__2692832 SwitchedObj=LINE.A488BH__2692832 SwitchedTerm=2 Action=Open Lock=no
+New Line.14FX08__104079443 Bus1=26859622 Bus2=103321729 Switch=T
+New SwtControl.14FX08__104079443 SwitchedObj=LINE.14FX08__104079443 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT92__2693191 Bus1=25734539 Bus2=26999514 Switch=T
+New SwtControl.8DT92__2693191 SwitchedObj=LINE.8DT92__2693191 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A488BH__2692831 Bus1=26999154 Bus2=1140293 Switch=T
+New SwtControl.A488BH__2692831 SwitchedObj=LINE.A488BH__2692831 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC40__105326057 Bus1=103626619 Bus2=103626618 Switch=T
+New SwtControl.18GC40__105326057 SwitchedObj=LINE.18GC40__105326057 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT92__2693193 Bus1=25734539 Bus2=26999516 Switch=T
+New SwtControl.8DT92__2693193 SwitchedObj=LINE.8DT92__2693193 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX11__2693075 Bus1=25734563 Bus2=26999398 Switch=T
+New SwtControl.7NX11__2693075 SwitchedObj=LINE.7NX11__2693075 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT92__2693192 Bus1=26999515 Bus2=25734539 Switch=T
+New SwtControl.8DT92__2693192 SwitchedObj=LINE.8DT92__2693192 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y13__104695300 Bus1=103536788 Bus2=103536835 Switch=T
+New SwtControl.183Y13__104695300 SwitchedObj=LINE.183Y13__104695300 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX11__2693074 Bus1=26999397 Bus2=25734563 Switch=T
+New SwtControl.7NX11__2693074 SwitchedObj=LINE.7NX11__2693074 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y13__104695301 Bus1=103536836 Bus2=103536788 Switch=T
+New SwtControl.183Y13__104695301 SwitchedObj=LINE.183Y13__104695301 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14NJ19__103098852 Bus1=103041529 Bus2=103041526 Switch=T
+New SwtControl.14NJ19__103098852 SwitchedObj=LINE.14NJ19__103098852 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR38__104508468 Bus1=103462496 Bus2=103462491 Switch=T
+New SwtControl.8DR38__104508468 SwitchedObj=LINE.8DR38__104508468 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R717__2685196 Bus1=26991514 Bus2=25490381 Switch=T
+New SwtControl.8R717__2685196 SwitchedObj=LINE.8R717__2685196 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G256K__2700934 Bus1=1105313 Bus2=27136688 Switch=T
+New SwtControl.G256K__2700934 SwitchedObj=LINE.G256K__2700934 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R717__2685197 Bus1=25490381 Bus2=26991515 Switch=T
+New SwtControl.8R717__2685197 SwitchedObj=LINE.8R717__2685197 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G256K__2700935 Bus1=27136689 Bus2=1105313 Switch=T
+New SwtControl.G256K__2700935 SwitchedObj=LINE.G256K__2700935 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G254K__2700927 Bus1=25734641 Bus2=27136681 Switch=T
+New SwtControl.G254K__2700927 SwitchedObj=LINE.G254K__2700927 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC40__105326058 Bus1=103626618 Bus2=103626617 Switch=T
+New SwtControl.18GC40__105326058 SwitchedObj=LINE.18GC40__105326058 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R714__2685198 Bus1=26991516 Bus2=25490379 Switch=T
+New SwtControl.8R714__2685198 SwitchedObj=LINE.8R714__2685198 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18KP62__105820252 Bus1=103645574 Bus2=103645575 Switch=T
+New SwtControl.18KP62__105820252 SwitchedObj=LINE.18KP62__105820252 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R714__2685199 Bus1=25490379 Bus2=26991517 Switch=T
+New SwtControl.8R714__2685199 SwitchedObj=LINE.8R714__2685199 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18KP62__105820253 Bus1=103645573 Bus2=103645574 Switch=T
+New SwtControl.18KP62__105820253 SwitchedObj=LINE.18KP62__105820253 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106800__2701099 Bus1=27136853 Bus2=25836861 Switch=T
+New SwtControl.106800__2701099 SwitchedObj=LINE.106800__2701099 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L470__2700829 Bus1=27136583 Bus2=26887565 Switch=T
+New SwtControl.14L470__2700829 SwitchedObj=LINE.14L470__2700829 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G254K__2700928 Bus1=27136682 Bus2=25734641 Switch=T
+New SwtControl.G254K__2700928 SwitchedObj=LINE.G254K__2700928 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14G318__2700768 Bus1=27136522 Bus2=26859780 Switch=T
+New SwtControl.14G318__2700768 SwitchedObj=LINE.14G318__2700768 SwitchedTerm=2 Action=Closed Lock=no
+New Line.B122K__2701360 Bus1=27137114 Bus2=1106342 Switch=T
+New SwtControl.B122K__2701360 SwitchedObj=LINE.B122K__2701360 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP92__2693161 Bus1=25734544 Bus2=26999484 Switch=T
+New SwtControl.5DP92__2693161 SwitchedObj=LINE.5DP92__2693161 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP92__2693160 Bus1=26999483 Bus2=25734544 Switch=T
+New SwtControl.5DP92__2693160 SwitchedObj=LINE.5DP92__2693160 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132415__2693113 Bus1=26555815 Bus2=26999436 Switch=T
+New SwtControl.132415__2693113 SwitchedObj=LINE.132415__2693113 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP93__2693169 Bus1=25734553 Bus2=26999492 Switch=T
+New SwtControl.5DP93__2693169 SwitchedObj=LINE.5DP93__2693169 SwitchedTerm=2 Action=Closed Lock=no
+New Line.RFJ61__2693070 Bus1=1105381 Bus2=26999393 Switch=T
+New SwtControl.RFJ61__2693070 SwitchedObj=LINE.RFJ61__2693070 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP93__2693168 Bus1=26999491 Bus2=25734553 Switch=T
+New SwtControl.5DP93__2693168 SwitchedObj=LINE.5DP93__2693168 SwitchedTerm=2 Action=Closed Lock=no
+New Line.RFJ61__2693071 Bus1=26999394 Bus2=1105381 Switch=T
+New SwtControl.RFJ61__2693071 SwitchedObj=LINE.RFJ61__2693071 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP97__2693163 Bus1=25734550 Bus2=26999486 Switch=T
+New SwtControl.5DP97__2693163 SwitchedObj=LINE.5DP97__2693163 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC32__105326047 Bus1=103631267 Bus2=103626594 Switch=T
+New SwtControl.18GC32__105326047 SwitchedObj=LINE.18GC32__105326047 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP96__2693165 Bus1=25734551 Bus2=103476241 Switch=T
+New SwtControl.5DP96__2693165 SwitchedObj=LINE.5DP96__2693165 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP97__2693162 Bus1=26999485 Bus2=25734550 Switch=T
+New SwtControl.5DP97__2693162 SwitchedObj=LINE.5DP97__2693162 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP95__2693167 Bus1=25734552 Bus2=26999490 Switch=T
+New SwtControl.5DP95__2693167 SwitchedObj=LINE.5DP95__2693167 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP96__2693164 Bus1=26999487 Bus2=25734551 Switch=T
+New SwtControl.5DP96__2693164 SwitchedObj=LINE.5DP96__2693164 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132415__2693114 Bus1=26999437 Bus2=26555815 Switch=T
+New SwtControl.132415__2693114 SwitchedObj=LINE.132415__2693114 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14G318__2700765 Bus1=103045219 Bus2=26859780 Switch=T
+New SwtControl.14G318__2700765 SwitchedObj=LINE.14G318__2700765 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17Q660__104378564 Bus1=103413073 Bus2=103413072 Switch=T
+New SwtControl.17Q660__104378564 SwitchedObj=LINE.17Q660__104378564 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP95__2693166 Bus1=26999489 Bus2=25734552 Switch=T
+New SwtControl.5DP95__2693166 SwitchedObj=LINE.5DP95__2693166 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132415__2693115 Bus1=26555815 Bus2=26999438 Switch=T
+New SwtControl.132415__2693115 SwitchedObj=LINE.132415__2693115 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14G318__2700766 Bus1=27136520 Bus2=26859780 Switch=T
+New SwtControl.14G318__2700766 SwitchedObj=LINE.14G318__2700766 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17Q660__104378565 Bus1=103413072 Bus2=103413071 Switch=T
+New SwtControl.17Q660__104378565 SwitchedObj=LINE.17Q660__104378565 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14G318__2700767 Bus1=103125253 Bus2=26859780 Switch=T
+New SwtControl.14G318__2700767 SwitchedObj=LINE.14G318__2700767 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q23__2693022 Bus1=25734526 Bus2=26999345 Switch=T
+New SwtControl.84Q23__2693022 SwitchedObj=LINE.84Q23__2693022 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q23__2693021 Bus1=26999344 Bus2=25734526 Switch=T
+New SwtControl.84Q23__2693021 SwitchedObj=LINE.84Q23__2693021 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q22__2693020 Bus1=26999343 Bus2=25734527 Switch=T
+New SwtControl.84Q22__2693020 SwitchedObj=LINE.84Q22__2693020 SwitchedTerm=2 Action=Closed Lock=no
+New Line.187W44__104783614 Bus1=103571155 Bus2=103571152 Switch=T
+New SwtControl.187W44__104783614 SwitchedObj=LINE.187W44__104783614 SwitchedTerm=2 Action=Closed Lock=no
+New Line.187W44__104783615 Bus1=103571152 Bus2=103571154 Switch=T
+New SwtControl.187W44__104783615 SwitchedObj=LINE.187W44__104783615 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE39__2701135 Bus1=25359971 Bus2=27136889 Switch=T
+New SwtControl.6TE39__2701135 SwitchedObj=LINE.6TE39__2701135 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NW53__2692933 Bus1=25734557 Bus2=26999256 Switch=T
+New SwtControl.7NW53__2692933 SwitchedObj=LINE.7NW53__2692933 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L468__2700825 Bus1=27136579 Bus2=26887563 Switch=T
+New SwtControl.14L468__2700825 SwitchedObj=LINE.14L468__2700825 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC32__105326048 Bus1=103626594 Bus2=103626595 Switch=T
+New SwtControl.18GC32__105326048 SwitchedObj=LINE.18GC32__105326048 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NW53__2692932 Bus1=26999255 Bus2=25734557 Switch=T
+New SwtControl.7NW53__2692932 SwitchedObj=LINE.7NW53__2692932 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA89__2701062 Bus1=27136816 Bus2=25873716 Switch=T
+New SwtControl.9WA89__2701062 SwitchedObj=LINE.9WA89__2701062 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA89__2701061 Bus1=25873716 Bus2=27136815 Switch=T
+New SwtControl.9WA89__2701061 SwitchedObj=LINE.9WA89__2701061 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE39__2701136 Bus1=27136890 Bus2=25359971 Switch=T
+New SwtControl.6TE39__2701136 SwitchedObj=LINE.6TE39__2701136 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L468__2700826 Bus1=26887563 Bus2=27136580 Switch=T
+New SwtControl.14L468__2700826 SwitchedObj=LINE.14L468__2700826 SwitchedTerm=2 Action=Closed Lock=no
+New Line.159X48__103337271 Bus1=103108310 Bus2=T4795B23_10000006 Switch=T
+New SwtControl.159X48__103337271 SwitchedObj=LINE.159X48__103337271 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D117K__2701023 Bus1=25734589 Bus2=27136777 Switch=T
+New SwtControl.D117K__2701023 SwitchedObj=LINE.D117K__2701023 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D113K__2700924 Bus1=25734607 Bus2=27136678 Switch=T
+New SwtControl.D113K__2700924 SwitchedObj=LINE.D113K__2700924 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D117K__2701022 Bus1=27136776 Bus2=25734589 Switch=T
+New SwtControl.D117K__2701022 SwitchedObj=LINE.D117K__2701022 SwitchedTerm=2 Action=Closed Lock=no
+New Line.186Q95__104672519 Bus1=103527272 Bus2=103527271 Switch=T
+New SwtControl.186Q95__104672519 SwitchedObj=LINE.186Q95__104672519 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D113K__2700923 Bus1=27136677 Bus2=25734607 Switch=T
+New SwtControl.D113K__2700923 SwitchedObj=LINE.D113K__2700923 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6MG75__2663810 Bus1=26331049 Bus2=25932967 Switch=T
+New SwtControl.6MG75__2663810 SwitchedObj=LINE.6MG75__2663810 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q26__2693029 Bus1=26999352 Bus2=25734528 Switch=T
+New SwtControl.84Q26__2693029 SwitchedObj=LINE.84Q26__2693029 SwitchedTerm=2 Action=Closed Lock=no
+New Line.NV08__2692883 Bus1=25024995 Bus2=26999206 Switch=T
+New SwtControl.NV08__2692883 SwitchedObj=LINE.NV08__2692883 SwitchedTerm=2 Action=Closed Lock=no
+New Line.NV08__2692882 Bus1=26999205 Bus2=25024995 Switch=T
+New SwtControl.NV08__2692882 SwitchedObj=LINE.NV08__2692882 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH93__2701369 Bus1=27137123 Bus2=26907383 Switch=T
+New SwtControl.14LH93__2701369 SwitchedObj=LINE.14LH93__2701369 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE33__2701131 Bus1=25359969 Bus2=27136885 Switch=T
+New SwtControl.6TE33__2701131 SwitchedObj=LINE.6TE33__2701131 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y09__104695276 Bus1=103536777 Bus2=103536820 Switch=T
+New SwtControl.183Y09__104695276 SwitchedObj=LINE.183Y09__104695276 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NW59__2692935 Bus1=26999258 Bus2=25734558 Switch=T
+New SwtControl.7NW59__2692935 SwitchedObj=LINE.7NW59__2692935 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE33__2701132 Bus1=27136886 Bus2=25359969 Switch=T
+New SwtControl.6TE33__2701132 SwitchedObj=LINE.6TE33__2701132 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NW59__2692934 Bus1=25734558 Bus2=26999257 Switch=T
+New SwtControl.7NW59__2692934 SwitchedObj=LINE.7NW59__2692934 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y09__104695275 Bus1=103536814 Bus2=103536777 Switch=T
+New SwtControl.183Y09__104695275 SwitchedObj=LINE.183Y09__104695275 SwitchedTerm=2 Action=Closed Lock=no
+New Line.2YV80__2693011 Bus1=26999334 Bus2=25234912 Switch=T
+New SwtControl.2YV80__2693011 SwitchedObj=LINE.2YV80__2693011 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE32__2701130 Bus1=25359968 Bus2=27136884 Switch=T
+New SwtControl.6TE32__2701130 SwitchedObj=LINE.6TE32__2701130 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.6TE37__2701139 Bus1=25359988 Bus2=27136893 Switch=T
+!New SwtControl.6TE37__2701139 SwitchedObj=LINE.6TE37__2701139 SwitchedTerm=2 Action=Open Lock=no
+!New Line.2YV80__2693012 Bus1=25234912 Bus2=26999335 Switch=T
+!New SwtControl.2YV80__2693012 SwitchedObj=LINE.2YV80__2693012 SwitchedTerm=2 Action=Open Lock=no
+New Line.9W753__2693515 Bus1=26999838 Bus2=25858571 Switch=T
+New SwtControl.9W753__2693515 SwitchedObj=LINE.9W753__2693515 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9W753__2693516 Bus1=25858571 Bus2=26999839 Switch=T
+New SwtControl.9W753__2693516 SwitchedObj=LINE.9W753__2693516 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE36__2701138 Bus1=25359973 Bus2=27136892 Switch=T
+New SwtControl.6TE36__2701138 SwitchedObj=LINE.6TE36__2701138 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9W753__2693517 Bus1=25858571 Bus2=26999840 Switch=T
+New SwtControl.9W753__2693517 SwitchedObj=LINE.9W753__2693517 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX78__2693879 Bus1=26709824 Bus2=27000202 Switch=T
+New SwtControl.13PX78__2693879 SwitchedObj=LINE.13PX78__2693879 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX74__2693870 Bus1=26709756 Bus2=27000193 Switch=T
+New SwtControl.13PX74__2693870 SwitchedObj=LINE.13PX74__2693870 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE36__2701137 Bus1=27136891 Bus2=25359973 Switch=T
+New SwtControl.6TE36__2701137 SwitchedObj=LINE.6TE36__2701137 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9W758__2701527 Bus1=25858576 Bus2=27137281 Switch=T
+New SwtControl.9W758__2701527 SwitchedObj=LINE.9W758__2701527 SwitchedTerm=2 Action=Closed Lock=no
+New Line.2YC86__2700880 Bus1=1105450 Bus2=27136634 Switch=T
+New SwtControl.2YC86__2700880 SwitchedObj=LINE.2YC86__2700880 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE34__2701134 Bus1=27136888 Bus2=25359970 Switch=T
+New SwtControl.6TE34__2701134 SwitchedObj=LINE.6TE34__2701134 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7X080__2701186 Bus1=27136940 Bus2=25360252 Switch=T
+New SwtControl.7X080__2701186 SwitchedObj=LINE.7X080__2701186 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7X080__2701185 Bus1=25360252 Bus2=27136939 Switch=T
+New SwtControl.7X080__2701185 SwitchedObj=LINE.7X080__2701185 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9W758__2701528 Bus1=27137282 Bus2=25858576 Switch=T
+New SwtControl.9W758__2701528 SwitchedObj=LINE.9W758__2701528 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE34__2701133 Bus1=25359970 Bus2=27136887 Switch=T
+New SwtControl.6TE34__2701133 SwitchedObj=LINE.6TE34__2701133 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7X081__2701184 Bus1=27136938 Bus2=25360253 Switch=T
+New SwtControl.7X081__2701184 SwitchedObj=LINE.7X081__2701184 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.106797__2701120 Bus1=27136874 Bus2=25836866 Switch=T
+!New SwtControl.106797__2701120 SwitchedObj=LINE.106797__2701120 SwitchedTerm=2 Action=Open Lock=no
+New Line.7X081__2701183 Bus1=25360253 Bus2=27136937 Switch=T
+New SwtControl.7X081__2701183 SwitchedObj=LINE.7X081__2701183 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106797__2701121 Bus1=25836866 Bus2=27136875 Switch=T
+New SwtControl.106797__2701121 SwitchedObj=LINE.106797__2701121 SwitchedTerm=2 Action=Closed Lock=no
+New Line.NV03__2692872 Bus1=26999195 Bus2=25024994 Switch=T
+New SwtControl.NV03__2692872 SwitchedObj=LINE.NV03__2692872 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18KP61__105820256 Bus1=103645570 Bus2=103645571 Switch=T
+New SwtControl.18KP61__105820256 SwitchedObj=LINE.18KP61__105820256 SwitchedTerm=2 Action=Closed Lock=no
+New Line.NV03__2692873 Bus1=25024994 Bus2=26999196 Switch=T
+New SwtControl.NV03__2692873 SwitchedObj=LINE.NV03__2692873 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18KP61__105820257 Bus1=103645569 Bus2=103645570 Switch=T
+New SwtControl.18KP61__105820257 SwitchedObj=LINE.18KP61__105820257 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH99__2701347 Bus1=26896053 Bus2=27137101 Switch=T
+New SwtControl.14LH99__2701347 SwitchedObj=LINE.14LH99__2701347 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH99__2701346 Bus1=27137100 Bus2=26896053 Switch=T
+New SwtControl.14LH99__2701346 SwitchedObj=LINE.14LH99__2701346 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9W755__2693518 Bus1=25858573 Bus2=26999841 Switch=T
+New SwtControl.9W755__2693518 SwitchedObj=LINE.9W755__2693518 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9W755__2693519 Bus1=26999842 Bus2=25858573 Switch=T
+New SwtControl.9W755__2693519 SwitchedObj=LINE.9W755__2693519 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.133Y82__2701197 Bus1=27136951 Bus2=26567483 Switch=T
+!New SwtControl.133Y82__2701197 SwitchedObj=LINE.133Y82__2701197 SwitchedTerm=2 Action=Open Lock=no
+New Line.154511__103157934 Bus1=103063849 Bus2=103063845 Switch=T
+New SwtControl.154511__103157934 SwitchedObj=LINE.154511__103157934 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17DH82__104079502 Bus1=103321745 Bus2=103321743 Switch=T
+New SwtControl.17DH82__104079502 SwitchedObj=LINE.17DH82__104079502 SwitchedTerm=2 Action=Closed Lock=no
+New Line.154511__103157935 Bus1=103063845 Bus2=103063853 Switch=T
+New SwtControl.154511__103157935 SwitchedObj=LINE.154511__103157935 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17DH82__104079503 Bus1=103321743 Bus2=103321744 Switch=T
+New SwtControl.17DH82__104079503 SwitchedObj=LINE.17DH82__104079503 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14FX04__2700769 Bus1=27136523 Bus2=26859628 Switch=T
+New SwtControl.14FX04__2700769 SwitchedObj=LINE.14FX04__2700769 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LJ01__2701351 Bus1=103042168 Bus2=103042167 Switch=T
+New SwtControl.14LJ01__2701351 SwitchedObj=LINE.14LJ01__2701351 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LJ01__2701350 Bus1=103042167 Bus2=27137104 Switch=T
+New SwtControl.14LJ01__2701350 SwitchedObj=LINE.14LJ01__2701350 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y94__104696237 Bus1=103537125 Bus2=103537196 Switch=T
+New SwtControl.183Y94__104696237 SwitchedObj=LINE.183Y94__104696237 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14FX06__2700741 Bus1=26859625 Bus2=27136495 Switch=T
+New SwtControl.14FX06__2700741 SwitchedObj=LINE.14FX06__2700741 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14FX06__2700742 Bus1=27136496 Bus2=26859625 Switch=T
+New SwtControl.14FX06__2700742 SwitchedObj=LINE.14FX06__2700742 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y94__104696238 Bus1=103543447 Bus2=103537125 Switch=T
+New SwtControl.183Y94__104696238 SwitchedObj=LINE.183Y94__104696238 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U489BH__103419336 Bus1=26119675 Bus2=103128851 Switch=T
+New SwtControl.U489BH__103419336 SwitchedObj=LINE.U489BH__103419336 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK67__2701049 Bus1=27136803 Bus2=26387790 Switch=T
+New SwtControl.12AK67__2701049 SwitchedObj=LINE.12AK67__2701049 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK67__2701048 Bus1=26387790 Bus2=27136802 Switch=T
+New SwtControl.12AK67__2701048 SwitchedObj=LINE.12AK67__2701048 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7BD65__2693181 Bus1=26999504 Bus2=25734542 Switch=T
+New SwtControl.7BD65__2693181 SwitchedObj=LINE.7BD65__2693181 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX97__2693863 Bus1=26709766 Bus2=27000186 Switch=T
+New SwtControl.13PX97__2693863 SwitchedObj=LINE.13PX97__2693863 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7BD65__2693180 Bus1=25734542 Bus2=26999503 Switch=T
+New SwtControl.7BD65__2693180 SwitchedObj=LINE.7BD65__2693180 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK63__2701083 Bus1=27136837 Bus2=26387820 Switch=T
+New SwtControl.12AK63__2701083 SwitchedObj=LINE.12AK63__2701083 SwitchedTerm=2 Action=Closed Lock=no
+New Line.154511__104039809 Bus1=103063845 Bus2=103306295 Switch=T
+New SwtControl.154511__104039809 SwitchedObj=LINE.154511__104039809 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR47__2693060 Bus1=26999383 Bus2=25426805 Switch=T
+New SwtControl.8DR47__2693060 SwitchedObj=LINE.8DR47__2693060 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK63__2701082 Bus1=26387820 Bus2=27136836 Switch=T
+New SwtControl.12AK63__2701082 SwitchedObj=LINE.12AK63__2701082 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR47__2693061 Bus1=25426805 Bus2=26999384 Switch=T
+New SwtControl.8DR47__2693061 SwitchedObj=LINE.8DR47__2693061 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DR38__104508467 Bus1=103462495 Bus2=103462490 Switch=T
+New SwtControl.8DR38__104508467 SwitchedObj=LINE.8DR38__104508467 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX91__2693843 Bus1=27000166 Bus2=26709776 Switch=T
+New SwtControl.13PX91__2693843 SwitchedObj=LINE.13PX91__2693843 SwitchedTerm=2 Action=Closed Lock=no
+New Line.126695__2693603 Bus1=26356906 Bus2=26999926 Switch=T
+New SwtControl.126695__2693603 SwitchedObj=LINE.126695__2693603 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX87__2693867 Bus1=27000190 Bus2=26709738 Switch=T
+New SwtControl.13PX87__2693867 SwitchedObj=LINE.13PX87__2693867 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX97__2693864 Bus1=27000187 Bus2=26709766 Switch=T
+New SwtControl.13PX97__2693864 SwitchedObj=LINE.13PX97__2693864 SwitchedTerm=2 Action=Closed Lock=no
+New Line.187W45__104783619 Bus1=103571160 Bus2=103571153 Switch=T
+New SwtControl.187W45__104783619 SwitchedObj=LINE.187W45__104783619 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E479__2701115 Bus1=26128165 Bus2=27136869 Switch=T
+New SwtControl.11E479__2701115 SwitchedObj=LINE.11E479__2701115 SwitchedTerm=2 Action=Closed Lock=no
+New Line.126695__2693604 Bus1=26999927 Bus2=26356906 Switch=T
+New SwtControl.126695__2693604 SwitchedObj=LINE.126695__2693604 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK66__2701051 Bus1=27136805 Bus2=26387798 Switch=T
+New SwtControl.12AK66__2701051 SwitchedObj=LINE.12AK66__2701051 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK66__2701050 Bus1=26387798 Bus2=27136804 Switch=T
+New SwtControl.12AK66__2701050 SwitchedObj=LINE.12AK66__2701050 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E479__2701116 Bus1=27136870 Bus2=26128165 Switch=T
+New SwtControl.11E479__2701116 SwitchedObj=LINE.11E479__2701116 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E482__2701124 Bus1=27136878 Bus2=26128181 Switch=T
+New SwtControl.11E482__2701124 SwitchedObj=LINE.11E482__2701124 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y11__104695286 Bus1=103536829 Bus2=103536783 Switch=T
+New SwtControl.183Y11__104695286 SwitchedObj=LINE.183Y11__104695286 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX91__2693844 Bus1=26709776 Bus2=27000167 Switch=T
+New SwtControl.13PX91__2693844 SwitchedObj=LINE.13PX91__2693844 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y11__104695285 Bus1=103536783 Bus2=103536825 Switch=T
+New SwtControl.183Y11__104695285 SwitchedObj=LINE.183Y11__104695285 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT89__2693044 Bus1=25734534 Bus2=26999367 Switch=T
+New SwtControl.8DT89__2693044 SwitchedObj=LINE.8DT89__2693044 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A455K__103013524 Bus1=103010980 Bus2=26281720 Switch=T
+New SwtControl.A455K__103013524 SwitchedObj=LINE.A455K__103013524 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX87__2693868 Bus1=26709738 Bus2=27000191 Switch=T
+New SwtControl.13PX87__2693868 SwitchedObj=LINE.13PX87__2693868 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM76__2693523 Bus1=25631606 Bus2=26999846 Switch=T
+New SwtControl.9AM76__2693523 SwitchedObj=LINE.9AM76__2693523 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM76__2693522 Bus1=26999845 Bus2=25631606 Switch=T
+New SwtControl.9AM76__2693522 SwitchedObj=LINE.9AM76__2693522 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G2635__2692875 Bus1=25024991 Bus2=26999198 Switch=T
+New SwtControl.G2635__2692875 SwitchedObj=LINE.G2635__2692875 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G2635__2692874 Bus1=26999197 Bus2=25024991 Switch=T
+New SwtControl.G2635__2692874 SwitchedObj=LINE.G2635__2692874 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y08__104695270 Bus1=103536806 Bus2=103536776 Switch=T
+New SwtControl.183Y08__104695270 SwitchedObj=LINE.183Y08__104695270 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y08__104695271 Bus1=103536776 Bus2=103536807 Switch=T
+New SwtControl.183Y08__104695271 SwitchedObj=LINE.183Y08__104695271 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT89__2693043 Bus1=25734534 Bus2=103079643 Switch=T
+New SwtControl.8DT89__2693043 SwitchedObj=LINE.8DT89__2693043 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G257K__2700936 Bus1=1105317 Bus2=27136690 Switch=T
+New SwtControl.G257K__2700936 SwitchedObj=LINE.G257K__2700936 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT88__2693041 Bus1=26999364 Bus2=25743424 Switch=T
+New SwtControl.8DT88__2693041 SwitchedObj=LINE.8DT88__2693041 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT89__2693042 Bus1=103079721 Bus2=25734534 Switch=T
+New SwtControl.8DT89__2693042 SwitchedObj=LINE.8DT89__2693042 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM75__2693525 Bus1=25631605 Bus2=26999848 Switch=T
+New SwtControl.9AM75__2693525 SwitchedObj=LINE.9AM75__2693525 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G257K__2700937 Bus1=27136691 Bus2=1105317 Switch=T
+New SwtControl.G257K__2700937 SwitchedObj=LINE.G257K__2700937 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN19__104282579 Bus1=103383278 Bus2=103383279 Switch=T
+New SwtControl.17MN19__104282579 SwitchedObj=LINE.17MN19__104282579 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM75__2693524 Bus1=26999847 Bus2=25631605 Switch=T
+New SwtControl.9AM75__2693524 SwitchedObj=LINE.9AM75__2693524 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G259K__2700940 Bus1=1105218 Bus2=27136694 Switch=T
+New SwtControl.G259K__2700940 SwitchedObj=LINE.G259K__2700940 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G259K__2700941 Bus1=27136695 Bus2=1105218 Switch=T
+New SwtControl.G259K__2700941 SwitchedObj=LINE.G259K__2700941 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D736K__2693194 Bus1=26999517 Bus2=1104945 Switch=T
+New SwtControl.D736K__2693194 SwitchedObj=LINE.D736K__2693194 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U571BH__2667582 Bus1=26027072 Bus2=26119676 Switch=T
+New SwtControl.U571BH__2667582 SwitchedObj=LINE.U571BH__2667582 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA92__2701509 Bus1=27137263 Bus2=25873711 Switch=T
+New SwtControl.9WA92__2701509 SwitchedObj=LINE.9WA92__2701509 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.17DH83__105931281 Bus1=103649878 Bus2=T4795B23_10000007 Switch=T
+!New SwtControl.17DH83__105931281 SwitchedObj=LINE.17DH83__105931281 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L341__2700849 Bus1=27136603 Bus2=26887522 Switch=T
+New SwtControl.14L341__2700849 SwitchedObj=LINE.14L341__2700849 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK64__2701502 Bus1=27137256 Bus2=25833131 Switch=T
+New SwtControl.8EK64__2701502 SwitchedObj=LINE.8EK64__2701502 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L344__2700811 Bus1=26887525 Bus2=27136565 Switch=T
+New SwtControl.14L344__2700811 SwitchedObj=LINE.14L344__2700811 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK64__2701503 Bus1=25833131 Bus2=27137257 Switch=T
+New SwtControl.8EK64__2701503 SwitchedObj=LINE.8EK64__2701503 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L344__2700810 Bus1=27136564 Bus2=26887525 Switch=T
+New SwtControl.14L344__2700810 SwitchedObj=LINE.14L344__2700810 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC39__105326054 Bus1=103626615 Bus2=103626614 Switch=T
+New SwtControl.18GC39__105326054 SwitchedObj=LINE.18GC39__105326054 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC39__105326053 Bus1=103626614 Bus2=103626613 Switch=T
+New SwtControl.18GC39__105326053 SwitchedObj=LINE.18GC39__105326053 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7BE81__2693175 Bus1=25734547 Bus2=26999498 Switch=T
+New SwtControl.7BE81__2693175 SwitchedObj=LINE.7BE81__2693175 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132358__2693130 Bus1=26999453 Bus2=26555774 Switch=T
+New SwtControl.132358__2693130 SwitchedObj=LINE.132358__2693130 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7BE81__2693174 Bus1=26999497 Bus2=25734547 Switch=T
+New SwtControl.7BE81__2693174 SwitchedObj=LINE.7BE81__2693174 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132358__2693131 Bus1=26555774 Bus2=26999454 Switch=T
+New SwtControl.132358__2693131 SwitchedObj=LINE.132358__2693131 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7BE80__2693177 Bus1=25734546 Bus2=26999500 Switch=T
+New SwtControl.7BE80__2693177 SwitchedObj=LINE.7BE80__2693177 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132365__2693126 Bus1=26555802 Bus2=26999449 Switch=T
+New SwtControl.132365__2693126 SwitchedObj=LINE.132365__2693126 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7BE80__2693176 Bus1=26999499 Bus2=25734546 Switch=T
+New SwtControl.7BE80__2693176 SwitchedObj=LINE.7BE80__2693176 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7MX01__2701151 Bus1=25356091 Bus2=27136905 Switch=T
+New SwtControl.7MX01__2701151 SwitchedObj=LINE.7MX01__2701151 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132365__2693127 Bus1=26999450 Bus2=26555802 Switch=T
+New SwtControl.132365__2693127 SwitchedObj=LINE.132365__2693127 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN75__103913546 Bus1=103265087 Bus2=103265164 Switch=T
+New SwtControl.15TN75__103913546 SwitchedObj=LINE.15TN75__103913546 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7MX01__2701150 Bus1=27136904 Bus2=25356091 Switch=T
+New SwtControl.7MX01__2701150 SwitchedObj=LINE.7MX01__2701150 SwitchedTerm=2 Action=Closed Lock=no
+New Line.144377__2701337 Bus1=27137091 Bus2=26776436 Switch=T
+New SwtControl.144377__2701337 SwitchedObj=LINE.144377__2701337 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN75__103913547 Bus1=103265168 Bus2=103265087 Switch=T
+New SwtControl.15TN75__103913547 SwitchedObj=LINE.15TN75__103913547 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC37__105326052 Bus1=103626598 Bus2=103626597 Switch=T
+New SwtControl.18GC37__105326052 SwitchedObj=LINE.18GC37__105326052 SwitchedTerm=2 Action=Closed Lock=no
+New Line.144377__2701338 Bus1=26776436 Bus2=27137092 Switch=T
+New SwtControl.144377__2701338 SwitchedObj=LINE.144377__2701338 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC37__105326051 Bus1=103626599 Bus2=103626598 Switch=T
+New SwtControl.18GC37__105326051 SwitchedObj=LINE.18GC37__105326051 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.132364__2693139 Bus1=26555809 Bus2=26999462 Switch=T
+!New SwtControl.132364__2693139 SwitchedObj=LINE.132364__2693139 SwitchedTerm=2 Action=Open Lock=no
+New Line.132352__2693152 Bus1=26555737 Bus2=26999475 Switch=T
+New SwtControl.132352__2693152 SwitchedObj=LINE.132352__2693152 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132361__2693124 Bus1=26999447 Bus2=26555797 Switch=T
+New SwtControl.132361__2693124 SwitchedObj=LINE.132361__2693124 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132361__2693125 Bus1=26555797 Bus2=26999448 Switch=T
+New SwtControl.132361__2693125 SwitchedObj=LINE.132361__2693125 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106799__2701094 Bus1=25836862 Bus2=27136848 Switch=T
+New SwtControl.106799__2701094 SwitchedObj=LINE.106799__2701094 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106799__2701095 Bus1=27136849 Bus2=25836862 Switch=T
+New SwtControl.106799__2701095 SwitchedObj=LINE.106799__2701095 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132352__2693151 Bus1=26999474 Bus2=26555737 Switch=T
+New SwtControl.132352__2693151 SwitchedObj=LINE.132352__2693151 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106799__2701096 Bus1=25836862 Bus2=27136850 Switch=T
+New SwtControl.106799__2701096 SwitchedObj=LINE.106799__2701096 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX84__2693795 Bus1=26709852 Bus2=27000118 Switch=T
+New SwtControl.13PX84__2693795 SwitchedObj=LINE.13PX84__2693795 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.183Y96__106403700 Bus1=103673030 Bus2=103537122 Switch=T
+!New SwtControl.183Y96__106403700 SwitchedObj=LINE.183Y96__106403700 SwitchedTerm=2 Action=Open Lock=no
+New Line.7BE84__2693173 Bus1=26999496 Bus2=25734548 Switch=T
+New SwtControl.7BE84__2693173 SwitchedObj=LINE.7BE84__2693173 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX84__2693794 Bus1=27000117 Bus2=26709852 Switch=T
+New SwtControl.13PX84__2693794 SwitchedObj=LINE.13PX84__2693794 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA91__2700948 Bus1=27136702 Bus2=25873709 Switch=T
+New SwtControl.9WA91__2700948 SwitchedObj=LINE.9WA91__2700948 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132353__2693149 Bus1=26999472 Bus2=26555743 Switch=T
+New SwtControl.132353__2693149 SwitchedObj=LINE.132353__2693149 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA91__2700949 Bus1=25873709 Bus2=27136703 Switch=T
+New SwtControl.9WA91__2700949 SwitchedObj=LINE.9WA91__2700949 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK67__2700947 Bus1=27136701 Bus2=25833119 Switch=T
+New SwtControl.8EK67__2700947 SwitchedObj=LINE.8EK67__2700947 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L573__2701328 Bus1=27137082 Bus2=26679488 Switch=T
+New SwtControl.13L573__2701328 SwitchedObj=LINE.13L573__2701328 SwitchedTerm=2 Action=Closed Lock=no
+New Line.186Q93__104672517 Bus1=103527267 Bus2=103527268 Switch=T
+New SwtControl.186Q93__104672517 SwitchedObj=LINE.186Q93__104672517 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18NP35__106231443 Bus1=103666875 Bus2=103666849 Switch=T
+New SwtControl.18NP35__106231443 SwitchedObj=LINE.18NP35__106231443 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.13L573__2701327 Bus1=27137081 Bus2=26679488 Switch=T
+!New SwtControl.13L573__2701327 SwitchedObj=LINE.13L573__2701327 SwitchedTerm=2 Action=Open Lock=no
+New Line.13L574__2701330 Bus1=26679489 Bus2=27137084 Switch=T
+New SwtControl.13L574__2701330 SwitchedObj=LINE.13L574__2701330 SwitchedTerm=2 Action=Closed Lock=no
+New Line.186Q93__104672518 Bus1=103527268 Bus2=103527269 Switch=T
+New SwtControl.186Q93__104672518 SwitchedObj=LINE.186Q93__104672518 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18NP35__106231444 Bus1=103666849 Bus2=103666862 Switch=T
+New SwtControl.18NP35__106231444 SwitchedObj=LINE.18NP35__106231444 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U613BH__2692859 Bus1=26999182 Bus2=1140029 Switch=T
+New SwtControl.U613BH__2692859 SwitchedObj=LINE.U613BH__2692859 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U613BH__2692858 Bus1=1140029 Bus2=26999181 Switch=T
+New SwtControl.U613BH__2692858 SwitchedObj=LINE.U613BH__2692858 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX81__2693789 Bus1=26709835 Bus2=27000112 Switch=T
+New SwtControl.13PX81__2693789 SwitchedObj=LINE.13PX81__2693789 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y10__104695282 Bus1=103536824 Bus2=103536782 Switch=T
+New SwtControl.183Y10__104695282 SwitchedObj=LINE.183Y10__104695282 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX81__2693788 Bus1=27000111 Bus2=26709835 Switch=T
+New SwtControl.13PX81__2693788 SwitchedObj=LINE.13PX81__2693788 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.183Y10__104695281 Bus1=103536822 Bus2=103536782 Switch=T
+!New SwtControl.183Y10__104695281 SwitchedObj=LINE.183Y10__104695281 SwitchedTerm=2 Action=Open Lock=no
+New Line.17MN21__104282585 Bus1=103383294 Bus2=103383295 Switch=T
+New SwtControl.17MN21__104282585 SwitchedObj=LINE.17MN21__104282585 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106807__2701109 Bus1=25836870 Bus2=27136863 Switch=T
+New SwtControl.106807__2701109 SwitchedObj=LINE.106807__2701109 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN21__104282584 Bus1=103383293 Bus2=103383294 Switch=T
+New SwtControl.17MN21__104282584 SwitchedObj=LINE.17MN21__104282584 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R713__2685201 Bus1=103125608 Bus2=25490378 Switch=T
+New SwtControl.8R713__2685201 SwitchedObj=LINE.8R713__2685201 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH79__104696197 Bus1=103537161 Bus2=103537115 Switch=T
+New SwtControl.18PH79__104696197 SwitchedObj=LINE.18PH79__104696197 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R713__2685202 Bus1=25490378 Bus2=26991520 Switch=T
+New SwtControl.8R713__2685202 SwitchedObj=LINE.8R713__2685202 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH64__104218259 Bus1=103359454 Bus2=103359455 Switch=T
+New SwtControl.17KH64__104218259 SwitchedObj=LINE.17KH64__104218259 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12134__2692912 Bus1=1105210 Bus2=26999235 Switch=T
+New SwtControl.12134__2692912 SwitchedObj=LINE.12134__2692912 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN72__103913526 Bus1=103265084 Bus2=103265150 Switch=T
+New SwtControl.15TN72__103913526 SwitchedObj=LINE.15TN72__103913526 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH79__104696198 Bus1=103537115 Bus2=103537162 Switch=T
+New SwtControl.18PH79__104696198 SwitchedObj=LINE.18PH79__104696198 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN72__103913527 Bus1=103265154 Bus2=103265084 Switch=T
+New SwtControl.15TN72__103913527 SwitchedObj=LINE.15TN72__103913527 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12134__2692911 Bus1=26999234 Bus2=1105210 Switch=T
+New SwtControl.12134__2692911 SwitchedObj=LINE.12134__2692911 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14NJ20__103076966 Bus1=103032165 Bus2=103032164 Switch=T
+New SwtControl.14NJ20__103076966 SwitchedObj=LINE.14NJ20__103076966 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D870K__2693081 Bus1=1105402 Bus2=26999404 Switch=T
+New SwtControl.D870K__2693081 SwitchedObj=LINE.D870K__2693081 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D870K__2693082 Bus1=26999405 Bus2=1105402 Switch=T
+New SwtControl.D870K__2693082 SwitchedObj=LINE.D870K__2693082 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH78__104696212 Bus1=103537179 Bus2=103537119 Switch=T
+New SwtControl.18PH78__104696212 SwitchedObj=LINE.18PH78__104696212 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U595BH__2693014 Bus1=1140078 Bus2=26999337 Switch=T
+New SwtControl.U595BH__2693014 SwitchedObj=LINE.U595BH__2693014 SwitchedTerm=2 Action=Closed Lock=no
+New Line.116262__2701203 Bus1=103121229 Bus2=26065905 Switch=T
+New SwtControl.116262__2701203 SwitchedObj=LINE.116262__2701203 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y92__104696250 Bus1=103537209 Bus2=103537129 Switch=T
+New SwtControl.183Y92__104696250 SwitchedObj=LINE.183Y92__104696250 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH78__104696213 Bus1=103537119 Bus2=103537182 Switch=T
+New SwtControl.18PH78__104696213 SwitchedObj=LINE.18PH78__104696213 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U595BH__2693013 Bus1=26999336 Bus2=1140078 Switch=T
+New SwtControl.U595BH__2693013 SwitchedObj=LINE.U595BH__2693013 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q051__103041390 Bus1=103016863 Bus2=103016860 Switch=T
+New SwtControl.14Q051__103041390 SwitchedObj=LINE.14Q051__103041390 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183Y92__104696251 Bus1=103537129 Bus2=103537210 Switch=T
+New SwtControl.183Y92__104696251 SwitchedObj=LINE.183Y92__104696251 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8Q064__2693036 Bus1=25734524 Bus2=26999359 Switch=T
+New SwtControl.8Q064__2693036 SwitchedObj=LINE.8Q064__2693036 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8Q064__2693035 Bus1=26999358 Bus2=25734524 Switch=T
+New SwtControl.8Q064__2693035 SwitchedObj=LINE.8Q064__2693035 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R714__2685200 Bus1=25490379 Bus2=26991518 Switch=T
+New SwtControl.8R714__2685200 SwitchedObj=LINE.8R714__2685200 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14MD12__103076940 Bus1=103032159 Bus2=26859807 Switch=T
+New SwtControl.14MD12__103076940 SwitchedObj=LINE.14MD12__103076940 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14MD12__103076941 Bus1=26859807 Bus2=103032160 Switch=T
+New SwtControl.14MD12__103076941 SwitchedObj=LINE.14MD12__103076941 SwitchedTerm=2 Action=Closed Lock=no
+New Line.84Q21__2693496 Bus1=26999819 Bus2=25734530 Switch=T
+New SwtControl.84Q21__2693496 SwitchedObj=LINE.84Q21__2693496 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183907__104679572 Bus1=103529700 Bus2=103529696 Switch=T
+New SwtControl.183907__104679572 SwitchedObj=LINE.183907__104679572 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183907__104679573 Bus1=103529698 Bus2=103597577 Switch=T
+New SwtControl.183907__104679573 SwitchedObj=LINE.183907__104679573 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC36__105326056 Bus1=103626590 Bus2=103626589 Switch=T
+New SwtControl.18GC36__105326056 SwitchedObj=LINE.18GC36__105326056 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WF49__2701059 Bus1=27136813 Bus2=25876081 Switch=T
+New SwtControl.9WF49__2701059 SwitchedObj=LINE.9WF49__2701059 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18GC36__105326055 Bus1=103626591 Bus2=103626590 Switch=T
+New SwtControl.18GC36__105326055 SwitchedObj=LINE.18GC36__105326055 SwitchedTerm=2 Action=Closed Lock=no
+New Line.183907__104679575 Bus1=103529701 Bus2=103529699 Switch=T
+New SwtControl.183907__104679575 SwitchedObj=LINE.183907__104679575 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5N331__2693381 Bus1=26999704 Bus2=1104653 Switch=T
+New SwtControl.5N331__2693381 SwitchedObj=LINE.5N331__2693381 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L20__2701172 Bus1=25750604 Bus2=27136926 Switch=T
+New SwtControl.102L20__2701172 SwitchedObj=LINE.102L20__2701172 SwitchedTerm=2 Action=Closed Lock=no
+New Line.102L20__2701173 Bus1=27136927 Bus2=25750604 Switch=T
+New SwtControl.102L20__2701173 SwitchedObj=LINE.102L20__2701173 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM87__2693529 Bus1=25631611 Bus2=26999852 Switch=T
+New SwtControl.9AM87__2693529 SwitchedObj=LINE.9AM87__2693529 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM87__2693528 Bus1=26999851 Bus2=25631611 Switch=T
+New SwtControl.9AM87__2693528 SwitchedObj=LINE.9AM87__2693528 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM86__2693521 Bus1=25631607 Bus2=26999844 Switch=T
+New SwtControl.9AM86__2693521 SwitchedObj=LINE.9AM86__2693521 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM86__2693520 Bus1=26999843 Bus2=25631607 Switch=T
+New SwtControl.9AM86__2693520 SwitchedObj=LINE.9AM86__2693520 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.18LL89__105931324 Bus1=103649893 Bus2=103649892 Switch=T
+!New SwtControl.18LL89__105931324 SwitchedObj=LINE.18LL89__105931324 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.18LL89__105931323 Bus1=103649892 Bus2=103649891 Switch=T
+!New SwtControl.18LL89__105931323 SwitchedObj=LINE.18LL89__105931323 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.17Q659__104378566 Bus1=103413069 Bus2=103413068 Switch=T
+!New SwtControl.17Q659__104378566 SwitchedObj=LINE.17Q659__104378566 SwitchedTerm=2 Action=Open Lock=no
+New Line.17Q659__104378567 Bus1=103413070 Bus2=103413069 Switch=T
+New SwtControl.17Q659__104378567 SwitchedObj=LINE.17Q659__104378567 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7WL55__103404165 Bus1=103125602 Bus2=25360338 Switch=T
+New SwtControl.7WL55__103404165 SwitchedObj=LINE.7WL55__103404165 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TD35__2700965 Bus1=27136719 Bus2=26037868 Switch=T
+New SwtControl.6TD35__2700965 SwitchedObj=LINE.6TD35__2700965 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX10__103222965 Bus1=103079725 Bus2=25734533 Switch=T
+New SwtControl.7NX10__103222965 SwitchedObj=LINE.7NX10__103222965 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH81__104696204 Bus1=103537163 Bus2=103537116 Switch=T
+New SwtControl.18PH81__104696204 SwitchedObj=LINE.18PH81__104696204 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH81__104696205 Bus1=103537116 Bus2=103537165 Switch=T
+New SwtControl.18PH81__104696205 SwitchedObj=LINE.18PH81__104696205 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.18LL87__105931320 Bus1=103649896 Bus2=103649897 Switch=T
+!New SwtControl.18LL87__105931320 SwitchedObj=LINE.18LL87__105931320 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18FA93__105325895 Bus1=103631341 Bus2=103631340 Switch=T
+New SwtControl.18FA93__105325895 SwitchedObj=LINE.18FA93__105325895 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L465__2700820 Bus1=26887559 Bus2=27136574 Switch=T
+New SwtControl.14L465__2700820 SwitchedObj=LINE.14L465__2700820 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN17__104282576 Bus1=103383297 Bus2=103383298 Switch=T
+New SwtControl.17MN17__104282576 SwitchedObj=LINE.17MN17__104282576 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.9AM88__2693527 Bus1=25631612 Bus2=26999850 Switch=T
+!New SwtControl.9AM88__2693527 SwitchedObj=LINE.9AM88__2693527 SwitchedTerm=2 Action=Open Lock=no
+New Line.9AM88__2693526 Bus1=26999849 Bus2=25631612 Switch=T
+New SwtControl.9AM88__2693526 SwitchedObj=LINE.9AM88__2693526 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17MN17__104282575 Bus1=103383296 Bus2=103383297 Switch=T
+New SwtControl.17MN17__104282575 SwitchedObj=LINE.17MN17__104282575 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15QR57__103849313 Bus1=103249182 Bus2=103249211 Switch=T
+New SwtControl.15QR57__103849313 SwitchedObj=LINE.15QR57__103849313 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L472__2700831 Bus1=26887569 Bus2=27136585 Switch=T
+New SwtControl.14L472__2700831 SwitchedObj=LINE.14L472__2700831 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15QR57__103849314 Bus1=103249214 Bus2=103249182 Switch=T
+New SwtControl.15QR57__103849314 SwitchedObj=LINE.15QR57__103849314 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U586BH__2693017 Bus1=1140112 Bus2=26999340 Switch=T
+New SwtControl.U586BH__2693017 SwitchedObj=LINE.U586BH__2693017 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U586BH__2693016 Bus1=1140112 Bus2=26999339 Switch=T
+New SwtControl.U586BH__2693016 SwitchedObj=LINE.U586BH__2693016 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L469__2700828 Bus1=26887564 Bus2=27136582 Switch=T
+New SwtControl.14L469__2700828 SwitchedObj=LINE.14L469__2700828 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U586BH__2693015 Bus1=26999338 Bus2=1140112 Switch=T
+New SwtControl.U586BH__2693015 SwitchedObj=LINE.U586BH__2693015 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.A650K__2700904 Bus1=27136658 Bus2=25734582 Switch=T
+!New SwtControl.A650K__2700904 SwitchedObj=LINE.A650K__2700904 SwitchedTerm=2 Action=Open Lock=no
+New Line.17C985__104039821 Bus1=103360206 Bus2=103306288 Switch=T
+New SwtControl.17C985__104039821 SwitchedObj=LINE.17C985__104039821 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH77__104696216 Bus1=103537184 Bus2=103537120 Switch=T
+New SwtControl.18PH77__104696216 SwitchedObj=LINE.18PH77__104696216 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH77__104696217 Bus1=103537120 Bus2=103537188 Switch=T
+New SwtControl.18PH77__104696217 SwitchedObj=LINE.18PH77__104696217 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L469__2700827 Bus1=27136581 Bus2=26887564 Switch=T
+New SwtControl.14L469__2700827 SwitchedObj=LINE.14L469__2700827 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U405BH__103374126 Bus1=103117837 Bus2=103119508 Switch=T
+New SwtControl.U405BH__103374126 SwitchedObj=LINE.U405BH__103374126 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A650K__2700903 Bus1=27136657 Bus2=25734582 Switch=T
+New SwtControl.A650K__2700903 SwitchedObj=LINE.A650K__2700903 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A547BH__2692851 Bus1=1139946 Bus2=26999174 Switch=T
+New SwtControl.A547BH__2692851 SwitchedObj=LINE.A547BH__2692851 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A547BH__2692850 Bus1=26999173 Bus2=1139946 Switch=T
+New SwtControl.A547BH__2692850 SwitchedObj=LINE.A547BH__2692850 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP98__2693172 Bus1=26999495 Bus2=25734545 Switch=T
+New SwtControl.5DP98__2693172 SwitchedObj=LINE.5DP98__2693172 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP98__2693171 Bus1=25734545 Bus2=26999494 Switch=T
+New SwtControl.5DP98__2693171 SwitchedObj=LINE.5DP98__2693171 SwitchedTerm=2 Action=Closed Lock=no
+New Line.5DP98__2693170 Bus1=25734545 Bus2=26999493 Switch=T
+New SwtControl.5DP98__2693170 SwitchedObj=LINE.5DP98__2693170 SwitchedTerm=2 Action=Closed Lock=no
+New Line.6TE32__2701129 Bus1=27136883 Bus2=25359968 Switch=T
+New SwtControl.6TE32__2701129 SwitchedObj=LINE.6TE32__2701129 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.14LH94__2701368 Bus1=27137122 Bus2=26907382 Switch=T
+!New SwtControl.14LH94__2701368 SwitchedObj=LINE.14LH94__2701368 SwitchedTerm=2 Action=Open Lock=no
+New Line.13PX79__2693877 Bus1=26709819 Bus2=27000200 Switch=T
+New SwtControl.13PX79__2693877 SwitchedObj=LINE.13PX79__2693877 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH94__2701367 Bus1=27137121 Bus2=26907382 Switch=T
+New SwtControl.14LH94__2701367 SwitchedObj=LINE.14LH94__2701367 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U612BH__2692829 Bus1=1140051 Bus2=26999152 Switch=T
+New SwtControl.U612BH__2692829 SwitchedObj=LINE.U612BH__2692829 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.18LL88__105931326 Bus1=103649884 Bus2=103649885 Switch=T
+!New SwtControl.18LL88__105931326 SwitchedObj=LINE.18LL88__105931326 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX75__2693872 Bus1=27000195 Bus2=26709761 Switch=T
+New SwtControl.13PX75__2693872 SwitchedObj=LINE.13PX75__2693872 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX75__2693871 Bus1=26709761 Bus2=27000194 Switch=T
+New SwtControl.13PX75__2693871 SwitchedObj=LINE.13PX75__2693871 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX79__2693878 Bus1=27000201 Bus2=26709819 Switch=T
+New SwtControl.13PX79__2693878 SwitchedObj=LINE.13PX79__2693878 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.18LL88__105931325 Bus1=103649884 Bus2=103649883 Switch=T
+!New SwtControl.18LL88__105931325 SwitchedObj=LINE.18LL88__105931325 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17BR89__104028968 Bus1=103294689 Bus2=103294688 Switch=T
+New SwtControl.17BR89__104028968 SwitchedObj=LINE.17BR89__104028968 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17BR89__104028969 Bus1=103294688 Bus2=103294687 Switch=T
+New SwtControl.17BR89__104028969 SwitchedObj=LINE.17BR89__104028969 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX74__2693869 Bus1=27000192 Bus2=26709756 Switch=T
+New SwtControl.13PX74__2693869 SwitchedObj=LINE.13PX74__2693869 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH80__104696208 Bus1=103537166 Bus2=103537118 Switch=T
+New SwtControl.18PH80__104696208 SwitchedObj=LINE.18PH80__104696208 SwitchedTerm=2 Action=Closed Lock=no
+New Line.18PH80__104696209 Bus1=103537118 Bus2=103537178 Switch=T
+New SwtControl.18PH80__104696209 SwitchedObj=LINE.18PH80__104696209 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15RX24__103950483 Bus1=103274960 Bus2=103274959 Switch=T
+New SwtControl.15RX24__103950483 SwitchedObj=LINE.15RX24__103950483 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U594BH__2693003 Bus1=1140114 Bus2=26999326 Switch=T
+New SwtControl.U594BH__2693003 SwitchedObj=LINE.U594BH__2693003 SwitchedTerm=2 Action=Closed Lock=no
+New Line.U594BH__2693002 Bus1=26999325 Bus2=1140114 Switch=T
+New SwtControl.U594BH__2693002 SwitchedObj=LINE.U594BH__2693002 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14DW88__2680015 Bus1=27146928 Bus2=26835325 Switch=T
+New SwtControl.14DW88__2680015 SwitchedObj=LINE.14DW88__2680015 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH98__2701361 Bus1=27137115 Bus2=26896057 Switch=T
+New SwtControl.14LH98__2701361 SwitchedObj=LINE.14LH98__2701361 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14DW88__2680014 Bus1=26835326 Bus2=27146931 Switch=T
+New SwtControl.14DW88__2680014 SwitchedObj=LINE.14DW88__2680014 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106795__2701117 Bus1=27136871 Bus2=25836873 Switch=T
+New SwtControl.106795__2701117 SwitchedObj=LINE.106795__2701117 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14DW88__2680017 Bus1=27146930 Bus2=103036414 Switch=T
+New SwtControl.14DW88__2680017 SwitchedObj=LINE.14DW88__2680017 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LJ02__2701355 Bus1=26896051 Bus2=27137109 Switch=T
+New SwtControl.14LJ02__2701355 SwitchedObj=LINE.14LJ02__2701355 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106795__2701118 Bus1=25836873 Bus2=27136872 Switch=T
+New SwtControl.106795__2701118 SwitchedObj=LINE.106795__2701118 SwitchedTerm=2 Action=Closed Lock=no
+New Line.133Y83__2701194 Bus1=26567454 Bus2=27136948 Switch=T
+New SwtControl.133Y83__2701194 SwitchedObj=LINE.133Y83__2701194 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LH98__2701362 Bus1=26896057 Bus2=103042166 Switch=T
+New SwtControl.14LH98__2701362 SwitchedObj=LINE.14LH98__2701362 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14LJ02__2701354 Bus1=103042169 Bus2=26896051 Switch=T
+New SwtControl.14LJ02__2701354 SwitchedObj=LINE.14LJ02__2701354 SwitchedTerm=2 Action=Closed Lock=no
+New Line.133Y83__2701195 Bus1=27136949 Bus2=26567454 Switch=T
+New SwtControl.133Y83__2701195 SwitchedObj=LINE.133Y83__2701195 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12122__2700897 Bus1=25734579 Bus2=27136651 Switch=T
+New SwtControl.12122__2700897 SwitchedObj=LINE.12122__2700897 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L471__104218201 Bus1=103359448 Bus2=26887566 Switch=T
+New SwtControl.14L471__104218201 SwitchedObj=LINE.14L471__104218201 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14MD35__2700862 Bus1=27136616 Bus2=103048714 Switch=T
+New SwtControl.14MD35__2700862 SwitchedObj=LINE.14MD35__2700862 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.8DT97__8767309 Bus1=103079646 Bus2=T4795B23_10000003 Switch=T
+!New SwtControl.8DT97__8767309 SwitchedObj=LINE.8DT97__8767309 SwitchedTerm=2 Action=Open Lock=no
+New Line.7BD66__2693179 Bus1=26999502 Bus2=25734543 Switch=T
+New SwtControl.7BD66__2693179 SwitchedObj=LINE.7BD66__2693179 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7BD66__2693178 Bus1=25734543 Bus2=26999501 Switch=T
+New SwtControl.7BD66__2693178 SwitchedObj=LINE.7BD66__2693178 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8R715__2701176 Bus1=27136930 Bus2=25490386 Switch=T
+New SwtControl.8R715__2701176 SwitchedObj=LINE.8R715__2701176 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15QR58__103849330 Bus1=103249185 Bus2=103249215 Switch=T
+New SwtControl.15QR58__103849330 SwitchedObj=LINE.15QR58__103849330 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT87__2692971 Bus1=25743423 Bus2=26999294 Switch=T
+New SwtControl.8DT87__2692971 SwitchedObj=LINE.8DT87__2692971 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8DT87__2692972 Bus1=26999295 Bus2=25743423 Switch=T
+New SwtControl.8DT87__2692972 SwitchedObj=LINE.8DT87__2692972 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14FX05__2700740 Bus1=27136494 Bus2=26859626 Switch=T
+New SwtControl.14FX05__2700740 SwitchedObj=LINE.14FX05__2700740 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12122__2700898 Bus1=27136652 Bus2=25734579 Switch=T
+New SwtControl.12122__2700898 SwitchedObj=LINE.12122__2700898 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11PR92__2701077 Bus1=27136831 Bus2=26284348 Switch=T
+New SwtControl.11PR92__2701077 SwitchedObj=LINE.11PR92__2701077 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH69__104218268 Bus1=103359060 Bus2=103359061 Switch=T
+New SwtControl.17KH69__104218268 SwitchedObj=LINE.17KH69__104218268 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH69__104218269 Bus1=103359059 Bus2=103359060 Switch=T
+New SwtControl.17KH69__104218269 SwitchedObj=LINE.17KH69__104218269 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D099K__2701021 Bus1=25734595 Bus2=27136775 Switch=T
+New SwtControl.D099K__2701021 SwitchedObj=LINE.D099K__2701021 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D099K__2701020 Bus1=27136774 Bus2=25734595 Switch=T
+New SwtControl.D099K__2701020 SwitchedObj=LINE.D099K__2701020 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D104K__2701013 Bus1=25734591 Bus2=27136767 Switch=T
+New SwtControl.D104K__2701013 SwitchedObj=LINE.D104K__2701013 SwitchedTerm=2 Action=Closed Lock=no
+New Line.126698__2693609 Bus1=26999932 Bus2=26356921 Switch=T
+New SwtControl.126698__2693609 SwitchedObj=LINE.126698__2693609 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D104K__2701012 Bus1=27136766 Bus2=25734591 Switch=T
+New SwtControl.D104K__2701012 SwitchedObj=LINE.D104K__2701012 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A649K__2700901 Bus1=25734581 Bus2=27136655 Switch=T
+New SwtControl.A649K__2700901 SwitchedObj=LINE.A649K__2700901 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D102K__2700906 Bus1=25734598 Bus2=27136660 Switch=T
+New SwtControl.D102K__2700906 SwitchedObj=LINE.D102K__2700906 SwitchedTerm=2 Action=Closed Lock=no
+New Line.A649K__2700902 Bus1=27136656 Bus2=25734581 Switch=T
+New SwtControl.A649K__2700902 SwitchedObj=LINE.A649K__2700902 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D102K__2700905 Bus1=27136659 Bus2=25734598 Switch=T
+New SwtControl.D102K__2700905 SwitchedObj=LINE.D102K__2700905 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.12AK64__2701085 Bus1=26387814 Bus2=27136839 Switch=T
+!New SwtControl.12AK64__2701085 SwitchedObj=LINE.12AK64__2701085 SwitchedTerm=2 Action=Open Lock=no
+New Line.12AK64__2701084 Bus1=27136838 Bus2=26387814 Switch=T
+New SwtControl.12AK64__2701084 SwitchedObj=LINE.12AK64__2701084 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX60__2693027 Bus1=26999350 Bus2=25734531 Switch=T
+New SwtControl.7NX60__2693027 SwitchedObj=LINE.7NX60__2693027 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK61__2701079 Bus1=27136833 Bus2=26387833 Switch=T
+New SwtControl.12AK61__2701079 SwitchedObj=LINE.12AK61__2701079 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.187R46__104783241 Bus1=103571021 Bus2=103571022 Switch=T
+!New SwtControl.187R46__104783241 SwitchedObj=LINE.187R46__104783241 SwitchedTerm=2 Action=Open Lock=no
+New Line.9AM77__2693551 Bus1=25631610 Bus2=26999874 Switch=T
+New SwtControl.9AM77__2693551 SwitchedObj=LINE.9AM77__2693551 SwitchedTerm=2 Action=Closed Lock=no
+New Line.12AK61__2701078 Bus1=26387833 Bus2=27136832 Switch=T
+New SwtControl.12AK61__2701078 SwitchedObj=LINE.12AK61__2701078 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX86__2693847 Bus1=27000170 Bus2=26709786 Switch=T
+New SwtControl.13PX86__2693847 SwitchedObj=LINE.13PX86__2693847 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9AM77__2693550 Bus1=26999873 Bus2=25631610 Switch=T
+New SwtControl.9AM77__2693550 SwitchedObj=LINE.9AM77__2693550 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX90__2693866 Bus1=27000189 Bus2=26709771 Switch=T
+New SwtControl.13PX90__2693866 SwitchedObj=LINE.13PX90__2693866 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.13PX90__2693865 Bus1=26709771 Bus2=27000188 Switch=T
+!New SwtControl.13PX90__2693865 SwitchedObj=LINE.13PX90__2693865 SwitchedTerm=2 Action=Open Lock=no
+New Line.13PX93__2693850 Bus1=26709791 Bus2=27000173 Switch=T
+New SwtControl.13PX93__2693850 SwitchedObj=LINE.13PX93__2693850 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14T643__103076976 Bus1=103048756 Bus2=103032167 Switch=T
+New SwtControl.14T643__103076976 SwitchedObj=LINE.14T643__103076976 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D869K__2700961 Bus1=27136715 Bus2=1105433 Switch=T
+New SwtControl.D869K__2700961 SwitchedObj=LINE.D869K__2700961 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14T643__103076977 Bus1=103032167 Bus2=103048757 Switch=T
+New SwtControl.14T643__103076977 SwitchedObj=LINE.14T643__103076977 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NX60__2693028 Bus1=25734531 Bus2=26999351 Switch=T
+New SwtControl.7NX60__2693028 SwitchedObj=LINE.7NX60__2693028 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX86__2693848 Bus1=26709786 Bus2=27000171 Switch=T
+New SwtControl.13PX86__2693848 SwitchedObj=LINE.13PX86__2693848 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX92__2693846 Bus1=26709781 Bus2=27000169 Switch=T
+New SwtControl.13PX92__2693846 SwitchedObj=LINE.13PX92__2693846 SwitchedTerm=2 Action=Closed Lock=no
+New Line.D869K__2700962 Bus1=1105433 Bus2=27136716 Switch=T
+New SwtControl.D869K__2700962 SwitchedObj=LINE.D869K__2700962 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX92__2693845 Bus1=27000168 Bus2=26709781 Switch=T
+New SwtControl.13PX92__2693845 SwitchedObj=LINE.13PX92__2693845 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7TX19__2701180 Bus1=27136934 Bus2=25360260 Switch=T
+New SwtControl.7TX19__2701180 SwitchedObj=LINE.7TX19__2701180 SwitchedTerm=2 Action=Closed Lock=no
+!New Line.NV11__2692876 Bus1=25024997 Bus2=26999199 Switch=T
+!New SwtControl.NV11__2692876 SwitchedObj=LINE.NV11__2692876 SwitchedTerm=2 Action=Open Lock=no
+New Line.17BR90__104028970 Bus1=103294685 Bus2=103294684 Switch=T
+New SwtControl.17BR90__104028970 SwitchedObj=LINE.17BR90__104028970 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G255K__2700932 Bus1=1105257 Bus2=27136686 Switch=T
+New SwtControl.G255K__2700932 SwitchedObj=LINE.G255K__2700932 SwitchedTerm=2 Action=Closed Lock=no
+New Line.NV11__2692877 Bus1=26999200 Bus2=25024997 Switch=T
+New SwtControl.NV11__2692877 SwitchedObj=LINE.NV11__2692877 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17BR90__104028971 Bus1=103294684 Bus2=103294683 Switch=T
+New SwtControl.17BR90__104028971 SwitchedObj=LINE.17BR90__104028971 SwitchedTerm=2 Action=Closed Lock=no
+New Line.G255K__2700933 Bus1=27136687 Bus2=1105257 Switch=T
+New SwtControl.G255K__2700933 SwitchedObj=LINE.G255K__2700933 SwitchedTerm=2 Action=Closed Lock=no
+New Line.PBB37__2692826 Bus1=26999149 Bus2=1139879 Switch=T
+New SwtControl.PBB37__2692826 SwitchedObj=LINE.PBB37__2692826 SwitchedTerm=2 Action=Closed Lock=no
+New Line.PBB37__2692825 Bus1=1139879 Bus2=26999148 Switch=T
+New SwtControl.PBB37__2692825 SwitchedObj=LINE.PBB37__2692825 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN76__103913510 Bus1=103384998 Bus2=103265081 Switch=T
+New SwtControl.15TN76__103913510 SwitchedObj=LINE.15TN76__103913510 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106796__2701090 Bus1=27136844 Bus2=25836865 Switch=T
+New SwtControl.106796__2701090 SwitchedObj=LINE.106796__2701090 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15TN76__103913511 Bus1=103265081 Bus2=103328976 Switch=T
+New SwtControl.15TN76__103913511 SwitchedObj=LINE.15TN76__103913511 SwitchedTerm=2 Action=Closed Lock=no
+New Line.106796__2701091 Bus1=25836865 Bus2=27136845 Switch=T
+New SwtControl.106796__2701091 SwitchedObj=LINE.106796__2701091 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L345__2700815 Bus1=27136569 Bus2=26887526 Switch=T
+New SwtControl.14L345__2700815 SwitchedObj=LINE.14L345__2700815 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L345__2700814 Bus1=26887526 Bus2=27136568 Switch=T
+New SwtControl.14L345__2700814 SwitchedObj=LINE.14L345__2700814 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15QR55__103849292 Bus1=103249207 Bus2=103249178 Switch=T
+New SwtControl.15QR55__103849292 SwitchedObj=LINE.15QR55__103849292 SwitchedTerm=2 Action=Closed Lock=no
+New Line.15QR55__103849291 Bus1=103249178 Bus2=103249201 Switch=T
+New SwtControl.15QR55__103849291 SwitchedObj=LINE.15QR55__103849291 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA92__2701510 Bus1=25873711 Bus2=27137264 Switch=T
+New SwtControl.9WA92__2701510 SwitchedObj=LINE.9WA92__2701510 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132359__2693132 Bus1=26999455 Bus2=26555782 Switch=T
+New SwtControl.132359__2693132 SwitchedObj=LINE.132359__2693132 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132359__2693133 Bus1=26555782 Bus2=26999456 Switch=T
+New SwtControl.132359__2693133 SwitchedObj=LINE.132359__2693133 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14L341__2700850 Bus1=26887522 Bus2=27136604 Switch=T
+New SwtControl.14L341__2700850 SwitchedObj=LINE.14L341__2700850 SwitchedTerm=2 Action=Closed Lock=no
+New Line.RFJ75__2693068 Bus1=1105212 Bus2=26999391 Switch=T
+New SwtControl.RFJ75__2693068 SwitchedObj=LINE.RFJ75__2693068 SwitchedTerm=2 Action=Closed Lock=no
+New Line.RFJ75__2693069 Bus1=26999392 Bus2=1105212 Switch=T
+New SwtControl.RFJ75__2693069 SwitchedObj=LINE.RFJ75__2693069 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132364__2693140 Bus1=26999463 Bus2=26555809 Switch=T
+New SwtControl.132364__2693140 SwitchedObj=LINE.132364__2693140 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132362__2693120 Bus1=26999443 Bus2=26555845 Switch=T
+New SwtControl.132362__2693120 SwitchedObj=LINE.132362__2693120 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132355__2693134 Bus1=26555757 Bus2=26999457 Switch=T
+New SwtControl.132355__2693134 SwitchedObj=LINE.132355__2693134 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132362__2693121 Bus1=26555845 Bus2=26999444 Switch=T
+New SwtControl.132362__2693121 SwitchedObj=LINE.132362__2693121 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132355__2693135 Bus1=26999458 Bus2=26555757 Switch=T
+New SwtControl.132355__2693135 SwitchedObj=LINE.132355__2693135 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q049__103041242 Bus1=103294961 Bus2=103661126 Switch=T
+New SwtControl.14Q049__103041242 SwitchedObj=LINE.14Q049__103041242 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NW83__2692939 Bus1=26999262 Bus2=25734560 Switch=T
+New SwtControl.7NW83__2692939 SwitchedObj=LINE.7NW83__2692939 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132353__2693150 Bus1=26555743 Bus2=26999473 Switch=T
+New SwtControl.132353__2693150 SwitchedObj=LINE.132353__2693150 SwitchedTerm=2 Action=Closed Lock=no
+New Line.14Q049__103041241 Bus1=103089665 Bus2=103016793 Switch=T
+New SwtControl.14Q049__103041241 SwitchedObj=LINE.14Q049__103041241 SwitchedTerm=2 Action=Closed Lock=no
+New Line.7NW83__2692938 Bus1=25734560 Bus2=26999261 Switch=T
+New SwtControl.7NW83__2692938 SwitchedObj=LINE.7NW83__2692938 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132363__2693118 Bus1=26999441 Bus2=26555839 Switch=T
+New SwtControl.132363__2693118 SwitchedObj=LINE.132363__2693118 SwitchedTerm=2 Action=Closed Lock=no
+New Line.132363__2693119 Bus1=26555839 Bus2=26999442 Switch=T
+New SwtControl.132363__2693119 SwitchedObj=LINE.132363__2693119 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK66__2700973 Bus1=27136727 Bus2=25784511 Switch=T
+New SwtControl.8EK66__2700973 SwitchedObj=LINE.8EK66__2700973 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX83__2693793 Bus1=26709847 Bus2=27000116 Switch=T
+New SwtControl.13PX83__2693793 SwitchedObj=LINE.13PX83__2693793 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH68__104218266 Bus1=103359066 Bus2=103359067 Switch=T
+New SwtControl.17KH68__104218266 SwitchedObj=LINE.17KH68__104218266 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13PX83__2693792 Bus1=27000115 Bus2=26709847 Switch=T
+New SwtControl.13PX83__2693792 SwitchedObj=LINE.13PX83__2693792 SwitchedTerm=2 Action=Closed Lock=no
+New Line.17KH68__104218267 Bus1=103359067 Bus2=103359068 Switch=T
+New SwtControl.17KH68__104218267 SwitchedObj=LINE.17KH68__104218267 SwitchedTerm=2 Action=Closed Lock=no
+New Line.13L574__2701329 Bus1=27137083 Bus2=26679489 Switch=T
+New SwtControl.13L574__2701329 SwitchedObj=LINE.13L574__2701329 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK66__2700975 Bus1=25784511 Bus2=27136729 Switch=T
+New SwtControl.8EK66__2700975 SwitchedObj=LINE.8EK66__2700975 SwitchedTerm=2 Action=Closed Lock=no
+New Line.8EK66__2700974 Bus1=25784511 Bus2=27136728 Switch=T
+New SwtControl.8EK66__2700974 SwitchedObj=LINE.8EK66__2700974 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA90__2700950 Bus1=27136704 Bus2=25873707 Switch=T
+New SwtControl.9WA90__2700950 SwitchedObj=LINE.9WA90__2700950 SwitchedTerm=2 Action=Closed Lock=no
+New Line.11E482__103404140 Bus1=26128181 Bus2=103125601 Switch=T
+New SwtControl.11E482__103404140 SwitchedObj=LINE.11E482__103404140 SwitchedTerm=2 Action=Closed Lock=no
+New Line.9WA90__2700951 Bus1=25873707 Bus2=27136705 Switch=T
+New SwtControl.9WA90__2700951 SwitchedObj=LINE.9WA90__2700951 SwitchedTerm=2 Action=Closed Lock=no
+New Line.144378__2701335 Bus1=27137089 Bus2=26776430 Switch=T
+New SwtControl.144378__2701335 SwitchedObj=LINE.144378__2701335 SwitchedTerm=2 Action=Closed Lock=no
