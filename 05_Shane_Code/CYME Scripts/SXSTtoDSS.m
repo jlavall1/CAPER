@@ -4,11 +4,16 @@ Master.dss - OpenDSS redirect information for defining circuit
 Shapes.dss - OpenDSS Daily and Yearly Loadshape definitions
 BusesCoords.dss - Bus Coordinates for plotting circuit
 
+\Libraries
+% *WireData.dss
+% *LineSpacing.dss
+% *UGLineCodes.dss
+
 \Elements
 % Lines.dss - OpenDSS line definitions
-% LinesNO.dss - OpenDSS line definitions for Normally Open points for loops
+% *LinesNO.dss - OpenDSS line definitions for Normally Open points for loops
 % Loads.dss - OpenDSS load definitions
-% *Capacitors.dss - OpenDSS capacitor definitions
+% Capacitors.dss - OpenDSS capacitor definitions
 % *Regulators.dss - OpenDSS regulator definitions
 
 \Controls
@@ -64,7 +69,8 @@ l = length(strfind(FILE,'<SpotLoad>'));
 lp = length(strfind(FILE,'<CustomerLoadValue>'));
 fprintf('%d Source(s)\n%d Nodes; %d Sections; (%d N.O. Switches)\n%d Loads (%d by phase)\n',sc,n,l,no,l,lp)
 
-%% Generate Loadshape File
+%% Generate Standard Files
+% Output - Shapes.dss (Empty Loadshapes for Loads to Reference)
 fID_Shape = fopen([savelocation,'Shapes.dss'],'wt');
 fprintf(fID_Shape,['New loadshape.DailyA\n',...
     'New loadshape.DailyB\n',...
@@ -76,6 +82,25 @@ fprintf(fID_Shape,['New loadshape.DailyA\n',...
     'New loadshape.YearlyB\n',...
     'New loadshape.YearlyC']);
 fclose(fID_Shape);
+
+%% Extract Database Informaiton
+% Output - WireData.dss (OpenDSS Library of Wire Data)
+%        - LineSpacing.dss (OpenDSS Library of Line Spacing)
+%        - UGLineCodes.dss (OpenDSS Library of Line Codes)
+
+EquipmentDB = regexp(FILE,'<EquipmentDBs>(.*?)</EquipmentDBs>','match');
+
+%{
+<SubstationDB>
+<SwitchDB>
+<FuseDB>
+<RecloserDB>
+<ShuntCapacitorDB>
+<ConductorDB>
+<CableDB>
+<OverheadSpacingOfConductorDB>
+<DoubleCircuitSpacingDB>
+%}
 
 %% Extract Node Information
 %  Output - Buses.dss (text file containing BusID, X, and Y Coords)
@@ -105,6 +130,7 @@ rc = 1; % Reclosers
 Lines = struct('Info',regexp(FILE,'<Section>(.*?)</Section>','match'));
 fID_Lines = fopen([savelocation,'Elements\Lines.dss'],'wt');
 fID_Loads = fopen([savelocation,'Elements\Loads.dss'],'wt');
+fID_Caps = fopen([savelocation,'Elements\Capacitors.dss'],'wt');
 for l = 1:s
     Lines(l).ID = regexp(Lines(l).Info,'(?<=<SectionID>)(.*?)(?=</SectionID>)','match'); Lines(l).ID = Lines(l).ID{1};
     Lines(l).Phase = regexp(Lines(l).Info,'(?<=<Phase>)(.*?)(?=</Phase>)','match','once');
@@ -127,10 +153,20 @@ for l = 1:s
     Lines(l).Bus1 = [bus1{1},append];
     Lines(l).Bus2 = [bus2{1},append];
     
+    % Reclosers (counter = rc)
+    reclinfo = regexp(Lines(l).Info,'<Recloser>(.*?)</Recloser>','match');
+    if ~isempty(reclinfo)
+        Lines(l).Recloser = 1;
+        Lines(l).ReclCode = regexp(reclinfo,'(?<=<DeviceID>)(.*?)(?=</DeviceID>)','match'); Lines(l).ReclCode = Lines(l).ReclCode{1};
+    else
+        Lines(l).Recloser = 0;
+    end
+    
     % Switches (counter = sw)
     switchinfo = regexp(Lines(l).Info,'<Switch>(.*?)</Switch>','match');
     if ~isempty(switchinfo)
         Lines(l).Switch = 1;
+        Lines(l).SwitchCode = regexp(switchinfo,'(?<=<DeviceID>)(.*?)(?=</DeviceID>)','match'); Lines(l).SwitchCode = Lines(l).SwitchCode{1};
         Lines(l).Enable = regexp(switchinfo,'(?<=<NormalStatus>)(.*?)(?=</NormalStatus>)','match');
         Lines(l).Enable = strrep(Lines(l).Enable{1},'Closed','yes');
         Lines(l).Enable = strrep(Lines(l).Enable{1},'Open','no');
@@ -139,7 +175,16 @@ for l = 1:s
         Lines(l).Enable = 'yes';
     end
     
-    %  Overhead By Phase
+    % Fuses (counter = fs)
+    fuseinfo = regexp(Lines(l).Info,'<Fuse>(.*?)</Fuse>','match');
+    if ~isempty(fuseinfo)
+        Lines(l).Fuse = 1;
+        Lines(l).FuseCode = regexp(fuseinfo,'(?<=<DeviceID>)(.*?)(?=</DeviceID>)','match'); Lines(l).FuseCode = Lines(l).FuseCode{1};
+    else
+        Lines(l).Fuse = 0;
+    end
+    
+    % Overhead Wire
     overheadinfo = regexp(Lines(l).Info,'<OverheadByPhase>(.*?)</OverheadByPhase>','match');
     if ~isempty(overheadinfo)
         Lines(l).Length = str2double(regexp(overheadinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
@@ -155,7 +200,7 @@ for l = 1:s
             Lines(l).Length,Lines(l).Spacing,Lines(l).Wires);
     end
     
-    %  Underground
+    % Underground Cable
     undergroundinfo = regexp(Lines(l).Info,'<Underground>(.*?)</Underground>','match');
     if ~isempty(undergroundinfo)
         Lines(l).Length = str2double(regexp(undergroundinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
@@ -234,9 +279,42 @@ for l = 1:s
         ld = ld+1;
     end
     
-    % Fuses (counter = fs)
-    
     % Capacitors (counter = cp)
+    capinfo = regexp(Lines(l).Info,'<ShuntCapacitor>(.*?)</ShuntCapacitor>','match');
+    if ~isempty(capinfo)
+        Location = regexp(capinfo{1},'(?<=<Location>)(.*?)(?=</Location>)','match');
+        switch Location{1}
+            case 'From'
+                Capacitors(cp).ID = bus1{1};
+            case 'To'
+                Capacitors(cp).ID = bus2{1};
+        end
+        
+        Capacitors(cp).Phases = 3;
+        [Capacitors(cp).kVAR,type] = max([sum(str2double(regexp(capinfo{1},'(?<=<SwitchedKVAR[ABC]>)(.*?)(?=</SwitchedKVAR[ABC]>)','match'))),...
+            sum(str2double(regexp(capinfo{1},'(?<=<FixedKVAR[ABC]>)(.*?)(?=</FixedKVAR[ABC]>)','match')))]);
+        
+        Capacitors(cp).kV = sqrt(3)*str2double(regexp(capinfo{1},'(?<=<KVLN>)(.*?)(?=</KVLN>)','match'));
+        
+        fprintf(fID_Caps,'New Capacitor.%s Bus1= %s Phases= %d kvar= %d kV= %.2f\n',...
+            Capacitors(cp).ID,Capacitors(cp).ID,Capacitors(cp).Phases,...
+            Capacitors(cp).kVAR,Capacitors(cp).kV);
+        
+        switch type
+            case 1
+                Capacitors(cp).Type = 'switched';
+                
+                fprintf(fID_Caps,'New Capcontrol.%s Element=Line.%s Capacitor=%s Terminal=1\n',Capacitors(cp).ID,Lines(l).ID,Capacitors(cp).ID);
+                fprintf(fID_Caps,'!~ type=time Onsetting=6 offsetting=23\n');
+                fprintf(fID_Caps,'!~ type=kvar ONSetting=250 OFFSetting=200\n');
+                fprintf(fID_Caps,'!~ type=voltage ONsetting=116 OFFsetting=119 vmax=126 vmin=112 voltOverride=yes\n');
+                
+            case 2
+                Capacitors(cp).Type = 'fixed';
+        end
+        
+        cp = cp+1;
+    end
     
     % Regulators (counter = rg)
     
@@ -245,6 +323,7 @@ for l = 1:s
 end
 fclose(fID_Lines);
 fclose(fID_Loads);
+fclose(fID_Caps);
 Lines = rmfield(Lines,'Info');
 
 %% Generate Master File
