@@ -586,6 +586,13 @@ end
 %%
 %These are just leftovers:
 %{
+figure(1);
+plotCircuitLines(DSSCircObj,'Coloring','lineLoading','PVMarker','on','MappingBackground','none');
+figure(2);
+plotCircuitLines(DSSCircObj,'Coloring','voltage120','PVMarker','on','MappingBackground','none');
+%}
+
+%{
 %   Feeder Power
 DSSfilename=ckt_direct_prime;
 fileNameNoPath = DSSfilename(find(DSSfilename=='\',1,'last')+1:end-4);

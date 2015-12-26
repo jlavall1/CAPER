@@ -9,9 +9,9 @@ while action<1
     action=menu('Which Plot would you like to initiate?','Monthly averages during PV peak','Yearly distrib. of daily max/mins','box plot of seasons','Histograms of avgs.','W&S mu+/-1.5s');
 end
 
-feeder_NUM=menu('Which feeder','1-Bellhaven','2-Flay','3-Commonwealth','4-Roxboro','5-HollySprings','6-ERaleigh');
+feeder_NUM=menu('Which feeder','1-Bellhaven','2-Flay','3-Commonwealth','4-Roxboro');
 while feeder_NUM<1
-    feeder_NUM=menu('Which feeder','1-Bellhaven','2-Flay','3-Commonwealth','4-Roxboro','5-HollySprings','6-ERaleigh');
+    feeder_NUM=menu('Which feeder','1-Bellhaven','2-Flay','3-Commonwealth','4-Roxboro');
 end
 
 if feeder_NUM == 1
@@ -47,14 +47,14 @@ elseif feeder_NUM == 5
     load Annual_daytime_load_HOLLY.mat
     FEEDER = HOLLY;
     clearvars HOLLY
-    kW_peak = [3585.700,4021.705,2741.913];
+    kw_peak = [3585.700,4021.705,2741.913];
     str_FDR = '_HOLLY.mat';
 elseif feeder_NUM == 6
     load ERALEIGH.mat
     load Annual_daytime_load_ERALEIGH.mat
     FEEDER = ERALEIGH;
     clearvars ERALEIGH
-    kW_peak = [1545.687,1606.278,1569.691];
+    kw_peak = [1545.687,1606.278,1569.691];
     str_FDR = '_ERALEIGH.mat';
 end
  kW_peak_3ph = sum(kW_peak(1,:));

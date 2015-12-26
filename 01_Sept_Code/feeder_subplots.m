@@ -76,7 +76,7 @@ elseif feeder_NUM == 4
 elseif feeder_NUM == 5
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\HollySprings_Circuit_Opendss';
     peak_current = [263.73641240095,296.245661392728,201.389207853812];
-    peak_kW=3189.476+3319.354+3254.488;
+    peak_kW=3585.700+4021.705+2741.913;
     min_kW = 2022.5799;
     if load_LVL == 1
         ratio = 1.0;

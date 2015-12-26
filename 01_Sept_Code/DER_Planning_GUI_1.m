@@ -8,7 +8,7 @@ myGUI=[];
 close all
 bk_color = [0.953 0.871 0.733];
 h.f = figure('units','normalized','toolbar','none','menu','none',...
-    'Color',bk_color,'Position',[-1.1 0.1 1.0 0.7]); %[258 14 126.6 57]);
+    'Color',bk_color,'Position',[1.1 0.1 1.0 0.7]); %[258 14 126.6 57]); -1.1 0.1 1.0 0.7
 %%
 %Add all text:
 h.st(1) = uicontrol('style','text','unit','normalized','position',[0.01 0.944 0.17 0.038],...
@@ -61,7 +61,7 @@ h.ppm(2) = uicontrol('style','popup','units','normalized',...
      'position',[0.037 .162 0.235 0.155],'string',{'Top of Voltage band on caps/vregs','Bottom of Voltage band on caps/vregs','Steady-State','Extreme UP-ramping','Extreme DOWN-ramping'},...
      'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 h.ppm(3) = uicontrol('style','popup','units','normalized',...
-     'position',[0.037 0.169 0.235 0.106],'string',{'hold','hold'},...
+     'position',[0.037 0.169 0.235 0.106],'string',{'Summer mean','Summer mean-2s','Winter mean','Winter mean-2s'},...
      'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
  
 %   PV Loadshapce selection:
@@ -330,6 +330,7 @@ function m=p_run(varargin)
     section_type = get(h.ckbx(1),'Value');
     if section_type == 1
         select = get(h.ppm(2),'Value');
+        load_LVL = get(h.ppm(3),'Value');
         %Check:
         if isempty(select)
             select = 'none';
@@ -339,6 +340,8 @@ function m=p_run(varargin)
             sim_type = select;
             time_select = 0;
         end
+    else
+        load_LVL = 0;
     end
     %---- PV loadshape generation:
     PV_type = get(h.ckbx(2),'Value');
@@ -456,6 +459,7 @@ function m=p_run(varargin)
     STRING_0{1,16} = PV_BIN;
     STRING_0{1,17} = PV_pmpp;
     STRING_0{1,18} = Location;
+    STRING_0{1,19} = load_LVL;
     %assignin('base', 'cat_choice', cat_choice);
     %assignin('base', 'ckt_num', ckt_num);
     %assignin('base', 'STRING', STRING);

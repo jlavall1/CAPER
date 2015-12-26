@@ -26,8 +26,7 @@ Redirect UGLineCodes.dss
 ! 
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
-Redirect Regulators.dss
-Redirect Loads_NCSU.dss !Just changed to _NCSU.dss
+Redirect Loads_NCSU.dss 	!Just changed to _NCSU.dss
 Redirect Capacitors.dss
 ! 
 ! Set the voltage bases
