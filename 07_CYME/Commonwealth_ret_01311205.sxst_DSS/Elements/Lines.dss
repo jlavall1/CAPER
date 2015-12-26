@@ -532,10 +532,7 @@ New Line.260761074 Bus1=260761071.2     Bus2=260761076.2     LineCode=1/0-AL-HMW
 New Line.260761181 Bus1=260761178.1     Bus2=260761183.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=12.64  units=m enable=yes
 New Line.258904516 Phases= 3 Bus1=258904513.1.2.3 Bus2=258904518.1.2.3 Length=101.10 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-WP-6X1' '1/0-ACSR-WP-6X1' '1/0-ACSR-WP-6X1' '1/0-ACSR-B-6X1']
 New Line.258907765 Phases= 1 Bus1=258907762.2     Bus2=258907767.2     Length=31.99  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '1/0-ACSR-B-6X1']
-
-! Add node downstream of Regulator
-New Line.259355408 Phases= 3 Bus1=COMMONWEALTH_RET_01311205_reg.1.2.3 Bus2=259355404.1.2.3 Length=76.44  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19']
-
+New Line.259355408 Phases= 3 Bus1=COMMONWEALTH_RET_01311205.1.2.3 Bus2=259355404.1.2.3 Length=76.44  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19']
 New Line.263534343 Bus1=263534340.1.2.3 Bus2=260762267.1.2.3 LineCode=2-AL-HMWPECN-15KV Phases= 3 Length=104.90 units=m enable=yes
 New Line.258903876 Phases= 3 Bus1=258903873.1.2.3 Bus2=258903878.1.2.3 Length=46.24  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
 New Line.264381920 Phases= 3 Bus1=264381917.1.2.3 Bus2=258903807.1.2.3 Length=57.75  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']

@@ -1,0 +1,38 @@
+Clear
+
+! Define the Circuit
+New Circuit.FLAY_RET_16271201 Bus1=FLAY_RET_16271201
+~ BasekV=12.47  pu=1.0000  angle=0.00
+~ Z1=[ 0.3493 1.6996 ]
+~ Z2=[ 0.3493 1.6996 ]
+~ Z0=[ 0.0923 0.8400 ]
+
+! Library Data
+Redirect Libraries\WireData.dss
+Redirect Libraries\LineSpacing.dss
+Redirect Libraries\UGLineCodes.dss
+
+! Loadshapes
+Redirect Shapes.dss
+
+! Circuit Element Data
+Redirect Elements\Lines_.dss
+Redirect Elements\Loads.dss
+Redirect Elements\Capacitors.dss
+Redirect Elements\Regulators.dss
+
+! Circuit Control Settings
+!Redirect Controls\FuseContrl.dss
+!Redirect Controls\SwitContrl.dss
+!Redirect Controls\ReclContrl.dss
+
+! Set the voltage bases
+Set voltagebases = [ 12.47 7.20 0.480 0.208 0.240 0.120 ]
+CalcVoltageBases
+
+! Define the bus coordinates
+Buscoords BusCoords.dss
+
+! Define an energy meter
+New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
+~ peakcurrent=[ 199.00   189.00   241.00 ]
