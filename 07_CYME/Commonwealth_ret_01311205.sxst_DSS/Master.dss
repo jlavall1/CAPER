@@ -2,7 +2,7 @@ Clear
 
 ! Define the Circuit
 New Circuit.COMMONWEALTH_RET_01311205 Bus1=COMMONWEALTH_RET_01311205
-~ BasekV=12.47  pu=1.0337  angle=0.00
+~ BasekV=12.47  pu=1.0249  angle=0.00
 ~ Z1=[ 0.0532 1.0104 ]
 ~ Z2=[ 0.0532 1.0104 ]
 ~ Z0=[ 0.0387 0.9408 ]
