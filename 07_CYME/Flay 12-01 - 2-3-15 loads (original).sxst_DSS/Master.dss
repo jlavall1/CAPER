@@ -2,7 +2,7 @@ Clear
 
 ! Define the Circuit
 New Circuit.FLAY_RET_16271201 Bus1=FLAY_RET_16271201
-~ BasekV=12.47  pu=1.0000  angle=0.00
+~ BasekV=12.47  pu=1.0329  angle=0.00
 ~ Z1=[ 0.3493 1.6996 ]
 ~ Z2=[ 0.3493 1.6996 ]
 ~ Z0=[ 0.0923 0.8400 ]
