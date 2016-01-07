@@ -16,7 +16,7 @@ New Circuit.BELLHAVEN_RET_01291204 Bus1=BELLHAVEN_RET_01291204
 ~ Z1=[ 0.035781 ,  0.939054 ] ! Actual ohms
 ~ Z2=[ 0.035781 ,  0.939054 ]
 ~ Z0=[ 0.030727 ,  0.902154 ]
-Redirect SourceRegulator.dss
+Redirect SourceRegulator_3ph.dss
 ! 
 ! Library Data
 ! 
@@ -28,13 +28,12 @@ Redirect UGLineCodes.dss
 ! 
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
-Redirect Regulators.dss
 Redirect Loads.dss
 Redirect Capacitors.dss
-!Redirect SwtControls.dss
-!Redirect Reclosers.dss
-!Redirect SectionalizerSettings.DSS
+
+Redirect SwtControls.dss
 !Redirect FuseSettings.dss
+
 ! 
 ! Set the voltage bases
 ! 

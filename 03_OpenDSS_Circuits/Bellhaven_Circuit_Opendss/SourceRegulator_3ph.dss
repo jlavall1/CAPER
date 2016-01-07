@@ -1,0 +1,14 @@
+!BELLHAVEN
+New Transformer.BELLHAVEN_RET_01291204 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[BELLHAVEN_RET_01291204.1.2.3 BELLHAVEN_RET_01291204_reg.1.2.3] kvas=[46400.0 58680.0]
+~ kVs=[12.47 12.47]
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes
+
+New RegControl.BELLHAVEN_RET_01291204 Transformer=BELLHAVEN_RET_01291204 Winding=2 R= 0 X= 0
+~ Vreg= 120.000002416772  
+~ Band= 1 
+~ PTratio= 60  
+~ CTPrim= 100  
+~ delay=30
+~ PTphase=3	!Phase C

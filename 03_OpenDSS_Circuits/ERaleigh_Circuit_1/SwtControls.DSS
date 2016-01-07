@@ -1,7 +1,7 @@
 New Line.GT18BK__2890991 Bus1=1992535.1.2.3 Bus2=26449577.1.2.3 Switch=T
 New SwtControl.GT18BK__2890991 SwitchedObj=Line.GT18BK__2890991 SwitchedTerm=1 Action=Closed Lock=no
 
-New Line.11H260__2912107 Bus1=27043849.2 Bus2=26172320.2 Switch=T
+New Line.11H260__2912107 Bus1=27043849.2 Bus2=26172320.2 Phases=1 Switch=T
 New SwtControl.11H260__2912107 SwitchedObj=Line.11H260__2912107 SwitchedTerm=1 Action=Closed Lock=no
 
 New Line.144581__2912130 Bus1=103004800.1.2.3 Bus2=26824809.1.2.3 Switch=T

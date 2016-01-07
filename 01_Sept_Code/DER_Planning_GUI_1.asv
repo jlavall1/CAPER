@@ -293,13 +293,13 @@ function m=p_run(varargin)
             cat_choice = 2;
         end
         if checked{5} == 1
-            s2 = '\HollySprings_Circuit_Opendss\Master.dss';
+            s2 = '\HollySprings_Circuit_Opendss\Run_Master_Allocate.dss';
             ckt_num = 4;
             COUNT = COUNT + 1;
             cat_choice = 2;
         end
         if checked{6} == 1
-            s2 = '\ERaleigh_Circuit_1\Master.dss';
+            s2 = '\ERaleigh_Circuit_Opendss\Run_Master_Allocate.dss';
             ckt_num = 5;
             COUNT = COUNT + 1;
             cat_choice = 2;

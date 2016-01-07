@@ -110,7 +110,7 @@ end
     wdg2minTap=0.9      wdg2maxTap=1.1
     maxnumTaps=32
 %} 
-if feeder_NUM < 3       %Do only for feeders w/ line VREGs
+if feeder_NUM ~= 3       %Do only for feeders w/o line VREGs
     tic
     Regulators = DSSCircuit.RegControls;    % Assign a Variable to the RegControls interface
     for jj=1:1:length(xfmrName) %starts at 4 to skip the LTC
