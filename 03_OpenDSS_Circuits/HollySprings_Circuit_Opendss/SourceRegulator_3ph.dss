@@ -1,0 +1,14 @@
+New Transformer.T4795B23 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[T4795B23_1.1 T4795B23_1_reg.1] kvas=[40000.0 40000.0] 
+~ kVs=[22.870000   22.870000]
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes
+
+New RegControl.T4795B23 Transformer=T4795B23 Winding=2 R= 0  X= 0 
+~ Vreg= 123.987758181313  
+~ Band= 1 
+~ PTratio= 110  
+~ CTPrim= 100  
+~ Delay = 45
+~ PTphase= 2 !Phase B had the greatest connected load.
+

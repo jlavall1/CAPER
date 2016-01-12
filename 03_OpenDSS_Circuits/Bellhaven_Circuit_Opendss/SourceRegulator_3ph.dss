@@ -10,5 +10,5 @@ New RegControl.BELLHAVEN_RET_01291204 Transformer=BELLHAVEN_RET_01291204 Winding
 ~ Band= 1 
 ~ PTratio= 60  
 ~ CTPrim= 100  
-~ delay=30
+~ delay= 45
 ~ PTphase=3	!Phase C

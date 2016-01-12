@@ -14,7 +14,7 @@ New Circuit.T4795B23 Bus1=T4795B23_1
 ~ Z1=[ 0.062784 ,  2.317248 ] ! Actual ohms
 ~ Z2=[ 0.058752 ,  2.245824 ]
 ~ Z0=[ 0 ,  13.642787 ]
-Redirect SourceRegulator.dss
+Redirect SourceRegulator_3ph.dss
 ! 
 ! Library Data
 ! 
