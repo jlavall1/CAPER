@@ -63,26 +63,11 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 
 % 7. Setup Capacitors for control/switching:
 Capacitors = getCapacitorInfo(DSSCircObj);
-%Set Voltage Regulating Devices:
-if scenerio_NUM == 1
-    %UPPER VOLTAGE BAND
-    cap_on = 0;
-    %tap = 8;
-    vreg = 125;
-elseif scenerio_NUM == 2
-    %LOWER VOLTAGE BAND
-    cap_on = 1;
-    %tap = -8;
-    vreg = 118;
-elseif scenerio_NUM == 3
-    %SteadyState
-    cap_on = 0;
-    vreg = 124;
-end
-
+%{
 for jj=1:1:length(Capacitors)
     DSSText.command = sprintf('edit capacitor.%s state=%s',Capacitors(jj,1).name,num2str(cap_on));
 end
+%}
 DSSText.command =sprintf('solve loadmult=%s',num2str(pu_load));
 Capacitors = getCapacitorInfo(DSSCircObj);
 %DSSText.command = 'edit capacitor.cp-nr-613 state=0';
@@ -157,10 +142,10 @@ MAT_FILE_LOAD %generates 'ref_busVpu'
 
 %STEP 1] Find legal buses & save names:
 %legal_buses = cell(200,1);
-ii = 5;
+ii = 1;
 j = 1;
 while ii<length(Buses)
-    if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
+    if Buses(ii,1).numPhases == 3 && Buses(ii,1).kVBase > vbase && Buses(ii,1).distance ~= 0
         legal_buses{j,1} = Buses(ii,1).name;
         legal_distances{j,1} = Buses(ii,1).distance;
         j = j + 1;
@@ -177,7 +162,7 @@ end
 m = 1;
 n = 1;
 DSSCircuit.Enable('generator.PV');
-ii = bus_init;
+ii = 1;
 PV_size = 100;
 PV_LOC = 3;
 P_loss = 0;
@@ -189,11 +174,12 @@ COUNT = 0;
 %Bus Loop.
 while ii< length(Buses) %length(Buses)
     %Skip BUS if not 3-ph & connected to 12.47:
-    if Buses(ii,1).numPhases == 3 && Buses(ii,1).voltage > 6000
+    if Buses(ii,1).numPhases == 3 && Buses(ii,1).kVBase > vbase && Buses(ii,1).distance ~= 0
         % ~~~~~~~~~~~~~~~~~
         %Connect PV to Bus:
         DSSText.command = sprintf('edit generator.PV bus1=%s kW=%s',Buses(ii,1).name,num2str(PV_size));
         fprintf('%1.1f/%1.1f SolarGEN located: %s\n',m,length(legal_buses),Buses(ii,1).name);
+        PV_Location_Save{m,1} = Buses(ii,1).name;
         %Reset Vreg to initial state:
         for ij=1:DSSCircuit.Transformers.Count;
             if isempty(XfmrTaps(ij,1).Init_tap) == 0
@@ -287,6 +273,10 @@ while ii< length(Buses) %length(Buses)
                 DSSCircuit.SetActiveElement('Line.259363665');
             elseif feeder_NUM == 3  %Roxboro
                 DSSCircuit.SetActiveElement('Line.333');
+            elseif feeder_NUM == 4  %Hollysprings
+                DSSCircuit.SetActiveElement('Line.10ef34__2663676');
+            elseif feeder_NUM == 5  %E.Raleigh
+                DSSCircuit.SetActiveElement('Line.pdp28__2843462');
             end
             %power = DSSCircuit.ActiveDSSElement.Powers; %complex
             power = DSSCircuit.ActiveCktElement.Powers;
@@ -365,7 +355,7 @@ while ii< length(Buses) %length(Buses)
             %end
             %
             %Save results for this iteration:
-            RESULTS(jj,1:6)=[PV_size,max(max_V(:,1)),max_V(2,1),max_C(1,1),max_C(2,1),PV_LOC]; %|PV_KW|maxV_3ph|maxV_1ph|maxC1|maxC2|bus_name|kVAR_CAP1|kVAR_CAP2
+            RESULTS(jj,1:6)=[PV_size,max(max_V(:,1)),max_V(2,1),max_C(1,1),max_C(2,1),ii]; %|PV_KW|maxV_3ph|maxV_1ph|maxC1|maxC2|bus_name|kVAR_CAP1|kVAR_CAP2
             %{
             if length(Capacitors) == 2
                 RESULTS(jj,7)=Capacitors(1,1).powerReactive;

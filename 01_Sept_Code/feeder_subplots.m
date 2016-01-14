@@ -214,6 +214,37 @@ elseif load_LVL == 3
     %fprintf('Load Center Resistance: %3.3f ohm\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
     fprintf('Number of Violations: %d\t SUM: %d\n',count,sum);
 end
+%%
+%Now lets find kVA/phase & proportion of 100kVA:
+KVA_ph = zeros(1,3); 
+count = zeros(1,2); %Residential & Commercial
+for j=1:1:length(Loads)
+    if Loads(j,1).nodes == 1
+        KVA_ph(1,1) = KVA_ph(1,1) + Loads(j,1).xfkVA;
+    elseif Loads(j,1).nodes == 2
+        KVA_ph(1,2) = KVA_ph(1,2) + Loads(j,1).xfkVA;
+    elseif Loads(j,1).nodes == 3
+        KVA_ph(1,3) = KVA_ph(1,3) + Loads(j,1).xfkVA;
+    else
+        fprintf('missing here: %d\n',j);
+    end
+    %Customer Count:
+    if Loads(j,1).xfkVA > 100
+        count(1,2) = count(1,2) + 1;
+    else
+        count(1,1) = count(1,1) + 1;
+    end
+end
+
+total_KVA = KVA_ph(1,1)+KVA_ph(1,2)+KVA_ph(1,3);
+fprintf('Connected kVA:\n A:%3.3f\n B:%3.3f\n C:%3.3f\n',KVA_ph(1,1),KVA_ph(1,2),KVA_ph(1,3));
+fprintf('Connected kVA(PU):\n A:%3.3f\n B:%3.3f\n C:%3.3f\n',(KVA_ph(1,1)/total_KVA)*100,(KVA_ph(1,2)/total_KVA)*100,(KVA_ph(1,3)/total_KVA)*100);
+total_LD = count(1,1) + count(1,2);
+fprintf('R=%3.3f %% and C=%3.3f %%\n',(count(1,1)/total_LD)*100,(count(1,2)/total_LD)*100);
+%%
+
+            
+
 
 %-------------------------------------------------------------------------
 %Find Voltage headroom:

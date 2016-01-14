@@ -25,7 +25,7 @@ load Annual_ls_BELL.mat
 BELL_LS=MAX;
 feeder_PeakMW(1,n)=(BELL_LS.YEAR.KW.A+BELL_LS.YEAR.KW.B+BELL_LS.YEAR.KW.C)/1000;
 feeder_CAP_Fixed(1,n)=900;
-feeder_CAP_Switch(1,n)=900+900;
+feeder_CAP_Switch(1,n)=900;
 feeder_length_mi(1,n)=5.652*0.621371;
 feeder_length_ohm(1,n)=2.206;
 feeder_volt_peak_head(1,n)=0.101;
@@ -47,8 +47,20 @@ for i=1:1:length(KW_3PH)
     end
 end
 feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
-
-
+conn_KVA(:,n) = [12508.900,12352.900,13176.900];
+conn_KVA_P(:,n) = [32.885,32.475,34.641];
+conn_CUST(:,n) = [85.33,14.67];
+%{
+Connected kVA:
+ A:12508.900
+ B:12352.900
+ C:13176.900
+Connected kVA(PU):
+ A:32.885
+ B:32.475
+ C:34.641
+R=85.330 % and C=14.670 %
+%}
 
 
 %%
@@ -79,6 +91,20 @@ for i=1:1:length(KW_3PH)
     end
 end
 feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
+conn_KVA(:,n) = [6772.700,7520.700,6852.700];
+conn_KVA_P(:,n) = [32.028,35.565,32.406];
+conn_CUST(:,n) = [89.415,10.585];
+%{
+Connected kVA:
+ A:6772.700
+ B:7520.700
+ C:6852.700
+Connected kVA(PU):
+ A:32.028
+ B:35.565
+ C:32.406
+R=89.415 % and C=10.585 %
+%}
 %%
 %3 - Flay
 n = n + 1;
@@ -108,6 +134,20 @@ for i=1:1:length(KW_3PH)
 end
 %feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
 feeder_ValleyMW(1,n)=1200/1e3;
+conn_KVA(:,n) = [5116.700,4839.200,6919.200];
+conn_KVA_P(:,n) = [30.321,28.677,41.002];
+conn_CUST(:,n) = [99.493,0.507];
+%{
+Connected kVA:
+ A:5116.700
+ B:4839.200
+ C:6919.200
+Connected kVA(PU):
+ A:30.321
+ B:28.677
+ C:41.002
+R=99.493 % and C=0.507 %
+%}
 %%
 %4 - Roxboro
 n = n + 1;
@@ -136,6 +176,21 @@ for i=1:1:length(KW_3PH)
     end
 end
 feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
+conn_KVA(:,n) = [11547.333,12424.833,12044.833];
+conn_KVA_P(:,n) = [32.061,34.497,33.442];
+conn_CUST(:,n) = [97.421,2.579];
+%{
+Connected kVA:
+ A:11547.333
+ B:12424.833
+ C:12044.833
+Connected kVA(PU):
+ A:32.061
+ B:34.497
+ C:33.442
+R=97.421 % and C=2.579 %
+%}
+
 %%
 %5 - Hollysprings
 n = n + 1;
@@ -163,6 +218,20 @@ for i=1:1:length(KW_3PH)
     end
 end
 feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
+conn_KVA(:,n) = [11684.500,6700.000,10412.500];
+conn_KVA_P(:,n) = [40.575,23.266,36.158];
+conn_CUST(:,n) = [97.153,2.847];
+%{
+Connected kVA:
+ A:11684.500
+ B:6700.000
+ C:10412.500
+Connected kVA(PU):
+ A:40.575
+ B:23.266
+ C:36.158
+R=97.153 % and C=2.847 %
+%}
 
 
 feeder_conductor(1,n)=60.358; %mi
@@ -193,6 +262,20 @@ for i=1:1:length(KW_3PH)
     end
 end
 feeder_ValleyMW(1,n)=KW_3PH_MIN/1e3;
+conn_KVA(:,n) = [6258.333,6525.333,6133.333];
+conn_KVA_P(:,n) = [33.083,34.495,32.422];
+conn_CUST(:,n) = [39.344,60.656];
+%{
+Connected kVA:
+ A:6258.333
+ B:6525.333
+ C:6133.333
+Connected kVA(PU):
+ A:33.083
+ B:34.495
+ C:32.422
+R=39.344 % and C=60.656 %
+%}
 feeder_conductor(1,n)=1.531; %mi
 
 %%
@@ -210,28 +293,6 @@ xlabel('Voltage Class (kV)','FontWeight','bold');
 ylabel('Feeder','FontSize',16);
 %-----------------------------
 subplot(3,4,2);
-barh(feeder_PeakMW);
-axis([0 15 0 7]);
-set(gca,'FontWeight','bold');
-xlabel('Peak Load (MW)','FontWeight','bold');
-%-----------------------------
-subplot(3,4,3);
-ax = gca;
-barh(feeder_ValleyMW);
-axis([0 5 0 7]);
-set(gca,'FontWeight','bold');
-ax.XTick = [0 1 2 3 4 5];
-xlabel('Valley Day Load (MW)','FontWeight','bold');
-%-----------------------------
-subplot(3,4,4);
-ax = gca;
-barh(feeder_CAP_Fixed);
-axis([0 4000 0 7]);
-set(gca,'FontWeight','bold');
-ax.XTick = [0 1000 2000 3000 4000];
-xlabel('Fixed Caps (kVAR)','FontWeight','bold');
-%-----------------------------
-subplot(3,4,5);
 ax = gca;
 barh(feeder_LTC_VREG);
 axis([0 8 0 7]);
@@ -239,9 +300,37 @@ set(gca,'FontWeight','bold');
 ax.XTick = [0 2 4 6 8];
 ax.YTickLabel = Labels;
 xlabel('LTC & Line Regulators','FontWeight','bold');
+%-----------------------------
+subplot(3,4,3);
+barh(feeder_PeakMW);
+axis([0 15 0 7]);
+set(gca,'FontWeight','bold');
+xlabel('Peak Load (MW)','FontWeight','bold');
+%-----------------------------
+subplot(3,4,4);
+ax = gca;
+barh(feeder_ValleyMW);
+axis([0 5 0 7]);
+set(gca,'FontWeight','bold');
+ax.XTick = [0 1 2 3 4 5];
+xlabel('Valley Day Load (MW)','FontWeight','bold');
+%-----------------------------
+subplot(3,4,5);
+ax = gca;
+barh(feeder_CAP_Fixed);
+axis([0 4000 0 7]);
+set(gca,'FontWeight','bold');
+ax.XTick = [0 1000 2000 3000 4000];
+xlabel('Fixed Caps (kVAR)','FontWeight','bold');
 ylabel('Feeder','FontSize',16);
 %-----------------------------
 subplot(3,4,6);
+barh(feeder_CAP_Switch);
+axis([0 4000 0 7]);
+set(gca,'FontWeight','bold');
+xlabel('Swtch Caps (kVAR)','FontWeight','bold');
+%-----------------------------
+subplot(3,4,7);
 ax = gca;
 barh(feeder_volt_peak_head);
 axis([0 0.125 0 7]);
@@ -249,19 +338,13 @@ set(gca,'FontWeight','bold');
 ax.XTick = [0 0.025 0.05 0.075 0.100 0.125];
 xlabel('Peak Load Headroom (Vpu)','FontWeight','bold');
 %-----------------------------
-subplot(3,4,7);
+subplot(3,4,8);
 ax = gca;
 barh(feeder_volt_min_head);
 axis([0 0.125 0 7]);
 set(gca,'FontWeight','bold');
 ax.XTick = [0 0.025 0.05 0.075 0.100 0.125];
 xlabel('Valley Load Headroom (Vpu)','FontWeight','bold');
-%-----------------------------
-subplot(3,4,8);
-barh(feeder_CAP_Switch);
-axis([0 4000 0 7]);
-set(gca,'FontWeight','bold');
-xlabel('Swtch Caps (kVAR)','FontWeight','bold');
 %-----------------------------
 subplot(3,4,9);
 ax = gca;
@@ -289,6 +372,35 @@ barh(Load_Center_Resistance);
 axis([0 3 0 7]);
 set(gca,'FontWeight','bold');
 xlabel('Load Center Resistance (ohm)','FontWeight','bold');
+%%
+figure(2)
+%{
+conn_KVA(:,n) = [6258.333,6525.333,6133.333];
+conn_KVA_P(:,n) = [33.083,34.495,32.422];
+conn_CUST(:,n) = [39.344,60.656];
+%}
+b = [1,2,3,4,5,6];
+bar(b,conn_KVA_P','grouped');
+Bb=ones(1,8)*33.33;
+hold on
+plot([0,1,2,3,4,5,6,7],Bb,'k--','LineWidth',3);
+legend('Phase A','Phase B','Phase C');
+xlabel('Feeder Number','FontWeight','bold','FontSize',12);
+ylabel('Percent of Total kVA Capacity [%]','FontWeight','bold','FontSize',12);
+axis([0 7 20 50]);
+grid on
+set(gca,'FontWeight','bold');
+
+figure(3)
+bar(b,conn_CUST','stacked');
+xlabel('Feeder Number','FontWeight','bold','FontSize',12);
+ylabel('Percent of Single Phase Loads [%]','FontWeight','bold','FontSize',12);
+axis([0 7 0 120]);
+grid on
+set(gca,'FontWeight','bold');
+legend('Residential','Commercial')
+
+
 
 
 

@@ -10,13 +10,13 @@ close all
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 
-action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','Capacitor Ops','CAPER Report','ALL');
+action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','Capacitor Ops','CAPER Report','Circuit Topology','ALL');
 while action<1
-    action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','Capacitor Ops','CAPER Report','ALL');
+    action=menu('Which Plot would you like to initiate?','Validation Plots','Parameter VS. Distance','Parameter VS. Time','QSTS Simulation','Compiled','Capacitor Ops','CAPER Report','Circuit Topology','ALL');
 end
 %%
 %action = 6;
-ALL = 8;
+ALL = 9;
 fig = 0;
 %----------------------------------------------------------
 if action == 1 || action == ALL
@@ -580,9 +580,98 @@ if action == 7 || action == ALL
         
         fig = fig + 1;
     end
-            
-
 end
+%%
+if action == 8 || action == ALL
+    fig = fig + 1;
+    figure(fig);
+    for fdr=1:1:7
+        %subplot(3,2,fdr);
+        if fdr == 1
+            fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Bellhaven_Circuit_Opendss';
+            peak_current = [424.489787369243,385.714277946091,446.938766508963];
+            energy_line = '258839833';
+        elseif fdr == 2
+            fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss';
+            peak_current = [345.492818586166,362.418979727275,291.727365549702];
+            energy_line = '259355408';
+        elseif fdr == 3
+            fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss';
+            peak_current = [196.597331353572,186.718068471483,238.090235458346];
+            energy_line = '259363665';
+        elseif fdr == 4 || fdr == 7
+            fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss';
+            peak_current = [232.766663065503,242.994085721044,238.029663479192];
+            energy_line = 'PH997__2571841';
+        elseif fdr == 5
+            fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\HollySprings_Circuit_Opendss';
+            peak_current = [263.73641240095,296.245661392728,201.389207853812];
+            energy_line = '10EF34__2663676';
+        elseif fdr == 6
+            fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\ERaleigh_Circuit_1';
+            peak_current = [214.80136594272,223.211693408696,217.825750072964];
+            energy_line = 'PDP28__2843462';
+        end
+        str = strcat(fileloc,'\Master.DSS');
+        [DSSCircObj, DSSText] = DSSStartup; 
+        DSSText.command = ['Compile ' str]; 
+        DSSText.command = sprintf('New EnergyMeter.CircuitMeter LINE.%s terminal=1 option=R PhaseVoltageReport=yes',energy_line);
+        DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
+        DSSText.command = 'Disable Capacitor.*';
+        DSSText.command = 'AllocateLoad';
+        DSSText.command = 'AllocateLoad';
+        DSSText.command = 'AllocateLoad';
+        DSSText.command = 'Enable Capacitor.*';
+        DSSText.command = 'Solve Loadmult=1.0';
+        %Plot Topology
+        plotCircuitLines(DSSCircObj,'Coloring','perPhase','MappingBackground','none');
+        set(gca,'xtick',[]);
+        set(gca,'ytick',[]);
+        if fdr ~= 7
+            legend('hide')
+        end
+        title('');
+        %set(gca,'legend','position','SouthEast');
+        
+        %set(gca,'legendLocation','SouthWest');
+        if fdr == 1
+            xlabel('(a) Feeder 01','FontSize',14);
+        elseif fdr == 2
+            xlabel('(b) Feeder 02','FontSize',14);
+        elseif fdr == 3
+            xlabel('(c) Feeder 03','FontSize',14);
+        elseif fdr == 4
+            xlabel('(d) Feeder 04','FontSize',14);
+        elseif fdr == 5
+            xlabel('(e) Feeder 05','FontSize',14);
+        elseif fdr == 6
+            xlabel('(f) Feeder 06','FontSize',14);
+        end
+        fig = fig + 1;
+        figure(fig);
+    end
+    plot(1,1,'r-','LineWidth',3)
+    hold on
+    plot(1,2,'g-','LineWidth',3)
+    hold on
+    plot(1,3,'b-','LineWidth',3)
+    hold on
+    plot(1,4,'y-','LineWidth',3)
+    hold on
+    plot(1,5,'m-','LineWidth',3)
+    hold on
+    plot(1,6,'c-','LineWidth',3)
+    hold on
+    plot(1,7,'k-','LineWidth',3)
+    legend('Phase A','Phase B','Phase C','Phase AB','Phase AC','Phase BC','Phase ABC')
+    set(gca,'FontSize',12,'FontWeight','bold');
+end
+        
+    
+    %{
+    
+    %}
+    
 %%
 %These are just leftovers:
 %{
