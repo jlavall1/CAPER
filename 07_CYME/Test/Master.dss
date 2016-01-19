@@ -1,0 +1,41 @@
+Clear
+
+! Define the Circuit
+New Circuit.CCircuit1 Bus1=B001
+~ BasekV=12.47  pu=1.0249  angle=0.00
+~ Z1=[ 0.0532 1.0104 ]
+~ Z2=[ 0.0532 1.0104 ]
+~ Z0=[ 0.0387 0.9408 ]
+
+New Line.L001 Phases=3 Bus1=B001 Bus2=B002
+New Line.L002 Phases=3 Bus1=B003 Bus2=B004
+
+! Library Data
+!Redirect Libraries\WireData.dss
+!Redirect Libraries\LineSpacing.dss
+!Redirect Libraries\UGLineCodes.dss
+
+! Loadshapes
+!Redirect Shapes.dss
+
+! Circuit Element Data
+!Redirect Elements\Lines_.dss
+!Redirect Elements\Loads.dss
+!Redirect Elements\Capacitors.dss
+!Redirect Elements\Regulators.dss
+
+! Circuit Control Settings
+!Redirect Controls\FuseContrl.dss
+!Redirect Controls\SwitContrl.dss
+!Redirect Controls\ReclContrl.dss
+
+! Set the voltage bases
+Set voltagebases = [ 12.47 7.20 0.480 0.208 0.240 0.120 ]
+CalcVoltageBases
+
+! Define the bus coordinates
+!Buscoords BusCoords.dss
+
+! Define an energy meter
+!New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
+!~ peakcurrent=[ 347.00   364.00   293.00 ]

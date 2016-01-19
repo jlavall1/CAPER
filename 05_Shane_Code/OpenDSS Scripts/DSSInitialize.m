@@ -14,7 +14,8 @@ rootlocation = [rootlocation,'07_CYME\'];
 filename = 0;
 % ******To skip UIGETFILE uncomment desired filename*******
 % ***(Must be in rootlocation CAPER03_OpenDSS_Circuits\)***
-filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
+%filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
+filename = 'Master.dss'; filelocation = [rootlocation,'Test\'];
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
         rootlocation);
