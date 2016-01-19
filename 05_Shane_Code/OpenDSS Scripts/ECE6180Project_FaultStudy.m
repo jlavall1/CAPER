@@ -4,7 +4,7 @@ clc
 close('all')
 
 load('COMMONWEALTH_Location.mat');
-filename = 'Master_Fault.dss';
+%filename = 'Master_Fault.dss';
 
 % Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
@@ -85,7 +85,7 @@ DSSCircuit.SetActiveElement('Fault.F1');
 % Problem 3 Plots
 figure;
 subplot(1,2,1)
-plot([Lines.Distance],[Lines.Rsc],'.k')
+plot([Lines.Distance],[Lines.Rsc],'-k')
 grid on;
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Distance From Substation [km]','FontSize',12,'FontWeight','bold')
@@ -95,7 +95,7 @@ title('Problem 3: SLG Fault Study on Phase B','FontWeight','bold','FontSize',12)
 
 subplot(1,2,2)
 %plot([Lines.Rsc],[Lines.IscA],'-k',[Lines.Rsc],[Lines.IscB],'-r',[Lines.Rsc],[Lines.IscC],'-b')
-plot([Lines.Rsc],[Lines.IscB],'.k')
+plot([Lines.Rsc],[Lines.IscB],'-k')
 grid on;
 set(gca,'FontSize',10,'FontWeight','bold')
 xlabel(gca,'Short Circuit Resistance [\Omega]','FontSize',12,'FontWeight','bold')

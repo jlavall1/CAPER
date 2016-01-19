@@ -1,18 +1,19 @@
-New WireData.1/0-ACSR-B-6X1 Rac= 0.551777  GMRac=0.387096 diam=1.010920 normamps=260.000000 emergamps=260.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.1/0-ACSR-WP-6X1 Rac= 0.551777  GMRac=0.387096 diam=1.010920 normamps=231.000000 emergamps=231.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.1/0-CU-B-7 Rac= 0.344861  GMRac=0.341376 diam=0.934720 normamps=345.000000 emergamps=345.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.1/0-CU-WP-7 Rac= 0.344861  GMRac=0.341376 diam=0.934720 normamps=275.000000 emergamps=275.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.2-ACSR-B-6X1 Rac= 0.850036  GMRac=0.313944 diam=0.802640 normamps=198.000000 emergamps=198.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.2-CU-B-7 Rac= 0.548049  GMRac=0.268224 diam=0.741680 normamps=255.000000 emergamps=255.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.2-CU-WP-7 Rac= 0.548049  GMRac=0.268224 diam=0.741680 normamps=183.000000 emergamps=183.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.336-AAC-B-19 Rac= 0.172741  GMRac=0.640080 diam=1.691640 normamps=560.000000 emergamps=560.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.336-ACSR-B-18X1 Rac= 0.171498  GMRac=0.676656 diam=1.737360 normamps=564.000000 emergamps=564.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.336-ACSR-WP-18X1 Rac= 0.171498  GMRac=0.676656 diam=1.737360 normamps=496.000000 emergamps=496.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.4-ACSR-B-6X1 Rac= 1.351482  GMRac=0.252984 diam=0.635000 normamps=149.000000 emergamps=149.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.4-CU-B-7 Rac= 0.853764  GMRac=0.201168 diam=0.518160 normamps=190.000000 emergamps=190.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.4-CU-TBWP-7 Rac= 0.853764  GMRac=0.201168 diam=0.518160 normamps=155.000000 emergamps=155.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.4-CU-WP-7 Rac= 0.853764  GMRac=0.201168 diam=0.518160 normamps=155.000000 emergamps=155.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.556-AAC-B-19 Rac= 0.105012  GMRac=0.822960 diam=2.174240 normamps=770.000000 emergamps=770.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.6-CU-B-S Rac= 1.354589  GMRac=0.158496 diam=0.411480 normamps=130.000000 emergamps=130.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.6-CU-TBWP-7 Rac= 1.354589  GMRac=0.158496 diam=0.411480 normamps=115.000000 emergamps=115.000000 Runits=km  GMRunits=cm  radunits=cm 
-New WireData.6-CU-WP-7 Rac= 1.354589  GMRac=0.158496 diam=0.411480 normamps=115.000000 emergamps=115.000000 Runits=km  GMRunits=cm  radunits=cm 
+New WireData.1/0-ACSR-B-6X1 Rac=0.551777 GMRac=0.387096 diam=1.010920 normamps=260 emergamps=362 Runits=km GMRunits=cm radunits=cm
+New WireData.4-CU-B-7 Rac=0.853764 GMRac=0.201168 diam=0.518160 normamps=190 emergamps=215 Runits=km GMRunits=cm radunits=cm
+New WireData.336-ACSR-WP-18X1 Rac=0.171498 GMRac=0.676656 diam=1.737360 normamps=496 emergamps=699 Runits=km GMRunits=cm radunits=cm
+New WireData.6-CU-TBWP-7 Rac=1.354589 GMRac=0.158496 diam=0.411480 normamps=115 emergamps=155 Runits=km GMRunits=cm radunits=cm
+New WireData.2-CU-WP-7 Rac=0.548049 GMRac=0.268224 diam=0.741680 normamps=183 emergamps=300 Runits=km GMRunits=cm radunits=cm
+New WireData.1/0-CU-B-7 Rac=0.344861 GMRac=0.341376 diam=0.934720 normamps=345 emergamps=395 Runits=km GMRunits=cm radunits=cm
+New WireData.6-CU-B-S Rac=1.354589 GMRac=0.158496 diam=0.411480 normamps=130 emergamps=155 Runits=km GMRunits=cm radunits=cm
+New WireData.336-AAC-B-19 Rac=0.172741 GMRac=0.640080 diam=1.691640 normamps=560 emergamps=756 Runits=km GMRunits=cm radunits=cm
+New WireData.4-CU-TBWP-7 Rac=0.853764 GMRac=0.201168 diam=0.518160 normamps=155 emergamps=210 Runits=km GMRunits=cm radunits=cm
+New WireData.2-CU-B-7 Rac=0.548049 GMRac=0.268224 diam=0.741680 normamps=255 emergamps=290 Runits=km GMRunits=cm radunits=cm
+New WireData.4-CU-WP-7 Rac=0.853764 GMRac=0.201168 diam=0.518160 normamps=155 emergamps=210 Runits=km GMRunits=cm radunits=cm
+New WireData.4-ACSR-B-6X1 Rac=1.351482 GMRac=0.252984 diam=0.635000 normamps=149 emergamps=201 Runits=km GMRunits=cm radunits=cm
+New WireData.DEFAULT Rac=0.172700 GMRac=0.508400 diam=1.341100 normamps=480 emergamps=480 Runits=km GMRunits=cm radunits=cm
+New WireData.556-AAC-B-19 Rac=0.105012 GMRac=0.822960 diam=2.174240 normamps=770 emergamps=1040 Runits=km GMRunits=cm radunits=cm
+New WireData.1/0-ACSR-WP-6X1 Rac=0.551777 GMRac=0.387096 diam=1.010920 normamps=231 emergamps=326 Runits=km GMRunits=cm radunits=cm
+New WireData.1/0-CU-WP-7 Rac=0.344861 GMRac=0.341376 diam=0.934720 normamps=275 emergamps=380 Runits=km GMRunits=cm radunits=cm
+New WireData.6-CU-WP-7 Rac=1.354589 GMRac=0.158496 diam=0.411480 normamps=115 emergamps=155 Runits=km GMRunits=cm radunits=cm
+New WireData.2-ACSR-B-6X1 Rac=0.850036 GMRac=0.313944 diam=0.802640 normamps=198 emergamps=279 Runits=km GMRunits=cm radunits=cm
+New WireData.336-ACSR-B-18X1 Rac=0.171498 GMRac=0.676656 diam=1.737360 normamps=564 emergamps=761 Runits=km GMRunits=cm radunits=cm

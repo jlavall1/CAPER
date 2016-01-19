@@ -5,9 +5,9 @@ Shapes.dss - OpenDSS Daily and Yearly Loadshape definitions
 BusesCoords.dss - Bus Coordinates for plotting circuit
 
 \Libraries
-% *WireData.dss
-% *LineSpacing.dss
-% *UGLineCodes.dss
+% WireData.dss
+% LineSpacing.dss
+% UGLineCodes.dss
 
 \Elements
 % Lines.dss - OpenDSS line definitions
@@ -52,13 +52,14 @@ if ~exist(savelocation,'dir')
     mkdir(savelocation)
     mkdir([savelocation,'Elements\'])
     mkdir([savelocation,'Controls\'])
+    mkdir([savelocation,'Libraries\'])
 end
 
 tic
 % Read SXST File
 FILE = fileread([filelocation,filename]);
 
-% Print Circuit Specs
+% Show Circuit Specs
 sc = length(strfind(FILE,'<Source>'));
 
 n = length(strfind(FILE,'<Node>'));
@@ -67,7 +68,7 @@ no = length(strfind(FILE,'<NormalStatus>Open</NormalStatus>'));
 
 l = length(strfind(FILE,'<SpotLoad>'));
 lp = length(strfind(FILE,'<CustomerLoadValue>'));
-fprintf('%d Source(s)\n%d Nodes; %d Sections; (%d N.O. Switches)\n%d Loads (%d by phase)\n',sc,n,l,no,l,lp)
+fprintf('%d Source(s)\n%d Nodes; %d Sections; (%d N.O. Switches)\n%d Loads (%d by phase)\n',sc,n,s,no,l,lp)
 
 %% Generate Standard Files
 % Output - Shapes.dss (Empty Loadshapes for Loads to Reference)
@@ -87,7 +88,6 @@ fclose(fid(2));
 % Output - WireData.dss (OpenDSS Library of Wire Data)
 %        - LineSpacing.dss (OpenDSS Library of Line Spacing)
 %        - UGLineCodes.dss (OpenDSS Library of Line Codes)
-
 EquipmentDB.Info = regexp(FILE,'<EquipmentDBs>(.*?)</EquipmentDBs>','match');
 
 % <SubstationDB>
@@ -151,6 +151,7 @@ for i =1:length(EquipmentDB.Capacitor)
 end
 
 % <ConductorDB>
+fid(8) = fopen([savelocation,'Libraries\WireData.dss'],'wt');
 EquipmentDB.Conductor = struct('Info',regexp(EquipmentDB.Info{1},'<ConductorDB>(.*?)</ConductorDB>','match'));
 for i =1:length(EquipmentDB.Conductor)
     EquipmentDB.Conductor(i).ID = regexp(EquipmentDB.Conductor(i).Info,'(?<=<EquipmentID>)(.*?)(?=</EquipmentID>)','match'); EquipmentDB.Conductor(i).ID = EquipmentDB.Conductor(i).ID{1};
@@ -161,21 +162,44 @@ for i =1:length(EquipmentDB.Conductor)
     EquipmentDB.Conductor(i).diam = str2double(regexp(EquipmentDB.Conductor(i).Info,'(?<=<OutsideDiameter>)(.*?)(?=</OutsideDiameter>)','match'));
     EquipmentDB.Conductor(i).normamps = str2double(regexp(EquipmentDB.Conductor(i).Info,'(?<=<NominalRating>)(.*?)(?=</NominalRating>)','match'));
     EquipmentDB.Conductor(i).emergamps = str2double(regexp(EquipmentDB.Conductor(i).Info,'(?<=<SecondRating>)(.*?)(?=</SecondRating>)','match'));
+    
+    % Print to file
+    if ~strcmp(EquipmentDB.Conductor(i).ID,'NONE') % Exclude NONE for WireData
+        fprintf(fid(8),['New WireData.%s Rac=%.6f GMRac=%.6f diam=%.6f ',...
+            'normamps=%d emergamps=%d Runits=km GMRunits=cm radunits=cm\n'],...
+            EquipmentDB.Conductor(i).ID,EquipmentDB.Conductor(i).Rac,EquipmentDB.Conductor(i).GMRac,...
+            EquipmentDB.Conductor(i).diam,EquipmentDB.Conductor(i).normamps,EquipmentDB.Conductor(i).emergamps);
+    end
 end
+fclose(fid(8));
 
+fid(10) = fopen([savelocation,'Libraries\UGLineCodes.dss'],'wt');
 % <CableDB>
 EquipmentDB.Cable = struct('Info',regexp(EquipmentDB.Info{1},'<CableDB>(.*?)</CableDB>','match'));
 for i =1:length(EquipmentDB.Cable)
     EquipmentDB.Cable(i).ID = regexp(EquipmentDB.Cable(i).Info,'(?<=<EquipmentID>)(.*?)(?=</EquipmentID>)','match'); EquipmentDB.Cable(i).ID = EquipmentDB.Cable(i).ID{1};
     
     % Read Data
-    EquipmentDB.Cable(i).Rac = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<FirstResistance>)(.*?)(?=</FirstResistance>)','match'));
-    EquipmentDB.Cable(i).GMRac = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<GMR>)(.*?)(?=</GMR>)','match'));
-    EquipmentDB.Cable(i).diam = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<OutsideDiameter>)(.*?)(?=</OutsideDiameter>)','match'));
+    EquipmentDB.Cable(i).R1 = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<PositiveSequenceResistance>)(.*?)(?=</PositiveSequenceResistance>)','match'));
+    EquipmentDB.Cable(i).X1 = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<PositiveSequenceReactance>)(.*?)(?=</PositiveSequenceReactance>)','match'));
+    EquipmentDB.Cable(i).R0 = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<ZeroSequenceResistance>)(.*?)(?=</ZeroSequenceResistance>)','match'));
+    EquipmentDB.Cable(i).X0 = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<ZeroSequenceReactance>)(.*?)(?=</ZeroSequenceReactance>)','match'));
+    EquipmentDB.Cable(i).B1 = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<PositiveSequenceShuntSusceptance>)(.*?)(?=</PositiveSequenceShuntSusceptance>)','match'));
+    EquipmentDB.Cable(i).B0 = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<ZeroSequenceShuntSusceptance>)(.*?)(?=</ZeroSequenceShuntSusceptance>)','match'));
     EquipmentDB.Cable(i).normamps = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<NominalRating>)(.*?)(?=</NominalRating>)','match'));
     EquipmentDB.Cable(i).emergamps = str2double(regexp(EquipmentDB.Cable(i).Info,'(?<=<SecondRating>)(.*?)(?=</SecondRating>)','match'));
+    
+    % Print to file
+    fprintf(fid(10),['New LineCode.%s R1=%.6f X1=%.6f R0=%.6f X0=%.6f ',...
+        'B1=%.6f B0=%.6f normamps=%d emergamps=%d Units=km\n'],...
+        EquipmentDB.Cable(i).ID,EquipmentDB.Cable(i).R1,EquipmentDB.Cable(i).X1,...
+        EquipmentDB.Cable(i).R0,EquipmentDB.Cable(i).X0,EquipmentDB.Cable(i).B1,...
+        EquipmentDB.Cable(i).B0,EquipmentDB.Cable(i).normamps,EquipmentDB.Cable(i).emergamps);
 end
+fclose(fid(10));
 
+%{
+fid(9) = fopen([savelocation,'Libraries\LineSpacing.dss'],'wt');
 % <OverheadSpacingOfConductorDB>
 EquipmentDB.Spacing = struct('Info',regexp(EquipmentDB.Info{1},'<OverheadSpacingOfConductorDB>(.*?)</OverheadSpacingOfConductorDB>','match'));
 for i =1:length(EquipmentDB.Spacing)
@@ -190,6 +214,8 @@ for i =1:length(EquipmentDB.Spacing)
 end
 
 % <DoubleCircuitSpacingDB>
+fclose(fid(9));
+%}
 
 %% Extract Node Information
 %  Output - Buses.dss (text file containing BusID, X, and Y Coords)
@@ -200,6 +226,7 @@ for b = 1:n
     Buses(b).XCoord = str2double(regexp(Buses(b).Info,'(?<=<X>)(.*?)(?=</X>)','match'));
     Buses(b).YCoord = str2double(regexp(Buses(b).Info,'(?<=<Y>)(.*?)(?=</Y>)','match'));
     
+    % Print Node Info to file
     fprintf(fid(3),'%-30s %-15.2f %-15.2f\n',Buses(b).ID,Buses(b).XCoord,Buses(b).YCoord);
 end
 fclose(fid(3));
