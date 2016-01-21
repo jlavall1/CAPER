@@ -81,9 +81,13 @@ A10 = zeros(n,xlen);
 A10((d+1)*n+s+1:(2*d+1)*n+s) = repmat(eye(n),1,d);
 
 % -------------------------------------------------------------------------
-% (12)
-% (19)
-% (22)
+% (12) d_ij - b_ij <= 0                                                               all (i,j) in S
+% (19) sum(d_ki) +   sum(b_ik-d_ik) + sum(b_jk-d_jk) +   sum(d_kj) + M*b_ij <= M + 1  all (i,j) in S
+%     (k,i)<S     (i,k)<S,k\=j       (j,k)<S          (k,j)<S,k\=i
+% (22) sum(d_ki) +   sum(b_ik-d_ik) - d_ij + M*b_ij <= M                              all (i,j) in S
+%     (k,i)<S     (i,k)<S,k\=j  
+%    ( sum(d_ki) +   sum(b_ik-d_ik) - d_ij ) + M*b_ij <= M                              all (i,j) in S
+%     (k,i)<S     (i,k)<S,k\=j  
 % (23)
 % (24)
 
