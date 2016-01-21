@@ -14,7 +14,7 @@ New Circuit.T5240B12 Bus1=T5240B12_1
 ~ Z1=[ 0.078336 ,  1.86336 ] ! Actual ohms
 ~ Z2=[ 0.041472 ,  3.483072 ]
 ~ Z0=[ 0 ,  13.642787 ]
-Redirect SourceRegulator.dss
+Redirect SourceRegulator_3ph.dss
 ! 
 ! Library Data
 ! 

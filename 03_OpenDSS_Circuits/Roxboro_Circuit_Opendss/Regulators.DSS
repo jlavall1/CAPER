@@ -3,34 +3,36 @@
 // This involves changing the name of a bus in the Section
 // *****************************
 
-// (1) VREG:
+// (3ph) Three single phase VREGs:
 New Transformer.152J55__103161240A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[152J55_103161240.1 103064666.1] kvas=[1440 1440] kVs=[14.400000 14.400000]
 New Transformer.152J55__103161240B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[152J55_103161240.2 103064666.2] kvas=[1440 1440] kVs=[14.400000 14.400000]
 New Transformer.152J55__103161240C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[152J55_103161240.3 103064666.3] kvas=[1440 1440] kVs=[14.400000 14.400000]
-New RegControl.152J55__103161240A Transformer=152J55__103161240A Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 
-New RegControl.152J55__103161240B Transformer=152J55__103161240B Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 
-New RegControl.152J55__103161240C Transformer=152J55__103161240C Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 
+New RegControl.152J55__103161240A Transformer=152J55__103161240A Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
+New RegControl.152J55__103161240B Transformer=152J55__103161240B Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
+New RegControl.152J55__103161240C Transformer=152J55__103161240C Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
 
-//(2) VREG:
-New Transformer.18GJ19__105595290A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[18GJ19_105595290.1 T5240B12_10000008.1] kvas=[1440 1440] kVs=[14.400000 14.400000]
-New RegControl.18GJ19__105595290A Transformer=18GJ19__105595290A Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 
-New Line.18GJ19__105595290B phases=1 bus1=18GJ19_105595290.2  bus2=T5240B12_10000008.2 Switch=T
-New Line.18GJ19__105595290C phases=1 bus1=18GJ19_105595290.3  bus2=T5240B12_10000008.3 Switch=T
-
-New Line.152B04__104329420A phases=1 bus1=152B04_104329420.1  bus2=103392725.1 Switch=T
-New Transformer.152B04__104329420B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[152B04_104329420.2 103392725.2] kvas=[1440 1440] kVs=[14.400000 14.400000]
-New RegControl.152B04__104329420B Transformer=152B04__104329420B Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 
-New Line.152B04__104329420C phases=1 bus1=152B04_104329420.3  bus2=103392725.3 Switch=T
-
-New Transformer.E0X71__104175287A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[E0X71_104175287.1 103342325.1] kvas=[1440 1440] kVs=[14.400000 14.400000]
-New RegControl.E0X71__104175287A Transformer=E0X71__104175287A Winding=2 Vreg=125 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 
-New Line.E0X71__104175287B phases=1 bus1=E0X71_104175287.2  bus2=103342325.2 Switch=T
-New Line.E0X71__104175287C phases=1 bus1=E0X71_104175287.3  bus2=103342325.3 Switch=T
-
-//(3) Single Phase VREGS:
+// (3ph) Three single phase VREGs:
 New Transformer.17FK87__104175233A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17FK87_104175233.1 103342298.1] kvas=[1440 1440] kVs=[14.400000 14.400000]
 New Transformer.17FK87__104175233B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17FK87_104175233.2 103342298.2] kvas=[1440 1440] kVs=[14.400000 14.400000]
 New Transformer.17FK87__104175233C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17FK87_104175233.3 103342298.3] kvas=[1440 1440] kVs=[14.400000 14.400000]
-New RegControl.17FK87__104175233A Transformer=17FK87__104175233A Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 
-New RegControl.17FK87__104175233B Transformer=17FK87__104175233B Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 
-New RegControl.17FK87__104175233C Transformer=17FK87__104175233C Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 
+New RegControl.17FK87__104175233A Transformer=17FK87__104175233A Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
+New RegControl.17FK87__104175233B Transformer=17FK87__104175233B Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
+New RegControl.17FK87__104175233C Transformer=17FK87__104175233C Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
+
+
+//(2) VREG:
+New Transformer.18GJ19__105595290A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[18GJ19_105595290.1 T5240B12_10000008.1] kvas=[1440 1440] kVs=[14.400000 14.400000]
+New RegControl.18GJ19__105595290A Transformer=18GJ19__105595290A Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
+!New Line.18GJ19__105595290B phases=1 bus1=18GJ19_105595290.2  bus2=T5240B12_10000008.2 Switch=T
+!New Line.18GJ19__105595290C phases=1 bus1=18GJ19_105595290.3  bus2=T5240B12_10000008.3 Switch=T
+
+New Line.152B04__104329420A phases=1 bus1=152B04_104329420.1  bus2=103392725.1 Switch=T
+New Transformer.152B04__104329420B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[152B04_104329420.2 103392725.2] kvas=[1440 1440] kVs=[14.400000 14.400000]
+New RegControl.152B04__104329420B Transformer=152B04__104329420B Winding=2 Vreg=124 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
+!New Line.152B04__104329420C phases=1 bus1=152B04_104329420.3  bus2=103392725.3 Switch=T
+
+New Transformer.E0X71__104175287A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[E0X71_104175287.1 103342325.1] kvas=[1440 1440] kVs=[14.400000 14.400000]
+New RegControl.E0X71__104175287A Transformer=E0X71__104175287A Winding=2 Vreg=125 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
+New Line.E0X71__104175287B phases=1 bus1=E0X71_104175287.2  bus2=103342325.2 Switch=T
+New Line.E0X71__104175287C phases=1 bus1=E0X71_104175287.3  bus2=103342325.3 Switch=T
+

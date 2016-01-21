@@ -4,7 +4,7 @@ clc
 close all
 s_b ='C:\Users\jlavall\Documents\GitHub\CAPER';
 %addpath(strcat(s_b,'\01_Sept_Code'));
-tic
+
 %Setup the COM server
 %{
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;

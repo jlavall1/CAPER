@@ -1,4 +1,4 @@
-New Transformer.T4795B23 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[T4795B23_1.1 T4795B23_1_reg.1] kvas=[40000.0 40000.0] 
+New Transformer.T4795B23 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[T4795B23_1.1.2.3 T4795B23_1_reg.1.2.3] kvas=[40000.0 40000.0] 
 ~ kVs=[22.870000   22.870000]
 ~ mintap=0.9
 ~ maxtap=1.1

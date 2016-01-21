@@ -242,9 +242,15 @@ fprintf('Connected kVA(PU):\n A:%3.3f\n B:%3.3f\n C:%3.3f\n',(KVA_ph(1,1)/total_
 total_LD = count(1,1) + count(1,2);
 fprintf('R=%3.3f %% and C=%3.3f %%\n',(count(1,1)/total_LD)*100,(count(1,2)/total_LD)*100);
 %%
-
-            
-
+for i=1:1:length(Lines_Distance)
+    phase_check(i,1).name = Lines_Distance(i,1).name;
+    phase_check(i,1).bus1 = Lines_Distance(i,1).bus1;
+    phase_check(i,1).bus2 = Lines_Distance(i,1).bus2;
+    phase_check(i,1).bus1phC=Lines_Distance(i,1).bus1PhaseCurrent;
+    phase_check(i,1).bus1Voltage=Lines_Distance(i,1).bus1Voltage;
+end
+plot([phase_check.bus1Voltage])
+%%
 
 %-------------------------------------------------------------------------
 %Find Voltage headroom:

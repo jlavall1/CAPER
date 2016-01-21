@@ -1,3 +1,4 @@
+tic
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
 
 % 1. Setup the COM server
@@ -96,7 +97,6 @@ end
     maxnumTaps=32
 %} 
 if feeder_NUM ~= 3       %Do only for feeders w/o line VREGs
-    tic
     Regulators = DSSCircuit.RegControls;    % Assign a Variable to the RegControls interface
     for jj=1:1:length(xfmrName) %starts at 4 to skip the LTC
         %send:
@@ -113,8 +113,25 @@ if feeder_NUM ~= 3       %Do only for feeders w/o line VREGs
         XfmrTaps(jj,1).vreg_setting = str2double(VREG_pt);
 
     end
-    toc
+elseif feeder_NUM == 3
+    Regulators = DSSCircuit.RegControls;    % Assign a Variable to the RegControls interface
+    for jj=1:1:length(xfmrName) %starts at 4 to skip the LTC
+        %send:
+        XfmrTaps(jj,1).names = xfmrName{jj,1};
+        %DSSText.Command = sprintf('RegControl.%s.TapNum=5',char(xfmrName(jj)));
+        DSSText.Command = sprintf('RegControl.%s.Vreg=%s',char(xfmrName(jj)),num2str(vreg));
+        %Check:
+        DSSText.command = sprintf('? RegControl.%s.TapNum',char(xfmrName(jj)));
+        VREG_tap = DSSText.Result;
+        DSSText.command = sprintf('? RegControl.%s.vreg',char(xfmrName(jj)));
+        VREG_pt = DSSText.Result;
+        %Save results:
+        XfmrTaps(jj,1).Init_tap = str2double(VREG_tap);
+        XfmrTaps(jj,1).vreg_setting = str2double(VREG_pt);
+
+    end
 end
+    
 
 
 % 9. Initiate PV Central station:
@@ -402,9 +419,22 @@ while ii< length(Buses) %length(Buses)
             P_loss = 0;
             
             %Now increment the solar site:
-            PV_size = PV_size + 100; %kW
-            n = n + 1;
-            jj = jj + 1;
+            if RESULTS(jj,12) < 1.06
+                PV_size = PV_size + 100; %kW
+                n = n + 1;
+                jj = jj + 1;
+            elseif RESULTS(jj,12) > 1.06
+                n = n + 1;
+                n1 = (10000-PV_size)/100
+                for n11=jj:1:jj+n1
+                    RESULTS(n11,1)=PV_size;
+                    PV_size = PV_size + 100;
+                end
+                RESULTS(jj:jj+n1,2:14)=zeros(n1+1,13);
+                PV_size = 11000;
+                n = n+ n1; %ghost index:
+                jj = jj + n1 + 1;
+            end
             %toc
             %fprintf('Next Iteration\n');
         end
@@ -416,6 +446,7 @@ while ii< length(Buses) %length(Buses)
     %Increment Position:
     ii = ii + 1;
 end
+toc
 save(filename,'RESULTS');
 %%
 %After Simulation, Lets show where all the locations were w/ distance from

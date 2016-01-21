@@ -6,6 +6,6 @@ New Line.E1005__2491083 bus1=1713206.1 bus2=26401840.1 Phases=1 Switch=T ! Secti
 New Line.E0P37__2586589 bus1=1708871.2 bus2=26401830.2 Phases=1 Switch=T ! Sectionalizer
 New Line.E1565__2586655 bus1=1586033.3 bus2=26402844.3 Phases=1 Switch=T ! Sectionalizer
 New Line.E1565__2586654 bus1=1586033.3 bus2=26402843.3 Phases=1 Switch=T ! Sectionalizer
-New Line.EZZ57__2491113 bus1=1586271 bus2=26401869 Switch=T ! Sectionalizer
-New Line.E0Z06__2586621 bus1=1708916 bus2=26400155 Switch=T ! Sectionalizer
+New Line.EZZ57__2491113 bus1=1586271.1 bus2=26401869.1 Phases=1 Switch=T ! Sectionalizer
+New Line.E0Z06__2586621 bus1=1708916.2 bus2=26400155.2 Phases=1 Switch=T ! Sectionalizer
 New Line.E2K70__2583978 bus1=1713412 bus2=26115125 Switch=T ! Sectionalizer
