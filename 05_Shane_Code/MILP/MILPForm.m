@@ -1,6 +1,6 @@
 function [f,intcon,Aineq,bineq,Aeq,beq,lb,ub] = MILPForm(NODE,SECTION,DER)
 % N                 - NODE.ID
-% S                 - SECNTION.ID
+% S                 - (SECNTION.FROM,SECTION.TO)
 % D                 - DER.ID
 % w                 - NODE.w
 % p                 - NODE.p
@@ -8,6 +8,7 @@ function [f,intcon,Aineq,bineq,Aeq,beq,lb,ub] = MILPForm(NODE,SECTION,DER)
 % KVAmax_d          - DER.CAPACITY
 % alpha             - 1
 alpha = 1;
+M = 5;
 
 n = length(NODE.ID);    % Number of Nodes
 s = length(SECTION.ID); % Number of Sections
@@ -86,12 +87,36 @@ A10((d+1)*n+s+1:(2*d+1)*n+s) = repmat(eye(n),1,d);
 %     (k,i)<S     (i,k)<S,k\=j       (j,k)<S          (k,j)<S,k\=i
 % (22) sum(d_ki) +   sum(b_ik-d_ik) - d_ij + M*b_ij <= M                              all (i,j) in S
 %     (k,i)<S     (i,k)<S,k\=j  
-%    ( sum(d_ki) +   sum(b_ik-d_ik) - d_ij ) + M*b_ij <= M                              all (i,j) in S
+%   -( sum(d_ki) +   sum(b_ik-d_ik) - d_ij ) + M*b_ij <= M                            all (i,j) in S
 %     (k,i)<S     (i,k)<S,k\=j  
-% (23)
-% (24)
+% (23) sum(b_jk-d_jk) +   sum(d_kj) + d_ij + M*b_ij <= M + 1                          all (i,j) in S
+%     (j,k)<S          (i,k)<S,k\=i
+%   -( sum(b_jk-d_jk) +   sum(d_kj) + d_ij ) + M*b_ij <= 0                            all (i,j) in S
+%     (j,k)<S          (i,k)<S,k\=i
 
+% (24) gamma_id - gamma_jd + b_ij <= 1    all (i,j) in S, d in D
+%   -( gamma_id - gamma_jd ) + b_ij <= 1  all (i,j) in S, d in D
 
+b12 = zeros(s,1);
+b19 = M*ones(s,1);
+b22 = M*ones(2*s,1);
+b23 = [(M+1)*ones(s,1);zeros(s,1)];
+b24 = ones(2*d*n,1);
+
+A12 = zeros(s,xlen);
+A12(:,(2*d+1)*n+s+1:(2*d+1)*n+2*s) = eye(s);
+A12(:,n+1:n+s) = -eye(s);
+for i = 1:s
+    % Find Index of all adjacent sections
+    index = {find(ismember({SECTION.FROM},SECTION(i).FROM)),...
+    find(ismember({SECTION.FROM},SECTION(i).TO));...
+    find(ismember({SECTION.TO},SECTION(i).FROM)),...
+    find(ismember({SECTION.TO},SECTION(i).TO))};
+
+    index{1}(index{1}==i) = [];
+    index{4}(index{4}==i) = [];
+    
+end
 
 
 Aineq = [A6;A7;A8;A9;A10;A12;A19;A22;A23;A24];
