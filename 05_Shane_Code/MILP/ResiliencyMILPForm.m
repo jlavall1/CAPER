@@ -213,10 +213,10 @@ for k = 1:S % for each section (i,j)
     index = [find(ismember({NODE.ID},SECTION(k).FROM)),...
     find(ismember({NODE.ID},SECTION(k).TO))];
     
-    A12(k+0:S:(D-1)*S,gamma+index(1)) = 1; % coeff for gamma_id (12.1)
-    A12(k+0:S:(D-1)*S,gamma+index(2)) = -1; % coeff for gamma_jd (12.1)
-    A12(k+D*S:S:(2*D-1)*S) = -A12(k+0:S:(D-1)*S,:); % coeff for gamma_id, gamma_jd (12.2)
-    A12(k+0:S:(2*D-1)*S,b+k) = 1; % coeff for b_ij (12.1) (12.2)
+    A12(k+0:S:D*S,gamma+index(1)) = 1; % coeff for gamma_id (12.1)
+    A12(k+0:S:D*S,gamma+index(2)) = -1; % coeff for gamma_jd (12.1)
+    A12(k+D*S:S:2*D*S,:) = -A12(k+0:S:D*S,:); % coeff for gamma_id, gamma_jd (12.2)
+    A12(k+0:S:2*D*S,b+k) = 1; % coeff for b_ij (12.1) (12.2)
     
     % Find Index of all adjacent sections
     index = {find(ismember({SECTION.FROM},SECTION(k).FROM)),...
@@ -254,8 +254,28 @@ for i = 1:D
     A23([index,index+S],:) = [];
 end
 
-Aineq = [A6;A7;A8;A9;A10;A12;A13;A19;A22;A23];
-bineq = [b6;b7;b8;b9;b10;b12;b13;b19;b22;b23];
+% -------------------------------------------------------------------------
+
+bb = zeros(D*(N-D),1);
+
+AA = zeros(D*N,xlen);
+AA(:,gamma+1:gamma+D*N) = eye(D*N);
+
+for i = 1:N
+    index = {find(ismember({SECTION.FROM},NODE(i).ID)),...
+        find(ismember({SECTION.TO},NODE(i).ID))};
+    
+    AA(i+0:N:D*N,d+index{1}) = 1;
+    AA(i+0:N:D*N,[b+index{1},d+index{2}]) = -1;
+end
+
+for i = 1:D
+    index = find(ismember({NODE.ID},DER(i).ID));
+    AA(index+0:N:D*N,:) = [];
+end
+
+Aineq = [A6;A7;A8;A9;A10;A12;A13;A19;A22;A23;AA];
+bineq = [b6;b7;b8;b9;b10;b12;b13;b19;b22;b23;bb];
 
 Aeq = [A1;A2;A3;A4;A11;A14];
 beq = [b1;b2;b3;b4;b11;b14];
