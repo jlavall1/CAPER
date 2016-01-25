@@ -64,8 +64,8 @@ elseif feeder_NUM == 2
         cir_name='_FLAY_030.mat';
     elseif SHC_LoadLVL == 3
         %winter mean
-        pu_load = 0.50;
-        cir_name='_FLAY_050.mat';
+        pu_load = 0.40;
+        cir_name='_FLAY_040.mat';
     elseif SHC_LoadLVL == 4
         %winter mean-2s
         pu_load = 0.25;

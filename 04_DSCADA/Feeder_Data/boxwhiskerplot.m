@@ -60,7 +60,7 @@ end
  kW_peak_3ph = sum(kW_peak(1,:));
 
 %LOAD PV INFO:
-addpath('C:\Users\Brian\Documents\GitHub\CAPER\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\03_Taylorsville_NC');
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\03_Taylorsville_NC');
 load M_TAYLOR.mat
 M_PVSITE=M_TAYLOR;
 clearvars M_TAYLOR
@@ -473,7 +473,7 @@ if action == 5
     legend('Avg. (Winter)','+2.0s (Winter)','-2.0s (Winter)','1/1 CSI path','2/1 CSI path','3/1 CSI path','4/1 CSI path','11/1 CSI path','12/1 CSI path','Location','NorthWest');
     xlabel('Hour of Day (H) [hr]','Fontsize',12,'FontWeight','bold')
     ylabel('Real Power (P) [p.u.]','Fontsize',12,'FontWeight','bold')
-    title('Winter Load Range vs. Cleak Sky Irradiance (CSI)','Fontsize',14,'FontWeight','bold');
+    %title('Winter Load Range vs. Cleak Sky Irradiance (CSI)','Fontsize',14,'FontWeight','bold');
     grid on
     
     
@@ -520,7 +520,7 @@ if action == 5
     legend('Avg. (Summer)','+2.0s (Summer)','-2.0s (Summer)','5/1 CSI path','6/1 CSI path','7/1 CSI path','8/1 CSI path','9/1 CSI path','10/1 CSI path','Location','NorthWest');
     xlabel('Hour of Day (H) [hr]','Fontsize',12,'FontWeight','bold')
     ylabel('Real Power (P) [p.u.]','Fontsize',12,'FontWeight','bold')
-    title('Summer Load Range vs. Clear Sky Irradiance (CSI)','Fontsize',14,'FontWeight','bold');
+    %title('Summer Load Range vs. Clear Sky Irradiance (CSI)','Fontsize',14,'FontWeight','bold');
     grid on
     
     %
