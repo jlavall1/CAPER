@@ -136,6 +136,10 @@ Lines=getLineInfo(DSSCircObj);
 Loads=getLoadInfo(DSSCircObj);
 [~,index] = sortrows([Lines.bus1Distance].'); 
 Lines_Distance = Lines(index); 
+%For Post_Process & Post_Process_2
+xfmrNames = DSSCircuit.Transformers.AllNames;
+lineNames = DSSCircuit.Lines.AllNames;
+loadNames = DSSCircuit.Loads.AllNames;
 
 %-------------------------------------------------------------------------
 %Find Conductor total distance:

@@ -3,6 +3,9 @@
 clear
 clc
 clear all
+UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
+set(0, 'DefaultUIControlFontSize', 18);
+
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
 %import numpy as np

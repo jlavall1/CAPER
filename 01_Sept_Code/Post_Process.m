@@ -3,12 +3,18 @@
 clear
 clc
 close all
+UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
+set(0, 'DefaultUIControlFontSize', 18);
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
-ckt_num=menu('Which Circuit?','Commonwealth','Flay','EPRI - 7');
+%User Menus:
+ckt_num=menu('Which Circuit?','1)Bellhaven','2)Commonwealth','3)Flay','4)Roxboro','5)Hollysprings','6)E.Raleigh','7)EPRI 7');
 while ckt_num<1
-    ckt_num=menu('Which Circuit?','EPRI - 7','Commonwealth','Flay','EPRI - 7');
+    ckt_num=menu('Which Circuit?','1)Bellhaven','2)Commonwealth','3)Flay','4)Roxboro','5)Hollysprings','6)E.Raleigh','7)EPRI 7');
 end
-
+sim_type=menu('Load Level:','summer-2s','winter-2s','summer','winter');
+while sim_type<1
+    sim_type=menu('Load Level:','summer-2s','winter-2s','summer','winter');
+end
 plot_type=menu('What kind of plot?','Quartiles','Violation Percentages');
 while plot_type<1
     plot_type=menu('What kind of plot?','Quartiles','Violation Percentages');
@@ -22,36 +28,127 @@ end
 %load RESULTS_9_3_2015.mat
 %load RESULTS_9_10_2015.mat
 %load RESULTS_9_11_2015.mat
-if ckt_num == 0
-    fprintf('not simulated yet!!\n');
-elseif ckt_num == 1
-    load RESULTS_9_18_2015.mat
+if ckt_num == 1
+    %Bellhaven:
+    feeder_name = 'BELL';
+    %   1]
+    load RESULTS_BELL_048.mat
+    RESULTS_SU_MIN=RESULTS;
+    sort_Results_1 = xlsread('RESULTS_BELL.xlsx','BELL_048');
+    %   2]
+    load RESULTS_BELL_043.mat
+    RESULTS_WN_MIN=RESULTS;
+    sort_Results_2 = xlsread('RESULTS_BELL.xlsx','BELL_043');
+    %   3]
+    load RESULTS_BELL_070.mat
+    RESULTS_SU=RESULTS;
+    sort_Results_3 = xlsread('RESULTS_BELL.xlsx','BELL_070');
+    %Feeder component files:
+    load config_LOADNAMES_BELL.mat
+    load config_LINENAMES_BELL.mat
+    load config_XFMRNAMES_BELL.mat
+    
+elseif ckt_num == 2
+    %Commonwealth:
+    feeder_name = 'CMNW';
+    %   1]
+    load RESULTS_CMNW_045.mat
+    RESULTS_SU_MIN=RESULTS;
+    sort_Results_1 = xlsread('RESULTS_CMNW.xlsx','CMNW_045');
+    %   2]
+    load RESULTS_CMNW_040.mat
+    RESULTS_WN_MIN=RESULTS;
+    sort_Results_2 = xlsread('RESULTS_CMNW.xlsx','CMNW_040');
+    %   3]
+    load RESULTS_CMNW_065.mat
+    RESULTS_SU=RESULTS;
+    sort_Results_3 = xlsread('RESULTS_CMNW.xlsx','CMNW_065');
+        
+    %load RESULTS_9_18_2015.mat
     %load DISTANCE_CMNWLTH.mat
     load config_LOADNAMES_CMNWLTH.mat
     load config_LINENAMES_CMNWLTH.mat
     load config_XFMRNAMES_CMNWLTH.mat
     %sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_18');
-    sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_19');
-elseif ckt_num == 2
-    %       FLAY
-    %
-    %   30% loading condition:
+    %sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_19');
+elseif ckt_num == 3
+    %FLAY:
+    feeder_name = 'FLAY';
+    %   1]
     load RESULTS_FLAY_030.mat
-    RESULTS_30 = RESULTS;
-    sort_Results_30 = xlsread('RESULTS_FLAY.xlsx','RESULTS_025');
-    %   25% loading condition:
+    RESULTS_SU_MIN=RESULTS;
+    sort_Results_1 = xlsread('RESULTS_FLAY.xlsx','FLAY_030');
+    %   2]
     load RESULTS_FLAY_025.mat
-    RESULTS_25 = RESULTS;
-    sort_Results_25 = xlsread('RESULTS_FLAY.xlsx','RESULTS_030');
-    %   50% loading condition:
+    RESULTS_WN_MIN=RESULTS;
+    sort_Results_2 = xlsread('RESULTS_FLAY.xlsx','FLAY_025');
+    %   3]
     load RESULTS_FLAY_SS_1.mat
-    sort_Results = xlsread('RESULTS_SORTED_2.xlsx','FLAY_3'); %Steady State Case
+    RESULTS_SU=RESULTS;
+    sort_Results_3 = xlsread('RESULTS_FLAY.xlsx','FLAY_062');
     
     %configs:
     load config_LOADNAMES_FLAY.mat
     load config_LINENAMES_FLAY.mat
     load config_XFMRNAMES_FLAY.mat
-elseif ckt_num == 3
+elseif ckt_num == 4
+    %ROX:
+    feeder_name = 'ROX';
+    %   1]
+    %load RESULTS_ROX_042.mat
+    RESULTS_SU_MIN=RESULTS;
+    sort_Results_1 = xlsread('RESULTS_ROX.xlsx','CMNW_045');
+    %   2]
+    load RESULTS_ROX_040.mat
+    RESULTS_WN_MIN=RESULTS;
+    sort_Results_2 = xlsread('RESULTS_ROX.xlsx','CMNW_040');
+    %   3]
+    load RESULTS_ROX_062.mat
+    RESULTS_SU=RESULTS;
+    sort_Results_3 = xlsread('RESULTS_ROX.xlsx','CMNW_062');
+elseif ckt_num == 5
+    %HOLLYSPRINGS:
+    feeder_name = 'HLLY';
+    %   1]
+    load RESULTS_HLLY_025.mat
+    RESULTS_SU_MIN=RESULTS;
+    sort_Results_1 = xlsread('RESULTS_HLLY.xlsx','HLLY_025');
+    %   2]
+    load RESULTS_HLLY_020.mat
+    RESULTS_WN_MIN=RESULTS;
+    sort_Results_2 = xlsread('RESULTS_HLLY.xlsx','HLLY_020');
+    %   3]
+    load RESULTS_HLLY_054.mat
+    RESULTS_SU=RESULTS;
+    sort_Results_3 = xlsread('RESULTS_HLLY.xlsx','HLLY_054');
+    
+    %configs:
+    load config_LOADNAMES_HLLY.mat
+    load config_LINENAMES_HLLY.mat
+    load config_XFMRNAMES_HLLY.mat
+elseif ckt_num == 6
+    %ERALEIGH:
+    feeder_name = 'ERAL';
+    %   1]
+    load RESULTS_ERAL_056.mat
+    RESULTS_SU_MIN=RESULTS;
+    sort_Results_1 = xlsread('RESULTS_ERAL.xlsx','ERAL_056');
+    %   2]
+    load RESULTS_ERAL_050.mat
+    RESULTS_WN_MIN=RESULTS;
+    sort_Results_2 = xlsread('RESULTS_ERAL.xlsx','ERAL_050');
+    %   3]
+    load RESULTS_ERAL_075.mat
+    RESULTS_SU=RESULTS;
+    sort_Results_3 = xlsread('RESULTS_ERAL.xlsx','ERAL_075');
+    
+    %configs:
+    load config_LOADNAMES_ERAL.mat
+    load config_LINENAMES_ERAL.mat
+    load config_XFMRNAMES_ERAL.mat
+    %legal positions tested:
+    LEGAL=113;
+elseif ckt_num == 7
     load RESULTS_9_14_2015.mat
     load DISTANCE.mat
     load config_LOADNAMES_CKT7.mat
@@ -96,28 +193,27 @@ n = 100;
 DONE = 0;
 jj = 1;
 ii=1;
-inc = (length(sort_Results)/100) - 1;
+
+inc = (length(sort_Results_1)/100) - 1;
 
 %while ii<length(sort_Results)-200
-while ii < length(sort_Results)-1
-    %Obtain group of 201simresults:
-    SM.(['PU_',num2str(n)]) = sort_Results(ii:ii+inc,2); %1:200 then 201:400
-    SM.(['THRM_',num2str(n)]) = sort_Results(ii:ii+inc,4);
-    %
-    %Now lets sort by desired field.
+while ii < length(sort_Results_1)-1
+    %Obtain group of simresults:
+    %   SUMMER_MIN Loading Condition --
+    SM.(['PU_',num2str(n)]) = sort_Results_1(ii:ii+inc,2); %1:200 then 201:400
+    SM.(['THRM_',num2str(n)]) = sort_Results_1(ii:ii+inc,4);
     SM.(['PU_',num2str(n)]) = sort(SM.(['PU_',num2str(n)])(:,1));
     SM.(['THRM_',num2str(n)]) = sort(SM.(['THRM_',num2str(n)])(:,1));
-    %   30% Loading Condition --
-    SM1.(['PU_',num2str(n)]) = sort_Results_30(ii:ii+inc,2); %1:200 then 201:400
-    SM1.(['THRM_',num2str(n)]) = sort_Results_30(ii:ii+inc,4);
+    %   WINTER_MIN Loading Condition --
+    SM1.(['PU_',num2str(n)]) = sort_Results_2(ii:ii+inc,2); %1:200 then 201:400
+    SM1.(['THRM_',num2str(n)]) = sort_Results_2(ii:ii+inc,4);
     SM1.(['PU_',num2str(n)]) = sort(SM1.(['PU_',num2str(n)])(:,1));
     SM1.(['THRM_',num2str(n)]) = sort(SM1.(['THRM_',num2str(n)])(:,1));
-    %   25% Loading Condition --
-    SM2.(['PU_',num2str(n)]) = sort_Results_25(ii:ii+inc,2); %1:200 then 201:400
-    SM2.(['THRM_',num2str(n)]) = sort_Results_25(ii:ii+inc,4);
+    %   Summer mean Loading Condition --
+    SM2.(['PU_',num2str(n)]) = sort_Results_3(ii:ii+inc,2); %1:200 then 201:400
+    SM2.(['THRM_',num2str(n)]) = sort_Results_3(ii:ii+inc,4);
     SM2.(['PU_',num2str(n)]) = sort(SM2.(['PU_',num2str(n)])(:,1));
     SM2.(['THRM_',num2str(n)]) = sort(SM2.(['THRM_',num2str(n)])(:,1));
-    
     
     %fprintf('hit!!\n');
     ii = ii + inc + 1;
@@ -141,7 +237,26 @@ Q_V = zeros(101,10);
 Q_I = zeros(101,10);
 %Q_Vv = zeros(51,10);
 %Q_Ii = zeros(51,10);
-nn = 199; %samples
+if ckt_num == 1
+    %Bell
+    nn = 389;%--
+elseif ckt_num == 2
+    %Common
+    nn = 208;%--
+elseif ckt_num == 3
+    %Flay
+    nn = 344;
+elseif ckt_num == 4
+    nn = 300;
+elseif ckt_num == 5
+    %HOLLY
+    nn = 261;
+elseif ckt_num == 6
+    %ERAL
+    nn = 113;%--
+elseif ckt_num == 7
+    nn = 199; %samples
+end
 PERC = [0,0.05,0.10,0.25,0.5,0.75,0.9,0.95,1];
 
 while n < 10100
@@ -156,16 +271,25 @@ while n < 10100
     end
     %}
     %Voltage Profiles:
+    %Select which set for quartiles:
+    if sim_type == 1
+        SM_SLT=SM;
+    elseif sim_type == 2
+        SM_SLT=SM1;
+    elseif sim_type == 3
+        SM_SLT=SM2;
+    end
+    
     for j=1:1:9
         index = round(nn*PERC(1,j));
         if index == 0 %This is the bottom of Q1
             index = 1;
         end
-        Q_V(i,j) = SM.(['PU_',num2str(n)])(index,1);
-        Q_I(i,j) = SM.(['THRM_',num2str(n)])(index,1);
+        Q_V(i,j) = SM_SLT.(['PU_',num2str(n)])(index,1);
+        Q_I(i,j) = SM_SLT.(['THRM_',num2str(n)])(index,1);
     end
-    Q_V(i,10) = mean(SM.(['PU_',num2str(n)])(:,1));
-    Q_I(i,10) = mean(SM.(['THRM_',num2str(n)])(:,1));
+    Q_V(i,10) = mean(SM_SLT.(['PU_',num2str(n)])(:,1));
+    Q_I(i,10) = mean(SM_SLT.(['THRM_',num2str(n)])(:,1));
     
     %Refresh Variables:
     n = n + 100;
@@ -327,12 +451,21 @@ if plot_type == 1
         axis([0 10 1.03 1.11]);
     elseif ckt_num == 2 || ckt_num == 1
         axis([0 10 1.02 1.11]);
+    else
+        axis([0 10 1.03 1.08]);
     end
     grid on
     legend([h(9),h(18),h(16),h(14),h(10),h(10),h(6),h(4),h(2)],{'Median','95th & up','90th to 95th','75th to 90th','50th to 75th','25th to 50','10th to 25th','5th to 10th','5th and below'},'Location','NorthWest');
     ylabel('Max Bus Voltage in Each Scenario(PU)','FontWeight','bold');
     xlabel('PV Size (MW)','FontWeight','bold');
-    title('Effect of PV size on max bus voltage under ~50% Load','FontWeight','bold');
+    if sim_type == 1
+        LVL_NM='SMR-2S';
+    elseif sim_type == 2
+        LVL_NM='WTR-2S';
+    elseif sim_type == 3
+        LVL_NM='SMR';
+    end
+    title(sprintf('Effect of PV size on max bus voltage under %s Load for %s',LVL_NM,feeder_name),'FontWeight','bold');
     set(gca,'FontWeight','bold');
     % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     % "Effect of PV size on max LINE loading under 50% load"
@@ -472,7 +605,8 @@ if plot_type == 1
     legend([h(9),h(18),h(16),h(14),h(10),h(10),h(6),h(4),h(2)],{'Median','95th & up','90th to 95th','75th to 90th','50th to 75th','25th to 50','10th to 25th','5th to 10th','5th and below'},'Location','NorthWest');
     ylabel('Max Line Loadings in Each Scenario(%)','FontWeight','bold');
     xlabel('PV Size (MW)','FontWeight','bold');
-    title('Effect of PV size on max line loading under ~50% Load','FontWeight','bold');
+    
+    title(sprintf('Effect of PV size on max line loading under %s Load for %s',LVL_NM,feeder_name),'FontWeight','bold');
     set(gca,'FontWeight','bold');
 end
 
