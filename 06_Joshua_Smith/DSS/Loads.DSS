@@ -1,0 +1,6 @@
+New Load.LD1_1 Phases= 1  Bus1=01_2.1 	kV= 13.2043879907621  XFKVA=143.000000 	PF= 0.9  NumCust=27 
+New Load.LD1_2 Phases= 1  Bus1=01_2.2 	kV= 13.2043879907621  XFKVA=88.000000 	PF= 0.9  NumCust=28
+New Load.LD1_3 Phases= 1  Bus1=01_2.3 	kV= 13.2043879907621  XFKVA=315.000000 	PF= 0.9  NumCust=28 
+
+
+

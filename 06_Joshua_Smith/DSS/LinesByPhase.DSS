@@ -1,0 +1,2 @@
+New Line.A Phases= 3  Bus1=01_1.1.2.3 Bus2=01_2.1.2.3 Length=486.766 units=m Spacing=PEC_PEC_23KV_Tris_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD' ]
+New Line.A1 Phases= 3  Bus1=01_2.1.2.3 Bus2=02_1.1.2.3 Length=486.766 units=m Spacing=PEC_PEC_23KV_Tris_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD' ]
