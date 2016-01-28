@@ -37,8 +37,8 @@ d       = (2*D+1)*N+2*S;
 
 f_a     = zeros(N,1);
 f_b     = zeros(S,1);
-f_beta  = zeros(S,1);
-f_c     = -ones(N*D,1) + repmat(-[NODE.w]'.*[NODE.p]',D,1);
+f_beta  = ones(S,1);
+f_c     = -ones(N*D,1) - repmat([NODE.w]'.*[NODE.p]',D,1);
 f_gamma = zeros(D*N,1);
 f_d     = zeros(S,1);
 
@@ -101,47 +101,66 @@ for i = 1:SC
     
     A4(i,b+index) = 1; % coeff for b_ij (4)
 end
-    
+
+% -DSCS-(6)-to-(9)----------------------------------------------------------
+% (6)    beta_ij - b_ij <= n_ij       all (i,j) in S
+% (7) -( beta_ij - b_ij ) <= n_ij     all (i,j) in S
+% (8) -( beta_ij + b_ij ) <= - n_ij   all (i,j) in S
+% (9)    beta_ij + b_ij <= 2 - n_ij   all (i,j) in S
+
+b6 = [SECTION.NormalStatus]';
+b7 = [SECTION.NormalStatus]';
+b8 = -[SECTION.NormalStatus]';
+b9 = 2*ones(S,1)-[SECTION.NormalStatus]';
+
+A6 = zeros(S,xlen);
+A6(:,beta+1:beta+S) = eye(S); % coeff for beta_ij (6)
+A9 = A6; % coeff for beta_ij (9)
+A6(:,b+1:b+S) = -eye(S); % coeff for b_ij (6)
+A7 = -A6; % coeff for beta_ij, b_ij (7)
+A9(:,b+1:b+S) = eye(S); % coeff for b_ij (9)
+A8 = -A9; % coeff for beta_ij, b_ij (8)
+
 % -MCC-(11)-to-(13)----------------------------------------------------------
 % (11)  c_id - gamma_id <= 0         all i in N, d in D
 % (12)  c_id - a_i <= 0              all i in N, d in D
 % (13) -c_id + gamma_id + a_i <= 1   all i in N, d in D
 
-b6 = zeros(D*N,1); 
-b7 = zeros(D*N,1);
-b8 = ones (D*N,1);
+b11 = zeros(D*N,1); 
+b12 = zeros(D*N,1);
+b13 = ones (D*N,1);
 
-A6 = zeros(D*N,xlen);
-A6(:,c+1:c+D*N) = eye(D*N); % coeff for c_id (6)
-A7 = A6; % coeff for c_id (7)
-A7(:,a+1:a+N) = repmat(-eye(N),D,1); % coeff for a_i (7)
-A6(:,gamma+1:gamma+D*N) = -eye(D*N); % coeff for gamma_id (6)
-A8 = -A6; % coeff for c_id, gamma_id (8)
-A8(:,a+1:a+N) = repmat(eye(N),D,1); % coeff for a_i (8)
+A11 = zeros(D*N,xlen);
+A11(:,c+1:c+D*N) = eye(D*N); % coeff for c_id (11)
+A12 = A11; % coeff for c_id (12)
+A12(:,a+1:a+N) = repmat(-eye(N),D,1); % coeff for a_i (12)
+A11(:,gamma+1:gamma+D*N) = -eye(D*N); % coeff for gamma_id (11)
+A13 = -A11; % coeff for c_id, gamma_id (13)
+A13(:,a+1:a+N) = repmat(eye(N),D,1); % coeff for a_i (13)
 
-% -MCC-(9)-to-(11)--VDC-(20)-&-(21)----------------------------------------
-% (9) sum(alpha s_i c_id) <= KVAmax_d  all d in D
-%     i<N
-% (10) sum(gamma_id) <= 1              all i in N
+% -MCC-(14)-to-(16)--VDC-(20)-&-(21)---------------------------------------
+% (14) sum(alpha s_i c_id) <= KVAmax_d  all d in D
+%      i<N
+% (15) sum(gamma_id) <= 1               all i in N
 %      d<D
-% (11) gamma_dd = 1                    all d in D
-% (20) d_ij - b_ij <= 0                all (i,j) in S
-% (21) d_dj - b_dj = 0                 all (d,j) in S, d in D
-%      d_id = 0                        all (i,d) in S, d in D
+% (16) gamma_dd = 1                     all d in D
+% (20) d_ij - b_ij <= 0                 all (i,j) in S
+% (21) d_dj - b_dj = 0                  all (d,j) in S, d in D
+%      d_id = 0                         all (i,d) in S, d in D
 
 % index = { id  dj }
 
-b9 = [DER.CAPACITY]'; % CHECK TO SEE IF ORIENTED CORRECTLY
-b10 = ones(N,1);
-b11 = ones(D,1);
+b14 = [DER.CAPACITY]'; % CHECK TO SEE IF ORIENTED CORRECTLY
+b15 = ones(N,1);
+b16 = ones(D,1);
 b20 = zeros(S,1);
 
-A9 = zeros(D,xlen);
+A14 = zeros(D,xlen);
 
-A10 = zeros(N,xlen);
-A10(:,gamma+1:gamma+D*N) = repmat(eye(N),1,D); % coeff for gamma_id (10)
+A15 = zeros(N,xlen);
+A15(:,gamma+1:gamma+D*N) = repmat(eye(N),1,D); % coeff for gamma_id (15)
 
-A11 = zeros(D,xlen);
+A16 = zeros(D,xlen);
 
 A20 = zeros(S,xlen);
 A20(:,d+1:d+S) = eye(S); % coeff for d_ij (20)
@@ -152,12 +171,12 @@ A21 = zeros(1,xlen);
 temp = alpha*[NODE.p]/pf;
 j = 1;
 for i = 1:D
-    A9(i,c+(i-1)*N+1:c+i*N) = temp;  % coeff for c_id  all i in N, d constant (9)
+    A14(i,c+(i-1)*N+1:c+i*N) = temp;  % coeff for c_id  all i in N, d constant (14)
     
     % Find node index of DER
     index = find(ismember({NODE.ID},DER(i).ID));
     
-    A11(i,gamma+(i-1)*d+index) = 1;  % coeff for gamma_dd (11)
+    A16(i,gamma+(i-1)*d+index) = 1;  % coeff for gamma_dd (16)
     
     % Find section index of all sections adjacent to DER
     index = {find(ismember({SECTION.FROM},DER(i).ID)),...
@@ -182,8 +201,30 @@ clear temp
 
 b21 = zeros(j-1,1);
 
-% -MCC-(12)--VDC-(26)-&-(29)-to-(30)---------------------------------------
-% (12) gamma_id - gamma_jd + b_ij <= 1    all (i,j) in S, d in D
+% -MCC-(19)----------------------------------------------------------------
+% (19)
+
+b19 = zeros(D*(N-D),1);
+
+A19 = zeros(D*N,xlen);
+A19(:,gamma+1:gamma+D*N) = eye(D*N);
+
+for i = 1:N
+    index = {find(ismember({SECTION.FROM},NODE(i).ID)),...
+        find(ismember({SECTION.TO},NODE(i).ID))};
+    
+    A19(i+0:N:D*N,d+index{1}) = 1;
+    A19(i+0:N:D*N,[b+index{1},d+index{2}]) = -1;
+end
+
+for i = 1:D
+    index = find(ismember({NODE.ID},DER(i).ID));
+    A19(index+0:N:D*N,:) = [];
+end
+
+
+% -MCC-(17)--VDC-(26)-&-(29)-to-(30)---------------------------------------
+% (17) gamma_id - gamma_jd + b_ij <= 1    all (i,j) in S, d in D
 %   -( gamma_id - gamma_jd ) + b_ij <= 1  all (i,j) in S, d in D
 
 % index = [ FROM  ,  TO ]
@@ -201,12 +242,12 @@ b21 = zeros(j-1,1);
 
 % index = { ik  ki  jk  kj }
 
-b12 = ones(2*D*S,1);
+b17 = ones(2*D*S,1);
 b26 = (M+1)*ones(S,1);
 b29 = M*ones(2*S,1);
 b30 = [(M+1)*ones(S,1);zeros(S,1)];
 
-A12 = zeros(2*D*S,xlen);
+A17 = zeros(2*D*S,xlen);
 A26 = zeros(S,xlen);
 A29 = zeros(2*S,xlen);
 A30 = zeros(2*S,xlen);
@@ -216,10 +257,10 @@ for k = 1:S % for each section (i,j)
     index = [find(ismember({NODE.ID},SECTION(k).FROM)),...
     find(ismember({NODE.ID},SECTION(k).TO))];
     
-    A12(k+0:S:(D-1)*S,gamma+index(1)) = 1; % coeff for gamma_id (12.1)
-    A12(k+0:S:(D-1)*S,gamma+index(2)) = -1; % coeff for gamma_jd (12.1)
-    A12(k+D*S:S:(2*D-1)*S) = -A12(k+0:S:(D-1)*S,:); % coeff for gamma_id, gamma_jd (12.2)
-    A12(k+0:S:(2*D-1)*S,b+k) = 1; % coeff for b_ij (12.1) (12.2)
+    A17(k+0:S:D*S,gamma+index(1)) = 1; % coeff for gamma_id (17.1)
+    A17(k+0:S:D*S,gamma+index(2)) = -1; % coeff for gamma_jd (17.1)
+    A17(k+D*S:S:2*D*S,:) = -A17(k+0:S:D*S,:); % coeff for gamma_id, gamma_jd (17.2)
+    A17(k+0:S:2*D*S,b+k) = 1; % coeff for b_ij (17.1) (17.2)
     
     % Find Index of all adjacent sections
     index = {find(ismember({SECTION.FROM},SECTION(k).FROM)),...
@@ -257,8 +298,8 @@ for i = 1:D
     A30([index,index+S],:) = [];
 end
 
-Aineq = [A6;A7;A8;A9;A10;A12;A20;A26;A29;A30];
-bineq = [b6;b7;b8;b9;b10;b12;b20;b26;b29;b30];
+Aineq = [A6;A7;A8;A9;A11;A12;A13;A14;A15;A17;A19;A20;A26;A29;A30];
+bineq = [b6;b7;b8;b9;b11;b12;b13;b14;b15;b17;b19;b20;b26;b29;b30];
 
-Aeq = [A1;A2;A3;A4;A11;A21];
-beq = [b1;b2;b3;b4;b11;b21];
+Aeq = [A1;A2;A3;A4;A16;A21];
+beq = [b1;b2;b3;b4;b16;b21];
