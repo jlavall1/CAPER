@@ -34,6 +34,7 @@ if feeder_NUM == 1
     end
     energy_line = '258839833';
     fprintf('Characteristics for:\t1 - BELLHAVEN\n\n');
+    vbase = 7;
 elseif feeder_NUM == 2
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss';
     peak_current = [345.492818586166,362.418979727275,291.727365549702];
@@ -47,6 +48,7 @@ elseif feeder_NUM == 2
     
     energy_line = '259355408';
     fprintf('Characteristics for:\t1 - COMMONWEALTH\n\n');
+    vbase = 7;
 elseif feeder_NUM == 3
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss';
     peak_current = [196.597331353572,186.718068471483,238.090235458346];
@@ -60,6 +62,7 @@ elseif feeder_NUM == 3
     
     energy_line = '259363665';
     fprintf('Characteristics for:\t1 - FLAY\n\n');
+    vbase = 7;
 elseif feeder_NUM == 4
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss';
     peak_current = [232.766663065503,242.994085721044,238.029663479192];
@@ -73,6 +76,7 @@ elseif feeder_NUM == 4
     
     energy_line = 'PH997__2571841';
     fprintf('Characteristics for:\t1 - ROXBORO\n\n');
+    vbase = 13;
 elseif feeder_NUM == 5
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\HollySprings_Circuit_Opendss';
     peak_current = [263.73641240095,296.245661392728,201.389207853812];
@@ -86,6 +90,7 @@ elseif feeder_NUM == 5
     
     energy_line = '10EF34__2663676';
     fprintf('Characteristics for:\t1 - HOLLY SPRINGS\n\n');
+    vbase = 13;
 elseif feeder_NUM == 6
     %fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\ERaleigh_Circuit_Opendss';
     fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\ERaleigh_Circuit_1';
@@ -100,6 +105,7 @@ elseif feeder_NUM == 6
     
     energy_line = 'PDP28__2843462';
     fprintf('Characteristics for:\t1 - E.RALEIGH\n\n');
+    vbase = 7;
 end
 
 str = strcat(fileloc,'\Master.DSS');
@@ -140,6 +146,18 @@ Lines_Distance = Lines(index);
 xfmrNames = DSSCircuit.Transformers.AllNames;
 lineNames = DSSCircuit.Lines.AllNames;
 loadNames = DSSCircuit.Loads.AllNames;
+Lines_Base = getLineInfo(DSSCircObj);
+Buses_Base = getBusInfo(DSSCircObj);
+ii = 1;
+j = 1;
+while ii<length(Buses)
+    if Buses(ii,1).numPhases == 3 && Buses(ii,1).kVBase > vbase && Buses(ii,1).distance ~= 0
+        legal_buses{j,1} = Buses(ii,1).name;
+        legal_distances{j,1} = Buses(ii,1).distance;
+        j = j + 1;
+    end
+    ii =ii + 1;
+end
 
 %-------------------------------------------------------------------------
 %Find Conductor total distance:
@@ -201,6 +219,7 @@ elseif load_LVL == 3
     fprintf('Overall End Resistance: %3.3f ohms\n',Lines_Distance(max_dist_bus,1).bus1Zsc1(1,1));
     fprintf('KW Load Center Resistance: %3.3f ohms\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
     fprintf('Distance Load Center Resistance: %3.3f ohms\n',Lines_Distance(distance_diff(1,2),1).bus1Zsc1(1,1));
+    SC_Imped=struct('Zsc1', {Buses(1:end).Zsc1}, 'Zsc0', {Buses(1:end).Zsc0});
     %Plot Rsc1 vs km from sub:
 %%
     figure(1);

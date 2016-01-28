@@ -1,194 +1,3 @@
-%Post function results to replicate paper:
-%Use of ERPI CKT7
-clear
-clc
-close all
-UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
-set(0, 'DefaultUIControlFontSize', 18);
-addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
-%User Menus:
-ckt_num=menu('Which Circuit?','1)Bellhaven','2)Commonwealth','3)Flay','4)Roxboro','5)Hollysprings','6)E.Raleigh','7)EPRI 7');
-while ckt_num<1
-    ckt_num=menu('Which Circuit?','1)Bellhaven','2)Commonwealth','3)Flay','4)Roxboro','5)Hollysprings','6)E.Raleigh','7)EPRI 7');
-end
-sim_type=menu('Load Level:','summer-2s','winter-2s','summer','winter');
-while sim_type<1
-    sim_type=menu('Load Level:','summer-2s','winter-2s','summer','winter');
-end
-plot_type=menu('What kind of plot?','Quartiles','Violation Percentages');
-while plot_type<1
-    plot_type=menu('What kind of plot?','Quartiles','Violation Percentages');
-end
-
-%DER_Planning_GUI_1
-%gui_response = STRING_0;
-%ckt_num = gui_response{1,2};
-%ckt_num = 2;
-%Load results and information about the circuit-
-%load RESULTS_9_3_2015.mat
-%load RESULTS_9_10_2015.mat
-%load RESULTS_9_11_2015.mat
-if ckt_num == 1
-    %Bellhaven:
-    feeder_name = 'BELL';
-    %   1]
-    load RESULTS_BELL_048.mat
-    RESULTS_SU_MIN=RESULTS;
-    sort_Results_1 = xlsread('RESULTS_BELL.xlsx','BELL_048');
-    %   2]
-    load RESULTS_BELL_043.mat
-    RESULTS_WN_MIN=RESULTS;
-    sort_Results_2 = xlsread('RESULTS_BELL.xlsx','BELL_043');
-    %   3]
-    load RESULTS_BELL_070.mat
-    RESULTS_SU=RESULTS;
-    sort_Results_3 = xlsread('RESULTS_BELL.xlsx','BELL_070');
-    %Feeder component files:
-    load config_LOADNAMES_BELL.mat
-    load config_LINENAMES_BELL.mat
-    load config_XFMRNAMES_BELL.mat
-    
-elseif ckt_num == 2
-    %Commonwealth:
-    feeder_name = 'CMNW';
-    %   1]
-    load RESULTS_CMNW_045.mat
-    RESULTS_SU_MIN=RESULTS;
-    sort_Results_1 = xlsread('RESULTS_CMNW.xlsx','CMNW_045');
-    %   2]
-    load RESULTS_CMNW_040.mat
-    RESULTS_WN_MIN=RESULTS;
-    sort_Results_2 = xlsread('RESULTS_CMNW.xlsx','CMNW_040');
-    %   3]
-    load RESULTS_CMNW_065.mat
-    RESULTS_SU=RESULTS;
-    sort_Results_3 = xlsread('RESULTS_CMNW.xlsx','CMNW_065');
-        
-    %load RESULTS_9_18_2015.mat
-    %load DISTANCE_CMNWLTH.mat
-    load config_LOADNAMES_CMNWLTH.mat
-    load config_LINENAMES_CMNWLTH.mat
-    load config_XFMRNAMES_CMNWLTH.mat
-    %sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_18');
-    %sort_Results = xlsread('RESULTS_SORTED_2.xlsx','9_19');
-elseif ckt_num == 3
-    %FLAY:
-    feeder_name = 'FLAY';
-    %   1]
-    load RESULTS_FLAY_030.mat
-    RESULTS_SU_MIN=RESULTS;
-    sort_Results_1 = xlsread('RESULTS_FLAY.xlsx','FLAY_030');
-    %   2]
-    load RESULTS_FLAY_025.mat
-    RESULTS_WN_MIN=RESULTS;
-    sort_Results_2 = xlsread('RESULTS_FLAY.xlsx','FLAY_025');
-    %   3]
-    load RESULTS_FLAY_SS_1.mat
-    RESULTS_SU=RESULTS;
-    sort_Results_3 = xlsread('RESULTS_FLAY.xlsx','FLAY_062');
-    
-    %configs:
-    load config_LOADNAMES_FLAY.mat
-    load config_LINENAMES_FLAY.mat
-    load config_XFMRNAMES_FLAY.mat
-elseif ckt_num == 4
-    %ROX:
-    feeder_name = 'ROX';
-    %   1]
-    %load RESULTS_ROX_042.mat
-    RESULTS_SU_MIN=RESULTS;
-    sort_Results_1 = xlsread('RESULTS_ROX.xlsx','CMNW_045');
-    %   2]
-    load RESULTS_ROX_040.mat
-    RESULTS_WN_MIN=RESULTS;
-    sort_Results_2 = xlsread('RESULTS_ROX.xlsx','CMNW_040');
-    %   3]
-    load RESULTS_ROX_062.mat
-    RESULTS_SU=RESULTS;
-    sort_Results_3 = xlsread('RESULTS_ROX.xlsx','CMNW_062');
-elseif ckt_num == 5
-    %HOLLYSPRINGS:
-    feeder_name = 'HLLY';
-    %   1]
-    load RESULTS_HLLY_025.mat
-    RESULTS_SU_MIN=RESULTS;
-    sort_Results_1 = xlsread('RESULTS_HLLY.xlsx','HLLY_025');
-    %   2]
-    load RESULTS_HLLY_020.mat
-    RESULTS_WN_MIN=RESULTS;
-    sort_Results_2 = xlsread('RESULTS_HLLY.xlsx','HLLY_020');
-    %   3]
-    load RESULTS_HLLY_054.mat
-    RESULTS_SU=RESULTS;
-    sort_Results_3 = xlsread('RESULTS_HLLY.xlsx','HLLY_054');
-    
-    %configs:
-    load config_LOADNAMES_HLLY.mat
-    load config_LINENAMES_HLLY.mat
-    load config_XFMRNAMES_HLLY.mat
-elseif ckt_num == 6
-    %ERALEIGH:
-    feeder_name = 'ERAL';
-    %   1]
-    load RESULTS_ERAL_056.mat
-    RESULTS_SU_MIN=RESULTS;
-    sort_Results_1 = xlsread('RESULTS_ERAL.xlsx','ERAL_056');
-    %   2]
-    load RESULTS_ERAL_050.mat
-    RESULTS_WN_MIN=RESULTS;
-    sort_Results_2 = xlsread('RESULTS_ERAL.xlsx','ERAL_050');
-    %   3]
-    load RESULTS_ERAL_075.mat
-    RESULTS_SU=RESULTS;
-    sort_Results_3 = xlsread('RESULTS_ERAL.xlsx','ERAL_075');
-    
-    %configs:
-    load config_LOADNAMES_ERAL.mat
-    load config_LINENAMES_ERAL.mat
-    load config_XFMRNAMES_ERAL.mat
-    %legal positions tested:
-    LEGAL=113;
-elseif ckt_num == 7
-    load RESULTS_9_14_2015.mat
-    load DISTANCE.mat
-    load config_LOADNAMES_CKT7.mat
-    load config_LINENAMES_CKT7.mat
-    load config_XFMRNAMES_CKT7.mat
-    sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14_1');
-end
-%%
-    
-%1) Setup the COM server
-%[DSSCircObj, DSSText, gridpvPath] = DSSStartup;
-
-%2) Compile the Circuit:
-%DSSText.command = 'compile C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\EPRI_ckt7\Master_ckt7.dss';
-%DSSText.command = 'solve';
-
-%3) Setup a pointer(handle) of the active circuit:
-%DSSCircuit = DSSCircObj.ActiveCircuit;
-
-%4) Obtain Component Names:
-%xfmrNames = DSSCircuit.Transformers.AllNames;
-%lineNames = DSSCircuit.Lines.AllNames;
-
-%loadNames = DSSCircuit.Loads.AllNames;
-%busNames = DSSCircuit.Buses.AllNames;
-%5) Obtain Component Structs:
-%Capacitors = getCapacitorInfo(DSSCircObj);
-%Loads = getLoadInfo(DSSCircObj);
-%Buses = getBusInfo(DSSCircObj);
-%Transformers = getTransformerInfo(DSSCircObj);
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%PV_size | Active PV bus | max P.U. | max %thermal | max %thermal 
-
-%sort_Results = sortrows(RESULTS(1:10000,1:6),1);
-%sort_Results = xlsread('RESULTS_SORTED.xlsx','9_10');
-%sort_Results = xlsread('RESULTS_SORTED.xlsx','9_11');
-%sort_Results = xlsread('RESULTS_SORTED.xlsx','9_14_1');
-%
 n = 100;
 DONE = 0;
 jj = 1;
@@ -247,7 +56,8 @@ elseif ckt_num == 3
     %Flay
     nn = 344;
 elseif ckt_num == 4
-    nn = 300;
+    %ROX
+    nn = 428;
 elseif ckt_num == 5
     %HOLLY
     nn = 261;
@@ -643,6 +453,7 @@ if plot_type == 2
     m = 1;
     violations = zeros(100,4); %totalV | V_vio | I_vio | PV_KW
     for i=1:1:3
+        %Select which set of sims for violations:
         if i==1
             SMk=SM;
         elseif i==2
@@ -653,7 +464,7 @@ if plot_type == 2
 
         while n < 10100
             %Voltage Profiles:
-            for j=1:1:199
+            for j=1:1:nn
                 if SMk.(['PU_',num2str(n)])(j,1) > 1.05
                     count_v = count_v + 1;
                 end
@@ -663,9 +474,9 @@ if plot_type == 2
                 end
             end
 
-            violations(m,1) = 100*(count_v+count_i)/(199*2); %total violations
-            violations(m,2) = 100*(count_v/199); %voltage violations
-            violations(m,3) = 100*(count_i/199); %current violations
+            violations(m,1) = 100*(count_v+count_i)/(nn*2); %total violations
+            violations(m,2) = 100*(count_v/nn); %voltage violations
+            violations(m,3) = 100*(count_i/nn); %current violations
             violations(m,4) = n;
 
             %Refresh Variables:
@@ -676,13 +487,14 @@ if plot_type == 2
         end
         %Reset outer variables:
         if i==1
-            vio.L50=violations;
+            vio.SU_2S=violations;
             violations = zeros(100,4);
         elseif i==2
-            vio.L30=violations;
+            vio.WT_2S=violations;
             violations = zeros(100,4);
         elseif i==3
-            vio.L25=violations;
+            vio.SU=violations;
+            violations = zeros(100,4);
         end
         n=100;
         m=1;
@@ -695,29 +507,29 @@ if plot_type == 2
     fig = fig + 1;
     figure(fig)
     %Loading condition #1
-    h(1) = plot(vio.L50(:,4),vio.L50(:,2),'b.','LineWidth',6);
+    h(1) = plot(vio.SU_2S(:,4),vio.SU_2S(:,2),'b.','LineWidth',6);
     hold on
-    h(2) = plot(vio.L50(:,4),vio.L50(:,2),'b-','LineWidth',1);
+    h(2) = plot(vio.SU_2S(:,4),vio.SU_2S(:,2),'b-','LineWidth',1);
     hold on
-    h(3) = plot(vio.L50(:,4),vio.L50(:,3),'go','LineWidth',3);
+    h(3) = plot(vio.SU_2S(:,4),vio.SU_2S(:,3),'go','LineWidth',3);
     hold on
-    h(4) = plot(interp(vio.L50(:,4),20),interp(vio.L50(:,3),20),'g.','LineWidth',0.5);
+    h(4) = plot(interp(vio.SU_2S(:,4),20),interp(vio.SU_2S(:,3),20),'g.','LineWidth',0.5);
     %Loading condition #2
-    h(5) = plot(vio.L25(:,4),vio.L25(:,2),'k.','LineWidth',6);
+    h(5) = plot(vio.WT_2S(:,4),vio.WT_2S(:,2),'k.','LineWidth',6);
     hold on
-    h(6) = plot(vio.L25(:,4),vio.L25(:,2),'k-','LineWidth',1);
+    h(6) = plot(vio.WT_2S(:,4),vio.WT_2S(:,2),'k-','LineWidth',1);
     hold on
-    h(7) = plot(vio.L25(:,4),vio.L25(:,3),'co','LineWidth',3);
+    h(7) = plot(vio.WT_2S(:,4),vio.WT_2S(:,3),'co','LineWidth',3);
     hold on
-    h(8) = plot(interp(vio.L25(:,4),20),interp(vio.L25(:,3),20),'c.','LineWidth',0.5);
+    h(8) = plot(interp(vio.WT_2S(:,4),20),interp(vio.WT_2S(:,3),20),'c.','LineWidth',0.5);
 
 
 
-    legend([h(1),h(5),h(3),h(7)],'Voltage Violations (50%)','Voltage Violations (25%)','Line Loading Violations (50%)','Line Loading Violations (25%)','Location','NorthWest');
+    legend([h(1),h(5),h(3),h(7)],'Voltage Violations (SU-2S)','Voltage Violations (WT-2S)','Line Loading Violations (SU-2S)','Line Loading Violations (WT-2S)','Location','NorthWest');
     axis([0 10000 0 140]);
     ylabel('Scenarios at Each PV Size With Violations [%]','FontWeight','bold','FontSize',12);
-    xlabel('PV Capacity (P_{pv}) [kW]','FontWeight','bold','FontSize',12);
-    title('Percent of PV Scenerioes with violations at two load levels','FontWeight','bold');
+    xlabel('PV Capacity (P_{pv }) [kW]','FontWeight','bold','FontSize',12);
+    title(sprintf('Percent of PV Scenerioes with violations at 2 load levels for: %s',feeder_name),'FontWeight','bold');
     set(gca,'FontWeight','bold');
     grid on
 end
