@@ -27,6 +27,7 @@ if ckt_num == 1
         load config_LEGALBUSES_BELL.mat      %legal_buses
         load config_LEGALDISTANCE_BELL.mat  %legal_distances
         load config_BUSESBASE_BELL.mat   %Buses_Base
+        load config_Zsc_BELL.mat %SC
         begin_M = 2;
         i = 2; %skip bus3 b/c distance to sub = 0km
         ii = 2;
@@ -62,6 +63,7 @@ elseif ckt_num == 2
         load config_LEGALBUSES_CMNWLTH.mat
         load config_LEGALDISTANCE_CMNWLTH.mat
         load config_BUSESBASE_CMNWLTH.mat   %Buses_Base
+        load config_Zsc_CMNWLTH.mat
         begin_M = 2;
         i = 2; %skip bus3 b/c distance to sub = 0km
         ii = 2;
@@ -95,6 +97,7 @@ elseif ckt_num == 3
         load config_LEGALBUSES_FLAY.mat
         load config_LEGALDISTANCE_FLAY.mat
         load config_BUSESBASE_FLAY.mat
+        load config_Zsc_FLAY.mat
         begin_M = 2;
         i = 2; %where you want to start in RESULTS
         ii = 2;
