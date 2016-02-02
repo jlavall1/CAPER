@@ -24,7 +24,7 @@ gui_response = STRING_0;
 
 ckt_direct      = gui_response{1,1}; %entire directory string of where the cktfile is locatted
 feeder_NUM      = gui_response{1,2};
-scenerio_NUM    = gui_response{1,3}; %1=VREG-top ; 2=VREG-bot ; 3=steadystate ; 4=RR_up ; 5=RR_down
+scenerio_NUM    = gui_response{1,3}; %1=VREG-top ; 2=VREG-bot ; 3=steadystate ; 4=RR_up ; 5=RR_down; 6=SC Study
 base_path       = gui_response{1,4};  %github directory based on user's selected comp. choice;
 cat_choice      = gui_response{1,5}; %DEC DEP EPRI;
 Static_Host     = gui_response{1,6}; %1=YES ; 0=NO
@@ -51,7 +51,11 @@ addpath(path);
 % 2. Select algo that user wants:
 if Static_Host == 1
     %User wants static hosting cap. algo.
-    Hosting_Cap_stream
+    if scenerio_NUM < 6
+        Hosting_Cap_stream
+    else
+        Fault_Study
+    end
 else
     % 2. Generate Real Power & PV loadshape files:
     if QSTS_select == 0

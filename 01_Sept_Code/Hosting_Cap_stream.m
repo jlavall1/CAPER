@@ -148,8 +148,11 @@ while ii < length(Buses)
     end
     ii = ii + 1;
 end
-
-DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=12.47 kW=100 pf=1.00 enabled=false',Buses(bus_init,1).name);
+if feeder_NUM ~= 3 && feeder_NUM ~= 4
+    DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=12.47 kW=100 pf=1.00 enabled=false',Buses(bus_init,1).name);
+else
+    DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=22.87 kW=100 pf=1.00 enabled=false',Buses(bus_init,1).name);
+end
 %DSSText.command = 'solve';
 DSSText.command =sprintf('solve loadmult=%s',num2str(pu_load));
 Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;

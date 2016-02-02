@@ -27,14 +27,14 @@ if plot_type1 == 1
         plot_type=menu('What kind of plot?','Quartiles','Violation Percentages','Color Display of all Data','max PV vs. Rsc (Location)');
     end
     if plot_type < 3
-        Post_Process_DATA
-        Post_Process
+        Post_Process_DATA       %Loads in result files
+        Post_Process            %Figures 3 -> 5
     elseif plot_type < 5
-       Post_Process_DATA
-       Post_Process_2
+       Post_Process_DATA        %Loads in result files
+       Post_Process_2           %Figure 9
     end
 elseif plot_type1 == 2
     %Thesis Report
-    Post_Process_3
+    Post_Process_3              %Figure
 end
    
