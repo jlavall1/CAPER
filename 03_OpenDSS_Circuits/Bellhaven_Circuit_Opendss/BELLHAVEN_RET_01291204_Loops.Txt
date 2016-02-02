@@ -1,0 +1,16 @@
+Loops and Paralleled Lines in all EnergyMeter Zones
+
+(circuitmeter) Line.263514907: LOOPED TO     Line.263514902
+(circuitmeter) Line.263514902: LOOPED TO     Line.263514907
+(circuitmeter) Line.263514835: LOOPED TO     Line.263514830
+(circuitmeter) Line.263514830: LOOPED TO     Line.263514835
+(circuitmeter) Line.263565089: LOOPED TO     Line.263565084
+(circuitmeter) Line.263565084: LOOPED TO     Line.263565089
+(circuitmeter) Line.472684220: LOOPED TO     Line.460932411
+(circuitmeter) Line.460932411: LOOPED TO     Line.472684220
+(circuitmeter) Line.460932382: LOOPED TO     Line.460932377
+(circuitmeter) Line.460932377: LOOPED TO     Line.460932382
+(circuitmeter) Line.263515051: LOOPED TO     Line.263515046
+(circuitmeter) Line.263515046: LOOPED TO     Line.263515051
+(circuitmeter) Line.263701624: LOOPED TO     Line.263701619
+(circuitmeter) Line.263701619: LOOPED TO     Line.263701624

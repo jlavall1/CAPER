@@ -91,7 +91,12 @@ figure(1);
 
 Buses =getBusInfo(DSSCircObj);
 %Import desired Buses based on user selection:
-if ckt_num == 1 %commonwealth
+if ckt_num == 0 %Bellhaven
+    load config_LEGALBUSES_BELL.mat
+    load config_LEGALDISTANCE_BELL.mat
+    peak_current = [424.489787369243,385.714277946091,446.938766508963];
+    energy_line = '258839833';
+elseif ckt_num == 1 %commonwealth
     load config_LEGALBUSES_CMNWLTH.mat
     load config_LEGALDISTANCE_CMNWLTH.mat %legal_distances
 elseif ckt_num == 7 %EPRI-7
@@ -156,7 +161,9 @@ hf1 = figure(2);
 ax1 = axes('Parent',hf1);
 hold on;
 gcf=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');
-title(titlestring);
+set(gca,'xtick',[]);
+set(gca,'ytick',[]);
+%title(titlestring);
 
 %PV_PCC buses
 

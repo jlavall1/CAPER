@@ -30,9 +30,7 @@ Redirect UGLines.dss
 Redirect LinesByPhase.dss
 Redirect Loads.dss
 Redirect Capacitors.dss
-
 Redirect SwtControls.dss
-!Redirect FuseSettings.dss
 
 ! 
 ! Set the voltage bases

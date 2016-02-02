@@ -23,8 +23,13 @@ while ii < length(sort_Results_1)-1
     SM2.(['THRM_',num2str(n)]) = sort_Results_3(ii:ii+inc,4);
     SM2.(['PU_',num2str(n)]) = sort(SM2.(['PU_',num2str(n)])(:,1));
     SM2.(['THRM_',num2str(n)]) = sort(SM2.(['THRM_',num2str(n)])(:,1));
+    %   Winter mean Loading Condition --
+    SM3.(['PU_',num2str(n)]) = sort_Results_4(ii:ii+inc,2);
+    SM3.(['THRM_',num2str(n)]) = sort_Results_4(ii:ii+inc,4);
+    SM3.(['PU_',num2str(n)]) = sort(SM3.(['PU_',num2str(n)])(:,1));
+    SM3.(['THRM_',num2str(n)]) = sort(SM3.(['THRM_',num2str(n)])(:,1));
     
-    %fprintf('hit!!\n');
+    
     ii = ii + inc + 1;
     n = n + 100;
     %SM.(pv_size{n+1,1}).A(m,1) = sort_RESULTS(ii,4);
@@ -88,6 +93,8 @@ while n < 10100
         SM_SLT=SM1;
     elseif sim_type == 3
         SM_SLT=SM2;
+    elseif sim_type == 4
+        SM_SLT=SM3;
     end
     
     for j=1:1:9
@@ -274,6 +281,8 @@ if plot_type == 1
         LVL_NM='WTR-2S';
     elseif sim_type == 3
         LVL_NM='SMR';
+    elseif sim_type == 4
+        LVL_NM='WTR';
     end
     title(sprintf('Effect of PV size on max bus voltage under %s Load for %s',LVL_NM,feeder_name),'FontWeight','bold');
     set(gca,'FontWeight','bold');
@@ -452,7 +461,7 @@ if plot_type == 2
     n = 100;
     m = 1;
     violations = zeros(100,4); %totalV | V_vio | I_vio | PV_KW
-    for i=1:1:3
+    for i=1:1:4
         %Select which set of sims for violations:
         if i==1
             SMk=SM;
@@ -460,7 +469,9 @@ if plot_type == 2
             SMk=SM1;
         elseif i==3
             SMk=SM2;
-        end  
+        elseif i==4
+            SMk=SM3;
+        end
 
         while n < 10100
             %Voltage Profiles:
@@ -495,6 +506,9 @@ if plot_type == 2
         elseif i==3
             vio.SU=violations;
             violations = zeros(100,4);
+        elseif i==4
+            vio.WT=violations;
+            violations = zeros(100,4);
         end
         n=100;
         m=1;
@@ -522,10 +536,35 @@ if plot_type == 2
     h(7) = plot(vio.WT_2S(:,4),vio.WT_2S(:,3),'co','LineWidth',3);
     hold on
     h(8) = plot(interp(vio.WT_2S(:,4),20),interp(vio.WT_2S(:,3),20),'c.','LineWidth',0.5);
-
-
-
+    %---------------Settings:
     legend([h(1),h(5),h(3),h(7)],'Voltage Violations (SU-2S)','Voltage Violations (WT-2S)','Line Loading Violations (SU-2S)','Line Loading Violations (WT-2S)','Location','NorthWest');
+    axis([0 10000 0 140]);
+    ylabel('Scenarios at Each PV Size With Violations [%]','FontWeight','bold','FontSize',12);
+    xlabel('PV Capacity (P_{pv }) [kW]','FontWeight','bold','FontSize',12);
+    title(sprintf('Percent of PV Scenerioes with violations at 2 load levels for: %s',feeder_name),'FontWeight','bold');
+    set(gca,'FontWeight','bold');
+    grid on
+    %--Now lets plot the means:
+    fig = fig + 1;
+    figure(fig)
+    %Loading condition #1
+    h(1) = plot(vio.SU(:,4),vio.SU(:,2),'b.','LineWidth',6);
+    hold on
+    h(2) = plot(vio.SU(:,4),vio.SU(:,2),'b-','LineWidth',1);
+    hold on
+    h(3) = plot(vio.SU(:,4),vio.SU(:,3),'go','LineWidth',3);
+    hold on
+    h(4) = plot(interp(vio.SU(:,4),20),interp(vio.SU(:,3),20),'g.','LineWidth',0.5);
+    %Loading condition #2
+    h(5) = plot(vio.WT(:,4),vio.WT(:,2),'k.','LineWidth',6);
+    hold on
+    h(6) = plot(vio.WT(:,4),vio.WT(:,2),'k-','LineWidth',1);
+    hold on
+    h(7) = plot(vio.WT(:,4),vio.WT(:,3),'co','LineWidth',3);
+    hold on
+    h(8) = plot(interp(vio.WT(:,4),20),interp(vio.WT(:,3),20),'c.','LineWidth',0.5);
+    %---------------Settings:
+    legend([h(1),h(5),h(3),h(7)],'Voltage Violations (SU mean)','Voltage Violations (WT mean)','Line Loading Violations (SU mean)','Line Loading Violations (WT mean)','Location','NorthWest');
     axis([0 10000 0 140]);
     ylabel('Scenarios at Each PV Size With Violations [%]','FontWeight','bold','FontSize',12);
     xlabel('PV Capacity (P_{pv }) [kW]','FontWeight','bold','FontSize',12);

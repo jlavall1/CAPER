@@ -148,8 +148,11 @@ while ii < length(Buses)
     end
     ii = ii + 1;
 end
-
-DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=12.47 kW=100 pf=1.00 enabled=false',Buses(bus_init,1).name);
+if feeder_NUM ~= 3 && feeder_NUM ~= 4
+    DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=12.47 kW=100 pf=1.00 enabled=false',Buses(bus_init,1).name);
+else
+    DSSText.command = sprintf('new generator.PV bus1=%s phases=3 kv=22.87 kW=100 pf=1.00 enabled=false',Buses(bus_init,1).name);
+end
 %DSSText.command = 'solve';
 DSSText.command =sprintf('solve loadmult=%s',num2str(pu_load));
 Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
@@ -417,7 +420,7 @@ while ii< length(Buses) %length(Buses)
             end
             RESULTS(jj,14)=P_loss;
             P_loss = 0;
-            
+            %{
             %Now increment the solar site:
             if RESULTS(jj,12) < 1.06
                 PV_size = PV_size + 100; %kW
@@ -435,8 +438,12 @@ while ii< length(Buses) %length(Buses)
                 n = n+ n1; %ghost index:
                 jj = jj + n1 + 1;
             end
+            %}
             %toc
             %fprintf('Next Iteration\n');
+            PV_size = PV_size + 100;
+            n = n + 1;
+            jj = jj + 1;
         end
         toc
         m = m + 1;

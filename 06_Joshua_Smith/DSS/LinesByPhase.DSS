@@ -1,2 +1,10 @@
-New Line.A Phases= 3  Bus1=01_1.1.2.3 Bus2=01_2.1.2.3 Length=486.766 units=m Spacing=PEC_PEC_23KV_Tris_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD' ]
-New Line.A1 Phases= 3  Bus1=01_2.1.2.3 Bus2=02_1.1.2.3 Length=486.766 units=m Spacing=PEC_PEC_23KV_Tris_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD' ]
+New Line.A1 Phases=3 Bus1=01_1.1.2.3 Bus2=01_2.1.2.3 Length=1597 units=ft Spacing=PEC_PEC_23KV_Tris_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD' ]
+New Line.A2 Phases=3 Bus1=01_2.1.2.3 Bus2=02_1.1.2.3 Length=1597 units=ft Spacing=PEC_PEC_23KV_Tris_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD' ]
+New Line.B1 Phases=3 Bus1=02_1.1.2.3 Bus2=02_2.1.2.3 Length=153.8 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD']
+New Line.B2 Phases=3 Bus1=02_2.1.2.3 Bus2=03_1.1.2.3 Length=153.8 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD']
+New LIne.C1 Phases=3 Bus1=03_1.1.2.3 Bus2=03_2.1.2.3 Length 1882.59 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
+New LIne.C2 Phases=3 Bus1=03_2.1.2.3 Bus2=04_1.1.2.3 Length 1882.59 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
+New Line.D1 Phases=3 Bus1=04_1.1.2.3 Bus2=04_2.1.2.3 Length 387.52 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
+New Line.D2 Phases=3 Bus1=04_2.1.2.3 Bus2=05_1.1.2.3 Length 387.52 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
+New Line.E1 Phases=3 Bus1=05_1.1.2.3 Bus2=05_2.1.2.3 Length 230 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
+
