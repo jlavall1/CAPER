@@ -12,7 +12,7 @@ Clear    ! Always start the Master with a Clear command
 ! Define the Circuit
 ! 
 New Circuit.BELLHAVEN_RET_01291204 Bus1=BELLHAVEN_RET_01291204
-~ BasekV= 12.47  pu= 1.00000002013976  angle= 0 
+~ BasekV= 12.47  pu= 1.03  angle= 0 
 ~ Z1=[ 0.035781 ,  0.939054 ] ! Actual ohms
 ~ Z2=[ 0.035781 ,  0.939054 ]
 ~ Z0=[ 0.030727 ,  0.902154 ]
@@ -26,11 +26,10 @@ Redirect UGLineCodes.dss
 ! 
 ! Circuit Element Data
 ! 
-Redirect UGLines.dss
-Redirect LinesByPhase.dss
+Redirect Lines_Corrected.dss
 Redirect Loads.dss
-Redirect Capacitors.dss
-Redirect SwtControls.dss
+Redirect Caps_Corrected.dss
+
 
 ! 
 ! Set the voltage bases

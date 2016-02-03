@@ -6,7 +6,7 @@ New Transformer.BELLHAVEN_RET_01291204 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.0
 ~ sub=yes
 
 New RegControl.BELLHAVEN_RET_01291204 Transformer=BELLHAVEN_RET_01291204 Winding=2 R= 0 X= 0
-~ Vreg= 120
+~ Vreg= 124
 ~ Band= 1 
 ~ PTratio= 60  
 ~ CTPrim= 100  

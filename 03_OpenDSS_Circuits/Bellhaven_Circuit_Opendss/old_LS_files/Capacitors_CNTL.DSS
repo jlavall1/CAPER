@@ -1,0 +1,9 @@
+!New Capacitor.38393648 Phases= 4  Bus1=258840425 kvar= 900  kV= 232.094808272 
+New Capacitor.38393673_Sw Phases= 3  Bus1=258850725 kvar= 900  kV= 12.47
+New Capacitor.38393644_Sw Phases= 3  Bus1=258839990 kvar= 900  kV= 12.47
+
+! Placeholder CapControl:
+New Capcontrol.38393673 Element=Line.258850723 Terminal=2 Capacitor=38393673_Sw Type=voltage ONsetting=118 OFFsetting=122 
+~ PTRatio= 1.11666666666667  VoltOverride=N Vmax = 116.000000 Vmin = 0 enabled=T delay=30
+New Capcontrol.38393644 Element=Line.258839988 Terminal=2 Capacitor=38393644_Sw Type=voltage ONsetting=118 OFFsetting=122 
+~ PTRatio= 1.11666666666667  VoltOverride=N Vmax = 116.000000 Vmin = 0 enabled=T delay=30

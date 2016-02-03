@@ -272,6 +272,7 @@ for i=1:1:length(Lines_Distance)
     phase_check(i,1).bus1phC=Lines_Distance(i,1).bus1PhaseCurrent;
     phase_check(i,1).bus1Voltage=Lines_Distance(i,1).bus1Voltage;
 end
+figure(2)
 plot([phase_check.bus1Voltage])
 %%
 

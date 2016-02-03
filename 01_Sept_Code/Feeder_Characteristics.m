@@ -25,14 +25,14 @@ load Annual_ls_BELL.mat
 BELL_LS=MAX;
 feeder_PeakMW(1,n)=(BELL_LS.YEAR.KW.A+BELL_LS.YEAR.KW.B+BELL_LS.YEAR.KW.C)/1000;
 feeder_CAP_Fixed(1,n)=900;
-feeder_CAP_Switch(1,n)=900;
-feeder_length_mi(1,n)=5.652*0.621371;
-feeder_length_ohm(1,n)=2.206;
-feeder_volt_peak_head(1,n)=0.101;
-feeder_volt_min_head(1,n)=0.058;
+feeder_CAP_Switch(1,n)=1800;
+feeder_length_mi(1,n)=5.79*0.621371;
+feeder_length_ohm(1,n)=1.38; %ohm
+feeder_volt_peak_head(1,n)=0.053;
+feeder_volt_min_head(1,n)=0.02;
 
 feeder_conductor(1,n)=20.515; %mi
-Load_Center_Resistance(1,n)=0.934; %ohm
+Load_Center_Resistance(1,n)=0.303; %ohm
 
 load Annual_daytime_load_BELL.mat   %WINDOW.DAYTIME.KW.A
 KW_3PH=WINDOW.DAYTIME.KW.A(:,1)+WINDOW.DAYTIME.KW.B(:,1)+WINDOW.DAYTIME.KW.C(:,1);
@@ -72,7 +72,7 @@ feeder_PeakMW(1,n)=(CMN_LS.YEAR.KW.A+CMN_LS.YEAR.KW.B+CMN_LS.YEAR.KW.C)/1000;
 feeder_CAP_Fixed(1,n)=300+600;
 feeder_CAP_Switch(1,n)=0;
 feeder_length_mi(1,n)=5.505*0.621371;
-feeder_length_ohm(1,n)=2.3899;
+feeder_length_ohm(1,n)=2.3899; %ohm
 feeder_volt_peak_head(1,n)=0.042;
 feeder_volt_min_head(1,n)=0.026;
 feeder_conductor(1,n)=16.055; %mi
@@ -115,8 +115,8 @@ feeder_CAP_Fixed(1,n)=600;
 feeder_CAP_Switch(1,n)=450;
 feeder_length_mi(1,n)=13.4747*0.621371;
 feeder_length_ohm(1,n)=11.1166;
-feeder_volt_peak_head(1,n)=0.045;
-feeder_volt_min_head(1,n)=0.032;
+feeder_volt_peak_head(1,n)=0.048;
+feeder_volt_min_head(1,n)=0.014;
 feeder_conductor(1,n)=55.876; %mi
 Load_Center_Resistance(1,n)=1.008; %ohm
 
