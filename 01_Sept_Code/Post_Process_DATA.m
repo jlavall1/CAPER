@@ -28,12 +28,12 @@ if ckt_num == 1
     vbase = 7;
     if plot_type > 2
         %Post_Process_2 background data:
-        load config_DISTANCE_BELL.mat    %distance
-        load config_LINESBASE_BELL.mat   %Lines_Base
-        load config_LEGALBUSES_BELL.mat      %legal_buses
-        load config_LEGALDISTANCE_BELL.mat  %legal_distances
-        load config_BUSESBASE_BELL.mat   %Buses_Base
-        load config_Zsc_BELL.mat %SC
+        load config_DISTANCE_BELL.mat       %distance
+        load config_LINESBASE_BELL.mat      %Lines_Base+
+        load config_LEGALBUSES_BELL.mat     %legal_buses+
+        load config_LEGALDISTANCE_BELL.mat  %legal_distances+
+        load config_BUSESBASE_BELL.mat      %Buses_Base+
+        load config_Zsc_BELL.mat            %SC+
         begin_M = 2;
         i = 2; %skip bus3 b/c distance to sub = 0km
         ii = 2;

@@ -275,8 +275,34 @@ end
 figure(2)
 plot([phase_check.bus1Voltage])
 %%
-
 %-------------------------------------------------------------------------
+%Find Conductor type breakdown:
+AMP_HOLD = zeros(2,6); %row1 = AMP row2 = total distance
+AMP_HOLD(1,:) = [0 200 400 600 800 1000];
+k = 1;
+HIT = 0;
+for i=1:1:length(Lines_Distance)
+    %search for saved amp:
+    for j=2:1:6
+        if Lines_Distance(i,1).lineRating <= AMP_HOLD(1,j) && Lines_Distance(i,1).lineRating > AMP_HOLD(1,j-1) && Lines_Distance(i,1).numPhases == 3
+            %Found hit:
+            AMP_HOLD(2,j-1) = AMP_HOLD(2,j-1) + Lines_Distance(i,1).length;
+            HIT = 1;
+        end
+    end
+end
+AMP_HOLD(2,:)=0.000621371.*AMP_HOLD(2,:); %convert meters to mi
+fprintf('Distribution of Conductor Ampere Ratings\n');
+fprintf('0\t\t200\t\t400\t\t600\t\t800\t\t1000\n');
+fprintf('\t%0.2f\t%0.2f\t %0.2f\t%0.2f\t%0.2f\t%0.2f\n',AMP_HOLD(2,1),AMP_HOLD(2,2),AMP_HOLD(2,3),AMP_HOLD(2,4),AMP_HOLD(2,5),AMP_HOLD(2,6));
+%%
+        
+    
+
+
+
+
+
 %Find Voltage headroom:
 
 
