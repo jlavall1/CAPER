@@ -2,7 +2,7 @@ Clear
 
 ! Define the Circuit
 New Circuit.BELLHAVEN_RET_01291204 Bus1=BELLHAVEN_RET_01291204
-~ BasekV=12.47  pu=1.0000  angle=0.00
+~ BasekV=12.47  pu=1.0337  angle=0.00
 ~ Z1=[ 0.1000 0.6000 ]
 ~ Z2=[ 0.1000 0.6000 ]
 ~ Z0=[ 0.5000 2.0000 ]
