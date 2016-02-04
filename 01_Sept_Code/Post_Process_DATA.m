@@ -96,7 +96,7 @@ elseif ckt_num == 3
     RESULTS_SU=RESULTS;
     sort_Results_3 = xlsread('RESULTS_FLAY.xlsx','FLAY_062');
     %   4]
-    load RESULTS_FLAY_040.mat
+    load RESULTS_FLAY_SS_1.mat %_040
     RESULTS_WN=RESULTS;
     sort_Results_4 = xlsread('RESULTS_FLAY.xlsx','FLAY_040');
     %configs:
@@ -112,6 +112,7 @@ elseif ckt_num == 3
         load config_LEGALDISTANCE_FLAY.mat
         load config_BUSESBASE_FLAY.mat
         load config_Zsc_FLAY.mat
+        load config_BRANCH_FLAY.mat
         begin_M = 2;
         i = 2; %where you want to start in RESULTS
         ii = 2;

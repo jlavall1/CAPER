@@ -36,6 +36,7 @@ for k=1:1:4 %For each load level:
         ZSC=sqrt(RSC^2+XSC^2);
         RATE=Cond(hold_1,1);
         PEAK=Cond(hold_1,2);
+        BUS_NM=legal_buses{hold_1,1};
         
         %Save depend. variables:
         if k==1
@@ -45,6 +46,7 @@ for k=1:1:4 %For each load level:
             RESULTS_SU_MIN(iii,16)=ZSC;
             RESULTS_SU_MIN(iii,17)=RATE;
             RESULTS_SU_MIN(iii,18)=PEAK;
+            RESULTS_SU_MIN(iii,19)=BUS_NM;
         elseif k==2
             RESULTS_WN_MIN(iii,9)=KM;
             RESULTS_WN_MIN(iii,10)=hold_1;
@@ -52,6 +54,7 @@ for k=1:1:4 %For each load level:
             RESULTS_WN_MIN(iii,16)=ZSC;
             RESULTS_WN_MIN(iii,17)=RATE;
             RESULTS_WN_MIN(iii,18)=PEAK;
+            RESULTS_WN_MIN(iii,19)=BUS_NM;
         elseif k == 3
             RESULTS_SU(iii,9)=KM;
             RESULTS_SU(iii,10)=hold_1;
@@ -59,6 +62,7 @@ for k=1:1:4 %For each load level:
             RESULTS_SU(iii,16)=ZSC;
             RESULTS_SU(iii,17)=RATE;
             RESULTS_SU(iii,18)=PEAK;
+            RESULTS_SU(iii,19)=BUS_NM;
         elseif k == 4
             RESULTS_WN(iii,9)=KM;
             RESULTS_WN(iii,10)=hold_1;
@@ -66,6 +70,7 @@ for k=1:1:4 %For each load level:
             RESULTS_WN(iii,16)=ZSC;
             RESULTS_WN(iii,17)=RATE;
             RESULTS_WN(iii,18)=PEAK;
+            RESULTS_WN(iii,19)=BUS_NM;
         end
         %Inc. hold_1 if nesseccary:  
         if iij == 100
@@ -199,7 +204,8 @@ elseif plot_type == 4
                     max_PVkw(n,5) = location(j,15); %Rsc
                     max_PVkw(n,6) = location(j,16); %Xsc
                     max_PVkw(n,7) = location(j,17); %line Rating
-                    max_PVkw(n,8) = location(j,18); %kW
+                    max_PVkw(n,8) = location(j,18); %
+                    max_PVkw(n,9) = location(j,19); %bus #
                     n = n + 1;
                     hit = 0;
                     j = 202;
@@ -210,6 +216,30 @@ elseif plot_type == 4
             end
             i = i + 100;
         end
+        
+        for i=1:1:length(max_PVkw)
+            for ss=1:1:3
+                if ss == 1
+                    Section=Section.B;
+                    dummy=1;
+                elseif ss == 2
+                    Section=Section.C;
+                    dummy=2;
+                elseif ss == 3
+                    Section=Section.D;
+                    dummy=3;
+                end
+                for j=1:1:length(Section)
+                    %
+                    if max_PVkw(i,9) == Section{j,1}
+                        max_PVkw(i,10) = dummy;
+                    end
+                    %
+                end
+            end
+        end
+                        
+        
         if k == 1
             MAX_PV.SU_MIN = max_PVkw;
         elseif k == 2
@@ -221,6 +251,8 @@ elseif plot_type == 4
         end
         i = 2;
         n = 2;
+        %Now lets find groups of branches:
+        
     end
     %%
     %NEXT FIGURE ---

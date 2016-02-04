@@ -158,7 +158,15 @@ while ii<length(Buses)
     end
     ii =ii + 1;
 end
-
+%------------------------------------------------------------------------
+%%
+%Find downstream buses:
+if feeder_NUM == 3
+    Section.B=findDownstreamBuses(DSSCircObj,'258425578');
+    Section.C=findDownstreamBuses(DSSCircObj,'258425583');
+    Section.D=findDownstreamBuses(DSSCircObj,'258405796');
+end
+%%
 %-------------------------------------------------------------------------
 %Find Conductor total distance:
 total_length=0;
