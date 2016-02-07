@@ -36,7 +36,7 @@ for k=1:1:4 %For each load level:
         ZSC=sqrt(RSC^2+XSC^2);
         RATE=Cond(hold_1,1);
         PEAK=Cond(hold_1,2);
-        BUS_NM=legal_buses{hold_1,1};
+        BUS_NM=str2num(legal_buses{hold_1,1});
         
         %Save depend. variables:
         if k==1

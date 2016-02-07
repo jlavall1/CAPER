@@ -45,8 +45,8 @@ plot(COND(5,2),COND(5,4),'ro');
 hold on
 plot(COND(6,2),COND(6,4),'ro');
 %settings
-xlabel('Conductor Temperature, degress Celsius');
-ylabel('Current, A');
+xlabel('Conductor Temperature, degress Celsius','FontWeight','bold','FontSize',12);
+ylabel('Current, A','FontWeight','bold','FontSize',12);
 axis([50 200 100 2000])
 set(gca,'XTick',50:25:200);
 grid on
@@ -89,13 +89,90 @@ plot(Ta_new_1,I_new(:,5),'r-','LineWidth',2);
 hold on
 plot(Ta_new_1,I_new(:,6),'r--','LineWidth',2);
 
-xlabel('Ambient Temperature, degress Celsius');
-ylabel('Approximate Ampacity Rating (A)');
+xlabel('Ambient Temperature, degress Celsius','FontWeight','bold','FontSize',12);
+ylabel('Approximate Ampacity Rating (A)','FontWeight','bold','FontSize',12);
 %axis([50 200 100 2000])
 %set(gca,'XTick',50:25:200);
 grid on
 set(gca,'FontWeight','bold');
 legend('336 ACSR, wind','336 ACSR, no wind','477 AAC,   wind','477 AAC,   no wind');
+%%
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA');
+Weather = xlsread('Weather_NC.xlsx','NC');
+wind=Weather(:,1);
+Atemp=Weather(:,2);
+wind=sort(wind);
+Atemp=sort(Atemp);
+
+num_g=20;
+wind_max=12;
+step=wind_max/num_g;
+%hist(wind,50)
+count=zeros(num_g,2);
+min=0;
+max=step;
+for i=1:1:length(wind)
+    min=0;
+    max=step;
+    for b=1:1:num_g
+        if wind(i,1) >= min && wind(i,1) < max
+            count(b,1)=count(b,1)+1;
+        end
+        min=min+step;
+        max=max+step;
+    end
+end
+fig = fig + 1;
+figure(fig);
+X=0:step:wind_max-step;
+plot(X*2.23694,count(:,1)/8760,'b-','LineWidth',3);
+hold on
+plot([1.4 1.4],[0 0.16],'r--','LineWidth',2);
+xlabel('Wind Speed (mph)','FontWeight','bold','FontSize',12);
+ylabel('Probability Density','FontWeight','bold','FontSize',12);
+grid on
+set(gca,'FontWeight','bold');
+%%
+fig = fig + 1;
+figure(fig);
+%   Find PDF of A temp:
+Atemp = Atemp + 15;
+num_g=20;
+am_min=0;
+am_max=52;
+am = am_max-am_min;
+step=am/num_g;
+%hist(wind,50)
+count1=zeros(num_g,2);
+min=am_min;
+max=step;
+%Atemp=Atemp+15;
+for i=1:1:length(Atemp)
+    min=am_min;
+    max=step;
+    for b=1:1:num_g
+        if Atemp(i,1) >= min && Atemp(i,1) < max
+            count1(b,1)=count1(b,1)+1;
+        end
+        min=min+step;
+        max=max+step;
+    end
+end
+X=-15:step:am_max-15-step;
+plot(X,count1(:,1)/8760,'b-','LineWidth',3);
+hold on
+plot([25 25],[0 0.14],'r--','LineWidth',2);
+xlabel('Ambient Temperature (C)','FontWeight','bold','FontSize',12);
+ylabel('Probability Density','FontWeight','bold','FontSize',12);
+grid on
+set(gca,'FontWeight','bold');
+
+
+        
+    
+    
+
+
 
 
 

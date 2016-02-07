@@ -18,7 +18,7 @@ if ckt_num == 1
     sort_Results_3 = xlsread('RESULTS_BELL.xlsx','BELL_070');
     %   4]
     load RESULTS_BELL_062.mat
-    RESULTS_WN=RESULTS;
+    RESULTS_WN=RESULTS;         %RESULTS_WN
     sort_Results_4 = xlsread('RESULTS_BELL.xlsx','BELL_062');
     
     %Feeder component files:
@@ -92,11 +92,11 @@ elseif ckt_num == 3
     RESULTS_WN_MIN=RESULTS;
     sort_Results_2 = xlsread('RESULTS_FLAY.xlsx','FLAY_025');
     %   3]
-    load RESULTS_FLAY_SS_1.mat
+    load RESULTS_FLAY_050.mat
     RESULTS_SU=RESULTS;
-    sort_Results_3 = xlsread('RESULTS_FLAY.xlsx','FLAY_062');
+    sort_Results_3 = xlsread('RESULTS_FLAY.xlsx','FLAY_050');
     %   4]
-    load RESULTS_FLAY_SS_1.mat %_040
+    load RESULTS_FLAY_040.mat %_040
     RESULTS_WN=RESULTS;
     sort_Results_4 = xlsread('RESULTS_FLAY.xlsx','FLAY_040');
     %configs:

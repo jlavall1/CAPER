@@ -18,14 +18,20 @@ if plot_type1 == 1
     while ckt_num<1
         ckt_num=menu('Which Circuit?','1)Bellhaven','2)Commonwealth','3)Flay','4)Roxboro','5)Hollysprings','6)E.Raleigh','7)EPRI 7','8)ALLLLLL');
     end
-    sim_type=menu('Load Level:','summer-2s','winter-2s','summer','winter','ALL');
-    while sim_type<1
-        sim_type=menu('Load Level:','summer-2s','winter-2s','summer','winter','ALL');
-    end
+    
     plot_type=menu('What kind of plot?','Quartiles','Violation Percentages','Color Display of all Data','max PV vs. Rsc (Location)');
     while plot_type<1
         plot_type=menu('What kind of plot?','Quartiles','Violation Percentages','Color Display of all Data','max PV vs. Rsc (Location)');
     end
+    if plot_type < 4
+        sim_type=menu('Load Level:','summer-2s','winter-2s','summer','winter','ALL');
+        while sim_type<1
+            sim_type=menu('Load Level:','summer-2s','winter-2s','summer','winter','ALL');
+        end
+    else
+        sim_type=1;
+    end
+    
     if plot_type < 3
         Post_Process_DATA       %Loads in result files
         Post_Process            %Figures 3 -> 5

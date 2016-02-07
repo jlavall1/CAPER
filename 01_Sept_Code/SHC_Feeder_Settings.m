@@ -57,7 +57,7 @@ elseif feeder_NUM == 2
     if SHC_LoadLVL == 1
         %Summer mean
         pu_load = 0.50;
-        cir_name='_FLAY_025.mat';
+        cir_name='_FLAY_050.mat';
     elseif SHC_LoadLVL == 2
         %summer mean-2s
         pu_load = 0.30;

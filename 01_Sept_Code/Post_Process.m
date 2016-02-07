@@ -274,7 +274,7 @@ if plot_type == 1
     grid on
     legend([h(9),h(18),h(16),h(14),h(10),h(10),h(6),h(4),h(2)],{'Median','95th & up','90th to 95th','75th to 90th','50th to 75th','25th to 50','10th to 25th','5th to 10th','5th and below'},'Location','NorthWest');
     ylabel('Max Bus Voltage in Each Scenario(PU)','FontWeight','bold');
-    xlabel('PV Size (MW)','FontWeight','bold');
+    xlabel('Distributed Generation Capacity (MW)','FontWeight','bold');
     if sim_type == 1
         LVL_NM='SMR-2S';
     elseif sim_type == 2
@@ -284,7 +284,7 @@ if plot_type == 1
     elseif sim_type == 4
         LVL_NM='WTR';
     end
-    title(sprintf('Effect of PV size on max bus voltage under %s Load for %s',LVL_NM,feeder_name),'FontWeight','bold');
+    %title(sprintf('Effect of PV size on max bus voltage under %s Load for %s',LVL_NM,feeder_name),'FontWeight','bold');
     set(gca,'FontWeight','bold');
     % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     % "Effect of PV size on max LINE loading under 50% load"
@@ -423,9 +423,9 @@ if plot_type == 1
     grid on
     legend([h(9),h(18),h(16),h(14),h(10),h(10),h(6),h(4),h(2)],{'Median','95th & up','90th to 95th','75th to 90th','50th to 75th','25th to 50','10th to 25th','5th to 10th','5th and below'},'Location','NorthWest');
     ylabel('Max Line Loadings in Each Scenario(%)','FontWeight','bold');
-    xlabel('PV Size (MW)','FontWeight','bold');
+    xlabel('Distributed Generation Capacity (MW)','FontWeight','bold');
     
-    title(sprintf('Effect of PV size on max line loading under %s Load for %s',LVL_NM,feeder_name),'FontWeight','bold');
+    %title(sprintf('Effect of PV size on max line loading under %s Load for %s',LVL_NM,feeder_name),'FontWeight','bold');
     set(gca,'FontWeight','bold');
 end
 
@@ -541,7 +541,7 @@ if plot_type == 2
     axis([0 10000 0 140]);
     ylabel('Scenarios at Each PV Size With Violations [%]','FontWeight','bold','FontSize',12);
     xlabel('PV Capacity (P_{pv }) [kW]','FontWeight','bold','FontSize',12);
-    title(sprintf('Percent of PV Scenerioes with violations at 2 load levels for: %s',feeder_name),'FontWeight','bold');
+    %title(sprintf('Percent of PV Scenerioes with violations at 2 load levels for: %s',feeder_name),'FontWeight','bold');
     set(gca,'FontWeight','bold');
     grid on
     %--Now lets plot the means:
@@ -568,7 +568,7 @@ if plot_type == 2
     axis([0 10000 0 140]);
     ylabel('Scenarios at Each PV Size With Violations [%]','FontWeight','bold','FontSize',12);
     xlabel('PV Capacity (P_{pv }) [kW]','FontWeight','bold','FontSize',12);
-    title(sprintf('Percent of PV Scenerioes with violations at 2 load levels for: %s',feeder_name),'FontWeight','bold');
+    %title(sprintf('Percent of PV Scenerioes with violations at 2 load levels for: %s',feeder_name),'FontWeight','bold');
     set(gca,'FontWeight','bold');
     grid on
 end
