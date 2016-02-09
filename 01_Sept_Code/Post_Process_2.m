@@ -120,8 +120,15 @@ if plot_type == 3
     %Edit title string:
     set(get(c,'title'),'string','PV Size (MW)','Rotation',90.0,'FontWeight','bold');
     pos = get(get(c,'title'),'position');
-    pos(1,1) = pos(1,1)+50.5;
-    pos(1,2) = pos(1,2)+120;
+    if ckt_num == 2
+        X_move=1.8;
+        Y_move=-5;
+    else
+        X_move=1.8;
+        Y_move=-5;
+    end
+    pos(1,1) = pos(1,1)+X_move;
+    pos(1,2) = pos(1,2)+Y_move;
     set(get(c,'title'),'position',pos);
 
 
@@ -135,7 +142,7 @@ if plot_type == 3
     elseif sim_type == 3
         LVL_NM='SMR';
     end
-    title(sprintf('Impact from PV size on %s with %s Loadset',feeder_name,LVL_NM),'FontWeight','Bold');
+    %title(sprintf('Impact from PV size on %s with %s Loadset',feeder_name,LVL_NM),'FontWeight','Bold');
     max_distance=0;
     for i=1:1:length(legal_distances)
         if legal_distances{i,1} > max_distance
@@ -216,25 +223,26 @@ elseif plot_type == 4
             end
             i = i + 100;
         end
-        
-        for i=1:1:length(max_PVkw)
-            for ss=1:1:3
-                if ss == 1
-                    Section=Section.B;
-                    dummy=1;
-                elseif ss == 2
-                    Section=Section.C;
-                    dummy=2;
-                elseif ss == 3
-                    Section=Section.D;
-                    dummy=3;
-                end
-                for j=1:1:length(Section)
-                    %
-                    if max_PVkw(i,9) == Section{j,1}
-                        max_PVkw(i,10) = dummy;
+        if ckt_num == 3
+            for i=1:1:length(max_PVkw)
+                for ss=1:1:3
+                    if ss == 1
+                        Section=Section.B;
+                        dummy=1;
+                    elseif ss == 2
+                        Section=Section.C;
+                        dummy=2;
+                    elseif ss == 3
+                        Section=Section.D;
+                        dummy=3;
                     end
-                    %
+                    for j=1:1:length(Section)
+                        %
+                        if max_PVkw(i,9) == Section{j,1}
+                            max_PVkw(i,10) = dummy;
+                        end
+                        %
+                    end
                 end
             end
         end
