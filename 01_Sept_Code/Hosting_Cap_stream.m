@@ -420,30 +420,32 @@ while ii< length(Buses) %length(Buses)
             end
             RESULTS(jj,14)=P_loss;
             P_loss = 0;
-            %{
-            %Now increment the solar site:
-            if RESULTS(jj,12) < 1.06
-                PV_size = PV_size + 100; %kW
+            if feeder_NUM == 3
+                %Now increment the solar site:
+                if RESULTS(jj,12) < 1.06
+                    PV_size = PV_size + 100; %kW
+                    n = n + 1;
+                    jj = jj + 1;
+                elseif RESULTS(jj,12) > 1.06
+                    n = n + 1;
+                    n1 = (10000-PV_size)/100
+                    for n11=jj:1:jj+n1
+                        RESULTS(n11,1)=PV_size;
+                        PV_size = PV_size + 100;
+                    end
+                    RESULTS(jj:jj+n1,2:14)=zeros(n1+1,13);
+                    PV_size = 11000;
+                    n = n+ n1; %ghost index:
+                    jj = jj + n1 + 1;
+                end
+            else
+                %}
+                %toc
+                %fprintf('Next Iteration\n');
+                PV_size = PV_size + 100;
                 n = n + 1;
                 jj = jj + 1;
-            elseif RESULTS(jj,12) > 1.06
-                n = n + 1;
-                n1 = (10000-PV_size)/100
-                for n11=jj:1:jj+n1
-                    RESULTS(n11,1)=PV_size;
-                    PV_size = PV_size + 100;
-                end
-                RESULTS(jj:jj+n1,2:14)=zeros(n1+1,13);
-                PV_size = 11000;
-                n = n+ n1; %ghost index:
-                jj = jj + n1 + 1;
             end
-            %}
-            %toc
-            %fprintf('Next Iteration\n');
-            PV_size = PV_size + 100;
-            n = n + 1;
-            jj = jj + 1;
         end
         toc
         m = m + 1;

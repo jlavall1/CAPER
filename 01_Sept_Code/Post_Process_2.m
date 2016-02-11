@@ -36,7 +36,10 @@ for k=1:1:4 %For each load level:
         ZSC=sqrt(RSC^2+XSC^2);
         RATE=Cond(hold_1,1);
         PEAK=Cond(hold_1,2);
-        BUS_NM=str2num(legal_buses{hold_1,1});
+        [BUS_NM,status]=str2num(legal_buses{hold_1,1});
+        if status == 0
+            BUS_NM=0;
+        end
         
         %Save depend. variables:
         if k==1
@@ -227,18 +230,18 @@ elseif plot_type == 4
             for i=1:1:length(max_PVkw)
                 for ss=1:1:3
                     if ss == 1
-                        Section=Section.B;
+                        Section_S=Section.B;
                         dummy=1;
                     elseif ss == 2
-                        Section=Section.C;
+                        Section_S=Section.C;
                         dummy=2;
                     elseif ss == 3
-                        Section=Section.D;
+                        Section_S=Section.D;
                         dummy=3;
                     end
-                    for j=1:1:length(Section)
+                    for j=1:1:length(Section_S)
                         %
-                        if max_PVkw(i,9) == Section{j,1}
+                        if max_PVkw(i,9) == Section_S{j,1}
                             max_PVkw(i,10) = dummy;
                         end
                         %
@@ -321,11 +324,16 @@ elseif plot_type == 4
     hold on
     plot(MAX_PV.WN_AVG(:,VAR),MAX_PV.WN_AVG(:,1),'ko')
     
-    xlabel('Upstream Impedance (Zsc) [/{omega}]','FontWeight','bold','FontSize',12);
-    ylabel('Max Central PV Size (kW)','FontWeight','bold','FontSize',12);   
+    xlabel('Upstream Impedance (Zsc) [ \Omega ]','FontWeight','bold','FontSize',12);
+    ylabel('Minimum DER-PV Hosting Capacity (kW)','FontWeight','bold','FontSize',12);   
     legend('SMR-2S','WTR-2S','SUMMER','WINTER');
     grid on
     set(gca,'FontWeight','bold');
+    if ckt_num == 2
+        axis([0.5 3.5 0 12000])
+    elseif ckt_num == 3
+        axis([1 11 0 12000])
+    end
     %%
     %NEXT FIGURE ---
     fig = fig + 1;

@@ -74,12 +74,16 @@ elseif ckt_num == 2
         load config_LEGALDISTANCE_CMNWLTH.mat
         load config_BUSESBASE_CMNWLTH.mat   %Buses_Base
         load config_Zsc_CMNWLTH.mat
+        load HOSTING_CAP_CMNW.mat
+        peak_current = [345.492818586166,362.418979727275,291.727365549702];
+        energy_line = '259355408';
         begin_M = 2;
         i = 2; %skip bus3 b/c distance to sub = 0km
         ii = 2;
         n = 1;
         k = 1; %use all --
     end
+    mainFile ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Master.DSS';
 elseif ckt_num == 3
     %FLAY:
     feeder_name = 'FLAY';
@@ -113,12 +117,16 @@ elseif ckt_num == 3
         load config_BUSESBASE_FLAY.mat
         load config_Zsc_FLAY.mat
         load config_BRANCH_FLAY.mat
+        load HOSTING_CAP_FLAY.mat
+        peak_current = [196.597331353572,186.718068471483,238.090235458346];
+        energy_line = '259363665';
         begin_M = 2;
         i = 2; %where you want to start in RESULTS
         ii = 2;
         n = 1;
         k = 1; 
     end 
+    mainFile ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Master.dss';
 elseif ckt_num == 4
     %ROX:
     feeder_name = 'ROX';

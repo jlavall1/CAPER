@@ -7,23 +7,23 @@ set(0, 'DefaultUIControlFontSize', 18);
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis')
 %User Menus:
 
-plot_type1=menu('For What?','Individual Runs','Chapter 3');
+plot_type1=menu('For What?','Individual Runs','Chapter 3','MHC per Location');
 while plot_type1<1
-    plot_type1=menumenu('For What?','Individual Runs','Chapter 3');
+    plot_type1=menumenu('For What?','Individual Runs','Chapter 3','MHC per Location');
 end
 
-if plot_type1 == 1
+if plot_type1 == 1 || plot_type1 == 3
     %Individuals
     ckt_num=menu('Which Circuit?','1)Bellhaven','2)Commonwealth','3)Flay','4)Roxboro','5)Hollysprings','6)E.Raleigh','7)EPRI 7','8)ALLLLLL');
     while ckt_num<1
         ckt_num=menu('Which Circuit?','1)Bellhaven','2)Commonwealth','3)Flay','4)Roxboro','5)Hollysprings','6)E.Raleigh','7)EPRI 7','8)ALLLLLL');
     end
     
-    plot_type=menu('What kind of plot?','Quartiles','Violation Percentages','Color Display of all Data','max PV vs. Rsc (Location)');
+    plot_type=menu('What kind of plot?','Quartiles','Violation Percentages','Color Display of all Data','max PV vs. Rsc (Location)','Min. Hosting Cap');
     while plot_type<1
-        plot_type=menu('What kind of plot?','Quartiles','Violation Percentages','Color Display of all Data','max PV vs. Rsc (Location)');
+        plot_type=menu('What kind of plot?','Quartiles','Violation Percentages','Color Display of all Data','max PV vs. Rsc (Location)','Min. Hosting Cap');
     end
-    if plot_type < 4
+    if plot_type < 4 || plot_type == 5
         sim_type=menu('Load Level:','summer-2s','winter-2s','summer','winter','ALL');
         while sim_type<1
             sim_type=menu('Load Level:','summer-2s','winter-2s','summer','winter','ALL');
@@ -38,6 +38,9 @@ if plot_type1 == 1
     elseif plot_type < 5
        Post_Process_DATA        %Loads in result files
        Post_Process_2           %Figure 9
+    else
+       Post_Process_DATA
+       Post_Process_4           %Plot PCC Location
     end
 elseif plot_type1 == 2
     %Thesis Report
