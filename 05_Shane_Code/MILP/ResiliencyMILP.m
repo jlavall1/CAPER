@@ -13,7 +13,7 @@ disp('Reading in Circuit Data...')
 [NODE,SECTION,DER] = addDER(NODE,SECTION,DER,...
     {'258896301' '258908260' '258896628' '264491247'});
 
-PARAM.SO = {'263530745'};
+PARAM.SO = {'264495349'};
 
 toc
 disp('Formulating MILP Constraints...')
@@ -57,3 +57,15 @@ if exitflag==1
 end    
 
 toc
+
+% Plot Results
+figure;
+% DER Locations
+[~,~,ic] = unique([{NODE.ID},{DER.ID}],'stable');
+plot([NODE(ic(end-D:end)).XCoord],[NODE(ic(end-D:end)).YCoord],'sb','MarkerSize',20)
+hold on
+for i = 1:D
+    plot([NODE(logical([NODE.(['gamma_',DER(i).ID])])).XCoord],...
+         [NODE(logical([NODE.(['gamma_',DER(i).ID])])).YCoord],'.',...
+        'Color',hsv2rgb([(i-1)/D .5 .5]),'MarkerSize',12)
+end

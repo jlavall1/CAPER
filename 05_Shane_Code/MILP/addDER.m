@@ -25,7 +25,7 @@ for i = D+1:D+d
     NODE(end).p = 0;
     NODE(end).q = 0;
     NODE(end).XCoord = NODE(ic(i-D)).XCoord;
-    NODE(end).YCoord = NODE(ic(i-D)).YCoord;
+    NODE(end).YCoord = NODE(ic(i-D)).YCoord + 20;
     
     % Add Section
     SECTION(end+1).ID = [ID,'_SW'];

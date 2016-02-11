@@ -64,6 +64,17 @@ NC = length(PARAM.NC);
 SO = length(PARAM.SO);
 SC = length(PARAM.SC);
 
+% Remove Duplicates
+[~,~,ic] = unique([PARAM.SC,PARAM.SO],'stable');
+index = ic(end-SO+1:end);
+PARAM.SC(:,index(index<SC)) = [];
+SC = length(PARAM.SC);
+
+[~,~,ic] = unique([PARAM.NC,PARAM.NO],'stable');
+index = ic(end-NO+1:end);
+PARAM.SC(:,index(index<NC)) = [];
+NC = length(PARAM.NC);
+
 b1 = zeros(NO,1);
 b2 = ones (NC,1);
 b3 = zeros(SO,1);
@@ -249,6 +260,8 @@ b29 = M*ones(2*S,1);
 b30 = [(M+1)*ones(S,1);zeros(S,1)];
 
 A17 = zeros(2*D*S,xlen);
+%A17 = sparse([],[],[],2*D*S,xlen,3*2*D*S); % 
+%i17 = zeros(3*2*D*S,1); j17 = zeros(3*2*D*S,1); v17 = zeros(3*2*D*S,1);
 A26 = zeros(S,xlen);
 A29 = zeros(2*S,xlen);
 A30 = zeros(2*S,xlen);
@@ -258,9 +271,14 @@ for k = 1:S % for each section (i,j)
     index = [find(ismember({NODE.ID},SECTION(k).FROM)),...
     find(ismember({NODE.ID},SECTION(k).TO))];
     
-    A17(k+(0:S:D*S-1),gamma+index(1)) = 1; % coeff for gamma_id (17.1)
-    A17(k+(0:S:D*S-1),gamma+index(2)) = -1; % coeff for gamma_jd (17.1)
-    A17(k+(D*S:S:2*D*S-1),:) = -A17(k+(0:S:D*S-1),:); % coeff for gamma_id, gamma_jd (17.2)
+    %i17((k-1)*D+1:k*D) = k+(0:S:D*S-1);
+    %j17((k-1)*D+1:k*D) = gamma+(0:N:D*N-1)+index(1);
+    %v17((k-1)*D+1:k*D) = 1;
+    for j = 1:D
+        A17(k+(j-1)*S,gamma+(j-1)*N+index(1)) = 1; % coeff for gamma_id (17.1)
+        A17(k+(j-1)*S,gamma+(j-1)*N+index(2)) = -1; % coeff for gamma_jd (17.1)
+        A17(k+(D+j-1)*S,:) = -A17(k+(j-1)*S,:); % coeff for gamma_id, gamma_jd (17.2)
+    end
     A17(k+(0:S:2*D*S-1),b+k) = 1; % coeff for b_ij (17.1) (17.2)
     
     % Find Index of all adjacent sections
