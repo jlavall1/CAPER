@@ -9,6 +9,12 @@ disp('Reading in Circuit Data...')
 %[NODE,SECTION,DER,PARAM] = DSSRead(filename);
 [NODE,SECTION,DER,PARAM] = sxstRead; %(fullfilename);
 
+% Add DER
+[NODE,SECTION,DER] = addDER(NODE,SECTION,DER,...
+    {'258896301' '258908260' '258896628' '264491247'});
+
+PARAM.SO = {'263530745'};
+
 toc
 disp('Formulating MILP Constraints...')
 % Formulate Problem
@@ -28,11 +34,12 @@ if exitflag==1
     D = length({DER.ID});     % Number of DER
     
     % Define starting indicies
-    a = 0;
-    b = N;
-    c = N+S;
-    gamma = (D+1)*N+S;
-    d = (2*D+1)*N+S;
+    a       = 0;
+    b       = N;
+    beta    = N+S;
+    c       = N+2*S;
+    gamma   = (D+1)*N+2*S;
+    d       = (2*D+1)*N+2*S;
     
     for i = 1:N
         NODE(i).a = X(a+i);
@@ -44,6 +51,7 @@ if exitflag==1
     
     for i = 1:S
         SECTION(i).b = X(b+i);
+        SECTION(i).beta = X(beta+i);
         SECTION(i).d = X(d+i);
     end
 end    

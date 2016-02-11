@@ -78,7 +78,7 @@ for i = 1:NO
     % Find index of constrained node
     index = find(ismember({NODE.ID},PARAM.NO{i}));
     
-    A2(i,a+index) = 1; % coeff for a_i (1)
+    A1(i,a+index) = 1; % coeff for a_i (1)
 end
 
 for i = 1:NC
@@ -92,7 +92,7 @@ for i = 1:SO
     % Find index of constrained section
     index = find(ismember({SECTION.ID},PARAM.SO{i}));
     
-    A4(i,b+index) = 1; % coeff for b_ij (3)
+    A3(i,b+index) = 1; % coeff for b_ij (3)
 end
 
 for i = 1:SC
@@ -176,7 +176,7 @@ for i = 1:D
     % Find node index of DER
     index = find(ismember({NODE.ID},DER(i).ID));
     
-    A16(i,gamma+(i-1)*d+index) = 1;  % coeff for gamma_dd (16)
+    A16(i,gamma+(i-1)*N+index) = 1;  % coeff for gamma_dd (16)
     
     % Find section index of all sections adjacent to DER
     index = {find(ismember({SECTION.FROM},DER(i).ID)),...
@@ -202,7 +202,8 @@ clear temp
 b21 = zeros(j-1,1);
 
 % -MCC-(19)----------------------------------------------------------------
-% (19)
+% (19) gamma_id - sum(d_ki) - sum(b_ik - d_ik) <= 0   all i in N, d in D, i \= d
+%               (k,i)<S     (i,k)<S
 
 b19 = zeros(D*(N-D),1);
 
@@ -213,14 +214,14 @@ for i = 1:N
     index = {find(ismember({SECTION.FROM},NODE(i).ID)),...
         find(ismember({SECTION.TO},NODE(i).ID))};
     
-    A19(i+0:N:D*N,d+index{1}) = 1;
-    A19(i+0:N:D*N,[b+index{1},d+index{2}]) = -1;
+    A19(i+(0:N:D*N-1),d+index{1}) = 1;
+    A19(i+(0:N:D*N-1),[b+index{1},d+index{2}]) = -1;
 end
 
-for i = 1:D
-    index = find(ismember({NODE.ID},DER(i).ID));
-    A19(index+0:N:D*N,:) = [];
-end
+% Remove Constraint (19) from DER Nodes
+[~,~,index] = unique([{NODE.ID},{DER.ID}],'stable');
+index = reshape(repmat(index(end-D+1:end),1,5) + repmat((0:N:D*N-1),5,1),1,[]);
+A19(index,:) = [];
 
 
 % -MCC-(17)--VDC-(26)-&-(29)-to-(30)---------------------------------------
@@ -257,10 +258,10 @@ for k = 1:S % for each section (i,j)
     index = [find(ismember({NODE.ID},SECTION(k).FROM)),...
     find(ismember({NODE.ID},SECTION(k).TO))];
     
-    A17(k+0:S:D*S,gamma+index(1)) = 1; % coeff for gamma_id (17.1)
-    A17(k+0:S:D*S,gamma+index(2)) = -1; % coeff for gamma_jd (17.1)
-    A17(k+D*S:S:2*D*S,:) = -A17(k+0:S:D*S,:); % coeff for gamma_id, gamma_jd (17.2)
-    A17(k+0:S:2*D*S,b+k) = 1; % coeff for b_ij (17.1) (17.2)
+    A17(k+(0:S:D*S-1),gamma+index(1)) = 1; % coeff for gamma_id (17.1)
+    A17(k+(0:S:D*S-1),gamma+index(2)) = -1; % coeff for gamma_jd (17.1)
+    A17(k+(D*S:S:2*D*S-1),:) = -A17(k+(0:S:D*S-1),:); % coeff for gamma_id, gamma_jd (17.2)
+    A17(k+(0:S:2*D*S-1),b+k) = 1; % coeff for b_ij (17.1) (17.2)
     
     % Find Index of all adjacent sections
     index = {find(ismember({SECTION.FROM},SECTION(k).FROM)),...
@@ -287,16 +288,13 @@ for k = 1:S % for each section (i,j)
 end
 
 % Remove Constraints (29) and (30) from Sections with DER Attached
-for i = 1:D
-    index = [find(ismember({SECTION.FROM},DER(i).ID)),...
-    find(ismember({SECTION.TO},DER(i).ID))];
-    
-    b29([index,index+S],:) = [];
-    b30([index,index+S],:) = [];
-    
-    A29([index,index+S],:) = [];
-    A30([index,index+S],:) = [];
-end
+[~,ia,ic] = unique([{SECTION.FROM},{SECTION.TO},{DER.ID}],'stable');
+index = mod(ia(ic(end-D+1:end))-1,S)+1;
+b29([index,index+S],:) = [];
+b30([index,index+S],:) = [];
+A29([index,index+S],:) = [];
+A30([index,index+S],:) = [];
+
 
 Aineq = [A6;A7;A8;A9;A11;A12;A13;A14;A15;A17;A19;A20;A26;A29;A30];
 bineq = [b6;b7;b8;b9;b11;b12;b13;b14;b15;b17;b19;b20;b26;b29;b30];
