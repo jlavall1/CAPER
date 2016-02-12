@@ -15,7 +15,8 @@ filename = 0;
 % ******To skip UIGETFILE uncomment desired filename*******
 % ***(Must be in rootlocation CAPER03_OpenDSS_Circuits\)***
 %filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
-filename = 'Master.dss'; filelocation = [rootlocation,'Test\'];
+%filename = 'Master.dss'; filelocation = [rootlocation,'Test\'];
+filename = 'Master.dss'; filelocation = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\07_CYME\Mocksville_Main_2401.sxst_DSS\';
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
         rootlocation);
@@ -33,3 +34,5 @@ DSSText.command = 'Set Mode=Snapshot';
 DSSCircuit.Solution.Solve
 
 Lines = getLineInfo(DSSCircObj);
+Bus = getBusInfo(DSSCircObj);
+Load = getLoadInfo(DSSCircObj);

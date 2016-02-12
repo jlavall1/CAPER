@@ -1,5 +1,4 @@
-% Solves the MILP for the 124 node reduced version of Commonwealth 01311205
-%  with 6 DERs and 3 main line Faults
+% Driving Script for LP solution
 clear
 clc
 
@@ -12,13 +11,14 @@ disp('Reading in Circuit Data...')
 % Add DER
 [NODE,SECTION,DER] = addDER(NODE,SECTION,DER,...
     {'258896301' '258908260' '258896628' '264491247'});
+LOAD = NODE(logical([NODE.p]));
 
 PARAM.SO = {'264495349'};
 
 toc
 disp('Formulating MILP Constraints...')
 % Formulate Problem
-[f,intcon,Aineq,bineq,Aeq,beq,lb,ub] = ResiliencyMILPForm(NODE,SECTION,DER,PARAM);
+[f,intcon,Aineq,bineq,Aeq,beq,lb,ub] = ResiliencyMILPForm(NODE,SECTION,LOAD,DER,PARAM);
 
 toc
 disp('Solving MILP...')
