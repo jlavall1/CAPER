@@ -57,15 +57,3 @@ if exitflag==1
 end    
 
 toc
-
-% Plot Results
-figure;
-% DER Locations
-[~,~,ic] = unique([{NODE.ID},{DER.ID}],'stable');
-plot([NODE(ic(end-D:end)).XCoord],[NODE(ic(end-D:end)).YCoord],'sb','MarkerSize',20)
-hold on
-for i = 1:D
-    plot([NODE(logical([NODE.(['gamma_',DER(i).ID])])).XCoord],...
-         [NODE(logical([NODE.(['gamma_',DER(i).ID])])).YCoord],'.',...
-        'Color',hsv2rgb([(i-1)/D .5 .5]),'MarkerSize',12)
-end
