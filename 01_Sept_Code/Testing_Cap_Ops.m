@@ -56,9 +56,9 @@ for DOY=1:1:364
     cap_pos = KVAR_ACTUAL.data(1440,4);
     
     %4]Save all results from Find_Cap_Ops in struct:
-    CAP_OPS(DOY).data = KVAR_ACTUAL.data;
-    CAP_OPS(DOY).dP = KVAR_ACTUAL.dP;
-    CAP_OPS(DOY).kW = LOAD_ACTUAL;
+    CAP_OPS_STEP1(DOY).data = KVAR_ACTUAL.data;
+    CAP_OPS_STEP1(DOY).dP = KVAR_ACTUAL.dP;
+    CAP_OPS_STEP2(DOY).kW = LOAD_ACTUAL;
     CAP_OPS(DOY).error = E;
     CAP_OPS(DOY).oper = OPS;
     CAP_OPS(DOY).PF = KVAR_ACTUAL.PF;
@@ -69,8 +69,8 @@ for DOY=1:1:364
     hold_PF = 1;
     for m=1:1:str2num(sim_num)-1
         if CAP_OPS(DOY).oper ~= 0
-            if CAP_OPS(DOY).data(m,4) ~= CAP_OPS(DOY).data(m+1,4)
-                PF(1,hold_PF)=CAP_OPS(DOY).data(m,6);
+            if CAP_OPS_STEP1(DOY).data(m,4) ~= CAP_OPS_STEP1(DOY).data(m+1,4)
+                PF(1,hold_PF)=CAP_OPS_STEP1(DOY).data(m,6);
                 hold_PF = hold_PF + 1;
             end
         end
@@ -84,7 +84,7 @@ CAP_OPS(1).datanames=KVAR_ACTUAL.datanames;
 figure(1)
 s = 1;
 for i=1:1:364
-    Y = CAP_OPS(i).data(1:1440,4);
+    Y = CAP_OPS_STEP1(i).data(1:1440,4);
     X = [s:1:1440+s-1]';
     X = X/1440;
     %plot(s+j,CAP_OPS(i).data(j,4));
@@ -100,7 +100,7 @@ ylabel('1=Closed & 0=Opened');
 figure(2)
 s = 1;
 for i=1:1:50
-    Y = CAP_OPS(i).data(1:1440,7);
+    Y = CAP_OPS_STEP1(i).data(1:1440,7);
     X = [s:1:1440+s-1]';
     %plot(s+j,CAP_OPS(i).data(j,4));
     plot(X,Y)
@@ -111,18 +111,18 @@ end
 figure(3)
 %Test DOY=51:
 T_DAY = 265;
-plot(CAP_OPS(T_DAY).data(:,1),'r-')
+plot(CAP_OPS_STEP1(T_DAY).data(:,1),'r-')
 hold on
-plot(CAP_OPS(T_DAY).data(:,2),'g-')
+plot(CAP_OPS_STEP1(T_DAY).data(:,2),'g-')
 hold on
-plot(CAP_OPS(T_DAY).data(:,3),'b-')
+plot(CAP_OPS_STEP1(T_DAY).data(:,3),'b-')
 hold on
-plot(CAP_OPS(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
+plot(CAP_OPS_STEP1(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
 %%
 figure(4)
 s = 1;
 for i=120:1:200
-    Y = CAP_OPS(i).data(1:1440,10);
+    Y = CAP_OPS_STEP1(i).data(1:1440,10);
     X = [s:1:1440+s-1]';
     %plot(s+j,CAP_OPS(i).data(j,4));
     plot(X,Y)
@@ -132,7 +132,7 @@ end
 %%
 %}
 %%
-fig = 0;
+fig = 4;
 %close all
 
 for i=1:1:364
@@ -140,13 +140,13 @@ for i=1:1:364
         fig = fig + 1;
         figure(fig)
         T_DAY = i;
-        plot(CAP_OPS(T_DAY).data(:,1),'r-','LineWidth',3)
+        plot(CAP_OPS_STEP1(T_DAY).data(:,1),'r-','LineWidth',3)
         hold on
-        plot(CAP_OPS(T_DAY).data(:,2),'g-','LineWidth',3)
+        plot(CAP_OPS_STEP1(T_DAY).data(:,2),'g-','LineWidth',3)
         hold on
-        plot(CAP_OPS(T_DAY).data(:,3),'b-','LineWidth',3)
+        plot(CAP_OPS_STEP1(T_DAY).data(:,3),'b-','LineWidth',3)
         hold on
-        plot(CAP_OPS(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
+        plot(CAP_OPS_STEP1(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
         hold on
         plot(CAP_OPS(T_DAY).DSS(:,1),'r--')
         hold on

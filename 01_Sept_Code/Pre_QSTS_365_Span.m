@@ -67,8 +67,14 @@ elseif feeder_NUM == 2
     root1= 'Flay';
     polar = -1;
     
-    %load P_Q_Mult_60s.mat %CAP_OPS
-    load P_Q_Mult_60s_1.mat
+    %load P_Q_Mult_60s.mat
+    %load P_Q_Mult_60s_1.mat %   |   CAP_OPS
+    load P_Mult_60s_Flay.mat
+    load Q_Mult_60s_Flay.mat
+    %%
+    %CAP_OPS_STEP1.dP=CAP_OPS.dP;
+    %CAP_OPS_STEP1.kW=CAP_OPS.kW;
+    %%
 elseif feeder_NUM == 3
     load ROX.mat
     FEEDER = ROX;
@@ -202,10 +208,12 @@ elseif PV_Site == 7
     clearvars M_MAYB_INFO M_MAYB
 end
 %%
+addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
 if feeder_NUM == 1
     load Common_Bus_Impedance.mat
 elseif feeder_NUM == 2
-    addpath(strcat(base_path,'\03_OpenDSS_Circuits\Flay_Circuit_Opendss'));
+    
     load Flay_Bus_Impedances.mat %Buses_Zsc
-    load Flay_Static_maxPV.mat   %MAX_PV.L50 ; MAX_PV.L30 ; MAX_PV.L25 ;
+    %load Flay_Static_maxPV.mat   %MAX_PV.L50 ; MAX_PV.L30 ; MAX_PV.L25 ;
+    load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
 end
