@@ -7,7 +7,7 @@ function [f,intcon,Aineq,bineq,Aeq,beq,lb,ub] = ResiliencyMILPForm(NODE,SECTION,
 % q                 - NODE.q
 % KVAmax_d          - DER.CAPACITY
 % alpha             - 1
-alpha = 1;
+eta = 1;
 pf = 0.85;
 M = 5;
 
@@ -42,7 +42,7 @@ f_a     = zeros(N,1);
 f_alpha = zeros(D*N,1);
 f_b     = zeros(S,1);
 f_bbar  = ones(S,1);
-f_beta  = ones(D*S,1);
+f_beta  = zeros(D*S,1);
 f_c     = repmat([LOAD.w]'.*[LOAD.p]',D,1);
 f_gamma = zeros(D,1);
 
@@ -156,33 +156,38 @@ A11(:,gamma+1:gamma+D*N) = -eye(D*N); % coeff for gamma_id (11)
 A13 = -A11; % coeff for c_id, gamma_id (13)
 A13(:,a+1:a+N) = repmat(eye(N),D,1); % coeff for a_i (13)
 
-% -MCC-(14)-to-(16)--VDC-(20)-&-(21)---------------------------------------
-% (14) sum(alpha s_i c_id) <= KVAmax_d  all d in D
-%      i<N
+% -MCC-(16)--VDC-(20)-&-(21)---------------------------------------
+% (16) eta * sum( c_ig p_i) - sum( alpha_dg KVAmax_d ) <= 0    all g in G
+%      i<L                     d<D
 
+b16 = sparse([],[],[],D,1);
 
+[~,~,ic] = unique([{NODE.ID},{DER.ID}],'stable');
+index = ic(end-D+1:end);
 
-b14 = [DER.CAPACITY]'; % CHECK TO SEE IF ORIENTED CORRECTLY
+i16 = [reshape(repmat(1:D,L,1),[],1);reshape(repmat(1:D,D,1),[],1)];
+j16 = [c+(1:D*L)';alpha+reshape(repmat(N*(0:D-1),D,1)+repmat(index,1,D),[],1)];
+v16 = [repmat(eta*[LOAD.p]'/pf,D,1);repmat(-[DER.CAPACITY]',D,1)];
+A16 = sparse(i16,j16,v16,D,xlen);
 
+%{
+A16 = zeros(D,xlen);
 
-A14 = zeros(D,xlen);
-
-
-
-temp = alpha*[NODE.p]/pf;
+temp = eta*[LOAD.p]/pf;
 for i = 1:D
-    A14(i,c+(i-1)*N+1:c+i*N) = temp;  % coeff for c_id  all i in N, d constant (14)
-    
+    A16(i,c+(i-1)*L+1:c+i*L) = temp;  % coeff for c_ig,  g constant (16)
+    A16(i,alpha+(i-1)*N+index) = -[DER.CAPACITY]; % coeff for alpha_dg,  g constant (16)
 end
 clear temp
+%}
 
 
 
 
 
 
-Aineq = [A6;A7;A8;A9;A11;A12;A13;A14;A15;A17;A19;A20;A26;A29;A30];
-bineq = [b6;b7;b8;b9;b11;b12;b13;b14;b15;b17;b19;b20;b26;b29;b30];
+Aineq = [A6;A7;A8;A9;A11;A12;A13;A16;A15;A17;A19;A20;A26;A29;A30];
+bineq = [b6;b7;b8;b9;b11;b12;b13;b16;b15;b17;b19;b20;b26;b29;b30];
 
 Aeq = [A1;A2;A3;A4;A16;A21];
 beq = [b1;b2;b3;b4;b16;b21];

@@ -2,10 +2,10 @@ Clear
 
 ! Define the Circuit
 New Circuit.MOCKSVILLE_MN_03552401 Bus1=MOCKSVILLE_MN_03552401
-~ BasekV=23.90  pu=1.0000  angle=0.00
-~ Z1=[ 0.0612 3.6003 ]
-~ Z2=[ 0.0612 3.6003 ]
-~ Z0=[ 0.0000 3.3701 ]
+~ BasekV=24.00  pu=1.0300  angle=0.00
+~ Z1=[ 0.0103 2.5590 ]
+~ Z2=[ 0.0103 2.5590 ]
+~ Z0=[ 0.0000 2.2448 ]
 
 ! Library Data
 Redirect Libraries\WireData.dss
@@ -27,12 +27,12 @@ Redirect Elements\Capacitors.dss
 !Redirect Controls\ReclContrl.dss
 
 ! Set the voltage bases
-Set voltagebases = [ 23.90 13.80 0.480 0.208 0.240 0.120 ]
+Set voltagebases = [ 24.00 13.86 0.480 0.208 0.240 0.120 ]
 CalcVoltageBases
 
 ! Define the bus coordinates
 Buscoords BusCoords.dss
 
 ! Define an energy meter
-!New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
-!~ peakcurrent=[    
+New EnergyMeter.CircuitMeter LINE.254420449 terminal=1 option=R PhaseVoltageReport=yes
+~ peakcurrent=[ 400.00   400.00   400.00 ]

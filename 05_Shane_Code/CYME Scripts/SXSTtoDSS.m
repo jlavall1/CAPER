@@ -239,6 +239,15 @@ for i =1:length(EquipmentDB.DCSpacing)
 end
 fclose(fid(9));
 
+%% Extract Source Information
+Source = struct('Info',regexp(FILE,'<Source>(.*?)</Source>','match'));
+if sc > 1
+    warning('DSS does not support multiple sources')
+end
+
+Source.ID = regexp(Source.Info,'(?<=<SourceNodeID>)(.*?)(?=</SourceNodeID>)','match'); Source.ID = Source.ID{1};
+[~,~,ic] = unique([{EquipmentDB.Substation.ID},{Source.ID}],'stable');
+Source = EquipmentDB.Substation(ic(end));
 
 %% Extract Node Information
 %  Output - Buses.dss (text file containing BusID, X, and Y Coords)
@@ -324,12 +333,14 @@ for l = 1:s
     end
     
     % Overhead Wire
-    overheadinfo = regexp(Lines(l).Info,'<OverheadByPhase>(.*?)</OverheadByPhase>','match');
-    if ~isempty(overheadinfo)
-        Lines(l).Length = str2double(regexp(overheadinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
-        Lines(l).Spacing = strrep(regexp(overheadinfo{1},'(?<=<ConductorSpacingID>)(.*?)(?=</ConductorSpacingID>)','match'),'&apos;',''''); Lines(l).Spacing = Lines(l).Spacing{1};
-        wires = regexp(overheadinfo{1},'(?<=<PhaseConductorID[ABC]>)(.*?)(?=</PhaseConductorID[ABC]>)','match');
-        wires = [wires(~strcmp(wires,'NONE')),regexp(overheadinfo{1},'(?<=<NeutralConductorID>)(.*?)(?=</NeutralConductorID>)','match')];
+    overheadbyphaseinfo = regexp(Lines(l).Info,'<OverheadByPhase>(.*?)</OverheadByPhase>','match');
+    overheadlineinfo    = regexp(Lines(l).Info,'<OverheadLine>(.*?)</OverheadLine>','match');
+    
+    if ~isempty(overheadbyphaseinfo)
+        Lines(l).Length = str2double(regexp(overheadbyphaseinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
+        Lines(l).Spacing = strrep(regexp(overheadbyphaseinfo{1},'(?<=<ConductorSpacingID>)(.*?)(?=</ConductorSpacingID>)','match'),'&apos;',''''); Lines(l).Spacing = Lines(l).Spacing{1};
+        wires = regexp(overheadbyphaseinfo{1},'(?<=<PhaseConductorID[ABC]>)(.*?)(?=</PhaseConductorID[ABC]>)','match');
+        wires = [wires(~strcmp(wires,'NONE')),regexp(overheadbyphaseinfo{1},'(?<=<NeutralConductorID>)(.*?)(?=</NeutralConductorID>)','match')];
         Lines(l).Wires = ['[''',strjoin(wires,''' '''),''']'];
         
         % Print to file Lines.dss
@@ -338,6 +349,17 @@ for l = 1:s
             Lines(l).ID,Lines(l).numPhase,Lines(l).Bus1,Lines(l).Bus2,...
             Lines(l).Length,Lines(l).Spacing,Lines(l).Wires);
     end
+    
+    if ~isempty(overheadlineinfo)
+        Lines(l).Length = str2double(regexp(overheadlineinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
+        
+        % Print to file Lines.dss
+        fprintf(fid(4),['New Line.%s Phases= %d Bus1=%-15s Bus2=%-15s ',...
+            'Length=%-6.2f units=m\n'],...
+            Lines(l).ID,Lines(l).numPhase,Lines(l).Bus1,Lines(l).Bus2,...
+            Lines(l).Length);
+    end
+    
     
     % Underground Cable
     undergroundinfo = regexp(Lines(l).Info,'<Underground>(.*?)</Underground>','match');
@@ -381,7 +403,7 @@ for l = 1:s
         Loads(ld).Phase = Phase{1};
         Loads(ld).NumPhase = length(Phase);
         Loads(ld).Bus1 = strrep(Loads(ld).ID,'_','.');
-        Loads(ld).kV = 7.2; % kV
+        Loads(ld).kV = Source.BaseKVLL/sqrt(3); % kV
         Loads(ld).XFKVA = str2double(regexp(spotloadinfo{i},'(?<=<ConnectedKVA>)(.*?)(?=</ConnectedKVA>)','match'));
         
         LoadType = regexp(spotloadinfo{i},'(?<=<LoadValue Type="LoadValue)(.*?)(?=">)','match');
@@ -412,8 +434,8 @@ for l = 1:s
         % Print Load
         fprintf(fid(5),['New Load.%s Bus1=%-10s Phases=%d kV=%.4f ',...
         'kW=%.6f yearly=Yearly%c daily=Daily%c kVAR=%.6f\n'],...
-        Loads(ld).ID,Loads(ld).Bus1,Loads(ld).NumPhase,Loads(ld).kV,...
-        Loads(ld).kW,repmat(Loads(ld).Phase,1,2),Loads(ld).kVAR);
+        Loads(ld).ID,Loads(ld).Bus1,Loads(ld).NumPhase,Loads(ld).kV,...        %Loads(ld).kW,repmat(Loads(ld).Phase,1,2),Loads(ld).kVAR);
+        20,repmat(Loads(ld).Phase,1,2),2);
         
         ld = ld+1;
     end
@@ -466,23 +488,26 @@ fclose(fid(6));
 Lines = rmfield(Lines,'Info');
 
 %% Generate Master File
-Sources = struct('Info',regexp(FILE,'<Source>(.*?)</Source>','match'));
-if sc > 1
-    warning('Does not support multiple sources')
-end
 
-Sources.ID = regexp(Sources.Info,'(?<=<SourceNodeID>)(.*?)(?=</SourceNodeID>)','match'); Sources.ID = Sources.ID{1};
-Sources.PeakAmps = str2double(regexp(Sources.Info,'(?<=<AMP>)(.*?)(?=</AMP>)','match'));
-Sources.SetVolt = str2double(regexp(Sources.Info,'(?<=<DesiredVoltage>)(.*?)(?=</DesiredVoltage>)','match'));
+[~,~,ic] = unique([{Lines.Bus1},{Lines.Bus2},{Source.ID}],'stable');
+Source.MeterLine = Lines(mod(ic(end)-1,l)+1).ID;
+
+%Sources.PeakAmps = str2double(regexp(Sources.Info,'(?<=<AMP>)(.*?)(?=</AMP>)','match'));
+%Sources.SetVolt = str2double(regexp(Sources.Info,'(?<=<DesiredVoltage>)(.*?)(?=</DesiredVoltage>)','match'));
+
+Source.R2 = Source.R1; Source.X2 = Source.X1;
+Source.PeakAmps = [400,400,400];
+Source.SetVolt = 1.03*Source.BaseKVLL;
 
 % Print Master File
 fid(7) = fopen([savelocation,'Master.dss'],'wt');
 fprintf(fid(7),['Clear\n\n! Define the Circuit\n',...
-    sprintf('New Circuit.%s Bus1=%s',Sources(1).ID,Sources(1).ID),'\n',...
-    sprintf('~ BasekV=%.2f  pu=%.4f  angle=%.2f',EquipmentDB.Substation(1).BaseKVLL,Sources.SetVolt/EquipmentDB.Substation(1).BaseKVLL,EquipmentDB.Substation(1).SetAngle),'\n',...
-    sprintf('~ Z1=[ %.4f %.4f ]',EquipmentDB.Substation(1).R1,EquipmentDB.Substation(1).X1),'\n',...
-    sprintf('~ Z2=[ %.4f %.4f ]',EquipmentDB.Substation(1).R1,EquipmentDB.Substation(1).X1),'\n',...
-    sprintf('~ Z0=[ %.4f %.4f ]',EquipmentDB.Substation(1).R0,EquipmentDB.Substation(1).X0),'\n\n',...
+    sprintf('New Circuit.%s Bus1=%s',Source.ID,Source.ID),'\n',...
+    sprintf('~ BasekV=%.2f  pu=%.4f  angle=%.2f',Source.BaseKVLL,...
+        Source.SetVolt/Source.BaseKVLL,Source.SetAngle),'\n',...
+    sprintf('~ Z1=[ %.4f %.4f ]',Source.R1,Source.X1),'\n',...
+    sprintf('~ Z2=[ %.4f %.4f ]',Source.R2,Source.X2),'\n',...
+    sprintf('~ Z0=[ %.4f %.4f ]',Source.R0,Source.X0),'\n\n',...
     '! Library Data\n',...
     'Redirect Libraries\\WireData.dss\n',...
     'Redirect Libraries\\LineSpacing.dss\n',...
@@ -499,13 +524,15 @@ fprintf(fid(7),['Clear\n\n! Define the Circuit\n',...
     '!Redirect Controls\\SwitContrl.dss\n',...
     '!Redirect Controls\\ReclContrl.dss\n\n',...
     '! Set the voltage bases\n',...
-    'Set voltagebases = [ 23.90 13.80 0.480 0.208 0.240 0.120 ]\n',...
+    sprintf('Set voltagebases = [ %.2f %.2f 0.480 0.208 0.240 0.120 ]\n',...
+        Source.BaseKVLL,Source.BaseKVLL/sqrt(3)),...
     'CalcVoltageBases\n\n',...
     '! Define the bus coordinates\n',...
     'Buscoords BusCoords.dss\n\n',...
     '! Define an energy meter\n',...
-    '!New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes\n',...
-    sprintf('!~ peakcurrent=[ %.2f   %.2f   %.2f ]',Sources.PeakAmps)]);
+    'New EnergyMeter.CircuitMeter ',sprintf('LINE.%s',Source.MeterLine),...
+    ' terminal=1 option=R PhaseVoltageReport=yes\n',...
+    sprintf('~ peakcurrent=[ %.2f   %.2f   %.2f ]',Source.PeakAmps)]);
 fclose(fid(7));
 
 
