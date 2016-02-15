@@ -103,10 +103,16 @@ wind=Weather(:,1);
 Atemp=Weather(:,2);
 wind=sort(wind);
 Atemp=sort(Atemp);
+v_avg=3.649; %m/s
 
-num_g=20;
+for v=0:1:30
+    WB(v+1,1)=(pi*v)/(2*(v_avg^2))*exp(-1*(pi/4)*(v/v_avg)^2);
+end
+
+num_g=30;
 wind_max=12;
-step=wind_max/num_g;
+%step=wind_max/num_g;
+step=1;
 %hist(wind,50)
 count=zeros(num_g,2);
 min=0;
@@ -122,14 +128,22 @@ for i=1:1:length(wind)
         max=max+step;
     end
 end
+
 fig = fig + 1;
 figure(fig);
+%{
 X=0:step:wind_max-step;
 plot(X*2.23694,count(:,1)/8760,'b-','LineWidth',3);
 hold on
 plot([1.4 1.4],[0 0.16],'r--','LineWidth',2);
-xlabel('Wind Speed (mph)','FontWeight','bold','FontSize',12);
+%}
+v=0:1:29;
+plot(v,count(:,1)/8760,'ro','LineWidth',2);
+hold on
+plot(v,WB(1:30,1),'b-','LineWidth',2);
+xlabel('Wind Speed (m/s)','FontWeight','bold','FontSize',12);
 ylabel('Probability Density','FontWeight','bold','FontSize',12);
+legend('From Discrete Wind Speeds','From Rayleigh Distribution')
 grid on
 set(gca,'FontWeight','bold');
 %%

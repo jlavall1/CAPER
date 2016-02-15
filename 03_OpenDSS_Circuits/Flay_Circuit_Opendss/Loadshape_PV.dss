@@ -1,0 +1,1 @@
+New loadshape.LS_PVshape Pbase=1.00 npts=86400 sinterval=1 mult=(file=LS_PVdaily.csv) action=normalize

@@ -1,0 +1,11 @@
+New Capacitor.38395182 Phases=3  Bus1=258425776 kvar= 600  kV= 12.47
+New Capacitor.38391707_Sw Phases=3  Bus1=258406388 kvar= 450  kV= 12.47 enabled=true
+/*
+New Capcontrol.38395182_Sw Element=Line.259126903 Terminal=2 Capacitor=38395182 Type=voltage ONsetting=122 OFFsetting=124 
+~ PTRatio=60  
+~ VoltOverride=N 
+~ Vmax=126.0 
+~ Vmin=116.0
+~ delay=45 
+~ enabled=T 
+*/

@@ -10,7 +10,7 @@ location = cd;
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 DSSCircuit = DSSCircObj.ActiveCircuit;
 
-DSSText.command = ['Compile ',ckt_direct_prime]; %_prime gen in:
+DSSText.command = ['Compile ',ckt_direct_prime]; %Master_General.dss
 Cap_info = getCapacitorInfo(DSSCircObj);
 Lines_info = getLineInfo(DSSCircObj);
 [~,index] = sortrows([Lines_info.bus1Distance].');
@@ -27,9 +27,18 @@ cd(location);
 
 %PV_ON_OFF=2;
 LC=3;
-POI_loc=[63,184,771];   %   10%,25%,50%
-POI_pmpp=[5000,1400,700];
-PV_bus=Buses_Zsc(POI_loc(LC)).name;
+if LC == 1
+    fprintf('PV at 10% of Zsc_max\n');
+elseif LC == 2
+    fprintf('PV at 25% of Zsc_max\n');
+elseif LC == 3
+    fprintf('PV at 50% of Zsc_max\n');
+end
+%POI_loc=[63,184,771];   %   10%,25%,50%
+POI_loc=[232,65,251]; 
+%POI_pmpp=[5000,1400,700];
+POI_pmpp=[4000,1000,600];
+PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9);
 PV_pmpp=POI_pmpp(LC);
 %}
 %-------------------------------------
@@ -102,19 +111,19 @@ for DOY=1:1:364 %365
     filelocation=strcat(s,'\');
     fileID = fopen([filelocation,'Loadshape.dss'],'wt');
     fprintf(fileID,['New loadshape.LS_PhaseA npts=%s sinterval=%s pmult=(',...
-        sprintf('%f ',CAP_OPS(DOY).kW(:,1)),') qmult=(',...
+        sprintf('%f ',CAP_OPS_STEP2(DOY).kW(:,1)),') qmult=(',...
         sprintf('%f ',CAP_OPS(DOY).DSS(:,1)),')\n\n'],num2str(sim_num),num2str(s_step));
     fprintf(fileID,['New loadshape.LS_PhaseB npts=%s sinterval=%s pmult=(',...
-        sprintf('%f ',CAP_OPS(DOY).kW(:,2)),') qmult=(',...
+        sprintf('%f ',CAP_OPS_STEP2(DOY).kW(:,2)),') qmult=(',...
         sprintf('%f ',CAP_OPS(DOY).DSS(:,2)),')\n\n'],num2str(sim_num),num2str(s_step));
     fprintf(fileID,['New loadshape.LS_PhaseC npts=%s sinterval=%s pmult=(',...
-        sprintf('%f ',CAP_OPS(DOY).kW(:,3)),') qmult=(',...
+        sprintf('%f ',CAP_OPS_STEP2(DOY).kW(:,3)),') qmult=(',...
         sprintf('%f ',CAP_OPS(DOY).DSS(:,3)),')\n\n'],num2str(sim_num),num2str(s_step));
     fclose(fileID);
-    KVAR_ACTUAL.data=CAP_OPS(DOY).data(:,1:6);
+    KVAR_ACTUAL.data=CAP_OPS_STEP1(DOY).data(:,1:6);
     
     %-- Find Cap Ops & Pmult/Qmult from CAP_OPS {struct}
-    sw_cap= CAP_OPS(DOY).data(:,4);
+    sw_cap= CAP_OPS_STEP1(DOY).data(:,4);
     
     %--  Tell program where DSS Files are:
     if feeder_NUM == 2
@@ -150,12 +159,12 @@ for DOY=1:1:364 %365
     end
     Export_Monitors_timeseries
     %Find P,Q residuals=DSCADA-DSS
-    CAP_OPS(DOY).DSS_LTC_V=DATA_SAVE(1).phaseV;
-    CAP_OPS(DOY).DSS_LTC_OP=DATA_SAVE(1).LTC_Ops;
-    CAP_OPS(DOY).DSS_SUB_P=DATA_SAVE(1).phaseP;
-    CAP_OPS(DOY).DSS_SUB_Q=DATA_SAVE(1).phaseQ;
+    YEAR_SIM_LTC(DOY).DSS_LTC_V=DATA_SAVE(1).phaseV;
+    YEAR_SIM_LTC(DOY).DSS_LTC_OP=DATA_SAVE(1).LTC_Ops;
+    YEAR_SIM_PQ(DOY).DSS_SUB_P=DATA_SAVE(1).phaseP;
+    YEAR_SIM_PQ(DOY).DSS_SUB_Q=DATA_SAVE(1).phaseQ;
     %Find Base Case LTC & Cap ops/day
-    Pre_Summary
+    %Pre_Summary
     
     DAY = DAY + 1;
     toc

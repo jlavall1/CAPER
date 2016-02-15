@@ -1,5 +1,6 @@
 %Pre QSTS_365_Span
-
+addpath(strcat(base_path,'\01_Sept_Code\04_QSTS_Solar_Coeff'));
+addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
 %Objective:
 %       To load in all background files nessessary to run sim.
 %%
@@ -69,12 +70,17 @@ elseif feeder_NUM == 2
     
     %load P_Q_Mult_60s.mat
     %load P_Q_Mult_60s_1.mat %   |   CAP_OPS
-    load P_Mult_60s_Flay.mat
-    load Q_Mult_60s_Flay.mat
-    %%
-    %CAP_OPS_STEP1.dP=CAP_OPS.dP;
-    %CAP_OPS_STEP1.kW=CAP_OPS.kW;
-    %%
+    load CAP_Mult_60s_Flay.mat  %CAP_OPS_STEP1
+    load P_Mult_60s_Flay.mat    %CAP_OPS_STEP2
+    load Q_Mult_60s_Flay.mat    %CAP_OPS
+    load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
+    %Now set where PV Farm is located:
+    % 10%,25%,50%
+    POI_loc=[232,65,251]; 
+    POI_pmpp=[4000,1000,600];
+    PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9);
+    PV_pmpp=POI_pmpp(LC);
+    
 elseif feeder_NUM == 3
     load ROX.mat
     FEEDER = ROX;
@@ -206,14 +212,4 @@ elseif PV_Site == 7
         M_PVSITE(i).PU(:,:) = M_MAYB(i).kW(1:end-1,1)./M_PVSITE_INFO.kW;
     end
     clearvars M_MAYB_INFO M_MAYB
-end
-%%
-addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
-if feeder_NUM == 1
-    load Common_Bus_Impedance.mat
-elseif feeder_NUM == 2
-    
-    load Flay_Bus_Impedances.mat %Buses_Zsc
-    %load Flay_Static_maxPV.mat   %MAX_PV.L50 ; MAX_PV.L30 ; MAX_PV.L25 ;
-    load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
 end

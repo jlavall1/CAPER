@@ -33,7 +33,7 @@ Redirect SourceRegulator_3ph.dss
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
 Redirect Loads_matchQ.dss 
-Redirect Capacitors.dss
+Redirect Capacitors_CTRL.dss
 !
 ! Set the voltage bases
 !

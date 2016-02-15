@@ -56,10 +56,10 @@ for DOY=1:1:364
     cap_pos = KVAR_ACTUAL.data(1440,4);
     
     %4]Save all results from Find_Cap_Ops in struct:
-    CAP_OPS_STEP1(DOY).data = KVAR_ACTUAL.data;
-    CAP_OPS_STEP1(DOY).dP = KVAR_ACTUAL.dP;
+    CAP_OPS_STEP1(DOY).data = KVAR_ACTUAL.data; %CAP_Mult
+    CAP_OPS_STEP2(DOY).dP = KVAR_ACTUAL.dP;     %P_Mult
     CAP_OPS_STEP2(DOY).kW = LOAD_ACTUAL;
-    CAP_OPS(DOY).error = E;
+    CAP_OPS(DOY).error = E;                     %Q_Mult
     CAP_OPS(DOY).oper = OPS;
     CAP_OPS(DOY).PF = KVAR_ACTUAL.PF;
     CAP_OPS(DOY).DSS= KVAR_ACTUAL.DSS;
