@@ -10,10 +10,10 @@ disp('Reading in Circuit Data...')
 
 % Add DER
 [NODE,SECTION,DER] = addDER(NODE,SECTION,DER,...
-    {'258896301' '258908260' '258896628' '264491247'});
+    {'258896301' '258896343' '258896628' '264491247'});
 LOAD = NODE(logical([NODE.p]));
 
-PARAM.SO = {'264495349'};
+PARAM.SO = {'263532848'}; %{'258896484'}; % {'264495349'};
 
 toc
 disp('Formulating MILP Constraints...')
@@ -21,9 +21,13 @@ disp('Formulating MILP Constraints...')
 [f,intcon,Aineq,bineq,Aeq,beq,lb,ub] = ResiliencyMILPForm(NODE,SECTION,LOAD,DER,PARAM);
 
 toc
-disp('Solving MILP...')
+disp('Solving LP...')
 % Solve Problem
-[X,fval,exitflag,output] = intlinprog(f,intcon,Aineq,bineq,Aeq,beq,lb,ub);
+%[X,fval,exitflag,output] = intlinprog(f,intcon,Aineq,bineq,Aeq,beq,lb,ub);
+Opt = opti('f',f,'ineq',Aineq,full(bineq),'eq',Aeq,full(beq),'bounds',lb,ub,'xtype',intcon);
+[X,fval,exitflag,info] = solve(Opt);
+disp(info)
+disp(fval)
 
 if exitflag==1
     toc
@@ -35,22 +39,27 @@ if exitflag==1
     L = length(LOAD);       % Number of Loads
     
     
-    % a     = x[       1      :       n      ]
-    % alpha = x[      n+1     :    (d+1)*n   ]
-    % b     = x[   (d+1)*n+1  :   (d+1)*n+s  ]
-    % bbar  = x[    (d+1)*n+s+1 :   (d+1)*n+2s ]
-    % beta  = x[   (d+1)*n+2s+1 : (d+1)*n+(2+d)s  ]
-    % c     = x[ (d+1)*n+(2+d)s+1  :  (d+1)n+2s ]
-    % gamma = x[  (d+1)n+2s+1 : (2d+1)n+2s ]
+    % Let x = [a;alpha;b1;b2;bbar;c;gamma], then
+    % a     = x[           1           :           N           ]
+    % alpha = x[          N+1          :        (D+1)*N        ]
+    % b1    = x[       (D+1)*N+1       :       (D+1)*N+S       ]
+    % b2    = x[      (D+1)*N+S+1      :      (D+1)*N+2*S      ]
+    % bbar  = x[     (D+1)*N+2*S+1     :      (D+1)*N+3*S      ]
+    % beta  = x[     (D+1)*N+3*S+1     :    (D+1)*N+(3+D)*S    ]
+    % c     = x[   (D+1)*N+(3+D)*s+1   :   (D+1)*N+(3+D)*S+L   ]
+    % gamma = x[  (D+1)*N+(3+D)*S+L+1  :  (D+1)*N+(3+D)*S+L+D  ]
     
     % Define starting indicies
     a       = 0;
     alpha   = a+N;
-    b       = alpha+D*N;
-    bbar    = b+S;
+    B1      = alpha+D*N;
+    B2      = B1+S;
+    bbar    = B2+S;
     beta    = bbar+S;
     c       = beta+D*S;
     gamma   = c+L*D;
+    
+    
     fprintf('Active Micro-grids: %s\n',sprintf(' %d ',find(X(gamma+1:gamma+D)>.5)))
         
     for i = 1:N
@@ -61,7 +70,9 @@ if exitflag==1
     end
     
     for i = 1:S
-        SECTION(i).b = X(b+i);
+        SECTION(i).b1 = X(B1+i);
+        SECTION(i).b2 = X(B2+i);
+        SECTION(i).b = SECTION(i).b1+SECTION(i).b2;
         SECTION(i).bbar = X(bbar+i);
         for j = 1:D
             SECTION(i).(sprintf('beta_MG%d',j)) = X(beta+i+(j-1)*S);
@@ -81,7 +92,10 @@ if exitflag==1
     DER = rmfield(DER,{'w','p','q'});
     [DER.CAPACITY] = deal(temp.CAPACITY);
     clear temp
-
+    
+    toc
+    disp('Plotting Results...')
+    PlotResults
 end    
 
 toc
