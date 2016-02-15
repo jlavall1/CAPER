@@ -243,7 +243,6 @@ fclose(fid(9));
 Source = struct('Info',regexp(FILE,'<Source>(.*?)</Source>','match'));
 if sc > 1
     warning('DSS does not support multiple sources')
-    Source=Source(1);
 end
 
 Source.ID = regexp(Source.Info,'(?<=<SourceNodeID>)(.*?)(?=</SourceNodeID>)','match'); Source.ID = Source.ID{1};
@@ -434,17 +433,17 @@ for l = 1:s
         
         % Print Load
         % kW=#.###### yearly=YearlyP daily=DailyP kVAR=#.######
-%         fprintf(fid(5),['New Load.%s Bus1=%-10s Phases=%d kV=%.4f ',...
-%         'kW=%.6f yearly=Yearly%c daily=Daily%c kVAR=%.6f\n'],...
-%         Loads(ld).ID,Loads(ld).Bus1,Loads(ld).NumPhase,Loads(ld).kV,...
-%         Loads(ld).kW,repmat(Loads(ld).Phase,1,2),Loads(ld).kVAR);
+        fprintf(fid(5),['New Load.%s Bus1=%-10s Phases=%d kV=%.4f ',...
+        'kW=%.6f yearly=Yearly%c daily=Daily%c kVAR=%.6f\n'],...
+        Loads(ld).ID,Loads(ld).Bus1,Loads(ld).NumPhase,Loads(ld).kV,...
+        Loads(ld).kW,repmat(Loads(ld).Phase,1,2),Loads(ld).kVAR);
         %20,repmat(Loads(ld).Phase,1,2),2);
 
-        % XFKVA=#.#(min10KVA) PF=0.95 yearly=YearlyP daily=DailyP
+        % XFKVA=# PF=0.95 kwh=#.## yearly=YearlyP daily=DailyP
         fprintf(fid(5),['New Load.%s Bus1=%-10s Phases=%d kV=%.4f ',...
-        'XFKVA=%.1f PF=%.2f yearly=Yearly%c daily=Daily%c\n'],...
-        Loads(ld).ID,Loads(ld).Bus1,Loads(ld).NumPhase,Loads(ld).kV,...
-        max(Loads(ld).XFKVA,10),0.95,repmat(Loads(ld).Phase,1,2));
+        'kW=%.6f yearly=Yearly%c daily=Daily%c kVAR=%.6f\n'],...
+        Loads(ld).ID,Loads(ld).Bus1,Loads(ld).NumPhase,Loads(ld).kV,...        %Loads(ld).kW,repmat(Loads(ld).Phase,1,2),Loads(ld).kVAR);
+        20,repmat(Loads(ld).Phase,1,2),2);
         
         ld = ld+1;
     end

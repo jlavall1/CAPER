@@ -1,0 +1,5 @@
+New LineSpacing.VERTICAL-1-PH-60-1PH Ncond=2 Nphases=1 x=[ 0.0000  0.0000 ] h=[ 10.6680  8.8392 ]
+New LineSpacing.8'-ARM-NON-CENTER-POST-3PH Ncond=4 Nphases=3 x=[ -1.1278  0.3048  1.1278  0.0000 ] h=[ 10.3632  10.3632  10.3632  7.9248 ]
+New LineSpacing.8'-ARM-STANDARD-2PH Ncond=3 Nphases=2 x=[ -1.1278  1.1278  0.0000 ] h=[ 10.3632  10.3632  7.9248 ]
+New LineSpacing.8'-ARM-STANDARD-3PH Ncond=4 Nphases=3 x=[ -1.1278  0.0000  1.1278  0.0000 ] h=[ 10.3632  10.6680  10.3632  7.9248 ]
+New LineSpacing.VERTICAL-1-PH-104-1PH Ncond=2 Nphases=1 x=[ 0.0000  0.0000 ] h=[ 10.7686  7.9248 ]
