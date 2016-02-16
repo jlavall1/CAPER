@@ -1,20 +1,8 @@
-New Capacitor.254454603 Bus1= 254454603 Phases= 3 kvar= 0 kV= 24.94
-New Capcontrol.254454603 Element=Line.259172904 Capacitor=254454603 Terminal=1
-!~ type=time Onsetting=6 offsetting=23
-!~ type=kvar ONSetting=250 OFFSetting=200
-!~ type=voltage ONsetting=116 OFFsetting=119 vmax=126 vmin=112 voltOverride=yes
-New Capacitor.254461121 Bus1= 254461121 Phases= 3 kvar= 0 kV= 24.94
+New Capacitor.254454603 Bus1= 254454603 Phases= 3 kvar= 900 kV= 24.94
+New Capacitor.254461121 Bus1= 254461121 Phases= 3 kvar= 900 kV= 24.94
 New Capcontrol.254461121 Element=Line.254461119 Capacitor=254461121 Terminal=1
 !~ type=time Onsetting=6 offsetting=23
 !~ type=kvar ONSetting=250 OFFSetting=200
 !~ type=voltage ONsetting=116 OFFsetting=119 vmax=126 vmin=112 voltOverride=yes
-New Capacitor.254448440 Bus1= 254448440 Phases= 3 kvar= 0 kV= 24.94
-New Capcontrol.254448440 Element=Line.385538158 Capacitor=254448440 Terminal=1
-!~ type=time Onsetting=6 offsetting=23
-!~ type=kvar ONSetting=250 OFFSetting=200
-!~ type=voltage ONsetting=116 OFFsetting=119 vmax=126 vmin=112 voltOverride=yes
-New Capacitor.254432909 Bus1= 254432909 Phases= 3 kvar= 0 kV= 24.94
-New Capcontrol.254432909 Element=Line.254432907 Capacitor=254432909 Terminal=1
-!~ type=time Onsetting=6 offsetting=23
-!~ type=kvar ONSetting=250 OFFSetting=200
-!~ type=voltage ONsetting=116 OFFsetting=119 vmax=126 vmin=112 voltOverride=yes
+New Capacitor.254448440 Bus1= 254448440 Phases= 3 kvar= 900 kV= 24.94
+New Capacitor.254432909 Bus1= 254432909 Phases= 3 kvar= 600 kV= 24.94

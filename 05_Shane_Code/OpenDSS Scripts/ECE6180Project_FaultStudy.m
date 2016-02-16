@@ -3,7 +3,26 @@ clear
 clc
 close('all')
 
-load('COMMONWEALTH_Location.mat');
+
+% Find CAPER directory
+fid = fopen('pathdef.m','r');
+rootlocation = textscan(fid,'%c')';
+rootlocation = regexp(rootlocation{1}','C:[^.]*?CAPER\\','match','once');
+fclose(fid);
+rootlocation = [rootlocation,'07_CYME\'];
+
+% Read in filelocation
+filename = 0;
+% ******To skip UIGETFILE uncomment desired filename*******
+% ***(Must be in rootlocation CAPER03_OpenDSS_Circuits\)***
+%filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
+%filename = 'Master.dss'; filelocation = [rootlocation,'Test\'];
+filename = 'Master.dss'; filelocation = [rootlocation,'Mocksville_Main_2401.sxst_DSS\'];
+
+
+
+
+%load('COMMONWEALTH_Location.mat');
 %filename = 'Master_Fault.dss';
 
 % Setup the COM server
@@ -20,12 +39,12 @@ DSSText.Command = 'Solve Mode=FaultStudy';
 % Organize Lines by distance and discard non-3ph and laterals
 LineNames = DSSCircuit.Lines.AllNames;
 % Remove these lines (3ph and 336AAC Laterals)
-Remove = {'258896341' '258896356' '258896361' '455183899' '455183905' '258908179' ...
-    '263534356' '263534361' '258896491' '275423519' '275423535' '258896496' ...
-    '264379695' '264379700' '716733195' '716733190'};
-for i = 1:length(Remove)
-    LineNames = LineNames(~strcmp(Remove{i},LineNames));
-end
+% Remove = {'258896341' '258896356' '258896361' '455183899' '455183905' '258908179' ...
+%     '263534356' '263534361' '258896491' '275423519' '275423535' '258896496' ...
+%     '264379695' '264379700' '716733195' '716733190'};
+% for i = 1:length(Remove)
+%     LineNames = LineNames(~strcmp(Remove{i},LineNames));
+% end
 
 % Read in Line Data from DSS
 for i = 1:length(LineNames)

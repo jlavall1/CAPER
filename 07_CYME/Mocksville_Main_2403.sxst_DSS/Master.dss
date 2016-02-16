@@ -34,5 +34,5 @@ CalcVoltageBases
 Buscoords BusCoords.dss
 
 ! Define an energy meter
-New EnergyMeter.CircuitMeter LINE.259114164 terminal=1 option=R PhaseVoltageReport=yes
+New EnergyMeter.CircuitMeter LINE.624622044 terminal=1 option=R PhaseVoltageReport=yes
 ~ peakcurrent=[ 400.00   400.00   400.00 ]

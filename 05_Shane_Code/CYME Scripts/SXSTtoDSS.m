@@ -42,7 +42,7 @@ filelocation = rootlocation; filename = 0;
 %filename = 'Bellhaven 12-04 - 8-14 loads.xst (original).sxst'
 %filename = 'Commonwealth_ret_01311205.sxst';
 %filename = 'Bellhaven_ret_01291204.sxst';
-%filename = 'Mocksville_Main_2401.sxst';
+filename = 'Mocksville_Main_2401.sxst';
 
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select SXST file to Convert',...
@@ -88,10 +88,14 @@ fprintf(fid(2),['New loadshape.DailyA\n',...
 fclose(fid(2));
 
 %% Extract Database Informaiton
+
+EquipmentDB.Types = regexp(FILE,'(?<=<EquipmentDBType>)(.*?)(?=</EquipmentDBType>)','match');
+
 % Output - WireData.dss (OpenDSS Library of Wire Data)
 %        - LineSpacing.dss (OpenDSS Library of Line Spacing)
 %        - UGLineCodes.dss (OpenDSS Library of Line Codes)
 EquipmentDB.Info = regexp(FILE,'<EquipmentDBs>(.*?)</EquipmentDBs>','match');
+
 
 % <SubstationDB>
 EquipmentDB.Substation = struct('Info',regexp(EquipmentDB.Info{1},'<SubstationDB>(.*?)<SubstationDetails>','match'));
@@ -229,7 +233,7 @@ for i =1:length(EquipmentDB.DCSpacing)
     EquipmentDB.DCSpacing(i).x = str2double(regexp(EquipmentDB.DCSpacing(i).Info,'(?<=<X>)(.*?)(?=</X>)','match'));
     EquipmentDB.DCSpacing(i).h = str2double(regexp(EquipmentDB.DCSpacing(i).Info,'(?<=<Y>)(.*?)(?=</Y>)','match'));
     EquipmentDB.DCSpacing(i).Ncond = length(EquipmentDB.DCSpacing(i).x);
-    EquipmentDB.DCSpacing(i).Nphases = EquipmentDB.DCSpacing(i).Nconds - str2double(regexp(EquipmentDB.DCSpacing(i).Info,'(?<=<NbNeutrals>)(.*?)(?=</NbNeutrals>)','match'));
+    EquipmentDB.DCSpacing(i).Nphases = EquipmentDB.DCSpacing(i).Ncond - str2double(regexp(EquipmentDB.DCSpacing(i).Info,'(?<=<NbNeutrals>)(.*?)(?=</NbNeutrals>)','match'));
     
     % Print to file
     fprintf(fid(9),'New LineSpacing.%s Ncond=%d Nphases=%d x=[%s] h=[%s]\n',...
@@ -355,10 +359,17 @@ for l = 1:s
         Lines(l).Length = str2double(regexp(overheadlineinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
         
         % Print to file Lines.dss
+%         fprintf(fid(4),['New Line.%s Phases= %d Bus1=%-15s Bus2=%-15s ',...
+%             'Length=%-6.2f units=m\n'],...
+%             Lines(l).ID,Lines(l).numPhase,Lines(l).Bus1,Lines(l).Bus2,...
+%             Lines(l).Length);
+
+        % Print to file Lines.dss
         fprintf(fid(4),['New Line.%s Phases= %d Bus1=%-15s Bus2=%-15s ',...
-            'Length=%-6.2f units=m\n'],...
+            'Length=%-6.2f units=m  Spacing=%s wires=%s\n'],...
             Lines(l).ID,Lines(l).numPhase,Lines(l).Bus1,Lines(l).Bus2,...
-            Lines(l).Length);
+            Lines(l).Length,'8''-ARM-NON-CENTER-POST-3PH',...
+        '[''336-ACSR-B-18X1'' ''336-ACSR-B-18X1'' ''336-ACSR-B-18X1'' ''1/0-ACSR-B-6X1'']');
     end
     
     
@@ -498,8 +509,10 @@ Lines = rmfield(Lines,'Info');
 
 %% Generate Master File
 
-[~,~,ic] = unique([{Lines.Bus1},{Lines.Bus2},{Source.ID}],'stable');
+%[~,~,ic] = unique([{Lines.Bus1},{Lines.Bus2},{[Source.ID,'.1.2.3']}],'stable');
 Source.MeterLine = Lines(mod(ic(end)-1,l)+1).ID;
+index = mod(find(ismember([{Lines.Bus1},{Lines.Bus2}],[Source.ID,'.1.2.3'])),l);
+Source.MeterLine = Lines(index).ID;
 
 %Sources.PeakAmps = str2double(regexp(Sources.Info,'(?<=<AMP>)(.*?)(?=</AMP>)','match'));
 %Sources.SetVolt = str2double(regexp(Sources.Info,'(?<=<DesiredVoltage>)(.*?)(?=</DesiredVoltage>)','match'));

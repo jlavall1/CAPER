@@ -16,7 +16,7 @@ filename = 0;
 % ***(Must be in rootlocation CAPER03_OpenDSS_Circuits\)***
 %filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
 %filename = 'Master.dss'; filelocation = [rootlocation,'Test\'];
-filename = 'Master.dss'; filelocation = [rootlocation,'Mocksville_Main_2401.sxst_DSS\'];
+filename = 'Master.dss'; filelocation = [rootlocation,'Mocksville_Main_2403.sxst_DSS\'];
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
         rootlocation);
@@ -30,14 +30,16 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 DSSText.command = ['Compile ',[filelocation,filename]];
 
 % Configure Simulation
-DSSText.command = 'Set Mode=Snapshot';
+%DSSText.command = 'Set Mode=Snapshot';
+DSSText.command = 'Set Mode=FaultStudy';
 DSSCircuit.Solution.Solve
 
 Lines = getLineInfo(DSSCircObj);
 Bus = getBusInfo(DSSCircObj);
 Load = getLoadInfo(DSSCircObj);
-% figure; plotKWProfile(DSSCircObj);
-% figure; plotVoltageProfile(DSSCircObj);
-% figure; plotCircuitLines(DSSCircObj,'Coloring','voltage120')
+figure; plotKWProfile(DSSCircObj);
+figure; plotVoltageProfile(DSSCircObj);
+figure; plotCircuitLines(DSSCircObj,'Coloring','voltage120')
 
-Probs = Lines(cellfun(@isempty,{Lines.length}));
+%Probs = Lines(cellfun(@isempty,{Lines.length}));
+Probs = Bus(~logical([Bus.distance]));

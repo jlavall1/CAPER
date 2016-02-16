@@ -465,6 +465,9 @@ A30 = sparse(i30,j30,v30,N,xlen);
 %A31 = sparse(i31,j31,v31,N-D,xlen);
 
 
+% ALL NODES MUST BELONG TO A MG
+
+
 % -RSC-(26)-&-(27)---------------------------------------------------------
 % (26) sum( alpha_ig ) - sum( beta_ijg ) - gamma_g = 0                         all g in G
 %      i<N             (i,j)<S
@@ -488,8 +491,8 @@ v27 = v26;
 A27 = sparse(i27,j27,v27,1,xlen);
 
 
-Aineq = [A6;A7;A8;A9;A10;A11;A13;A14;A15;A16;A17;A18;A20;A21;A22;A23;A24;A25;A30;A32;A33;A34];
-bineq = [b6;b7;b8;b9;b10;b11;b13;b14;b15;b16;b17;b18;b20;b21;b22;b23;b24;b25;b30;b32;b33;b34];
+Aineq = [A6;A7;A8;A9;A10;A11;A13;A14;A15;A16;A18;A20;A21;A22;A23;A24;A25;A30;A32;A33;A34];
+bineq = [b6;b7;b8;b9;b10;b11;b13;b14;b15;b16;b18;b20;b21;b22;b23;b24;b25;b30;b32;b33;b34];
 
-Aeq = [A1;A2;A3;A4;A26;A27];
-beq = [b1;b2;b3;b4;b26;b27];
+Aeq = [A1;A2;A3;A4;A17;A26;A27];
+beq = [b1;b2;b3;b4;b17;b26;b27];

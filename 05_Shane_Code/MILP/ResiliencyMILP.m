@@ -13,7 +13,7 @@ disp('Reading in Circuit Data...')
     {'258896301' '258896343' '258896628' '264491247'});
 LOAD = NODE(logical([NODE.p]));
 
-PARAM.SO = {'263532848'}; %{'258896484'}; % {'264495349'};
+PARAM.SO =  {'264495349'};
 
 toc
 disp('Formulating MILP Constraints...')
