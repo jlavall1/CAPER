@@ -244,15 +244,16 @@ end
 fclose(fid(9));
 
 %% Extract Source Information
-Source = struct('Info',regexp(FILE,'<Source>(.*?)</Source>','match'));
+sourceinfo = regexp(FILE,'<Source>(.*?)</Source>','match');
 if sc > 1
     warning('DSS does not support multiple sources')
-    Source=Source(1);
+    sourceinfo=sourceinfo{1};
 end
 
-Source.ID = regexp(Source.Info,'(?<=<SourceNodeID>)(.*?)(?=</SourceNodeID>)','match'); Source.ID = Source.ID{1};
-[~,~,ic] = unique([{EquipmentDB.Substation.ID},{Source.ID}],'stable');
+Source.ID = regexp(sourceinfo,'(?<=<SourceNodeID>)(.*?)(?=</SourceNodeID>)','match');
+[~,~,ic] = unique([{EquipmentDB.Substation.ID},Source.ID{1}],'stable');
 Source = EquipmentDB.Substation(ic(end));
+Source.Info = sourceinfo;
 
 %% Extract Node Information
 %  Output - Buses.dss (text file containing BusID, X, and Y Coords)
@@ -357,7 +358,10 @@ for l = 1:s
     
     if ~isempty(overheadlineinfo)
         Lines(l).Length = str2double(regexp(overheadlineinfo{1},'(?<=<Length>)(.*?)(?=</Length>)','match'));
-        
+        warning(['Line %s Does not have spacing and wire information.',...
+            'Defaults set to\n%s and\n%s'],Lines(l).ID,'8''-ARM-NON-CENTER-POST-3PH',...
+        '[''336-ACSR-B-18X1'' ''336-ACSR-B-18X1'' ''336-ACSR-B-18X1'' ''1/0-ACSR-B-6X1'']');
+    
         % Print to file Lines.dss
 %         fprintf(fid(4),['New Line.%s Phases= %d Bus1=%-15s Bus2=%-15s ',...
 %             'Length=%-6.2f units=m\n'],...
@@ -514,12 +518,21 @@ Source.MeterLine = Lines(mod(ic(end)-1,l)+1).ID;
 index = mod(find(ismember([{Lines.Bus1},{Lines.Bus2}],[Source.ID,'.1.2.3'])),l);
 Source.MeterLine = Lines(index).ID;
 
-%Sources.PeakAmps = str2double(regexp(Sources.Info,'(?<=<AMP>)(.*?)(?=</AMP>)','match'));
-%Sources.SetVolt = str2double(regexp(Sources.Info,'(?<=<DesiredVoltage>)(.*?)(?=</DesiredVoltage>)','match'));
+Source.PeakAmps = str2double(regexp(Source.Info,'(?<=<AMP>)(.*?)(?=</AMP>)','match'));
+Source.SetVolt = str2double(regexp(Source.Info,'(?<=<DesiredVoltage>)(.*?)(?=</DesiredVoltage>)','match'));
 
-Source.R2 = Source.R1; Source.X2 = Source.X1;
-Source.PeakAmps = [400,400,400];
-Source.SetVolt = 1.03*Source.BaseKVLL;
+if isempty(Source.R2)
+    Source.R2 = Source.R1; Source.X2 = Source.X1;
+    warning('Missing Negative Sequence Source Impedance. Default Z2 = Z1')
+end
+if isnan(Source.PeakAmps)
+    Source.PeakAmps = [400,400,400];
+    warning('Missing Peak Source Current. Default 400A/phase')
+end
+if isnan(Source.SetVolt)
+    Source.SetVolt = 1.03*Source.BaseKVLL;
+    warning('Missing Source Voltage Set Point. Default 1.03pu')
+end
 
 % Print Master File
 fid(7) = fopen([savelocation,'Master.dss'],'wt');

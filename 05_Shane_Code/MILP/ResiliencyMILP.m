@@ -6,7 +6,7 @@ tic
 disp('Reading in Circuit Data...')
 % Read in Circuit Data
 %[NODE,SECTION,DER,PARAM] = DSSRead(filename);
-[NODE,SECTION,DER,PARAM] = sxstRead; %(fullfilename);
+[NODE,SECTION,DER,PARAM] = sxstRead_old2; %(fullfilename);
 
 % Add DER
 [NODE,SECTION,DER] = addDER(NODE,SECTION,DER,...
