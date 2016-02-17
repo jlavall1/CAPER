@@ -75,6 +75,7 @@ elseif feeder_NUM == 2
     load Q_Mult_60s_Flay.mat    %CAP_OPS
     load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
     %Now set where PV Farm is located:
+    
     % 10%,25%,50%
     POI_loc=[232,65,251]; 
     POI_pmpp=[4000,1000,600];

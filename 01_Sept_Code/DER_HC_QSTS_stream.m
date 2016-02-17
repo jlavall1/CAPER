@@ -52,6 +52,8 @@ addpath(path);
 if Static_Host == 1
     %User wants static hosting cap. algo.
     if scenerio_NUM < 6
+        path = strcat(base_path,'\01_Sept_Code\03_Static_DG_Hosting_Cap');
+        addpath(path);
         Hosting_Cap_stream
     else
         Fault_Study
@@ -63,6 +65,8 @@ else
         QSTS_1_Span
     elseif QSTS_select == 4
         %Pre-main Algo:
+        path = strcat(base_path,'\01_Sept_Code\04_QSTS_Solar_Coeff');
+        addpath(path);
         Pre_QSTS_365_Span
         %Annual run of base case for LTC operations:
         QSTS_365_Span %just added _Quick
