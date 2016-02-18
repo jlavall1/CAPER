@@ -1,7 +1,7 @@
 clear
 clc
 close all
-FDR = 3;
+FDR = 1;
 if FDR == 3
     load('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis\HOSTING_CAP_FLAY.mat')
     B=[ 3.064419e+03 -2.082900e+04  2.725788e+04  2.184025e-01 -1.815598e+00  1.246599e+01 -1.191669e+01  7.349932e+01 -8.239626e+01  ];
