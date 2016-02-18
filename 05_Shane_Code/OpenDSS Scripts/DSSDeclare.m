@@ -1,19 +1,33 @@
-%Algorithm for Dynamically Declaring Circuit in OpenDSS
-clear
-clc
-close('all')
+function [DSSCircuit, DSSCircObj, DSSText, gridpvPath] = DSSDeclare(NODE,SECTION,LOAD,Source,DSS)
+%{
+Algorithm for Dynamically Declaring Circuit in OpenDSS
+--Source-- must contain only one source which has:
+Source.DSSCircuit - Circuit Definition
+Source.DSSVoltbase - Circuit Volage Bases
+Source.EnergyMeter - Energy Meter Definition
+
+--NODE--
+Contains BusCoords & Capacitor Data
+
+--SECTION--
+Contains Line info
+
+--LOAD--
+Contains Load info
+
+--DSS--
+Contains Loadshape Objects and Library info
+%}
 
 % Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 DSSCircuit = DSSCircObj.ActiveCircuit;
 
-[NODE,SECTION,LOAD,DER,PARAM,DSS] = sxstRead;
-
 % Clear DSS
 DSSText.command = 'Clear';
 
 % Define Circuit
-DSSText.command = DER.DSSCircuit;
+DSSText.command = Source.DSSCircuit;
 
 % Library Data
 fields = fieldnames(DSS);
@@ -54,10 +68,10 @@ end
 %!Redirect Controls\ReclContrl.dss
 
 % Set Voltage Bases
-DSSText.command = DER.DSSVoltbase;
+DSSText.command = Source.DSSVoltbase;
 
 % Define an energy meter
-DSSText.command = DER.EnergyMeter;
+DSSText.command = Source.EnergyMeter;
 
 
 % Configure Simulation
@@ -67,18 +81,13 @@ DSSCircuit.Solution.Solve
 
 % Define the bus coordinates
 %DSSText.command = ['BusCoords [ ',sprintf('%s\n',NODE.DSS),' ]'];
-fid = fopen('BusCoords.dss','wt');
+BusCoords = [tempname,'.dss'];
+fid = fopen(BusCoords,'wt');
 fprintf(fid,'%s\n',NODE.DSS);
 fclose(fid);
 for i = 1:length(NODE)
-    DSSText.command = sprintf('BusCoords %s\\BusCoords.dss',cd);
+    DSSText.command = ['BusCoords ',BusCoords];
 end
-delete(sprintf('%s\\BusCoords.dss',cd))
+delete(BusCoords)
 
-% Collect Data
-Lines = getLineInfo(DSSCircObj);
-Bus = getBusInfo(DSSCircObj);
-Load = getLoadInfo(DSSCircObj);
-figure; plotKWProfile(DSSCircObj);
-figure; plotVoltageProfile(DSSCircObj);
-figure; plotCircuitLines(DSSCircObj,'Coloring','voltage120')
+end

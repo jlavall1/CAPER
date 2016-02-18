@@ -58,7 +58,7 @@ EquipmentDB.Info = regexp(FILE,'<EquipmentDBs>(.*?)</EquipmentDBs>','match');
 
 
 % <SubstationDB>
-EquipmentDB.Substation = struct('Info',regexp(EquipmentDB.Info{1},'<SubstationDB>(.*?)<SubstationDetails>','match'));
+EquipmentDB.Substation = struct('Info',regexp(EquipmentDB.Info{1},'<SubstationDB>(.*?)</SubstationDB>','match'));
 for i =1:length(EquipmentDB.Substation)
     EquipmentDB.Substation(i).ID = regexp(EquipmentDB.Substation(i).Info,'(?<=<EquipmentID>)(.*?)(?=</EquipmentID>)','match'); EquipmentDB.Substation(i).ID = EquipmentDB.Substation(i).ID{1};
     
@@ -69,12 +69,12 @@ for i =1:length(EquipmentDB.Substation)
     EquipmentDB.Substation(i).SetVpu = EquipmentDB.Substation(i).SetKVLL/EquipmentDB.Substation(i).BaseKVLL;
     EquipmentDB.Substation(i).SetAngle = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<SourcePhaseAngle>)(.*?)(?=</SourcePhaseAngle>)','match'));
     EquipmentDB.Substation(i).ImpedanceUnit = regexp(EquipmentDB.Substation(i).Info,'(?<=<ImpedanceUnit>)(.*?)(?=</ImpedanceUnit>)','match');
-    EquipmentDB.Substation(i).R1 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<PositiveSequenceResistance>)(.*?)(?=</PositiveSequenceResistance>)','match'));
-    EquipmentDB.Substation(i).X1 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<PositiveSequenceReactance>)(.*?)(?=</PositiveSequenceReactance>)','match'));
-    EquipmentDB.Substation(i).R2 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<NegativeSequenceResistance>)(.*?)(?=</NegativeSequenceResistance>)','match'));
-    EquipmentDB.Substation(i).X2 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<NegativeSequenceReactance>)(.*?)(?=</NegativeSequenceReactance>)','match'));
-    EquipmentDB.Substation(i).R0 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<ZeroSequenceResistance>)(.*?)(?=</ZeroSequenceResistance>)','match'));
-    EquipmentDB.Substation(i).X0 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<ZeroSequenceReactance>)(.*?)(?=</ZeroSequenceReactance>)','match'));
+    EquipmentDB.Substation(i).R1 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<PositiveSequenceResistance>)(.*?)(?=</PositiveSequenceResistance>)','match','once'));
+    EquipmentDB.Substation(i).X1 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<PositiveSequenceReactance>)(.*?)(?=</PositiveSequenceReactance>)','match','once'));
+    EquipmentDB.Substation(i).R2 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<NegativeSequenceResistance>)(.*?)(?=</NegativeSequenceResistance>)','match','once'));
+    EquipmentDB.Substation(i).X2 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<NegativeSequenceReactance>)(.*?)(?=</NegativeSequenceReactance>)','match','once'));
+    EquipmentDB.Substation(i).R0 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<ZeroSequenceResistance>)(.*?)(?=</ZeroSequenceResistance>)','match','once'));
+    EquipmentDB.Substation(i).X0 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<ZeroSequenceReactance>)(.*?)(?=</ZeroSequenceReactance>)','match','once'));
 end
 
 % <SwitchDB>
@@ -204,7 +204,7 @@ DSS.LineSpacing = DSS.LineSpacing(~cellfun(@isempty,DSS.LineSpacing));
 sourceinfo = regexp(FILE,'<Source>(.*?)</Source>','match');
 %Source = struct('Info',regexp(FILE,'<Source>(.*?)</Source>','match'));
 for sc = 1:length(sourceinfo)
-    SourceID = regexp(sourceinfo,'(?<=<SourceNodeID>)(.*?)(?=</SourceNodeID>)','match');
+    SourceID = regexp(sourceinfo{sc},'(?<=<SourceNodeID>)(.*?)(?=</SourceNodeID>)','match');
     index = find(ismember({EquipmentDB.Substation.ID},SourceID{1}));
     Source(sc) = EquipmentDB.Substation(index);
     Source(sc).Info = sourceinfo{sc};
@@ -278,12 +278,11 @@ for l = 1:s
     if ~isempty(switchinfo)
         Lines(l).Switch = true;
         Lines(l).SwitchCode = regexp(switchinfo,'(?<=<DeviceID>)(.*?)(?=</DeviceID>)','match'); Lines(l).SwitchCode = Lines(l).SwitchCode{1};
-        Lines(l).Enable = regexp(switchinfo,'(?<=<NormalStatus>)(.*?)(?=</NormalStatus>)','match');
-        Lines(l).Enable = strrep(Lines(l).Enable{1},'Closed','yes');
-        Lines(l).Enable = strrep(Lines(l).Enable{1},'Open','no');
+        Lines(l).NormalStatus = regexp(switchinfo,'(?<=<NormalStatus>)(.*?)(?=</NormalStatus>)','match');
+        Lines(l).NormalStatus = strcmp(Lines(l).NormalStatus{1},'Closed');
     else
         Lines(l).Switch = false;
-        Lines(l).Enable = 'yes';
+        Lines(l).NormalStatus = true;
     end
     
     % Fuses (counter = fs)
@@ -339,9 +338,9 @@ for l = 1:s
         
         % Print to file Lines.dss
         Lines(l).DSS = sprintf(['New Line.%s Bus1=%-15s Bus2=%-15s LineCode=%s ',...
-            'Phases= %d Length=%-6.2f units=m enable=%s'],Lines(l).ID,...
+            'Phases= %d Length=%-6.2f units=m'],Lines(l).ID,...
             Lines(l).Bus1,Lines(l).Bus2,Lines(l).LineCode,Lines(l).numPhase,...
-            Lines(l).Length,Lines(l).Enable);
+            Lines(l).Length);
     end
 
     %% Extract Device Information
@@ -379,7 +378,7 @@ for l = 1:s
         Loads(ld).Phase = Phase{1};
         Loads(ld).NumPhase = length(Phase);
         Loads(ld).Bus1 = strrep(Loads(ld).Name,'_','.');
-        Loads(ld).kV = Source.BaseKVLL/sqrt(3); % kV
+        Loads(ld).kV = Source(1).BaseKVLL/sqrt(3); % kV
         Loads(ld).XFKVA = str2double(regexp(spotloadinfo{i},'(?<=<ConnectedKVA>)(.*?)(?=</ConnectedKVA>)','match'));
         
         LoadType = regexp(spotloadinfo{i},'(?<=<LoadValue Type="LoadValue)(.*?)(?=">)','match');
@@ -404,7 +403,7 @@ for l = 1:s
                 error('Unknown Load Type at Node %s',Loads.ID)
         end
         
-        Loads(ld).w = Loads(ld).kW;
+        Loads(ld).w = 1;
         Loads(ld).p = Loads(ld).kW;
         Loads(ld).kWh = str2double(regexp(spotloadinfo{i},'(?<=<KWH>)(.*?)(?=</KWH>)','match'));
         Loads(ld).NumCust = str2double(regexp(spotloadinfo{i},'(?<=<NumberOfCustomer>)(.*?)(?=</NumberOfCustomer>)','match'));

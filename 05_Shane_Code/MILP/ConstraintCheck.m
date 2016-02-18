@@ -17,8 +17,8 @@ L = length(LOAD);       % Number of Loads
 % Define starting indicies
 a       = 0;
 alpha   = a+N;
-b1      = alpha+D*N;
-b2      = B1+S;
+B1      = alpha+D*N;
+B2      = B1+S;
 bbar    = B2+S;
 beta    = bbar+S;
 c       = beta+D*S;
@@ -34,8 +34,8 @@ for i = 1:N
 end
 
 for i = 1:S
-    x{b1+i} = sprintf('b1_%s_%s',SECTION(i).FROM,SECTION(i).TO);
-    x{b2+i} = sprintf('b2_%s_%s',SECTION(i).FROM,SECTION(i).TO);
+    x{B1+i} = sprintf('b1_%s_%s',SECTION(i).FROM,SECTION(i).TO);
+    x{B2+i} = sprintf('b2_%s_%s',SECTION(i).FROM,SECTION(i).TO);
     x{bbar+i} = sprintf('bbar_%s_%s',SECTION(i).FROM,SECTION(i).TO);
     for j = 1:D
         x{beta+i+(j-1)*S} = sprintf('beta_%s_%s_MG%d',SECTION(i).FROM,SECTION(i).TO,j);

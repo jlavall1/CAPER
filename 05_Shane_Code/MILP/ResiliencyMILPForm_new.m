@@ -1,4 +1,4 @@
-function [f,intcon,Aineq,bineq,Aeq,beq,lb,ub] = ResiliencyMILPForm(NODE,SECTION,LOAD,DER,PARAM)
+function [f,A,rl,ru,lb,ub,xint] = ResiliencyMILPForm(NODE,SECTION,LOAD,DER,PARAM)
 % N                 - NODE.ID
 % S                 - (SECNTION.FROM,SECTION.TO)
 % D                 - DER.ID
@@ -17,6 +17,17 @@ D = length(DER);        % Number of DER
 L = length(LOAD);       % Number of Loads
 
 %%
+% GENERAL FORM
+%   min f'*x                   subject to:     rl <= A*x <= ru
+%    x                                         lb <= x <= ub
+%                                              for i = 1..n: xi in Z
+%                                              for j = 1..m: xj in {0,1} 
+%   x = opti_cplex([],f,A,rl,ru,lb,ub,xint) solves a LP/MILP where f is the 
+%   objective vector, A,rl,ru are the linear constraints, lb,ub are the
+%   bounds and xint is a string of integer variables ('C', 'I', 'B').
+
+
+% SPECIFIC FORM
 %               max                     sum(w_i * sum(c_id*p_i))
 % a,alpha,b1,b2,bbar,beta,c,gamma       i<N       d<D
 
@@ -57,7 +68,7 @@ xlen = length(f);
 % All Variables are binary
 lb = zeros(xlen,1);
 ub = ones (xlen,1);
-intcon = 1:xlen;
+xint = 1:xlen;
 
 %%  Constraints
 % -DSCC-(1)-to-(4)---------------------------------------------------------
@@ -82,8 +93,10 @@ index = ic(end-NO+1:end);
 PARAM.SC(:,index(index<NC)) = [];
 NC = length(PARAM.NC);
 
-b1 = zeros(NO,1);
-b2 = ones (NC,1);
+rl1 = zeros(NO,1);
+ru1 = zeros(NO,1);
+rl2 = ones (NC,1);
+ru2 = ones (NC,1);
 b3 = zeros(SO,1);
 b4 = ones (SC,1);
 
@@ -432,15 +445,6 @@ b34 = sparse([],[],[],length(i34),1);
 b32 = M*ones(S*D,1);
 b33 = M*ones(S*D,1);
 
-index = find([SECTION.numPhase]<3);
-n = length(index);
-i35 = (1:n)';
-j35 = B2+index';
-v35 = ones(n,1);
-A35 = sparse(i35,j35,v35,n,xlen);
-
-b35 = sparse([],[],[],n,1);
-
 
 i30 = [0];
 j30 = [];
@@ -503,5 +507,8 @@ A27 = sparse(i27,j27,v27,1,xlen);
 Aineq = [A6;A7;A8;A9;A10;A11;A13;A14;A15;A16;A18;A20;A21;A22;A23;A24;A25;A30;A32;A33;A34];
 bineq = [b6;b7;b8;b9;b10;b11;b13;b14;b15;b16;b18;b20;b21;b22;b23;b24;b25;b30;b32;b33;b34];
 
-Aeq = [A1;A2;A3;A4;A17;A26;A27;A35];
-beq = [b1;b2;b3;b4;b17;b26;b27;b35];
+Aeq = [A1;A2;A3;A4;A17;A26;A27];
+beq = [b1;b2;b3;b4;b17;b26;b27];
+
+A = [A1;A2;A3;A4;A6;A7;A8;A9;A10;A11;A13;A14;A15;A16;A17;A18;A20;A21;A22;A23;A24;A25;A26;A27;A30;A32;A33;A34];
+rl = [rl1;rl2;rl3;rl4;A6;A7;A8;A9;A10;A11;A13;A14;A15;A16;A17;A18;A20;A21;A22;A23;A24;A25;A26;A27;A30;A32;A33;A34];
