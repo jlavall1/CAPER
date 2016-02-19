@@ -7,6 +7,12 @@ New Circuit.COMMONWEALTH_RET_01311205 Bus1=COMMONWEALTH_RET_01311205
 ~ Z2=[ 0.0532 1.0104 ]
 ~ Z0=[ 0.0387 0.9408 ]
 
+!New Circuit.MG2 Bus1=CKT_TIE4
+!~ BasekV=12.47  pu=0.996  angle=0.00
+!~ Z1=[ 0.1075 0.9858 ]
+!~ Z2=[ 0.1075 0.9858 ]
+!~ Z0=[ 0.0810 0.9180 ]
+
 ! Library Data
 Redirect Libraries\WireData.dss
 Redirect Libraries\LineSpacing.dss
@@ -16,10 +22,10 @@ Redirect Libraries\UGLineCodes.dss
 Redirect Shapes.dss
 
 ! Circuit Element Data
-Redirect Elements\Lines_.dss
+Redirect Elements\Lines.dss
 Redirect Elements\Loads.dss
 Redirect Elements\Capacitors.dss
-Redirect Elements\Regulators.dss
+!Redirect Elements\Regulators.dss
 
 ! Circuit Control Settings
 !Redirect Controls\FuseContrl.dss
@@ -36,3 +42,6 @@ Buscoords BusCoords.dss
 ! Define an energy meter
 New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
 ~ peakcurrent=[ 347.00   364.00   293.00 ]
+
+!New EnergyMeter.CircuitMeter Line.CKT_TIE4_SW terminal=1 option=R PhaseVoltageReport=yes
+!~ peakcurrent=[ 347.00   364.00   293.00 ]

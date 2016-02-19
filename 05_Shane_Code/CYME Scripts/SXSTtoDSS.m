@@ -38,11 +38,11 @@ filelocation = rootlocation; filename = 0;
 % ******(Must be in rootlocation CAPER\07_CYME)*******
 %filename = 'Flay 12-01 - 2-3-15 loads (original).sxst';
 %filename = 'Commonwealth 12-05-  9-14 loads (original).sxst';
-%filename = 'Kud1207 (original).sxst'
+%filename = 'Kud1207 (original).sxst';
 %filename = 'Bellhaven 12-04 - 8-14 loads.xst (original).sxst'
-%filename = 'Commonwealth_ret_01311205.sxst';
+filename = 'Commonwealth_ret_01311205.sxst';
 %filename = 'Bellhaven_ret_01291204.sxst';
-filename = 'Mocksville_Main_2401.sxst';
+%filename = 'Mocksville_Main_2401.sxst';
 
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select SXST file to Convert',...
@@ -246,7 +246,7 @@ fclose(fid(9));
 %% Extract Source Information
 sourceinfo = regexp(FILE,'<Source>(.*?)</Source>','match');
 if sc > 1
-    warning('DSS does not support multiple sources')
+    %warning('DSS does not support multiple sources')
     sourceinfo=sourceinfo{1};
 end
 

@@ -432,14 +432,14 @@ b34 = sparse([],[],[],length(i34),1);
 b32 = M*ones(S*D,1);
 b33 = M*ones(S*D,1);
 
-index = find([SECTION.numPhase]<3);
-n = length(index);
-i35 = (1:n)';
-j35 = B2+index';
-v35 = ones(n,1);
-A35 = sparse(i35,j35,v35,n,xlen);
-
-b35 = sparse([],[],[],n,1);
+% index = find([SECTION.numPhase]<3);
+% n = length(index);
+% i35 = (1:n)';
+% j35 = B2+index';
+% v35 = ones(n,1);
+% A35 = sparse(i35,j35,v35,n,xlen);
+% 
+% b35 = sparse([],[],[],n,1);
 
 
 i30 = [0];
@@ -503,5 +503,5 @@ A27 = sparse(i27,j27,v27,1,xlen);
 Aineq = [A6;A7;A8;A9;A10;A11;A13;A14;A15;A16;A18;A20;A21;A22;A23;A24;A25;A30;A32;A33;A34];
 bineq = [b6;b7;b8;b9;b10;b11;b13;b14;b15;b16;b18;b20;b21;b22;b23;b24;b25;b30;b32;b33;b34];
 
-Aeq = [A1;A2;A3;A4;A17;A26;A27;A35];
-beq = [b1;b2;b3;b4;b17;b26;b27;b35];
+Aeq = [A1;A2;A3;A4;A17;A26;A27;A10];%;A35];
+beq = [b1;b2;b3;b4;b17;b26;b27;b10];%;b35];

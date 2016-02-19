@@ -408,6 +408,7 @@ New Line.263511716 Phases= 3 Bus1=258840205.1.2.3 Bus2=263511718.1.2.3 Length=1.
 New Line.460932489 Bus1=258840435.1.2.3 Bus2=460932491.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=1.51   units=m enable=yes
 New Line.472684497 Bus1=472684459.1.2.3 Bus2=472684499.1.2.3 LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 3 Length=120.50 units=m enable=yes
 New Line.472684368 Bus1=460932401.1.2.3 Bus2=261124294.1.2.3 LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 3 Length=326.20 units=m enable=yes
+New Line.264494209 Phases= 3 Bus1=258840067.1.2.3 Bus2=264494211.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-B-18X1' '336-ACSR-B-18X1' '336-ACSR-B-18X1' '1/0-ACSR-B-6X1']
 New Line.263515159 Bus1=263515156.1.2.3 Bus2=260745487.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=79.88  units=m enable=yes
 New Line.472684083 Bus1=462745747.1.2.3 Bus2=472684080.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=239.10 units=m enable=yes
 New Line.258840045 Phases= 3 Bus1=258840042.1.2.3 Bus2=258840047.1.2.3 Length=34.27  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-B-18X1' '336-ACSR-B-18X1' '336-ACSR-B-18X1' '2-CU-B-7']

@@ -1,11 +1,11 @@
 Clear
 
 ! Define the Circuit
-New Circuit.FLAY_RET_16271201 Bus1=FLAY_RET_16271201
+New Circuit.KUDZU_RET_01421207 Bus1=KUDZU_RET_01421207
 ~ BasekV=12.47  pu=1.0300  angle=0.00
-~ Z1=[ 0.3493 1.6996 ]
-~ Z2=[ 0.3493 1.6996 ]
-~ Z0=[ 0.0923 0.8400 ]
+~ Z1=[ 0.0430 0.9700 ]
+~ Z2=[ 0.0430 0.9700 ]
+~ Z0=[ 0.0280 0.9046 ]
 
 ! Library Data
 Redirect Libraries\WireData.dss
@@ -34,5 +34,5 @@ CalcVoltageBases
 Buscoords BusCoords.dss
 
 ! Define an energy meter
-New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes
+New EnergyMeter.CircuitMeter LINE.259419106 terminal=1 option=R PhaseVoltageReport=yes
 ~ peakcurrent=[ 400.00   400.00   400.00 ]

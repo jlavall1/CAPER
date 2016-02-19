@@ -2,10 +2,10 @@ Clear
 
 ! Define the Circuit
 New Circuit.BELLHAVEN_RET_01291204 Bus1=BELLHAVEN_RET_01291204
-~ BasekV=12.47  pu=1.0337  angle=0.00
-~ Z1=[ 0.1000 0.6000 ]
-~ Z2=[ 0.1000 0.6000 ]
-~ Z0=[ 0.5000 2.0000 ]
+~ BasekV=12.47  pu=1.0300  angle=0.00
+~ Z1=[ 0.0358 0.9391 ]
+~ Z2=[ 0.0358 0.9391 ]
+~ Z0=[ 0.0307 0.9022 ]
 
 ! Library Data
 Redirect Libraries\WireData.dss
@@ -16,10 +16,10 @@ Redirect Libraries\UGLineCodes.dss
 Redirect Shapes.dss
 
 ! Circuit Element Data
-Redirect Elements\Lines_.dss
+Redirect Elements\Lines.dss
 Redirect Elements\Loads.dss
 Redirect Elements\Capacitors.dss
-Redirect Elements\Regulators.dss
+!Redirect Elements\Regulators.dss
 
 ! Circuit Control Settings
 !Redirect Controls\FuseContrl.dss
@@ -34,5 +34,5 @@ CalcVoltageBases
 Buscoords BusCoords.dss
 
 ! Define an energy meter
-New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
-~ peakcurrent=[ 416.00   378.00   438.00 ]
+New EnergyMeter.CircuitMeter LINE.258839833 terminal=1 option=R PhaseVoltageReport=yes
+~ peakcurrent=[ 400.00   400.00   400.00 ]
