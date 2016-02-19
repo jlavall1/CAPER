@@ -46,11 +46,25 @@ elseif feeder_NUM == 1
     FEEDER = CMNWLTH;
     clearvars CMNWLTH
     kW_peak = [2.475021572579630e+03,2.609588847297235e+03,2.086659558753901e+03];
-    %AllocationFactors Terms:
+    Caps.Fixed(1)=300/3;
+    Caps.Fixed(2)=600/3;
+    
+    %To be used for finding AllocationFactors for simulation:
+    eff_KW(1,1) = 1;
+    eff_KW(1,2) = 1;
+    eff_KW(1,3) = 1;
+    V_LTC = 124*60;
+    polar = -1;
     
     % -- Commonwealth --
     root = 'Common';
     root1= 'Common';
+    %Background files needed to run QSTS:
+    %load CAP_Mult_60s_Flay.mat  %CAP_OPS_STEP1
+    %load P_Mult_60s_Flay.mat    %CAP_OPS_STEP2
+    %load Q_Mult_60s_Flay.mat    %CAP_OPS
+    %load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
+    
 elseif feeder_NUM == 2
     load FLAY.mat
     FEEDER = FLAY;
@@ -75,12 +89,27 @@ elseif feeder_NUM == 2
     load Q_Mult_60s_Flay.mat    %CAP_OPS
     load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
     %Now set where PV Farm is located:
-    
-    % 10%,25%,50%
+    %PV_ON_OFF=2;
+    LC=3;
+    if LC == 1
+        fprintf('PV at 10% of Zsc_max\n');
+    elseif LC == 2
+        fprintf('PV at 25% of Zsc_max\n');
+    elseif LC == 3
+        fprintf('PV at 50% of Zsc_max\n');
+    end
+    %POI_loc=[63,184,771];   %   10%,25%,50%
     POI_loc=[232,65,251]; 
     POI_pmpp=[4000,1000,600];
     PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9);
     PV_pmpp=POI_pmpp(LC);
+
+
+    % 10%,25%,50%
+    %POI_loc=[232,65,251]; 
+    %POI_pmpp=[4000,1000,600];
+    %PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9);
+    %PV_pmpp=POI_pmpp(LC);
     
 elseif feeder_NUM == 3
     load ROX.mat
@@ -111,106 +140,5 @@ str = ckt_direct;
 idx = strfind(str,'\');
 str = str(1:idx(8)-1);
 idx = strfind(ckt_direct,'.');
-ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_General.dss');
-%%
-%Import SOLAR FILES
-addpath(PV_Site_path);
+ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_QSTS.dss');
 
-if PV_Site == 1
-    load M_SHELBY_INFO.mat
-    M_PVSITE_INFO.RR_distrib = M_SHELBY_INFO.RR_distrib;
-    M_PVSITE_INFO.kW = M_SHELBY_INFO.kW;
-    M_PVSITE_INFO.name = M_SHELBY_INFO.name;
-    M_PVSITE_INFO.VI = M_SHELBY_INFO.VI;
-    M_PVSITE_INFO.CI = M_SHELBY_INFO.CI;
-    load M_SHELBY.mat
-    for i=1:1:12
-        M_PVSITE(i).DAY(:,:) = M_SHELBY(i).DAY(1:end-1,1:6);    
-        M_PVSITE(i).RR_1MIN(:,:) = M_SHELBY(i).RR_1MIN(:,1:3);
-        M_PVSITE(i).PU(:,:) = M_SHELBY(i).kW(1:end-1,1)./M_PVSITE_INFO.kW;
-    end
-    load M_SHELBY_SC.mat
-    M_PVSITE_SC = M_SHELBY_SC;
-    clearvars M_SHELBY_INFO M_SHELBY M_SHELBY_SC
-elseif PV_Site == 2
-    %MURPHY
-    load M_MURPHY_INFO.mat
-    M_PVSITE_INFO.RR_distrib = M_MURPHY_INFO.RR_distrib;
-    M_PVSITE_INFO.kW = M_MURPHY_INFO.kW;
-    M_PVSITE_INFO.name = M_MURPHY_INFO.name;
-    load M_MURPHY.mat
-
-    for i=1:1:12
-        M_PVSITE(i).DAY(:,:) = M_MURPHY(i).DAY(1:end-1,1:6);    
-        M_PVSITE(i).RR_1MIN(:,:) = M_MURPHY(i).RR_1MIN(:,1:3);
-        M_PVSITE(i).PU(:,:) = M_MURPHY(i).kW(1:end-1,1)./M_PVSITE_INFO.kW;
-    end
-    clearvars M_MURPHY_INFO M_MURPHY
-elseif PV_Site == 3
-    %TAYLOR
-    load M_TAYLOR_INFO.mat
-    M_PVSITE_INFO.RR_distrib = M_TAYLOR_INFO.RR_distrib;
-    M_PVSITE_INFO.kW = M_TAYLOR_INFO.kW;
-    M_PVSITE_INFO.name = M_TAYLOR_INFO.name;
-    load M_TAYLOR.mat
-
-    for i=1:1:12
-        M_PVSITE(i).DAY(:,:) = M_TAYLOR(i).DAY(1:end-1,1:6);    
-        M_PVSITE(i).RR_1MIN(:,:) = M_TAYLOR(i).RR_1MIN(:,1:3);
-        M_PVSITE(i).PU(:,:) = M_TAYLOR(i).kW(1:end-1,1)./M_PVSITE_INFO.kW;
-    end
-    clearvars M_TAYLOR_INFO M_TAYLOR
-elseif PV_Site == 4
-    load M_MOCKS_INFO.mat
-    M_PVSITE_INFO.RR_distrib = M_MOCKS_INFO.RR_distrib;
-    M_PVSITE_INFO.kW = M_MOCKS_INFO.kW;
-    M_PVSITE_INFO.name = M_MOCKS_INFO.name;
-    load M_MOCKS.mat
-
-    for i=1:1:12
-        M_PVSITE(i).DAY(:,:) = M_MOCKS(i).DAY(1:end-1,1:6);    
-        M_PVSITE(i).RR_1MIN(:,:) = M_MOCKS(i).RR_1MIN(:,1:3);
-        M_PVSITE(i).PU(:,:) = M_MOCKS(i).kW(1:end-1,1)./M_PVSITE_INFO.kW;
-    end
-    clearvars M_MOCKS_INFO M_MOCKS
-elseif PV_Site == 5
-    load M_AROCK_INFO.mat
-    M_PVSITE_INFO.RR_distrib = M_AROCK_INFO.RR_distrib;
-    M_PVSITE_INFO.kW = M_AROCK_INFO.kW;
-    M_PVSITE_INFO.name = M_AROCK_INFO.name;
-    load M_AROCK.mat
-
-    for i=1:1:12
-        M_PVSITE(i).DAY(:,:) = M_AROCK(i).DAY(1:end-1,1:6);    
-        M_PVSITE(i).RR_1MIN(:,:) = M_AROCK(i).RR_1MIN(:,1:3);
-        M_PVSITE(i).PU(:,:) = M_AROCK(i).kW(1:end-1,1)./M_PVSITE_INFO.kW;
-    end
-    clearvars M_AROCK_INFO M_AROCK
-
-elseif PV_Site == 6
-    load M_ODOM_INFO.mat
-    M_PVSITE_INFO.RR_distrib = M_ODOM_INFO.RR_distrib;
-    M_PVSITE_INFO.kW = M_ODOM_INFO.kW;
-    M_PVSITE_INFO.name = M_ODOM_INFO.name;
-    load M_ODOM.mat
-
-    for i=1:1:12
-        M_PVSITE(i).DAY(:,:) = M_ODOM(i).DAY(1:end-1,1:6);    
-        M_PVSITE(i).RR_1MIN(:,:) = M_ODOM(i).RR_1MIN(:,1:3);
-        M_PVSITE(i).PU(:,:) = M_ODOM(i).kW(1:end-1,1)./M_PVSITE_INFO.kW;
-    end
-    clearvars M_ODOM_INFO M_ODOM
-elseif PV_Site == 7
-    load M_MAYB_INFO.mat
-    M_PVSITE_INFO.RR_distrib = M_MAYB_INFO.RR_distrib;
-    M_PVSITE_INFO.kW = M_MAYB_INFO.kW;
-    M_PVSITE_INFO.name = M_MAYB_INFO.name;
-    load M_MAYB.mat
-
-    for i=1:1:12
-        M_PVSITE(i).DAY(:,:) = M_MAYB(i).DAY(1:end-1,1:6);    
-        M_PVSITE(i).RR_1MIN(:,:) = M_MAYB(i).RR_1MIN(:,1:3);
-        M_PVSITE(i).PU(:,:) = M_MAYB(i).kW(1:end-1,1)./M_PVSITE_INFO.kW;
-    end
-    clearvars M_MAYB_INFO M_MAYB
-end

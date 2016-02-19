@@ -24,22 +24,6 @@ cd(location);
 % 3. Compile PV system to a location:
 
 %Force the following:
-
-%PV_ON_OFF=2;
-LC=3;
-if LC == 1
-    fprintf('PV at 10% of Zsc_max\n');
-elseif LC == 2
-    fprintf('PV at 25% of Zsc_max\n');
-elseif LC == 3
-    fprintf('PV at 50% of Zsc_max\n');
-end
-%POI_loc=[63,184,771];   %   10%,25%,50%
-POI_loc=[232,65,251]; 
-%POI_pmpp=[5000,1400,700];
-POI_pmpp=[4000,1000,600];
-PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9);
-PV_pmpp=POI_pmpp(LC);
 %}
 %-------------------------------------
 if PV_ON_OFF == 2

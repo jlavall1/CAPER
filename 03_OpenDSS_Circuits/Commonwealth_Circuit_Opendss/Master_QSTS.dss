@@ -1,0 +1,45 @@
+! ---------------------------------
+!! QSTS Simulation:
+! 	Made for annual sim.
+! ---------------------------------
+! 
+Clear    ! Always start the Master with a Clear command
+! 
+! Define the Circuit
+! 
+New Circuit.COMMONWEALTH_RET_01311205 Bus1=COMMONWEALTH_RET_01311205
+~ BasekV= 12.47  pu= 1.02485960229808  angle= 0 
+~ Z1=[ 0.034212 ,  0.649771 ] ! Actual ohms
+~ Z2=[ 0.034212 ,  0.649771 ]
+~ Z0=[ 0.024887 ,  0.605013 ]
+! 
+! Library Data
+! 
+Redirect Wiredata.dss
+Redirect linespacing.dss
+Redirect UGLineCodes.dss
+!
+! Feeder Load Allocation 
+!
+Redirect Loadshape.dss
+
+! 
+! Circuit Element Data
+! 
+Redirect SourceRegulator_3ph.dss
+Redirect UGLines.dss
+Redirect LinesByPhase.dss
+Redirect Loads_NCSU.dss 	!Just changed to _NCSU.dss
+Redirect Capacitors.dss
+! 
+! Set the voltage bases
+! 
+Set voltagebases = [ 12.47 0.480, 0.208, 0.24, 0.12]
+CalcVoltageBases
+! 
+! Define the bus coordinates
+! 
+Buscoords Buscoords.CSV
+! 
+! Some command templates (commented out)
+! 

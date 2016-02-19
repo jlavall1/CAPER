@@ -68,6 +68,7 @@ else
         path = strcat(base_path,'\01_Sept_Code\04_QSTS_Solar_Coeff');
         addpath(path);
         Pre_QSTS_365_Span
+        PV_SITE_DATA_import
         %Annual run of base case for LTC operations:
         QSTS_365_Span %just added _Quick
     end
