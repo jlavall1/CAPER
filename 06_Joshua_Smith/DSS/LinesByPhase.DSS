@@ -1,5 +1,5 @@
-New Line.A1 Phases=3 Bus1=01_1.1.2.3 Bus2=01_2.1.2.3 Length=1597 units=ft Spacing=PEC_PEC_23KV_Tris_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD' ]
-New Line.A2 Phases=3 Bus1=01_2.1.2.3 Bus2=02_1.1.2.3 Length=1597 units=ft Spacing=PEC_PEC_23KV_Tris_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD' ]
+New Line.A1 Phases=3 Bus1=01_1.1.2.3 Bus2=01_2.1.2.3 Length=1597 units=ft Spacing=PEC_PEC_23KV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD' ]
+New Line.A2 Phases=3 Bus1=01_2.1.2.3 Bus2=02_1.1.2.3 Length=1597 units=ft Spacing=PEC_PEC_23KV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD' ]
 New Line.B1 Phases=3 Bus1=02_1.1.2.3 Bus2=02_2.1.2.3 Length=153.8 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD']
 New Line.B2 Phases=3 Bus1=02_2.1.2.3 Bus2=03_1.1.2.3 Length=153.8 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#4AWG_CHD']
 New LIne.C1 Phases=3 Bus1=03_1.1.2.3 Bus2=03_2.1.2.3 Length=1882.59 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
@@ -7,6 +7,9 @@ New LIne.C2 Phases=3 Bus1=03_2.1.2.3 Bus2=04_1.1.2.3 Length=1882.59 units=ft Spa
 New Line.D1 Phases=3 Bus1=04_1.1.2.3 Bus2=04_2.1.2.3 Length=387.52 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
 New Line.D2 Phases=3 Bus1=04_2.1.2.3 Bus2=05_1.1.2.3 Length=581.28 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
 New Line.E1 Phases=3 Bus1=05_1.1.2.3 Bus2=05_2.1.2.3 Length=230 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
+
+New Capacitor.CAP1 Phases=3 Bus1=05_2.1.2.3 kvar=1200 kV=22.8630706656
+
 New Line.E2 Phases=3 Bus1=05_2.1.2.3 Bus2=06_1.1.2.3 Length=102 units=ft Spacing=PEC_PEC_23kV_Tria_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
 New Line.F1 Phases=3 Bus1=06_1.1.2.3 Bus2=25_1.1.2.3 Length=1123 units=ft Spacing=PEC_PEC_23kV_VERT_3P wires=['PEC_#1/0AWG_ACSR' 'PEC_#1/0AWG_ACSR' 'PEC_#1/0AWG_ACSR' 'PEC_#1/0AWG_ACSR']
 New Line.F2 Phases=3 Bus1=25_1.1.2.3 Bus2=25_2.1.2.3 Length=1123 units=ft Spacing=PEC_PEC_23kV_VERT_3P wires=['PEC_#1/0AWG_ACSR' 'PEC_#1/0AWG_ACSR' 'PEC_#1/0AWG_ACSR' 'PEC_#1/0AWG_ACSR']
@@ -21,30 +24,95 @@ New Line.K1 Phases=3 Bus1=08_1.1.2.3 Bus2=08_A1.1.2.3 Length=2833.6 units=ft Spa
 New Line.K2 Phases=3 Bus1=08_A1.1.2.3 Bus2=09_1.1.2.3 Length=708.4 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
 
 /**********************************************************************************************/
-New Transformer.VR1 Phases=3 Wingings=##### XHL=##### %LoadLoss=#####
-~ Buses=[09_1.1.2.3 09_2.1.2.3]
-~ kVs={##### #####]
+New Transformer.VR1A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.1 09_2.1] kvas=[1440 1440] kVs=[14.4 14.4]
+New Transformer.VR1B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.2 09_2.2] kvas=[1440 1440] kVs=[14.4 14.4]
+New Transformer.VR1C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.3 09_2.3] kvas=[1440 1440] kVs=[14.4 14.4]
 
-New Regcontrol.VR1 Transformer=VR1 Winging=#####
-~ Vreg= ##### Band=##### PTratio=##### CTPrim=##### R=##### X=#####
-~ Delay=##### PTphase=#####
-
-!Vreg=#####
+New Regcontrol.VR1A Transformer=VR1A Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+New Regcontrol.VR1B Transformer=VR1B Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+New Regcontrol.VR1C Transformer=VR1C Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
 /**********************************************************************************************/
 
 New Line.L1 Phases=3 Bus1=09_2.1.2.3 Bus2=09_3.1.2.3 Length=2065 units=ft Spacing=PEC_PEC_23kV_VERT_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
 New Line.L2 Phases=3 Bus1=09_3.1.2.3 Bus2=10_1.1.2.3 Length=885 units=ft Spacing=PEC_PEC_23kV_VERT_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
+
+New Capacitor.CAP2 Phases=3 Bus1=10_1.1.2.3 kvar=1200 kV=22.8630706656
+
 New Line.M1 Phases=3 Bus1=10_1.1.2.3 Bus2=10_2.1.2.3 Length=1160 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#1/0AWG_ACSR' 'PEC_#1/0AWG_ACSR' 'PEC_#1/0AWG_ACSR' 'PEC_#4AWG_CHD']
 New Line.M2 Phases=3 Bus1=10_2.1.2.3 Bus2=11_1.1.2.3 Length=290 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#1/0AWG_ACSR' 'PEC_#1/0AWG_ACSR' 'PEC_#1/0AWG_ACSR' 'PEC_#4AWG_CHD']
+New Line.N1 Phases=1 Bus1=11_1.1 Bus2=11_B1.1 Length=3172 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.N2 Phases=1 Bus1=11_B1.1 Bus2=24_1.1 Length=793 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.O1 Phases=1 Bus1=24_1.1 Bus2=24_2.1 Length=5742.9 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.O2 Phases=1 Bus1=24_2.1 Bus2=24_3.1 Length=638.1 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.P1 Phases=3 Bus1=11_1.1.2.3 Bus2=11_A1.1.2.3 Length=1946.4 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.P2 Phases=3 Bus1=11_A1.1.2.3 Bus2=12_1.1.2.3 Length=486.6 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.Q1 Phases=3 Bus1=12_1.1.2.3 Bus2=12_2.1.2.3 Length=3164.4 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.Q2 Phases=3 Bus1=12_2.1.2.3 Bus2=13_1.1.2.3 Length=351.6 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.R1 Phases=3 Bus1=08_1.1.2.3 Bus2=08_B1.1.2.3 Length=816 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
+New Line.R2 Phases=3 Bus1=08_B1.1.2.3 Bus2=14_1.1.2.3 Length=544 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
+New Line.S1 Phases=3 Bus1=14_1.1.2.3 Bus2=14_2.1.2.3 Length=1652 units=ft Spacing=PEC_PEC_23kV_VERT_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
+New Line.S2 Phases=3 Bus1=14_2.1.2.3 Bus2=15_1.1.2.3 Length=1652 units=ft Spacing=PEC_PEC_23kV_VERT_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#1/0AWG_ACSR']
+New Line.T1 Phases=3 Bus1=15_1.1.2.3 Bus2=15_A1.1.2.3 Length=662.9 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#2AWG_CHD']
+New Line.T2 Phases=3 Bus1=15_A1.1.2.3 Bus2=27_1.1.2.3 Length=284.1 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#2AWG_CHD']
+New Line.U1 Phases=3 Bus1=15_1.1.2.3 Bus2=15_B1.1.2.3 Length=2824 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#2AWG_ACSR']
+New Line.U2 Phases=3 Bus1=15_B1.1.2.3 Bus2=16_1.1.2.3 Length=706 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_477KCMIL_AAC' 'PEC_#2AWG_ACSR']
+New Line.V1 Phases=3 Bus1=16_1.1.2.3 Bus2=16_2.1.2.3 Length=412.22 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#4AWG_CHD' 'PEC_#4AWG_CHD' 'PEC_#4AWG_CHD' 'PEC_#2AWG_ACSR']
+New Line.V2 Phases=3 Bus1=16_2.1.2.3 Bus2=17_1.1.2.3 Length=412.22 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#4AWG_CHD' 'PEC_#4AWG_CHD' 'PEC_#4AWG_CHD' 'PEC_#2AWG_ACSR']
 
-New Line.N1 Phases=1 Bus1=11_1.1.2.3 Bus2=11_B1.1.2.3 Length=3172 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
-New Line.N2 Phases=1 Bus1=11_B1.1.2.3 Bus2=24_1.1.2.3 Length=793 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+/**********************************************************************************************/
+New Transformer.VR2A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.1 17_2.1] kvas=[1440 1440] kVs=[14.4 14.4]
+New Transformer.VR2B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.2 17_2.2] kvas=[1440 1440] kVs=[14.4 14.4]
+New Transformer.VR2C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.3 17_2.3] kvas=[1440 1440] kVs=[14.4 14.4]
 
+New Regcontrol.VR2A Transformer=VR2A Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+New Regcontrol.VR2B Transformer=VR2B Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+New Regcontrol.VR2C Transformer=VR2C Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+/**********************************************************************************************/
 
+New Line.W1 Phases=3 Bus1=17_2.1.2.3 Bus2=17_3.1.2.3 Length=2259.62 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.W2 Phases=3 Bus1=17_3.1.2.3 Bus2=18_1.1.2.3 Length=2259.62 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.X1 Phases=1 Bus1=18_1.3 Bus2=18_A1.3 Length=7000 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.X2 Phases=1 Bus1=18_A1.3 Bus2=28_1.3 Length=7000 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.Y1 Phases=3 Bus1=18_1.1.2.3 Bus2=18_B1.1.2.3 Length=2325 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.Y2 Phases=3 Bus1=18_B1.1.2.3 Bus2=19_1.1.2.3 Length=1550 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
 
+/**********************************************************************************************/
+New Transformer.VR3A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[19_1.1 19_2.1] kvas=[1440 1440] kVs=[14.4 14.4]
+New Transformer.VR3B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[19_1.2 19_2.2] kvas=[1440 1440] kVs=[14.4 14.4]
+New Transformer.VR3C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[19_1.3 19_2.3] kvas=[1440 1440] kVs=[14.4 14.4]
 
+New Regcontrol.VR3A Transformer=VR3A Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+New Regcontrol.VR3B Transformer=VR3B Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+New Regcontrol.VR3C Transformer=VR3C Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+/**********************************************************************************************/
 
+New Line.Z1 Phases=3 Bus1=19_2.1.2.3 Bus2=19_3.1.2.3 Length=1104 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.Z2 Phases=3 Bus1=19_3.1.2.3 Bus2=20_1.1.2.3 Length=1656 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.AA1 Phases=3 Bus1=20_1.1.2.3 Bus2=20_2.1.2.3 Length=810 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
+New Line.BB1 Phases=1 Bus1=20_2.2 Bus2=20_A1.2 Length=6358.8 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#6AWG_RD' 'PEC_#6AWG_RD']
+New Line.BB2 Phases=1 Bus1=20_A1.2 Bus2=29_1.2 Length=2725.2 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#6AWG_RD' 'PEC_#6AWG_RD']
+New Line.CC1 Phases=2 Bus1=20_2.1.2 Bus2=20_B1.1.2 Length=2362.5 units=ft Spacing=PEC_PEC_23kV_TRIA_2P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
+New Line.CC2 Phases=2 Bus1=20_B1.1.2 Bus2=21_1.1.2 Length=262.5 units=ft Spacing=PEC_PEC_23kV_TRIA_2P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
 
+/**********************************************************************************************/
+New Transformer.VR4A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[21_1.1 21_2.1] kvas=[1440 1440] kVs=[14.4 14.4]
+New Transformer.VR4B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[21_1.2 21_2.2] kvas=[1440 1440] kVs=[14.4 14.4]
 
+New Regcontrol.VR4A Transformer=VR4A Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+New Regcontrol.VR4B Transformer=VR4B Winding=2 Vreg=124 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+/**********************************************************************************************/
 
+New Line.DD1 Phases=2 Bus1=21_2.1.2 Bus2=21_3.1.2 Length=2407.57 units=ft Spacing=PEC_PEC_23kV_HORZ_2P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
+New Line.DD2 Phases=2 Bus1=21_3.1.2 Bus2=21_4.1.2 Length=2407.57 units=ft Spacing=PEC_PEC_23kV_HORZ_2P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
+New Line.EE1 Phases=2 Bus1=21_4.1.2 Bus2=21_5.1.2 Length=9484.66 units=ft Spacing=PEC_PEC_23kV_TRIA_2P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
+New Line.EE2 Phases=2 Bus1=21_5.1.2 Bus2=22_1.1.2 Length=2371.16 units=ft Spacing=PEC_PEC_23kV_TRIA_2P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
+New Line.HH1 Phases=1 Bus1=22_1.1 Bus2=22_A1.1 Length=8651.58 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
+New Line.HH2 Phases=1 Bus1=22_A1.1 Bus2=22_A2.1 Length=2162.9 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
+New Line.II1 Phases=1 Bus1=22_1.1 Bus2=22_B1.1 Length=13596.8 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
+New Line.II2 Phases=1 Bus1=22_B1.1 Bus2=22_B2.1 Length=3399.2 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
+New Line.FF1 Phases=3 Bus1=20_2.1.2.3 Bus2=20_C1.1.2.3 Length=419 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
 
+New Capacitor.CAP3 Phases=3 Bus1=20_C1.1.2.3 kvar=1200 kV=22.8630706656
+
+New Line.GG1 Phases=3 Bus1=20_C1.1.2.3 Bus2=20_C2.1.2.3 Length=3132.8 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
+New Line.GG2 Phases=3 Bus1=20_C2.1.2.3 Bus2=23_1.1.2.3 Length=783.2 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
