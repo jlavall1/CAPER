@@ -60,10 +60,10 @@ elseif feeder_NUM == 1
     root = 'Common';
     root1= 'Common';
     %Background files needed to run QSTS:
-    %load CAP_Mult_60s_Flay.mat  %CAP_OPS_STEP1
-    %load P_Mult_60s_Flay.mat    %CAP_OPS_STEP2
-    %load Q_Mult_60s_Flay.mat    %CAP_OPS
-    %load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
+    load CAP_Mult_60s_CMNW.mat  %CAP_OPS_STEP1
+    load P_Mult_60s_CMNW.mat    %CAP_OPS_STEP2
+    load Q_Mult_60s_CMNW.mat    %CAP_OPS
+    load HOSTING_CAP_CMNW.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
     
 elseif feeder_NUM == 2
     load FLAY.mat
@@ -76,41 +76,17 @@ elseif feeder_NUM == 2
     eff_KW(1,1) = 0.9862;
     eff_KW(1,2) = 0.993;
     eff_KW(1,3) = 0.9894;
-    V_LTC = 1.03*((12.47e3)/sqrt(3));
+    V_LTC_PU = 1.03;
+    V_LTC = V_LTC_PU*((12.47e3)/sqrt(3));
     % -- Flay 13.27km long --
-    root = 'Flay';
-    root1= 'Flay';
+    dss_rt = 'Flay';
+    root = 'FLAY_0';
+    root1= '03_FLAY';
     polar = -1;
-    
-    %load P_Q_Mult_60s.mat
-    %load P_Q_Mult_60s_1.mat %   |   CAP_OPS
+
     load CAP_Mult_60s_Flay.mat  %CAP_OPS_STEP1
     load P_Mult_60s_Flay.mat    %CAP_OPS_STEP2
     load Q_Mult_60s_Flay.mat    %CAP_OPS
-    load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
-    %Now set where PV Farm is located:
-    %PV_ON_OFF=2;
-    LC=3;
-    if LC == 1
-        fprintf('PV at 10% of Zsc_max\n');
-    elseif LC == 2
-        fprintf('PV at 25% of Zsc_max\n');
-    elseif LC == 3
-        fprintf('PV at 50% of Zsc_max\n');
-    end
-    %POI_loc=[63,184,771];   %   10%,25%,50%
-    POI_loc=[232,65,251]; 
-    POI_pmpp=[4000,1000,600];
-    PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9);
-    PV_pmpp=POI_pmpp(LC);
-
-
-    % 10%,25%,50%
-    %POI_loc=[232,65,251]; 
-    %POI_pmpp=[4000,1000,600];
-    %PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9);
-    %PV_pmpp=POI_pmpp(LC);
-    
 elseif feeder_NUM == 3
     load ROX.mat
     FEEDER = ROX;
@@ -129,6 +105,10 @@ elseif feeder_NUM == 8
     root = 'ckt24';
     root1 = 'ckt24';
 end
+%Connect DER-PV to desired position:
+Set_DER_PV_PCC
+
+
 %%
 if feeder_NUM == 2
     CUTOFF=10;

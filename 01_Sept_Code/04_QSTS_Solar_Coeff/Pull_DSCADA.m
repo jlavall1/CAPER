@@ -1,4 +1,5 @@
 function [ LOAD_ACTUAL,KVAR_ACTUAL ] = Pull_DSCADA(DOY,FEEDER,t_int,sim_num,polar)
+    %------------------------------------------------------------------------------
     %1] Select data for 24hour period --
     LOAD_ACTUAL_1(:,1) = FEEDER.kW.A(time2int(DOY,0,0):time2int(DOY,23,59),1);
     LOAD_ACTUAL_1(:,2) = FEEDER.kW.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
@@ -7,7 +8,8 @@ function [ LOAD_ACTUAL,KVAR_ACTUAL ] = Pull_DSCADA(DOY,FEEDER,t_int,sim_num,pola
     KVAR_ACTUAL_1(:,2) = FEEDER.kVAR.B(time2int(DOY,0,0):time2int(DOY,23,59),1);
     KVAR_ACTUAL_1(:,3) = FEEDER.kVAR.C(time2int(DOY,0,0):time2int(DOY,23,59),1);
     %fprintf('1] %0.3f',KVAR_ACTUAL_1(1,1));
-    %3]Re-size original 1min data accordingly:
+    %------------------------------------------------------------------------------
+    %3]Re-size original to t_int data accordingly:
     if t_int ~= 0
         LOAD_ACTUAL(:,1) = interp(LOAD_ACTUAL_1(:,1),t_int);
         LOAD_ACTUAL(:,2) = interp(LOAD_ACTUAL_1(:,2),t_int);

@@ -25,7 +25,7 @@ Redirect UGLineCodes.dss
 ! Substation definiation
 !
 Redirect Loadshape.dss
-
+!Redirect Loadshape_SOLAR.dss
 ! 
 ! Circuit Element Data
 ! 
