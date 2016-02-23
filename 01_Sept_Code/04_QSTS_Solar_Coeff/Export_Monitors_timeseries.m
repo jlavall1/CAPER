@@ -1,9 +1,3 @@
-%%
-%clear
-%clc
-%close all
-%Lets create the needed monitors:
-%feeder_NUM = 1;
 if feeder_NUM == 0
     %Bellhaven --
     temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Bellhaven_Circuit_Opendss';
@@ -29,7 +23,6 @@ elseif feeder_NUM == 2
     %For export .txt file --
     filename = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\TIME_RESULTS';
     monitorfile_base= 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Results';
-    root1 = 'Flay';
 elseif feeder_NUM == 8
     %EPRI CKT7 --
     temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\EPRI_ckt24';
@@ -40,17 +33,16 @@ elseif feeder_NUM == 8
     load Lines_Monitor.mat %Lines_Distance
     %For export to .txt file --
     filename = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\EPRI_ckt24\Monitors_GEN.txt';
-    root1 = '05410';
+    dss_rt = '05410';
 end
 %%
-n = length(Lines_Distance(:,1));
 k = 2;
 j = 1;
 COUNT_ST = 1;
 COUNT = 1;
 %Pull PCC monitors:
 
-    DSSText.Command = sprintf('export mon fdr_%s_Mon_PQ',root1);
+    DSSText.Command = sprintf('export mon fdr_%s_Mon_PQ',dss_rt);
     monitorFile = DSSText.Result;
     MyCSV = importdata(monitorFile);
     delete(monitorFile);
@@ -59,12 +51,11 @@ COUNT = 1;
     %
     DATA_SAVE(j,1).phaseP = subPowers;
     DATA_SAVE(j,1).phaseQ = subReact;
-    DATA_SAVE(j,1).Name = sprintf('%s',root1);
-    j = j + 1;
-    
+    DATA_SAVE(j,1).Name = sprintf('%s',dss_rt);
+    j = j + 1;    
 %Now do general pull:
 n=length(Lines_Distance);
-while k <= n
+while k < 2 %n
     numPh = Lines_Distance(k,1).numPhases; 
     if numPh == 3
         for i=1:1:2
@@ -124,8 +115,8 @@ while k <= n
                     subPowers = MyCSV.data(:,3:2:7);
                     subReact = MyCSV.data(:,4:2:8);
                     %
-                    %DATA_SAVE(j,1).phaseP = subPowers;
-                    %DATA_SAVE(j,1).phaseQ = subReact;
+                    DATA_SAVE(j,1).phaseP = subPowers;
+                    DATA_SAVE(j,1).phaseQ = subReact;
                 end
                 DATA_SAVE(j,1).distance = Monitor{j,2};
             end
@@ -134,9 +125,9 @@ while k <= n
         %12.47 0.480, 0.208, 0.24, 0.12
         
         
-        if feeder_NUM == 8
+        if feeder_NUM == 8 && feeder_NUM == 2
             COUNT = COUNT + 1;
-            if COUNT == 4
+            if COUNT == 10
                 COUNT = 1;
                 j = j + 1;
             end
@@ -148,48 +139,6 @@ while k <= n
 end
 %%
 %-----------------------------------------------------------
-%Now lets calculate some things:
-%DATA_SAVE(j,1).phaseV = subVoltages;
-
-
-
-%{
-%-----------------------------------------------------------
-%when the monitors are at the nodes where loads are located:
-%   Used when Load voltage is wanted.
-c_j = j;
-k=1;
-while k<=100%length(Loads_Base)
-    %Assign new monitor name:
-    Monitor{j,1}=strcat(num2str(k),'_Mon_VI');
-    %Export monitor:
-    DSSText.Command = sprintf('export mon %s',char(Monitor{j,1}));
-    monitorFile = DSSText.Result;
-    MyCSV = importdata(monitorFile);
-    delete(monitorFile);
-    %subVoltages = MyCSV.data(:,3:2:7);
-    m = size(MyCSV.data);
-    if m(1,2)==8 %3ph
-        subVoltages = MyCSV.data(:,3:1:5);
-        subCurrents = MyCSV.data(:,6:1:8);
-    elseif m(1,2)==6 %2ph
-        subVoltages = MyCSV.data(:,3:1:4);
-        subCurrents = MyCSV.data(:,5:1:6);
-    elseif m(1,2)==4 %1ph
-        subVoltages = MyCSV.data(:,3);
-        subCurrents = MyCSV.data(:,4);
-    end
-    %
-    DATA_SAVE(j,1).phaseV = subVoltages;
-    DATA_SAVE(j,1).phaseI = subCurrents;
-    DATA_SAVE(j,1).title = MyCSV.textdata(1,:);
-    DATA_SAVE(j,1).loadnum = k;
-    
-    k = k + 1;
-    j = j + 1;
-end
-%}
-%%
 if feeder_NUM ~= 8
     %Now lets export LTC tap changes:
     DSSText.Command = 'export mon LTC';
@@ -215,6 +164,7 @@ if feeder_NUM ~= 8
     Settings(DOY).WoY = (DOY - mod(DOY,7))/8+1;
     %TVD=TVD_Calc(DATA_SAVE);
     %%
+    %{
     Settings(DOY).TVD_t = TVD_Calc(DATA_SAVE,V_LTC_PU);
     SUM_TVD=zeros(1,3);
     for tt=1:1:length(Settings(DOY).TVD_t)
@@ -222,24 +172,24 @@ if feeder_NUM ~= 8
             SUM_TVD(1,ph)=SUM_TVD(1,ph)+Settings(DOY).TVD_t(tt,ph);
         end
     end
-    Settings(DOY).TVD_avg=SUM_TVD/1440;
-            
+    Settings(DOY).TVD_avg=SUM_TVD/(1440*3600);
+    %}
+    Settings(DOY).TVD_t = TVD_SAVE;
+    SUM_TVD=zeros(1,3);
+    for tt=1:1:length(Settings(DOY).TVD_t)
+        for ph=1:1:3
+            SUM_TVD(1,ph)=SUM_TVD(1,ph)+Settings(DOY).TVD_t(tt,ph);
+        end
+    end
+    %%
+    Settings(DOY).TVD_avg=SUM_TVD/(6*3600/5);
+    
     OPS=CUM_TapCount(DATA_SAVE);
     Settings(DOY).LTCops = OPS;
     Settings(DOY).VI = M_PVSITE_INFO.VI(DOY,1);
     Settings(DOY).CI = M_PVSITE_INFO.CI(DOY,1);
     Settings(DOY).DARR = M_PVSITE_SC(DOY,6);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     %DATA_SAVE(1).settings = Settings;
     %{
     %Save struct of post sim. results.

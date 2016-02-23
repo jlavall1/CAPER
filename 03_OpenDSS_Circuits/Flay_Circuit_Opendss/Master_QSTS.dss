@@ -25,7 +25,7 @@ Redirect UGLineCodes.dss
 ! Substation definiation
 !
 Redirect Loadshape.dss
-!Redirect Loadshape_SOLAR.dss
+Redirect Loadshape_PV.dss
 ! 
 ! Circuit Element Data
 ! 
@@ -53,7 +53,6 @@ Buscoords Buscoords.CSV
 !
 New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes
 EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ] 
-
 ! 
 ! Disable Capacitors for load allocation
 Disable Capacitor.*
@@ -65,3 +64,4 @@ AllocateLoad
 ! 
 ! Enable capacitors before solving
 Enable Capacitor.*
+

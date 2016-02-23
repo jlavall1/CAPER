@@ -8,15 +8,15 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 %
 % 2. Compile the user selected circuit:
 DSSText.command = ['Compile ',ckt_direct_prime]; %Master_General.dss
-location = cd;
-cd(location);
+%location = cd;
+%cd(location);
 
-Cap_info = getCapacitorInfo(DSSCircObj);
-Lines_info = getLineInfo(DSSCircObj);
-[~,index] = sortrows([Lines_info.bus1Distance].');
-Lines_info = Lines_info(index);
+%Cap_info = getCapacitorInfo(DSSCircObj);
+%Lines_info = getLineInfo(DSSCircObj);
+%[~,index] = sortrows([Lines_info.bus1Distance].');
+%Lines_info = Lines_info(index);
 Buses_info = getBusInfo(DSSCircObj);
-Loads_info = getLoadInfo(DSSCircObj);
+%Loads_info = getLoadInfo(DSSCircObj);
 %%
 % 4. Main Loop
 %---------------------------------
@@ -24,8 +24,8 @@ MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 DAY = 1;
 MNTH = 1;
 cap_pos = 0; %used to be 1
-DSSText.command='Edit Capacitor.38391707_sw enabled=false';
-for DOY=1:1:364 %365
+cap_timer = 0;
+for DOY=1:1:3%364 %365
     tic
     %-- Update Irradiance/PV_KW
     if DAY > MTH_LN(MNTH)
@@ -33,79 +33,89 @@ for DOY=1:1:364 %365
         DAY = 1;
     end
     fprintf('\nQSTS Simulation: DOY= %d\n',DOY);
-    PV1_loadshape_daily = M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
-    PV_loadshape_daily = (PV_ON_OFF-1)*interp(PV1_loadshape_daily(:,1),60); %go down to 1 second dataset --
-    s_pv_txt = 'LS_PVdaily.csv';
-    s_pv = strcat(s,s_pv_txt);
-    %csvwrite(s_pv,PV_loadshape_daily)
-    
-    %--  Generate Gen & Load Shapes:
-    
+    %%
+    %--  Generate Solar Shapes:
     filelocation=strcat(s,'\');
-    
-    fileID = fopen([filelocation,'Loadshape_SOLAR.dss'],'wt');
-    fprintf(fileID,['New loadshape.LS_PVshape npts=%s sinterval=%s action=normalize mult=(',...
-       sprintf('%0.4f ',PV_loadshape_daily),')\n\n'],num2str(86400),num2str(1));
+    fileID = fopen([filelocation,'Loadshape_PV.dss'],'wt');
+    PV_loadshape_daily = (PV_ON_OFF-1)*M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
+    fprintf(fileID,['New loadshape.LS_Solar npts=%s sinterval=%s mult=(',...
+        sprintf('%f ',PV_loadshape_daily(:,1)),')\n'],num2str(sim_num),num2str(s_step));
+    if PV_ON_OFF == 2
+        fprintf(fileID,'new generator.PV bus1=%s phases=3 kv=12.47 kW=%s pf=1.00 Daily=LS_Solar enable=true\n',num2str(PV_bus),num2str(PV_pmpp));
+    end
     fclose(fileID);
-    
+    %%
+    %--  Generate Load Shapes:
+    filelocation=strcat(s,'\');
     fileID = fopen([filelocation,'Loadshape.dss'],'wt');
     fprintf(fileID,['New loadshape.LS_PhaseA npts=%s sinterval=%s pmult=(',...
-        sprintf('%4.3f ',CAP_OPS_STEP2(DOY).kW(:,1)),') qmult=(',...
-        sprintf('%4.3f ',CAP_OPS(DOY).DSS(:,1)),')\n\n'],num2str(sim_num),num2str(s_step));
+        sprintf('%f ',CAP_OPS_STEP2(DOY).kW(:,1)),') qmult=(',...
+        sprintf('%f ',CAP_OPS(DOY).DSS(:,1)),')\n\n'],num2str(sim_num),num2str(s_step));
     fprintf(fileID,['New loadshape.LS_PhaseB npts=%s sinterval=%s pmult=(',...
-        sprintf('%4.3f ',CAP_OPS_STEP2(DOY).kW(:,2)),') qmult=(',...
-        sprintf('%4.3f ',CAP_OPS(DOY).DSS(:,2)),')\n\n'],num2str(sim_num),num2str(s_step));
+        sprintf('%f ',CAP_OPS_STEP2(DOY).kW(:,2)),') qmult=(',...
+        sprintf('%f ',CAP_OPS(DOY).DSS(:,2)),')\n\n'],num2str(sim_num),num2str(s_step));
     fprintf(fileID,['New loadshape.LS_PhaseC npts=%s sinterval=%s pmult=(',...
-        sprintf('%4.3f ',CAP_OPS_STEP2(DOY).kW(:,3)),') qmult=(',...
-        sprintf('%4.3f ',CAP_OPS(DOY).DSS(:,3)),')\n\n'],num2str(sim_num),num2str(s_step));
-    %{
-    fprintf(fileID,['New loadshape.LS_PVshape Pbase=1.00 npts=%s sinterval=%s action=normalize mult=(',...
-       sprintf('%0.3f ',PV_loadshape_daily),')\n\n'],num2str(86400),num2str(1));
-        %}
+        sprintf('%f ',CAP_OPS_STEP2(DOY).kW(:,3)),') qmult=(',...
+        sprintf('%f ',CAP_OPS(DOY).DSS(:,3)),')\n\n'],num2str(sim_num),num2str(s_step));
     fclose(fileID); 
-        %%
-    KVAR_ACTUAL.data=CAP_OPS_STEP1(DOY).data(:,1:6);
-    
-    %-- Find Cap Ops & Pmult/Qmult from CAP_OPS {struct}
-    sw_cap= CAP_OPS_STEP1(DOY).data(:,4);
-    
-    %--  Tell program where DSS Files are:
-    if feeder_NUM == 2
-        CUTOFF=10;
-    else
-        CUTOFF=23;
-    end
-
+    %%
     %--  Re-Compile .DSS files:
     DSSText.command = ['Compile ',ckt_direct_prime];
-    location = cd;
-    cd(location);
-    %fprintf('hi\n');
-    if PV_ON_OFF == 2
-        %DSSText.command = 'New loadshape.LS_PVshape Pbase=1.00 npts=86400 sinterval=1 mult=(file=LS_PVdaily.csv) action=normalize';
-        DSSText.command = sprintf('new pvsystem.PV bus1=%s irradiance=1 phases=3 kv=12.47 pf=1.00 daily=LS_PVshape pmpp=%s kVA=%s',PV_bus,num2str(PV_pmpp),num2str(PV_pmpp*1.1));
+    Lines_info = getLineInfo(DSSCircObj);
+    [~,index] = sortrows([Lines_info.bus1Distance].');
+    Lines_info = Lines_info(index);
+    %--  Find {actual} reactive power:
+    KVAR_ACTUAL.data=CAP_OPS_STEP1(DOY).data(:,1:6);
+    %--  Find old Cap_Ops & initial status:
+    sw_cap= CAP_OPS_STEP1(DOY).data(:,4);
+    if DOY==1
+        DSSText.command='Edit Capacitor.38391707_sw states=0';
     end
-    DSSText.command='Edit Capacitor.38391707_sw enabled=false';
     
     %--  Run QSTS 24hr sim:
     if timeseries_span == 2
-        %(1) DAY, 24hr
-        % Solve QSTS Solution:
-        DSSText.command=sprintf('set mode=daily stepsize=%s number=%s',time_int,'1');
+        %(1) DAY, 24hr, 1 second timestep for MATLAB controls.
+        %
+        % Configure Simulation:
+        DSSText.command='set mode=daily stepsize=1 number=1';
         DSSCircuit.Solution.dblHour = 0.0;
-        for t = 1:1:str2num(sim_num)
+        i = 1; %counter for TVD sample & voltage violation check
+        for t = 1:1:1440*60
             % Solve at current time step
             DSSCircuit.Solution.Solve
+            % Calc TVD every 5sec & only during PV hours
+            if t>=10*3600 && t<16*3600
+                if mod(t,5) == 0
+                    Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
+                    phaseVoltagesPU = {Buses_info.phaseVoltagesPU}.';
+                    TVD_SAVE(i,1:4)=TVD_Calc_5sec(Voltages',phaseVoltagesPU);
+                    i = i + 1;
+                end
+            end  
             % Switching Capacitor Control
-            Cap_Control_1
+            %{
+            if mod(t,60) == 0
+                Cap_Control_1
+            end
+            %}
+            Cap_Control_Active
+
+            if mod(t,3600) == 0
+                fprintf('Hour: %d\n',t/3600);
+            end
+            
         end
     end
+    toc
+    tic
     Export_Monitors_timeseries
     %Find P,Q residuals=DSCADA-DSS
+    
     YEAR_SIM_LTC(DOY).DSS_LTC_V=DATA_SAVE(1).phaseV;
     YEAR_SIM_LTC(DOY).DSS_LTC_OP=DATA_SAVE(1).LTC_Ops;
     YEAR_SIM_PQ(DOY).DSS_SUB_P=DATA_SAVE(1).phaseP;
     YEAR_SIM_PQ(DOY).DSS_SUB_Q=DATA_SAVE(1).phaseQ;
+    
     %Find Base Case LTC & Cap ops/day
     %Pre_Summary
     
@@ -140,6 +150,11 @@ fn4='\YR_SIM_MEAS_';
 fn4=strcat(filedir,fn4);
 fn4=strcat(fn4,scen_nm);
 save(fn4,'DATA_SAVE');
+%5]
+fn5='\YR_SIM_CAPOP_';
+fn5=strcat(filedir,fn5);
+fn5=strcat(fn5,scen_nm);
+save(fn5,'CAP_OPS_DSS');
 
 
 
