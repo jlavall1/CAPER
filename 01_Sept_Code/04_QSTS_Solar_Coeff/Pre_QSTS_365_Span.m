@@ -63,8 +63,16 @@ elseif feeder_NUM == 1
     load CAP_Mult_60s_CMNW.mat  %CAP_OPS_STEP1
     load P_Mult_60s_CMNW.mat    %CAP_OPS_STEP2
     load Q_Mult_60s_CMNW.mat    %CAP_OPS
-    load HOSTING_CAP_CMNW.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
-    
+    %Unique Component Names:
+    trans_name='COMMONWEALTH_RET_01311205';
+    %%
+    %Things needed for Export_Monitors_Timeseries:
+    addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis');
+    %load config_LOADSBASE_CMNW.mat %Loads_Base
+    load config_LINESBASE_CMNW.mat %Lines
+    [~,index] = sortrows([Lines.bus1Distance].'); 
+    Lines_Distance = Lines(index); 
+    %
 elseif feeder_NUM == 2
     load FLAY.mat
     FEEDER = FLAY;
@@ -87,6 +95,8 @@ elseif feeder_NUM == 2
     load CAP_Mult_60s_Flay.mat  %CAP_OPS_STEP1
     load P_Mult_60s_Flay.mat    %CAP_OPS_STEP2
     load Q_Mult_60s_Flay.mat    %CAP_OPS
+    %Component Names:
+    trans_name='FLAY_RET_16271201';
 elseif feeder_NUM == 3
     load ROX.mat
     FEEDER = ROX;
@@ -110,7 +120,9 @@ Set_DER_PV_PCC
 
 
 %%
-if feeder_NUM == 2
+if feeder_NUM == 1
+    CUTOFF=11;
+elseif feeder_NUM == 2
     CUTOFF=10;
 else
     CUTOFF=23;

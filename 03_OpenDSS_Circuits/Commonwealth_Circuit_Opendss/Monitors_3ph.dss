@@ -1,3 +1,8 @@
+New Monitor.LTC element=Transformer.COMMONWEALTH_RET_01311205 terminal=2 mode=2
+New Monitor.subVI element=Transformer.COMMONWEALTH_RET_01311205 terminal=2 mode=0
+!
+!Line Monitors
+!
 New Monitor.259355403_Mon_VI  element=line.259355403 term=1  mode=32
 New Monitor.259355403_Mon_PQ  element=line.259355403 term=1  mode=1 PPolar=No
 New Monitor.258896287_Mon_VI  element=line.258896287 term=1  mode=32

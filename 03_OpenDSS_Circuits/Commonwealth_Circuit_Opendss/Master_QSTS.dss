@@ -22,6 +22,7 @@ Redirect UGLineCodes.dss
 ! Feeder Load Allocation 
 !
 Redirect Loadshape.dss
+Redirect Loadshape_PV.dss
 
 ! 
 ! Circuit Element Data
@@ -29,7 +30,8 @@ Redirect Loadshape.dss
 Redirect SourceRegulator_3ph.dss
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
-Redirect Loads_NCSU.dss 	!Just changed to _NCSU.dss
+Redirect Monitors_3ph.dss
+Redirect Loads_QSTS.dss 	!normalized kW & kVAR
 Redirect Capacitors.dss
 ! 
 ! Set the voltage bases
@@ -43,3 +45,20 @@ Buscoords Buscoords.CSV
 ! 
 ! Some command templates (commented out)
 ! 
+!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!
+! Define an energy meter -- needed for plot profile and yearly simulations
+!
+New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
+EnergyMeter.CircuitMeter.peakcurrent=[  345.492818586166   362.418979727275   291.727365549702  ] 
+! 
+! Disable Capacitors for load allocation
+Disable Capacitor.*
+! 
+AllocateLoad
+AllocateLoad
+AllocateLoad
+!Dump AllocationFactors
+! 
+! Enable capacitors before solving
+Enable Capacitor.*

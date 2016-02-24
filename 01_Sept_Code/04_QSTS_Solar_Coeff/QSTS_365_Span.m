@@ -22,10 +22,12 @@ Buses_info = getBusInfo(DSSCircObj);
 %---------------------------------
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 DAY = 1;
+DAY_F = 1;
 MNTH = 1;
 cap_pos = 0; %used to be 1
 cap_timer = 0;
-for DOY=1:1:3%364 %365
+tap_timer = 0;
+for DOY=DAY:1:DAY_F %365
     tic
     %-- Update Irradiance/PV_KW
     if DAY > MTH_LN(MNTH)
@@ -60,18 +62,21 @@ for DOY=1:1:3%364 %365
     fclose(fileID); 
     %%
     %--  Re-Compile .DSS files:
-    DSSText.command = ['Compile ',ckt_direct_prime];
-    Lines_info = getLineInfo(DSSCircObj);
-    [~,index] = sortrows([Lines_info.bus1Distance].');
-    Lines_info = Lines_info(index);
     %--  Find {actual} reactive power:
     KVAR_ACTUAL.data=CAP_OPS_STEP1(DOY).data(:,1:6);
     %--  Find old Cap_Ops & initial status:
     sw_cap= CAP_OPS_STEP1(DOY).data(:,4);
-    if DOY==1
+    if DOY==DAY
+        DSSText.command = ['Compile ',ckt_direct_prime];
+        Lines_info = getLineInfo(DSSCircObj);
+        [~,index] = sortrows([Lines_info.bus1Distance].');
+        Lines_info = Lines_info(index);
         DSSText.command='Edit Capacitor.38391707_sw states=0';
+        DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,'1.00625');
+    else
+        %DSSText.command=sprintf('Edit Capacitor.38391707_sw states=%s',CAP_DAY);
+        %DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,TAP_DAY);
     end
-    
     %--  Run QSTS 24hr sim:
     if timeseries_span == 2
         %(1) DAY, 24hr, 1 second timestep for MATLAB controls.
@@ -99,22 +104,28 @@ for DOY=1:1:3%364 %365
             end
             %}
             Cap_Control_Active
-
+            OLTC_Control_Active
             if mod(t,3600) == 0
                 fprintf('Hour: %d\n',t/3600);
             end
             
         end
+        
+        %save tap pos to reset after next day load allocation:
+        DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
+        TAP_DAY = DSSText.Result;
+        CAP_DAY = YEAR_CAPSTATUS(DOY).CAP_POS(t,1);
+        
     end
     toc
     tic
     Export_Monitors_timeseries
     %Find P,Q residuals=DSCADA-DSS
     
-    YEAR_SIM_LTC(DOY).DSS_LTC_V=DATA_SAVE(1).phaseV;
-    YEAR_SIM_LTC(DOY).DSS_LTC_OP=DATA_SAVE(1).LTC_Ops;
-    YEAR_SIM_PQ(DOY).DSS_SUB_P=DATA_SAVE(1).phaseP;
-    YEAR_SIM_PQ(DOY).DSS_SUB_Q=DATA_SAVE(1).phaseQ;
+    YEAR_SUB(DOY).V=DATA_SAVE(1).phaseV;
+    YEAR_LTC(DOY).OP=DATA_SAVE(1).LTC_Ops;
+    YEAR_SIM_P(DOY).DSS_SUB=DATA_SAVE(1).phaseP;
+    YEAR_SIM_Q(DOY).DSS_SUB=DATA_SAVE(1).phaseQ;
     
     %Find Base Case LTC & Cap ops/day
     %Pre_Summary
@@ -131,32 +142,51 @@ filedir = strcat(base_path,'\01_Sept_Code\04_QSTS_Solar_Coeff\');
 filedir = strcat(filedir,root1);
 scen_nm = strcat(root,num2str(Zsc_loc(LC)));
 %1]
-fn1='\YR_SIM_LTC_';
+fn1='\YR_SIM_SUBV_';
 fn1=strcat(filedir,fn1);
 fn1=strcat(fn1,scen_nm);
-save(fn1,'YEAR_SIM_LTC');
+save(fn1,'YEAR_SUB');
 %2]
-fn2='\YR_SIM_PQ_';
+fn2='\YR_SIM_OLTC_';
 fn2=strcat(filedir,fn2);
 fn2=strcat(fn2,scen_nm);
-save(fn2,'YEAR_SIM_PQ');
+save(fn2,'YEAR_LTC');
 %3]
-fn3='\YR_SIM_TVD_';
+fn3='\YR_SIM_P_';
 fn3=strcat(filedir,fn3);
 fn3=strcat(fn3,scen_nm);
-save(fn3,'Settings');
+save(fn3,'YEAR_SIM_P');
 %4]
-fn4='\YR_SIM_MEAS_';
+fn4='\YR_SIM_Q_';
 fn4=strcat(filedir,fn4);
 fn4=strcat(fn4,scen_nm);
-save(fn4,'DATA_SAVE');
+save(fn4,'YEAR_SIM_Q');
 %5]
-fn5='\YR_SIM_CAPOP_';
+fn5='\YR_SIM_TVD_';
 fn5=strcat(filedir,fn5);
 fn5=strcat(fn5,scen_nm);
-save(fn5,'CAP_OPS_DSS');
+save(fn5,'Settings');
+%6]
+fn6='\YR_SIM_MEAS_'; %more can be added to this
+fn6=strcat(filedir,fn6);
+fn6=strcat(fn6,scen_nm);
+save(fn6,'DATA_SAVE');
+%7]
+fn7='\YR_SIM_CAP1_';
+fn7=strcat(filedir,fn7);
+fn7=strcat(fn7,scen_nm);
+save(fn7,'YEAR_CAPSTATUS');
+%8]
+fn8='\YR_SIM_CAP2_';
+fn8=strcat(filedir,fn8);
+fn8=strcat(fn8,scen_nm);
+save(fn8,'YEAR_CAPCNTRL');
 
 
-
-
+%{
+YEAR_CAPSTATUS(DOY).CAP_POS(t,1)=cap_pos;
+YEAR_CAPSTATUS(DOY).Q_CAP(t,1)=MEAS(t).PF(1,7); %Reactive Power of cap_bank
+YEAR_CAPCNTRL(DOY).CTL_PF(t,1)=MEAS(t).PF(1,4); %control PF
+YEAR_CAPCNTRL(DOY).LD_LG(t,1)=MEAS(t).PF(1,6); %lead/lag
+%}
     

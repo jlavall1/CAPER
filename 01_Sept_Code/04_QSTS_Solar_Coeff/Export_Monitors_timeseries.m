@@ -6,9 +6,10 @@ elseif feeder_NUM == 1
     %Commonwealth --
     temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss';
     addpath(temp_dir)
-    addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis');
-    %load config_LOAD
-    load Lines_Monitor_CMNW.mat %Lines_Distance
+    %addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis');
+    %load config_LOADSBASE_CMNW.mat %Loads_Base
+    
+    %load Lines_Monitor_CMNW.mat %Lines_Distance
     %For export .txt file --
     filename = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\TIME_RESULTS';
     

@@ -14,6 +14,10 @@ feeder_NUM=menu('Which Feeder?','(BELL) Feeder 01','(CMNWH) Feeder 02','(FLAY) F
 while feeder_NUM<1
     feeder_NUM=menu('Which Feeder?','(BELL) Feeder 01','(CMNWH) Feeder 02','(FLAY) Feeder 03','(ROX) Feeder 04');
 end
+plot_op=menu('Plot what?','none','base figures','Results of all derived Q');
+while plot_op<1
+    plot_op=menu('Plot what?','none','base figures','Results of all derived Q');
+end
 
 if feeder_NUM == 1
 elseif feeder_NUM == 2
@@ -118,84 +122,92 @@ CAP_OPS(1).datanames=KVAR_ACTUAL.datanames;
 
 
 %%
-figure(1)
-s = 1;
-for i=1:1:364
-    Y = CAP_OPS_STEP1(i).data(1:1440,4);
-    X = [s:1:1440+s-1]';
-    X = X/1440;
-    %plot(s+j,CAP_OPS(i).data(j,4));
-    plot(X,Y)
-    hold on
-    s = s + 1440;
-end
-axis([0 365 -0.5 1.5])
-title('State of 450kVAR Swtch Cap');
-xlabel('Day of Year (DOY)');
-ylabel('1=Closed & 0=Opened');
-
-figure(2)
-s = 1;
-for i=1:1:50
-    Y = CAP_OPS_STEP1(i).data(1:1440,7);
-    X = [s:1:1440+s-1]';
-    %plot(s+j,CAP_OPS(i).data(j,4));
-    plot(X,Y)
-    hold on
-    s = s + 1440;
-end
-%%
-figure(3)
-%Test DOY=51:
-T_DAY = 265;
-plot(CAP_OPS_STEP1(T_DAY).data(:,1),'r-')
-hold on
-plot(CAP_OPS_STEP1(T_DAY).data(:,2),'g-')
-hold on
-plot(CAP_OPS_STEP1(T_DAY).data(:,3),'b-')
-hold on
-%%
-if feeder_NUM == 2 || feeder_NUM == 3
-    plot(CAP_OPS_STEP1(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
-    %
-    figure(4)
+if plot_op == 2 || plot_op == 3
+    figure(1)
     s = 1;
-    for i=120:1:200
-        Y = CAP_OPS_STEP1(i).data(1:1440,10);
+    for i=1:1:364
+        Y = CAP_OPS_STEP1(i).data(1:1440,4);
+        X = [s:1:1440+s-1]';
+        X = X/1440;
+        %plot(s+j,CAP_OPS(i).data(j,4));
+        plot(X,Y)
+        hold on
+        s = s + 1440;
+    end
+    axis([0 365 -0.5 1.5])
+    title('State of 450kVAR Swtch Cap');
+    xlabel('Day of Year (DOY)');
+    ylabel('1=Closed & 0=Opened');
+
+    figure(2)
+    s = 1;
+    for i=1:1:50
+        Y = CAP_OPS_STEP1(i).data(1:1440,7);
         X = [s:1:1440+s-1]';
         %plot(s+j,CAP_OPS(i).data(j,4));
         plot(X,Y)
         hold on
         s = s + 1440;
     end
-    fig = 4;
-    %close all
+    %
+    figure(3)
+    %Test DOY=51:
+    T_DAY = 265;
+    plot(CAP_OPS_STEP1(T_DAY).data(:,1),'r-')
+    hold on
+    plot(CAP_OPS_STEP1(T_DAY).data(:,2),'g-')
+    hold on
+    plot(CAP_OPS_STEP1(T_DAY).data(:,3),'b-')
+    hold on
+elseif plot_op == 3
+    if feeder_NUM == 2 || feeder_NUM == 3
+        plot(CAP_OPS_STEP1(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
+        %
+        figure(4)
+        s = 1;
+        for i=120:1:200
+            Y = CAP_OPS_STEP1(i).data(1:1440,10);
+            X = [s:1:1440+s-1]';
+            %plot(s+j,CAP_OPS(i).data(j,4));
+            plot(X,Y)
+            hold on
+            s = s + 1440;
+        end
+        fig = 4;
+        %close all
 
-    for i=1:10:341
-        if CAP_OPS(i).oper ~= 0
-            fig = fig + 1;
-            figure(fig)
-            T_DAY = i;
-            plot(CAP_OPS_STEP1(T_DAY).data(:,1),'r-','LineWidth',3)
-            hold on
-            plot(CAP_OPS_STEP1(T_DAY).data(:,2),'g-','LineWidth',3)
-            hold on
-            plot(CAP_OPS_STEP1(T_DAY).data(:,3),'b-','LineWidth',3)
-            hold on
-            plot(CAP_OPS_STEP1(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
-            hold on
-            plot(CAP_OPS(T_DAY).DSS(:,1),'r--')
-            hold on
-            plot(CAP_OPS(T_DAY).DSS(:,2),'g--')
-            hold on
-            plot(CAP_OPS(T_DAY).DSS(:,3),'b--')
-            hold on
+        for i=1:10:341
+            if CAP_OPS(i).oper ~= 0
+                fig = fig + 1;
+                figure(fig)
+                T_DAY = i;
+                plot(CAP_OPS_STEP1(T_DAY).data(:,1),'r-','LineWidth',3)
+                hold on
+                plot(CAP_OPS_STEP1(T_DAY).data(:,2),'g-','LineWidth',3)
+                hold on
+                plot(CAP_OPS_STEP1(T_DAY).data(:,3),'b-','LineWidth',3)
+                hold on
+                plot(CAP_OPS_STEP1(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
+                hold on
+                plot(CAP_OPS(T_DAY).DSS(:,1),'r--')
+                hold on
+                plot(CAP_OPS(T_DAY).DSS(:,2),'g--')
+                hold on
+                plot(CAP_OPS(T_DAY).DSS(:,3),'b--')
+                hold on
 
-            title(sprintf('DOY=%d',i));
+                title(sprintf('DOY=%d',i));
 
+            end
         end
     end
 end
+%SAVE following structs as follows:
+%{
+CAP_Mult_60s_ = CAP_OPS
+P_Mult_60s_ = CAP_OPS_STEP2
+Q_Mult_60s_ = CAP_OPS_STEP1
+%}
         
         
         

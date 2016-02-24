@@ -73,8 +73,8 @@ elseif MEAS(t).PF(1,6) == 1 %&& MEAS(t).PF(1,4) < PF_SUB_LD
 end
 %%
 %Save cap_pos command for next 1 sec of operation:
-CAP_OPS_DSS(DOY).CAP_POS(t,1)=cap_pos;
-CAP_OPS_DSS(DOY).Q_CAP(t,1)=MEAS(t).PF(1,7); %Reactive Power of cap_bank
-CAP_OPS_DSS(DOY).CTL_PF(t,1)=MEAS(t).PF(1,4); %control PF
-CAP_OPS_DSS(DOY).LD_LG(t,1)=MEAS(t).PF(1,6); %lead/lag
+YEAR_CAPSTATUS(DOY).CAP_POS(t,1)=cap_pos;
+YEAR_CAPSTATUS(DOY).Q_CAP(t,1)=MEAS(t).PF(1,7); %Reactive Power of cap_bank
+YEAR_CAPCNTRL(DOY).CTL_PF(t,1)=MEAS(t).PF(1,4); %control PF
+YEAR_CAPCNTRL(DOY).LD_LG(t,1)=MEAS(t).PF(1,6); %lead/lag
 
