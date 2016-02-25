@@ -1,17 +1,11 @@
 Clear
 
 ! Define the Circuit
-New Circuit.COMMONWEALTH_RET_01311205 Bus1=COMMONWEALTH_RET_01311205
-~ BasekV=12.47  pu=1.0337  angle=0.00
-~ Z1=[ 0.0532 1.0104 ]
-~ Z2=[ 0.0532 1.0104 ]
-~ Z0=[ 0.0387 0.9408 ]
-
-!New Circuit.MG2 Bus1=CKT_TIE4
-!~ BasekV=12.47  pu=0.996  angle=0.00
-!~ Z1=[ 0.1075 0.9858 ]
-!~ Z2=[ 0.1075 0.9858 ]
-!~ Z0=[ 0.0810 0.9180 ]
+New Circuit.CKT_TIE1 Bus1=CKT_TIE1
+~ BasekV=12.47  pu=1.0056  angle=0.00
+~ Z1=[ 0.1777 1.0994 ]
+~ Z2=[ 0.1777 1.0994 ]
+~ Z0=[ 0.2549 1.3287 ]
 
 ! Library Data
 Redirect Libraries\WireData.dss
@@ -40,8 +34,5 @@ CalcVoltageBases
 Buscoords BusCoords.dss
 
 ! Define an energy meter
-New EnergyMeter.CircuitMeter LINE.259355408 terminal=1 option=R PhaseVoltageReport=yes
-~ peakcurrent=[ 347.00   364.00   293.00 ]
-
-!New EnergyMeter.CircuitMeter Line.CKT_TIE4_SW terminal=1 option=R PhaseVoltageReport=yes
-!~ peakcurrent=[ 347.00   364.00   293.00 ]
+New EnergyMeter.CircuitMeter LINE.CKT_TIE1_SW terminal=1 option=R PhaseVoltageReport=yes
+~ peakcurrent=[ 100.00   100.00   100.00 ]

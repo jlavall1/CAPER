@@ -28,6 +28,7 @@ disp('Solving LP...')
 %Opt = opti('f',f,'ineq',Aineq,full(bineq),'eq',Aeq,full(beq),'bounds',lb,ub,'xtype',intcon);
 %[X,fval,exitflag,info] = solve(Opt);
 [X,fval,exitflag,info] = opti_cplex([],f,[Aineq;Aeq],full([-inf*ones(size(bineq));beq]),full([bineq;beq]),lb,ub,repmat('B',1,length(f)));
+%[X,fval.exitflag,info] = opti-cplex([],f,A,rl,ru,lb,ub,xint);
 %load('BILP.mat');
 disp(info)
 disp(fval)

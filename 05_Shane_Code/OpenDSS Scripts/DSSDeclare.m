@@ -85,9 +85,7 @@ BusCoords = [tempname,'.dss'];
 fid = fopen(BusCoords,'wt');
 fprintf(fid,'%s\n',NODE.DSS);
 fclose(fid);
-for i = 1:length(NODE)
-    DSSText.command = ['BusCoords ',BusCoords];
-end
+DSSText.command = ['BusCoords ',BusCoords];
 delete(BusCoords)
 
 end

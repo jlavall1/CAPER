@@ -232,9 +232,21 @@ DSSCircuit.Solution.Number = 1;
 DSSCircuit.Solution.Stepsize = step;
 DSSCircuit.Solution.dblHour = 0.0;
 
+% Initialize movie
+figure
+ax = gca;
+ax.NextPlot = 'replaceChildren';
+F(nstp) = struct('cdata',[],'colormap',[]);
+
 for t = 1:nstp
     % Solve at current time step
     DSSCircuit.Solution.Solve
+    
+    plotVoltageProfile(DSSCircObj);
+    ylim([116 124])
+    ax = gcf;
+    F(t) = getframe(ax);
+    close all
     
     % Read Data from OpenDSS
     RESULTS(t).Date = DATA(t).Date;

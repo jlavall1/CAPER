@@ -21,6 +21,8 @@ BusesCoords.dss - Bus Coordinates for plotting circuit
 % *SwitContrl.dss - OpenDSS switch control settings
 % *ReclContrl.dss - OpenDSS recloser control settings
 
+* - Not complete
+
 % All Files will be saved in folowing location:
 %   SXSTdir\filename.sxst_DSS\ {here}
 %}
