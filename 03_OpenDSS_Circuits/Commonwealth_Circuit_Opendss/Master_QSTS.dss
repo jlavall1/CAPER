@@ -27,7 +27,7 @@ Redirect Loadshape_PV.dss
 ! 
 ! Circuit Element Data
 ! 
-Redirect SourceRegulator_3ph.dss
+Redirect SourceRegulator_3ph_QSTS.dss
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
 Redirect Monitors_3ph.dss

@@ -2,9 +2,9 @@ clear
 clc
 %This function will generate plots depending on what user desires:
 %Focuses on interp simulation data:
-plot_choice=menu('How would you like to see the PV_PCCs?','By Distance','By Iteration #','maxPV_Cap');
+plot_choice=menu('How would you like to see the PV_PCCs?','By Distance','By Iteration #','maxPV_Cap','(2) POI Test Locations');
 while plot_choice<1
-    plot_choice=menu('How would you like to see the PV_PCCs?','By Distance','By Iteration #','maxPV_Cap');
+    plot_choice=menu('How would you like to see the PV_PCCs?','By Distance','By Iteration #','maxPV_Cap','(2) POI Test Locations');
 end
 user_def = zeros(1,2); %LOWER_BOUND | UPPPER_BOUND
 if plot_choice==1
@@ -303,7 +303,11 @@ elseif plot_choice == 3
     %legend([gcf.legendHandles,h(1)'],[gcf.legendText,[h(1),h(2),h(3),h(4),h(5),h(6),],'0MW - 1MW','1MW-2MW','2MW-3MW','4MW-5MW','5MW-10MW'])
     %l_handle2 = legend([h(1),h(2),h(3),h(4),h(5),h(6)],'0-1','1-2','2-3','3-4','4-5','5-');
     %set(l_handle2,'Color','none');
+elseif plot_choice == 4
+    %Plot only desired buses:
+    busHandle = plot(repmat(BusesCoords(5,2)',2,1),repmat(BusesCoords(5,1)',2,1),'ko','MarkerSize',10,'MarkerFaceColor','c','LineStyle','none','DisplayName','Bottleneck');
 end
+    
     
     
 

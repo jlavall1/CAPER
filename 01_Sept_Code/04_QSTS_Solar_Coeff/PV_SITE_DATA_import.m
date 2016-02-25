@@ -50,10 +50,14 @@ elseif PV_Site == 3
     end
     clearvars M_TAYLOR_INFO M_TAYLOR
 elseif PV_Site == 4
+    %Main one that should be used...
+    load M_TAYLOR_INFO.mat
     load M_MOCKS_INFO.mat
     M_PVSITE_INFO.RR_distrib = M_MOCKS_INFO.RR_distrib;
     M_PVSITE_INFO.kW = M_MOCKS_INFO.kW;
     M_PVSITE_INFO.name = M_MOCKS_INFO.name;
+    M_PVSITE_INFO.VI = M_TAYLOR_INFO.VI;
+    M_PVSITE_INFO.CI = M_TAYLOR_INFO.CI;
     load M_MOCKS.mat
 
     for i=1:1:12
@@ -61,7 +65,9 @@ elseif PV_Site == 4
         M_PVSITE(i).RR_1MIN(:,:) = M_MOCKS(i).RR_1MIN(:,1:3);
         M_PVSITE(i).PU(:,:) = M_MOCKS(i).kW(1:end-1,1)./M_PVSITE_INFO.kW;
     end
-    clearvars M_MOCKS_INFO M_MOCKS
+    load M_MOCKS_SC.mat
+    M_PVSITE_SC = M_MOCKS_SC;
+    clearvars M_MOCKS_INFO M_MOCKS M_TAYLOR_INFO M_MOCKS_SC
 elseif PV_Site == 5
     load M_AROCK_INFO.mat
     M_PVSITE_INFO.RR_distrib = M_AROCK_INFO.RR_distrib;

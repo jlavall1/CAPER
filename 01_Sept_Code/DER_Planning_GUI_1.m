@@ -207,7 +207,7 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     
     set(h.rb(3),'Value',1);     %ckt choice             -- Flay(3) Common(2)
     set(h.ppm(2),'Value',3);    %Simulation choice      -- Steady State(3)
-    
+    set(h.ppm(4),'Value',4);    %PV Site Data (PU)      -- MOCKS
     set(h.ppm(5),'Value',2);    %timeseries DROPDOWN    -- daytime,1 day,2 week,3 1mnth,4
     set(h.ppm(6),'Value',2);    %What month DROPDOWN    -- FEB (29d)
     %set(h.ppm(7),'Value',2);    %QSTS Select            -- (2)==Imp.

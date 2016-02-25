@@ -46,7 +46,7 @@ elseif feeder_NUM == 1
     FEEDER = CMNWLTH;
     clearvars CMNWLTH
     kW_peak = [2.475021572579630e+03,2.609588847297235e+03,2.086659558753901e+03];
-    Caps.Fixed(1)=300/3;
+    Caps.Swtch(1)=300/3;
     Caps.Fixed(2)=600/3;
     
     %To be used for finding AllocationFactors for simulation:
@@ -57,21 +57,23 @@ elseif feeder_NUM == 1
     polar = -1;
     
     % -- Commonwealth --
-    root = 'Common';
-    root1= 'Common';
+    dss_rt = 'Common';
+    root = 'CMNW_0';
+    root1= '02_CMNW';
     %Background files needed to run QSTS:
     load CAP_Mult_60s_CMNW.mat  %CAP_OPS_STEP1
     load P_Mult_60s_CMNW.mat    %CAP_OPS_STEP2
     load Q_Mult_60s_CMNW.mat    %CAP_OPS
     %Unique Component Names:
     trans_name='COMMONWEALTH_RET_01311205';
+    swcap_name='258903785';
     %%
     %Things needed for Export_Monitors_Timeseries:
     addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis');
     %load config_LOADSBASE_CMNW.mat %Loads_Base
-    load config_LINESBASE_CMNW.mat %Lines
-    [~,index] = sortrows([Lines.bus1Distance].'); 
-    Lines_Distance = Lines(index); 
+    load config_LINESBASE_CMNWLTH.mat %Lines_Base
+    [~,index] = sortrows([Lines_Base.bus1Distance].'); 
+    Lines_Distance = Lines_Base(index); 
     %
 elseif feeder_NUM == 2
     load FLAY.mat
@@ -97,6 +99,7 @@ elseif feeder_NUM == 2
     load Q_Mult_60s_Flay.mat    %CAP_OPS
     %Component Names:
     trans_name='FLAY_RET_16271201';
+    swcap_name='38391707_sw';
 elseif feeder_NUM == 3
     load ROX.mat
     FEEDER = ROX;

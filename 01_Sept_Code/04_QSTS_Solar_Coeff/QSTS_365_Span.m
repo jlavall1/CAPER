@@ -22,19 +22,23 @@ Buses_info = getBusInfo(DSSCircObj);
 %---------------------------------
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 DAY = 1;
-DAY_F = 1;
-MNTH = 1;
-cap_pos = 0; %used to be 1
+DAY_F = 1;%MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
+%DAY_F =0;
+MNTH = 2;
+DOY=calc_DOY(MNTH,DAY);
 cap_timer = 0;
 tap_timer = 0;
-for DOY=DAY:1:DAY_F %365
+BUCK = 0;
+BOOST = 0;
+
+for DAY_I=DOY:1:DOY+DAY_F %365
     tic
     %-- Update Irradiance/PV_KW
     if DAY > MTH_LN(MNTH)
         MNTH = MNTH + 1;
         DAY = 1;
     end
-    fprintf('\nQSTS Simulation: DOY= %d\n',DOY);
+    fprintf('\nQSTS Simulation: DOY= %d\n',DAY_I);
     %%
     %--  Generate Solar Shapes:
     filelocation=strcat(s,'\');
@@ -42,40 +46,42 @@ for DOY=DAY:1:DAY_F %365
     PV_loadshape_daily = (PV_ON_OFF-1)*M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
     fprintf(fileID,['New loadshape.LS_Solar npts=%s sinterval=%s mult=(',...
         sprintf('%f ',PV_loadshape_daily(:,1)),')\n'],num2str(sim_num),num2str(s_step));
-    if PV_ON_OFF == 2
+    %if PV_ON_OFF == 2
         fprintf(fileID,'new generator.PV bus1=%s phases=3 kv=12.47 kW=%s pf=1.00 Daily=LS_Solar enable=true\n',num2str(PV_bus),num2str(PV_pmpp));
-    end
+    %end
     fclose(fileID);
     %%
     %--  Generate Load Shapes:
     filelocation=strcat(s,'\');
     fileID = fopen([filelocation,'Loadshape.dss'],'wt');
     fprintf(fileID,['New loadshape.LS_PhaseA npts=%s sinterval=%s pmult=(',...
-        sprintf('%f ',CAP_OPS_STEP2(DOY).kW(:,1)),') qmult=(',...
-        sprintf('%f ',CAP_OPS(DOY).DSS(:,1)),')\n\n'],num2str(sim_num),num2str(s_step));
+        sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,1)),') qmult=(',...
+        sprintf('%f ',CAP_OPS(DAY_I).DSS(:,1)),')\n\n'],num2str(sim_num),num2str(s_step));
     fprintf(fileID,['New loadshape.LS_PhaseB npts=%s sinterval=%s pmult=(',...
-        sprintf('%f ',CAP_OPS_STEP2(DOY).kW(:,2)),') qmult=(',...
-        sprintf('%f ',CAP_OPS(DOY).DSS(:,2)),')\n\n'],num2str(sim_num),num2str(s_step));
+        sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,2)),') qmult=(',...
+        sprintf('%f ',CAP_OPS(DAY_I).DSS(:,2)),')\n\n'],num2str(sim_num),num2str(s_step));
     fprintf(fileID,['New loadshape.LS_PhaseC npts=%s sinterval=%s pmult=(',...
-        sprintf('%f ',CAP_OPS_STEP2(DOY).kW(:,3)),') qmult=(',...
-        sprintf('%f ',CAP_OPS(DOY).DSS(:,3)),')\n\n'],num2str(sim_num),num2str(s_step));
+        sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,3)),') qmult=(',...
+        sprintf('%f ',CAP_OPS(DAY_I).DSS(:,3)),')\n\n'],num2str(sim_num),num2str(s_step));
     fclose(fileID); 
     %%
     %--  Re-Compile .DSS files:
     %--  Find {actual} reactive power:
-    KVAR_ACTUAL.data=CAP_OPS_STEP1(DOY).data(:,1:6);
+    KVAR_ACTUAL.data=CAP_OPS_STEP1(DAY_I).data(:,1:6);
     %--  Find old Cap_Ops & initial status:
-    sw_cap= CAP_OPS_STEP1(DOY).data(:,4);
-    if DOY==DAY
-        DSSText.command = ['Compile ',ckt_direct_prime];
+    sw_cap= CAP_OPS_STEP1(DAY_I).data(:,4);
+    
+    DSSText.command = ['Compile ',ckt_direct_prime];
+    if DAY_I==DOY
         Lines_info = getLineInfo(DSSCircObj);
         [~,index] = sortrows([Lines_info.bus1Distance].');
         Lines_info = Lines_info(index);
         DSSText.command='Edit Capacitor.38391707_sw states=0';
+        cap_pos = 0; %used to be 1
         DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,'1.00625');
     else
-        %DSSText.command=sprintf('Edit Capacitor.38391707_sw states=%s',CAP_DAY);
-        %DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,TAP_DAY);
+        DSSText.command=sprintf('Edit Capacitor.38391707_sw states=%s',num2str(CAP_DAY));
+        DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,TAP_DAY);
     end
     %--  Run QSTS 24hr sim:
     if timeseries_span == 2
@@ -103,7 +109,7 @@ for DOY=DAY:1:DAY_F %365
                 Cap_Control_1
             end
             %}
-            Cap_Control_Active
+            Cap_Control_Active_Q
             OLTC_Control_Active
             if mod(t,3600) == 0
                 fprintf('Hour: %d\n',t/3600);
@@ -114,7 +120,7 @@ for DOY=DAY:1:DAY_F %365
         %save tap pos to reset after next day load allocation:
         DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
         TAP_DAY = DSSText.Result;
-        CAP_DAY = YEAR_CAPSTATUS(DOY).CAP_POS(t,1);
+        CAP_DAY = YEAR_CAPSTATUS(DAY_I).CAP_POS(t,1);
         
     end
     toc
@@ -122,15 +128,15 @@ for DOY=DAY:1:DAY_F %365
     Export_Monitors_timeseries
     %Find P,Q residuals=DSCADA-DSS
     
-    YEAR_SUB(DOY).V=DATA_SAVE(1).phaseV;
-    YEAR_LTC(DOY).OP=DATA_SAVE(1).LTC_Ops;
-    YEAR_SIM_P(DOY).DSS_SUB=DATA_SAVE(1).phaseP;
-    YEAR_SIM_Q(DOY).DSS_SUB=DATA_SAVE(1).phaseQ;
+    YEAR_SUB(DAY_I).V=DATA_SAVE(1).phaseV;
+    YEAR_LTC(DAY_I).OP=DATA_SAVE(1).LTC_Ops;
+    YEAR_SIM_P(DAY_I).DSS_SUB=DATA_SAVE(1).phaseP;
+    YEAR_SIM_Q(DAY_I).DSS_SUB=DATA_SAVE(1).phaseQ;
     
     %Find Base Case LTC & Cap ops/day
     %Pre_Summary
     
-    DAY = DAY + 1;
+    DAY = DAY + 1
     toc
 end
 %%

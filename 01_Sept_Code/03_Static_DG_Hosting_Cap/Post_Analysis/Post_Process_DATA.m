@@ -83,7 +83,7 @@ elseif ckt_num == 2
         n = 1;
         k = 1; %use all --
     end
-    mainFile ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Master.DSS';
+    mainFile ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Master.DSS';  
 elseif ckt_num == 3
     %FLAY:
     feeder_name = 'FLAY';
