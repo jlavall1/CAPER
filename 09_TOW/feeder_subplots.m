@@ -107,7 +107,8 @@ elseif feeder_NUM == 6
     fprintf('Characteristics for:\t1 - E.RALEIGH\n\n');
     vbase = 7;
 elseif feeder_NUM == 7
-    fileloc ='C:\Users\ATOW\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Mocksville_1_Circuit_Opendss';
+    fileloc ='C:\Users\ATOW\Documents\GitHub\CAPER\07_CYME\Mocksville_Main_2401.sxst_DSS';
+    peak_current = [319.57,314.1,356.4];
     peak_kW=(1545.687+1606.278+1569.691);
     min_kW = 1351.478;
     if load_LVL == 1
@@ -116,7 +117,7 @@ elseif feeder_NUM == 7
         ratio = min_kW/peak_kW;
     end
     
-    energy_line = 'PDP28__2843462';
+    energy_line = '254399393';
     fprintf('Characteristics for:\t1 - Mocks_01\n\n');
     vbase = 7;
 end
