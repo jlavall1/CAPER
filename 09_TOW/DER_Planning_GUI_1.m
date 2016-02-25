@@ -8,7 +8,7 @@ myGUI=[];
 close all
 bk_color = [0.953 0.871 0.733];
 h.f = figure('units','normalized','toolbar','none','menu','none',...
-    'Color',bk_color,'Position',[1.1 0.1 1.0 0.7]); %[258 14 126.6 57]); -1.1 0.1 1.0 0.7
+    'Color',bk_color,'Position',[0 0.1 1.0 0.7]); %[258 14 126.6 57]); -1.1 0.1 1.0 0.7
 %%
 %Add all text:
 h.st(1) = uicontrol('style','text','unit','normalized','position',[0.01 0.944 0.17 0.038],...
@@ -53,7 +53,7 @@ h.st(13) = uicontrol('style','text','unit','normalized','position',[0.6 0.324 0.
 %%
 %Add all popupmenu:
 h.ppm(1) = uicontrol('style','popup','units','normalized','position',[0.185 0.746 0.235 0.237],...
-    'fontsize',12,'string',{'JML''s Home Computer','JML''s Laptop Computer','Brian''s Computer','Shane''s RT7','Shane''s Laptop'},...
+    'fontsize',12,'string',{'JML''s Home Computer','JML''s Laptop Computer','Addison''s Computer','Shane''s RT7','Shane''s Laptop'},...
     'BackgroundColor',[1 1 1]);
     %'callback',@setmap);
 %   DER Hosting Capacity:
@@ -112,6 +112,8 @@ h.rb(8) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
     'position',[0.038 0.543 0.139 0.032],'string','Circuit #7','backgroundcolor',bk_color);
 h.rb(9) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
     'position',[0.038 0.51 0.139 0.032],'string','Circuit #24','backgroundcolor',bk_color);
+h.rb(10) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
+    'position',[0.038 0.477 0.139 0.032],'string','Mocksville_01','backgroundcolor',bk_color);
 %%
 %Add all checkboxes:
 h.ckbx(1) = uicontrol('style','checkbox','units','normalized',...
@@ -191,23 +193,23 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
 %Set Defaults:
     %Timeseries Annual analysis at key locations:
     
-    set(h.ckbx(1),'Value',0);   %DER hosting capacity   -- OFF
-    set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
-    set(h.ckbx(3),'Value',1);   %timeseries simulation  -- ON
-    set(h.ckbx(4),'Value',1);   %For Annual SIM         -- ON
-    set(h.ckbx(5),'Value',1);   %timeseries sim STEP    -- ON
-    set(h.ppm(7),'Value',4);    %QSTS_select=4          -- ON
+%     set(h.ckbx(1),'Value',0);   %DER hosting capacity   -- OFF
+%     set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
+%     set(h.ckbx(3),'Value',1);   %timeseries simulation  -- ON
+%     set(h.ckbx(4),'Value',1);   %For Annual SIM         -- ON
+%     set(h.ckbx(5),'Value',1);   %timeseries sim STEP    -- ON
+%     set(h.ppm(7),'Value',4);    %QSTS_select=4          -- ON
     %Locational Hosting Capacity:
-    %{
+
     set(h.ckbx(1),'Value',1);   %DER hosting capacity   -- ON
     set(h.ckbx(2),'Value',1);   %PV loadshape           -- ON
     set(h.ckbx(3),'Value',0);   %QSTS - duration        -- OFF
     set(h.ckbx(5),'Value',0);   %QSTS - timestep        -- ON
-    %}
+
     
     set(h.rb(3),'Value',1);     %ckt choice             -- Flay(3) Common(2)
     set(h.ppm(2),'Value',3);    %Simulation choice      -- Steady State(3)
-    
+    set(h.ppm(1),'Value',3);    %
     set(h.ppm(5),'Value',2);    %timeseries DROPDOWN    -- daytime,1 day,2 week,3 1mnth,4
     set(h.ppm(6),'Value',2);    %What month DROPDOWN    -- FEB (29d)
     %set(h.ppm(7),'Value',2);    %QSTS Select            -- (2)==Imp.
@@ -251,8 +253,8 @@ function m=p_run(varargin)
         s_b = 'C:\Users\jlavall\Documents\GitHub\CAPER';
     elseif comp_choice==3
         %Brians Comp
-        s1 = 'C:\Users\Brian\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
-        s_b = 'C:\Users\Brian\Documents\GitHub\CAPER';
+        s1 = 'C:\Users\ATOW\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+        s_b = 'C:\Users\ATOW\Documents\GitHub\CAPER';
     elseif comp_choice==4
         %Shane's Desktop DT7
         s1 = '';
@@ -321,6 +323,12 @@ function m=p_run(varargin)
         end
         if checked{9} == 1
             s2 = '\EPRI_ckt24\Master.dss';
+            ckt_num = 8;
+            COUNT = COUNT + 1;
+            cat_choice = 3;
+        end
+        if checked{10} == 1
+            s2 = '\Mocksville_1_Circuit_Opendss\Master.dss';
             ckt_num = 8;
             COUNT = COUNT + 1;
             cat_choice = 3;

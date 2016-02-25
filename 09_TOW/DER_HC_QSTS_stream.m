@@ -2,7 +2,7 @@
 clear
 clc
 close all
-s_b ='C:\Users\jlavall\Documents\GitHub\CAPER';
+s_b ='C:\Users\ATOW\Documents\GitHub\CAPER';
 %addpath(strcat(s_b,'\01_Sept_Code'));
 
 %Setup the COM server

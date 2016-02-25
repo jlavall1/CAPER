@@ -151,6 +151,31 @@ elseif feeder_NUM == 5
     peak_current = [214.80136594272,223.211693408696,217.825750072964];
     peak_kW=(1545.687+1606.278+1569.691);
     energy_line = 'PDP28__2843462';
+elseif feeder_NUM == 9
+    %E Raleigh 12.47kV
+    
+        %1) Select Load Level:
+    if SHC_LoadLVL == 1
+        %Summer mean
+        pu_load = 0.75;
+        cir_name='_MOCK1_075.mat';
+    elseif SHC_LoadLVL == 2
+        %summer mean-2s
+        pu_load = 0.56;
+        cir_name='_MOCK1_056.mat';
+    elseif SHC_LoadLVL == 3
+        %winter mean
+        pu_load = 0.70;
+        cir_name='_MOCK1_070.mat';
+    elseif SHC_LoadLVL == 4
+        %winter mean-2s
+        pu_load = 0.50;
+        cir_name='_MOCK1_050.mat';
+    end
+    %2) Declare Energy meter settings:
+    peak_current = [214.80136594272,223.211693408696,217.825750072964];
+    peak_kW=(1545.687+1606.278+1569.691);
+    energy_line = '254399393';
 end
     
         

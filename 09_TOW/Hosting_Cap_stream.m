@@ -1,5 +1,5 @@
 tic
-addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code')
+addpath('C:\Users\ATOW\Documents\GitHub\CAPER\01_Sept_Code')
 
 % 1. Setup the COM server
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
@@ -7,7 +7,7 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 %%
 % 2. Load background files & add directories:
 %   prompt = 'Please Enter name of results file (_FLAY_025)';
-%   cir_name = input(prompt);
+%cir_name = input(prompt);
 filename = strcat(base_path,'\01_Sept_Code\Result_Analysis\RESULTS');
 SHC_Feeder_Settings %load selection & energy meter info.
 

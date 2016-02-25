@@ -6,9 +6,9 @@ close all
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 
-feeder_NUM=menu('Which Feeder?','1) Bell','2) Common','3) Flay','4) Rox','5) Holly','6) ERaleigh');
+feeder_NUM=menu('Which Feeder?','1) Bell','2) Common','3) Flay','4) Rox','5) Holly','6) ERaleigh','7) Mocks_01');
 while feeder_NUM<1
-    feeder_NUM=menu('Which Feeder?','1) Bell','2) Common','3) Flay','4) Rox','5) Holly','6) ERaleigh');
+    feeder_NUM=menu('Which Feeder?','1) Bell','2) Common','3) Flay','4) Rox','5) Holly','6) ERaleigh','7) Mocks_01');
 end
 load_LVL=menu('What kind of simulation?','100%','Min. Load Level','Fault Study');
 while load_LVL<1
@@ -105,6 +105,19 @@ elseif feeder_NUM == 6
     
     energy_line = 'PDP28__2843462';
     fprintf('Characteristics for:\t1 - E.RALEIGH\n\n');
+    vbase = 7;
+elseif feeder_NUM == 7
+    fileloc ='C:\Users\ATOW\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Mocksville_1_Circuit_Opendss';
+    peak_kW=(1545.687+1606.278+1569.691);
+    min_kW = 1351.478;
+    if load_LVL == 1
+        ratio = 1.0;
+    elseif load_LVL == 2
+        ratio = min_kW/peak_kW;
+    end
+    
+    energy_line = 'PDP28__2843462';
+    fprintf('Characteristics for:\t1 - Mocks_01\n\n');
     vbase = 7;
 end
 
