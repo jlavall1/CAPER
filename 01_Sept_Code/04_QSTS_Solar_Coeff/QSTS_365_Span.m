@@ -22,7 +22,7 @@ Buses_info = getBusInfo(DSSCircObj);
 %---------------------------------
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 DAY = 1;
-DAY_F = 1;%MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
+DAY_F = MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
 %DAY_F =0;
 MNTH = 2;
 DOY=calc_DOY(MNTH,DAY);
@@ -30,7 +30,7 @@ cap_timer = 0;
 tap_timer = 0;
 BUCK = 0;
 BOOST = 0;
-
+%DOY=64;DOY+1
 for DAY_I=DOY:1:DOY+DAY_F %365
     tic
     %-- Update Irradiance/PV_KW
@@ -40,39 +40,55 @@ for DAY_I=DOY:1:DOY+DAY_F %365
     end
     fprintf('\nQSTS Simulation: DOY= %d\n',DAY_I);
     %%
-    %--  Generate Solar Shapes:
-    filelocation=strcat(s,'\');
-    fileID = fopen([filelocation,'Loadshape_PV.dss'],'wt');
     PV_loadshape_daily = (PV_ON_OFF-1)*M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
-    fprintf(fileID,['New loadshape.LS_Solar npts=%s sinterval=%s mult=(',...
-        sprintf('%f ',PV_loadshape_daily(:,1)),')\n'],num2str(sim_num),num2str(s_step));
-    %if PV_ON_OFF == 2
-        fprintf(fileID,'new generator.PV bus1=%s phases=3 kv=12.47 kW=%s pf=1.00 Daily=LS_Solar enable=true\n',num2str(PV_bus),num2str(PV_pmpp));
-    %end
-    fclose(fileID);
+    
+    if DAY_I == DOY
+        %--  Generate Solar Shapes:
+        filelocation=strcat(s,'\');
+        fileID = fopen([filelocation,'Loadshape_PV.dss'],'wt');
+        fprintf(fileID,['New loadshape.LS_Solar npts=%s sinterval=%s mult=(',...
+            sprintf('%f ',PV_loadshape_daily(:,1)),')\n'],num2str(sim_num),num2str(s_step));
+        %if PV_ON_OFF == 2
+            fprintf(fileID,'new generator.PV bus1=%s phases=3 kv=12.47 kW=%s pf=1.00 Daily=LS_Solar enable=true\n',num2str(PV_bus),num2str(PV_pmpp));
+        %end
+        fclose(fileID);
+        %--  Generate Load Shapes:
+        filelocation=strcat(s,'\');
+        fileID = fopen([filelocation,'Loadshape.dss'],'wt');
+        fprintf(fileID,['New loadshape.LS_PhaseA npts=%s sinterval=%s pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,1)),') qmult=(',...
+            sprintf('%f ',CAP_OPS(DAY_I).DSS(:,1)),')\n\n'],num2str(sim_num),num2str(s_step));
+        fprintf(fileID,['New loadshape.LS_PhaseB npts=%s sinterval=%s pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,2)),') qmult=(',...
+            sprintf('%f ',CAP_OPS(DAY_I).DSS(:,2)),')\n\n'],num2str(sim_num),num2str(s_step));
+        fprintf(fileID,['New loadshape.LS_PhaseC npts=%s sinterval=%s pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,3)),') qmult=(',...
+            sprintf('%f ',CAP_OPS(DAY_I).DSS(:,3)),')\n\n'],num2str(sim_num),num2str(s_step));
+        fclose(fileID);
+        
+    else
+        %-- Edit Loadshapes for next day:
+        DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseA pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,1)),') qmult=(',...
+            sprintf('%f ',CAP_OPS(DAY_I).DSS(:,1)),')']);
+        DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseB pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,2)),') qmult=(',...
+            sprintf('%f ',CAP_OPS(DAY_I).DSS(:,2)),')']);
+        DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseC pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,3)),') qmult=(',...
+            sprintf('%f ',CAP_OPS(DAY_I).DSS(:,3)),')']);
+        DSSText.Command = sprintf(['Edit Loadshape.LS_Solar mult=(',...
+            sprintf('%f ',PV_loadshape_daily(:,1)),')']);
+    end
     %%
-    %--  Generate Load Shapes:
-    filelocation=strcat(s,'\');
-    fileID = fopen([filelocation,'Loadshape.dss'],'wt');
-    fprintf(fileID,['New loadshape.LS_PhaseA npts=%s sinterval=%s pmult=(',...
-        sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,1)),') qmult=(',...
-        sprintf('%f ',CAP_OPS(DAY_I).DSS(:,1)),')\n\n'],num2str(sim_num),num2str(s_step));
-    fprintf(fileID,['New loadshape.LS_PhaseB npts=%s sinterval=%s pmult=(',...
-        sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,2)),') qmult=(',...
-        sprintf('%f ',CAP_OPS(DAY_I).DSS(:,2)),')\n\n'],num2str(sim_num),num2str(s_step));
-    fprintf(fileID,['New loadshape.LS_PhaseC npts=%s sinterval=%s pmult=(',...
-        sprintf('%f ',CAP_OPS_STEP2(DAY_I).kW(:,3)),') qmult=(',...
-        sprintf('%f ',CAP_OPS(DAY_I).DSS(:,3)),')\n\n'],num2str(sim_num),num2str(s_step));
-    fclose(fileID); 
-    %%
-    %--  Re-Compile .DSS files:
     %--  Find {actual} reactive power:
     KVAR_ACTUAL.data=CAP_OPS_STEP1(DAY_I).data(:,1:6);
     %--  Find old Cap_Ops & initial status:
     sw_cap= CAP_OPS_STEP1(DAY_I).data(:,4);
     
-    DSSText.command = ['Compile ',ckt_direct_prime];
+    
     if DAY_I==DOY
+        DSSText.command = ['Compile ',ckt_direct_prime];
         Lines_info = getLineInfo(DSSCircObj);
         [~,index] = sortrows([Lines_info.bus1Distance].');
         Lines_info = Lines_info(index);
@@ -98,6 +114,7 @@ for DAY_I=DOY:1:DOY+DAY_F %365
             if t>=10*3600 && t<16*3600
                 if mod(t,5) == 0
                     Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
+                    YEAR_FDR(i).V=[Voltages'];
                     phaseVoltagesPU = {Buses_info.phaseVoltagesPU}.';
                     TVD_SAVE(i,1:4)=TVD_Calc_5sec(Voltages',phaseVoltagesPU);
                     i = i + 1;
@@ -136,7 +153,7 @@ for DAY_I=DOY:1:DOY+DAY_F %365
     %Find Base Case LTC & Cap ops/day
     %Pre_Summary
     
-    DAY = DAY + 1
+    DAY = DAY + 1;
     toc
 end
 %%
@@ -187,6 +204,13 @@ fn8='\YR_SIM_CAP2_';
 fn8=strcat(filedir,fn8);
 fn8=strcat(fn8,scen_nm);
 save(fn8,'YEAR_CAPCNTRL');
+%%
+%9]
+fn9='\YR_SIM_FDR_V_';
+fn9=strcat(filedir,fn9);
+fn9=strcat(fn9,scen_nm);
+save(fn9,'YEAR_FDR');
+
 
 
 %{

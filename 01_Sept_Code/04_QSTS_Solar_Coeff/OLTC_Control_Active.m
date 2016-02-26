@@ -23,6 +23,7 @@ TAP_MAX=1.1;
 TAP_MIN=0.9;
 TAP_SIZE=(TAP_MAX-TAP_MIN)/32; %0.00625
 %%
+%{
 %-- REG CONTROL LOGIC:
 if tap_timer == LTC_CTRL_DELAY
     %Now change tap pos. accordingly:
@@ -73,6 +74,7 @@ elseif busPhase(t).V_PT < VREG_MIN
         end
     end
 end
+%}
 %%
 %Save info for comparison:
 YEAR_LTCSTATUS(DAY_I).TAP_POS(t,1)=TAP_POS;
