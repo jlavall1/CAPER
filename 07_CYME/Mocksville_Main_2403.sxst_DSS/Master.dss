@@ -2,7 +2,7 @@ Clear
 
 ! Define the Circuit
 New Circuit.MOCKSVILLE_MN_03552403 Bus1=MOCKSVILLE_MN_03552403
-~ BasekV=24.00  pu=1.0300  angle=0.00
+~ BasekV=24.00  pu=0.9958  angle=0.00
 ~ Z1=[ 0.0103 2.5590 ]
 ~ Z2=[ 0.0103 2.5590 ]
 ~ Z0=[ 0.0000 2.2448 ]
@@ -35,4 +35,4 @@ Buscoords BusCoords.dss
 
 ! Define an energy meter
 New EnergyMeter.CircuitMeter LINE.624622044 terminal=1 option=R PhaseVoltageReport=yes
-~ peakcurrent=[ 400.00   400.00   400.00 ]
+~ peakcurrent=[    

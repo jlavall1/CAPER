@@ -1,6 +1,6 @@
 % DSSInitialize initializes an OpenDSS Circuit in snapshot mode
-%clear
-%clc
+clear
+clc
 %close('all')
 
 % Find CAPER directory
@@ -16,7 +16,7 @@ filename = 0;
 % ***(Must be in rootlocation CAPER03_OpenDSS_Circuits\)***
 %filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
 %filename = 'Master.dss'; filelocation = [rootlocation,'Test\'];
-filename = 'Master.dss'; filelocation = [rootlocation,'Mocksville_Main_2401.sxst_DSS\'];
+filename = 'Master.dss'; filelocation = [rootlocation,'Mocksville_Main_2403.sxst_DSS\'];
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
         rootlocation);

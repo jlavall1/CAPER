@@ -41,14 +41,22 @@ fid = fopen('pathdef.m','r');
 rootlocation = textscan(fid,'%c')';
 rootlocation = regexp(rootlocation{1}','C:[^.]*?CAPER\\','match','once');
 fclose(fid);
-rootlocation = [rootlocation,'07_CYME\'];
 
 % Read in filelocation
-filename = 0;
+filelocation = rootlocation; filename = 0;
+% ****To skip UIGETFILE uncomment desired filename****
+% ******(Must be in rootlocation CAPER\07_CYME)*******
+%filename = 'Flay 12-01 - 2-3-15 loads (original).sxst';
+%filename = 'Commonwealth 12-05-  9-14 loads (original).sxst';
+%filename = 'Kud1207 (original).sxst';
+%filename = 'Bellhaven 12-04 - 8-14 loads.xst (original).sxst'
+%filename = 'Commonwealth_ret_01311205.sxst';
+%filename = 'Bellhaven_ret_01291204.sxst';
+filename = '07_CYME\Mocksville_Main_2401.sxst_DSS\Master.dss';
 % ******To skip UIGETFILE uncomment desired filename*******
 % ***(Must be in rootlocation CAPER03_OpenDSS_Circuits\)***
-%filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
-filename = 'Master.dss'; filelocation = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\01_Shane\';
+%filename = 'Master.dss'; filelocation = [rootlocation,'07_CYME\Commonwealth_ret_01311205.sxst_DSS\'];
+%filename = 'Master.dss'; filelocation = [rootlocation,\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\01_Shane\';
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
         rootlocation);
