@@ -44,7 +44,7 @@ filelocation = rootlocation; filename = 0;
 %filename = 'Bellhaven 12-04 - 8-14 loads.xst (original).sxst'
 %filename = 'Commonwealth_ret_01311205.sxst';
 %filename = 'Bellhaven_ret_01291204.sxst';
-filename = 'Mocksville_Main_2403.sxst';
+filename = 'Mocksville_Main_2404.sxst';
 
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select SXST file to Convert',...
