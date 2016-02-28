@@ -73,8 +73,8 @@ h.ppm(4) = uicontrol('style','popup','units','normalized',...
 h.ppm(5) = uicontrol('style','popup','units','normalized',...
     'position',[0.351 0.162 0.235 0.155],'string',{'(1) Day, 10:00 to 16:00','(1) Day, 0:00 - 23:59','(1) Week','(1) Month','(1) Year'},... 
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
-h.ppm(6) = uicontrol('style','popup','units','normalized',...
-    'position',[0.351 0.169 0.235 0.106],'string',{'January','February','March','April','May','June','July','August','September','October','November','December'},... 
+h.ppm(9) = uicontrol('style','popup','units','normalized',...
+    'position',[0.351 0.169 0.235 0.106],'string',{'3600s (1 hour)','60s (1 min)','30s','5s'},... 
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 
 %   Selective Timeseries Analysis:
@@ -85,8 +85,8 @@ h.ppm(8) = uicontrol('style','popup','units','normalized',...
      'position',[0.037 0.006 0.235 0.106],'string',{'10% of furthest 3-ph Impedance','20%','30%','40%','50%','60%','70%','80%','90%','100%'},...
      'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12); 
 %   Extra Option for future use:
-h.ppm(9) = uicontrol('style','popup','units','normalized',...
-    'position',[0.351 -0.001 0.235 0.155],'string',{'3600s (1 hour)','60s (1 min)','30s','5s'},...
+h.ppm(6) = uicontrol('style','popup','units','normalized',...
+    'position',[0.351 -0.001 0.235 0.155],'string',{'DSS Default','Sequential','Time-integrating','Voltage Averagign Mode'},...
     'backgroundcolor',[0.973 0.973 0.973],'Fontsize',12);
 h.ppm(10) = uicontrol('style','popup','units','normalized',...
      'position',[0.351 0.006 0.235 0.106],'string',{'BASE Case','PV Case'},...
@@ -209,7 +209,7 @@ hPlotAxes3=axes('Parent',h.f,'Units','normalized',...
     set(h.ppm(2),'Value',3);    %Simulation choice      -- Steady State(3)
     set(h.ppm(4),'Value',4);    %PV Site Data (PU)      -- MOCKS
     set(h.ppm(5),'Value',2);    %timeseries DROPDOWN    -- daytime,1 day,2 week,3 1mnth,4
-    set(h.ppm(6),'Value',2);    %What month DROPDOWN    -- FEB (29d)
+    set(h.ppm(6),'Value',2);    %What VREG Control      -- Sequential =2
     %set(h.ppm(7),'Value',2);    %QSTS Select            -- (2)==Imp.
     set(h.ppm(9),'Value',2);    %What timestep length   -- (2)==1min & (4)==5sec.
     set(h.ppm(10),'Value',2);   %PV ON/OFF              -- (2)==ON
@@ -372,20 +372,13 @@ function m=p_run(varargin)
     end
     %---- Timeseries analysis choices:
     time_type = get(h.ckbx(3),'Value');
+    time_select = 2;
     if time_type == 1
-        time_select = get(h.ppm(5),'Value');
         sim_type = 0;
-        if time_select == 4
-            %User choosed Monthly run --
-            mnth_select = get(h.ppm(6),'Value'); % 1=JAN  12=DEC
-        else
-            mnth_select = 0;
-        end
-        %time_select choices:
-        %1)  10:00 - 16:00
-        %2)  (1) WEEK
+        VREG_CNRL_select = get(h.ppm(6),'Value'); % 1=JAN  12=DEC
     else
-        mnth_select = 0;
+        %Default if not timeseries
+        VREG_CNRL_select = 1;
     end
     sim1_type = get(h.ckbx(4),'Value');
     if sim1_type == 1
@@ -453,7 +446,7 @@ function m=p_run(varargin)
     STRING_0{1,7} = PV_location;
     STRING_0{1,8} = PV_dir;
     STRING_0{1,9} = time_select;
-    STRING_0{1,10} = mnth_select;
+    STRING_0{1,10} = VREG_CNRL_select;
     STRING_0{1,11} = DARR_cat;
     STRING_0{1,12} = VI;
     STRING_0{1,13} = CI_cat;

@@ -31,7 +31,7 @@ Static_Host     = gui_response{1,6}; %1=YES ; 0=NO
 PV_Site         = gui_response{1,7}; %( 1 - 7) site#s;
 PV_Site_path    = gui_response{1,8}; %directory to PV kW file:
 timeseries_span = gui_response{1,9}; %(1) day ; (1) week ; (1) year ; etc.
-monthly_span    = gui_response{1,10};%(1) Month selected ; 1=JAN 12=DEC.
+VRR_Scheme      = gui_response{1,10};%DSS, Sequential, Time Int, V_avg
 DARR_category   = gui_response{1,11};%(1)Stabe through (5)Unstable.
 VI_USER_span    = gui_response{1,12}; %VI selection
 CI_USER_slt     = gui_response{1,13}; %CI selection

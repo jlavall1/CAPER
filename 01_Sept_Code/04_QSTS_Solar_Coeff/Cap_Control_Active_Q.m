@@ -92,7 +92,7 @@ YEAR_CAPCNTRL(DAY_I).CTL_PF(t,1)=MEAS(t).PF(1,4); %control PF
 YEAR_CAPCNTRL(DAY_I).LD_LG(t,1)=MEAS(t).PF(1,6); %lead/lag
 
 %CAPCNTRL_TROUBLE{1,1:4}={'cap_pos','Q_Cap','PF','Lead/lag'};
-%{
+
 CAPCNTRL_TROUBLE{t+1,1}=cap_pos;
 CAPCNTRL_TROUBLE{t+1,2}=MEAS(t).PF(1,7);
 CAPCNTRL_TROUBLE{t+1,3}=MEAS(t).PF(1,4);
@@ -100,5 +100,5 @@ CAPCNTRL_TROUBLE{t+1,4}=MEAS(t).PF(1,6);
 CAPCNTRL_TROUBLE{t+1,5}=cap_timer;
 CAPCNTRL_TROUBLE{t+1,6}=MEAS(t).Sub_P_PhA+MEAS(t).Sub_P_PhB+MEAS(t).Sub_P_PhC;
 CAPCNTRL_TROUBLE{t+1,7}=MEAS(t).PF(1,5);
-%}
+
 

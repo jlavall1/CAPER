@@ -21,17 +21,42 @@ Buses_info = getBusInfo(DSSCircObj);
 % 4. Main Loop
 %---------------------------------
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
-DAY = 1;
-DAY_F = MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
-%DAY_F =0;
-MNTH = 2;
-DOY=calc_DOY(MNTH,DAY);
+% 5. User Select run length:
+slt_DAY_RUN = 2;
+
+if slt_DAY_RUN == 1
+    %One day run on 2/13
+    DAY = 13;
+    MNTH = 2;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY;
+elseif slt_DAY_RUN == 2
+    %3 mnth run 2/1 - 5/1
+    DAY = 1;
+    MNTH = 2;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
+elseif slt_DAY_RUN == 3
+    %Annual run
+    DAY = 1;
+    MNTH = 1;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F=364;
+elseif slt_DAY_RUN == 4
+    %One week run
+    DAY = 1;
+    MNTH = 6;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY+6;
+end
+%%
 cap_timer = 0;
 tap_timer = 0;
+v_sum = 0;
 BUCK = 0;
 BOOST = 0;
-%DOY=64;DOY+1
-for DAY_I=DOY:1:DOY+DAY_F %365
+
+for DAY_I=DOY:1:DAY_F
     tic
     %-- Update Irradiance/PV_KW
     if DAY > MTH_LN(MNTH)
@@ -95,6 +120,9 @@ for DAY_I=DOY:1:DOY+DAY_F %365
         DSSText.command='Edit Capacitor.38391707_sw states=0';
         cap_pos = 0; %used to be 1
         DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,'1.00625');
+        if VRR_Scheme == 1
+            DSSText.command=sprintf('New RegControl.%s Transformer=%s Winding=2 R=0 X=0 Vreg=124 Band=2 PTratio=%s CTPrim=%s Delay=%s PTPhase=%s',trans_name,trans_name,'60','100','45','3');
+        end
     else
         DSSText.command=sprintf('Edit Capacitor.38391707_sw states=%s',num2str(CAP_DAY));
         DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,TAP_DAY);
@@ -143,16 +171,12 @@ for DAY_I=DOY:1:DOY+DAY_F %365
     toc
     tic
     Export_Monitors_timeseries
-    %Find P,Q residuals=DSCADA-DSS
-    
+    %Save Substation Info:
     YEAR_SUB(DAY_I).V=DATA_SAVE(1).phaseV;
     YEAR_LTC(DAY_I).OP=DATA_SAVE(1).LTC_Ops;
     YEAR_SIM_P(DAY_I).DSS_SUB=DATA_SAVE(1).phaseP;
     YEAR_SIM_Q(DAY_I).DSS_SUB=DATA_SAVE(1).phaseQ;
-    
-    %Find Base Case LTC & Cap ops/day
-    %Pre_Summary
-    
+    %Go onto next day...    
     DAY = DAY + 1;
     toc
 end
@@ -219,4 +243,5 @@ YEAR_CAPSTATUS(DOY).Q_CAP(t,1)=MEAS(t).PF(1,7); %Reactive Power of cap_bank
 YEAR_CAPCNTRL(DOY).CTL_PF(t,1)=MEAS(t).PF(1,4); %control PF
 YEAR_CAPCNTRL(DOY).LD_LG(t,1)=MEAS(t).PF(1,6); %lead/lag
 %}
+
     
