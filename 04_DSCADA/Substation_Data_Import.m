@@ -6,49 +6,55 @@ fig = 0;
 maindir = 'C:\Users\jlavall\Documents\GitHub\CAPER';
 maindir = strcat(maindir,'\04_DSCADA\MOCKS');
 addpath(maindir);
-%{
-n=1;
-[MSVL.MN(n).YR(1).d, MSVL.MN(1).YR(1).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2007');
-[MSVL.MN(n).YR(2).d, MSVL.MN(1).YR(2).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2008');
-[MSVL.MN(n).YR(3).d, MSVL.MN(1).YR(3).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2009');
-[MSVL.MN(n).YR(4).d, MSVL.MN(1).YR(4).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2010');
-[MSVL.MN(n).YR(5).d, MSVL.MN(1).YR(5).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2011');
-[MSVL.MN(n).YR(6).d, MSVL.MN(1).YR(6).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2012');
-[MSVL.MN(n).YR(7).d, MSVL.MN(1).YR(7).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2013');
-[MSVL.MN(n).YR(8).d, MSVL.MN(1).YR(8).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2014');
-n=n+1;
-[MSVL.MN(n).YR(1).d, MSVL.MN(n).YR(1).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2007');
-[MSVL.MN(n).YR(2).d, MSVL.MN(n).YR(2).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2008');
-[MSVL.MN(n).YR(3).d, MSVL.MN(n).YR(3).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2009');
-[MSVL.MN(n).YR(4).d, MSVL.MN(n).YR(4).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2010');
-[MSVL.MN(n).YR(5).d, MSVL.MN(n).YR(5).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2011');
-[MSVL.MN(n).YR(6).d, MSVL.MN(n).YR(6).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2012');
-[MSVL.MN(n).YR(7).d, MSVL.MN(n).YR(7).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2013');
-[MSVL.MN(n).YR(8).d, MSVL.MN(n).YR(8).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2014');
-n=n+1;
-[MSVL.MN(n).YR(1).d, MSVL.MN(n).YR(1).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2007');
-[MSVL.MN(n).YR(2).d, MSVL.MN(n).YR(2).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2008');
-[MSVL.MN(n).YR(3).d, MSVL.MN(n).YR(3).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2009');
-[MSVL.MN(n).YR(4).d, MSVL.MN(n).YR(4).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2010');
-[MSVL.MN(n).YR(5).d, MSVL.MN(n).YR(5).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2011');
-[MSVL.MN(n).YR(6).d, MSVL.MN(n).YR(6).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2012');
-[MSVL.MN(n).YR(7).d, MSVL.MN(n).YR(7).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2013');
-[MSVL.MN(n).YR(8).d, MSVL.MN(n).YR(8).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2014');
-n=n+1;
-[MSVL.MN(n).YR(1).d, MSVL.MN(n).YR(1).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2007');
-[MSVL.MN(n).YR(2).d, MSVL.MN(n).YR(2).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2008');
-[MSVL.MN(n).YR(3).d, MSVL.MN(n).YR(3).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2009');
-[MSVL.MN(n).YR(4).d, MSVL.MN(n).YR(4).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2010');
-[MSVL.MN(n).YR(5).d, MSVL.MN(n).YR(5).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2011');
-[MSVL.MN(n).YR(6).d, MSVL.MN(n).YR(6).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2012');
-[MSVL.MN(n).YR(7).d, MSVL.MN(n).YR(7).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2013');
-[MSVL.MN(n).YR(8).d, MSVL.MN(n).YR(8).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2014');
+process=menu('How to get data?','Load from Excel.','Load from .mat file');
+while process<1
+    process=menu('How to get data?','Load from Excel.','Load from .mat file');
+end
+if process == 1
+    n=1;
+    [MSVL.MN(n).YR(1).d, MSVL.MN(1).YR(1).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2007');
+    [MSVL.MN(n).YR(2).d, MSVL.MN(1).YR(2).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2008');
+    [MSVL.MN(n).YR(3).d, MSVL.MN(1).YR(3).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2009');
+    [MSVL.MN(n).YR(4).d, MSVL.MN(1).YR(4).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2010');
+    [MSVL.MN(n).YR(5).d, MSVL.MN(1).YR(5).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2011');
+    [MSVL.MN(n).YR(6).d, MSVL.MN(1).YR(6).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2012');
+    [MSVL.MN(n).YR(7).d, MSVL.MN(1).YR(7).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2013');
+    [MSVL.MN(n).YR(8).d, MSVL.MN(1).YR(8).TIME, ~] = xlsread('MocksvilleMn_2401.xlsx','2014');
+    n=n+1;
+    [MSVL.MN(n).YR(1).d, MSVL.MN(n).YR(1).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2007');
+    [MSVL.MN(n).YR(2).d, MSVL.MN(n).YR(2).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2008');
+    [MSVL.MN(n).YR(3).d, MSVL.MN(n).YR(3).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2009');
+    [MSVL.MN(n).YR(4).d, MSVL.MN(n).YR(4).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2010');
+    [MSVL.MN(n).YR(5).d, MSVL.MN(n).YR(5).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2011');
+    [MSVL.MN(n).YR(6).d, MSVL.MN(n).YR(6).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2012');
+    [MSVL.MN(n).YR(7).d, MSVL.MN(n).YR(7).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2013');
+    [MSVL.MN(n).YR(8).d, MSVL.MN(n).YR(8).TIME, ~] = xlsread('MocksvilleMn_2402.xlsx','2014');
+    n=n+1;
+    [MSVL.MN(n).YR(1).d, MSVL.MN(n).YR(1).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2007');
+    [MSVL.MN(n).YR(2).d, MSVL.MN(n).YR(2).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2008');
+    [MSVL.MN(n).YR(3).d, MSVL.MN(n).YR(3).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2009');
+    [MSVL.MN(n).YR(4).d, MSVL.MN(n).YR(4).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2010');
+    [MSVL.MN(n).YR(5).d, MSVL.MN(n).YR(5).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2011');
+    [MSVL.MN(n).YR(6).d, MSVL.MN(n).YR(6).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2012');
+    [MSVL.MN(n).YR(7).d, MSVL.MN(n).YR(7).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2013');
+    [MSVL.MN(n).YR(8).d, MSVL.MN(n).YR(8).TIME, ~] = xlsread('MocksvilleMn_2403.xlsx','2014');
+    n=n+1;
+    [MSVL.MN(n).YR(1).d, MSVL.MN(n).YR(1).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2007');
+    [MSVL.MN(n).YR(2).d, MSVL.MN(n).YR(2).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2008');
+    [MSVL.MN(n).YR(3).d, MSVL.MN(n).YR(3).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2009');
+    [MSVL.MN(n).YR(4).d, MSVL.MN(n).YR(4).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2010');
+    [MSVL.MN(n).YR(5).d, MSVL.MN(n).YR(5).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2011');
+    [MSVL.MN(n).YR(6).d, MSVL.MN(n).YR(6).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2012');
+    [MSVL.MN(n).YR(7).d, MSVL.MN(n).YR(7).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2013');
+    [MSVL.MN(n).YR(8).d, MSVL.MN(n).YR(8).TIME, ~] = xlsread('MocksvilleMn_2404.xlsx','2014');
+    %
+    filename = strcat(maindir,'\Mocks_MAIN_SUB');
+    delete(filename);
+    save(filename,'MSVL');
+else
+    load Mocks_MAIN_SUB.mat
+end
 %%
-filename = strcat(maindir,'\Mocks_MAIN_SUB');
-delete(filename);
-save(filename,'MSVL');
-%}
-load Mocks_MAIN_SUB.mat
 %TIME       KW      KVAR    AMPS   PI_time   header
 DOM=[...
 2007  31  28  31  30  31  30  31  31  30  31  30  31
@@ -61,10 +67,10 @@ DOM=[...
 2014  31  28  31  30  31  30  31  31  30  31  30  31
 2015  31  28  31  30  31  30  31  31  30  31  30  31];
 %[MSVL.MN(n).YR(8).d
-d_go=1;
-d_sp=24;
+d_go=1; %starting index
+d_sp=24;%ending index (24th hour)
 
-
+%1] Restruct. historical data:
 for n=1:1:4
     %MSVL.SUB.YR(yr).KW_3PH(d_go:d_sp,1)=0;
     for yr=2:1:8
@@ -76,10 +82,12 @@ for n=1:1:4
                 for ph=1:1:3
                     shift = ph+(ph-1)*1;
                     shift_2= (ph-2)+3+(ph-1)*1;
-                    fprintf('Column in Excel| %0.0f & %0.0f\n',shift,shift_2);
+                    shift_3=6+ph;
+                    %fprintf('Column in Excel| %0.0f & %0.0f\n',shift,shift_2);
                     
                     MSVL.MN(n).YR(yr).KW(d_go:d_sp,ph)=MSVL.MN(n).YR(yr).d(d_go:d_sp,shift);
                     MSVL.MN(n).YR(yr).KQ(d_go:d_sp,ph)=MSVL.MN(n).YR(yr).d(d_go:d_sp,shift_2);
+                    MSVL.MN(n).YR(yr).Amp(d_go:d_sp,ph)=MSVL.MN(n).YR(yr).d(d_go:d_sp,shift_3);
                     
                     MSVL.MN(n).YR(yr).KW_3PH(d_go:d_sp,1)=MSVL.MN(n).YR(yr).KW_3PH(d_go:d_sp,1)+(MSVL.MN(n).YR(yr).d(d_go:d_sp,shift))/1000;
                     MSVL.MN(n).YR(yr).KQ_3PH(d_go:d_sp,1)=MSVL.MN(n).YR(yr).KQ_3PH(d_go:d_sp,1)+(MSVL.MN(n).YR(yr).d(d_go:d_sp,shift_2))/1000;
@@ -164,27 +172,16 @@ xlabel('Day # from 1/1/2008','FontWeight','bold','FontSize',12);
 ylabel('Substation Load ( S_{3{\phi}  }) [MVA]','FontWeight','bold','FontSize',12);
 set(gca,'FontWeight','bold');
 grid on
-
-
-            
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%%
+%Extract & Save only 2014 datasets of each feeder. This will be used for
+%QSTS Simulation. Include all fields.
+for n=1:1:4
+    MOCK_2014.Feeder(n).KW_1PH=[MSVL.MN(n).YR(8).KW];
+    MOCK_2014.Feeder(n).KQ_1PH=[MSVL.MN(n).YR(8).KQ];
+    MOCK_2014.Feeder(n).KW_3PH=[MSVL.MN(n).YR(8).KW_3PH];
+    MOCK_2014.Feeder(n).KQ_3PH=[MSVL.MN(n).YR(8).KQ_3PH];
+    MOCK_2014.Feeder(n).AMP_1PH=[MSVL.MN(n).YR(8).Amp];
+end
 
 
 

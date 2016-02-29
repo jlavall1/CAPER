@@ -1,0 +1,29 @@
+h.ckbx(1) = DER HOSTING CAP
+h.ckbx(2) = PV output
+h.ckbx(3) = timeseries various durations.
+
+h.ppm(2) = DER hosting capacity choices
+h.ppm(3) = HOLD
+h.ppm(4) = PV loadshape location selection
+h.ppm(5) = timeseries time duration
+h.ppm(6) = timeseries location of PV farm
+
+
+ckt_num
+0	Bellhaven
+1	Commonwealth
+2	Flay
+3	Rox
+4	Holly
+5	ERaleigh
+6	ckt5
+7	ckt7
+8	ckt24
+
+%Files that changed:
+Loads_time.dss
+
+Run_Master_Allocate_24hr.dss
+Master_24hr.dss
+Flay_CentralPV_24hr.dss
+

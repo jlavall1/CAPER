@@ -5,6 +5,7 @@ close all
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 fig = 0;
+base_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\04_QSTS_Solar_Coeff\03_FLAY\Three_Month_Runs';
 section=menu('What Section of Chapter 4 would you like to initiate?','Section 1 (Vreg control schemes)','Section 2 (Solar Coeff)','Section 3 (Intro of DER-PV)','Section 4 (Centralized Approach)');
 while section<1
     section=menu('What Section of Chapter 4 would you like to initiate?','Section 1 (Vreg control schemes)','Section 2 (Solar Coeff)','Section 3 (Intro of DER-PV)','Section 4 (Centralized Approach)');
@@ -86,7 +87,8 @@ if section == 1
         %[hAx,hLine1,hLine2]=plotyy(X1,Y1,X1,Y2);
         %set(hLine1,'LineWidth',3);
     elseif plot_type == 3
-        addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\04_QSTS_Solar_Coeff\03_FLAY\Three_Month_Runs\POI_1_Sequential');
+        %addpath(strcat(base_dir,'\POI_1_Sequential'));
+        addpath(strcat(base_dir,'\POI_1_DSS'));
         load YR_SIM_CAP1_FLAY_010.mat    %YEAR_CAPSTATUS
         load YR_SIM_CAP2_FLAY_010.mat    %YEAR_CAPCNTRL
         load YR_SIM_MEAS_FLAY_010.mat    %DATA_SAVE
@@ -95,7 +97,8 @@ if section == 1
         load YR_SIM_Q_FLAY_010.mat       %YEAR_SIM_Q
         load YR_SIM_SUBV_FLAY_010.mat    %YEAR_SUB
         load YR_SIM_TVD_FLAY_010.mat     %Settings
-        %load YR_SIM_FDR_V_             %YEAR_FDR
+        load YR_SIM_FDR_V_FLAY_010.mat   %YEAR_FDR
+        load YR_SIM_LTC_CTLFLAY_010.mat  %What LTC control sees.
         fig= fig + 1;
         figure(fig)
         inc = 86400;

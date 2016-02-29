@@ -1,0 +1,71 @@
+Clear
+
+! Define the Circuit
+New Circuit.MOCKSVILLE_MN_0355 Bus1=MOCKSVILLE_MN_0355_BUS1
+~ BasekV=23.90  pu=1.0300  angle=0.00
+~ Z1=[ 0.0103 2.5590 ]
+~ Z2=[ 0.0103 2.5590 ]
+~ Z0=[ 0.0000 2.2448 ]
+! --------------------------------------------------------------------------------------------
+! Define Substation:
+New Line.M2401 Bus1=MOCKSVILLE_MN_0355_BUS1 Bus2=MOCKSVILLE_MN_03552401 Phases=3 Switch=T
+New Line.M2402 Bus1=MOCKSVILLE_MN_0355_BUS1 Bus2=MOCKSVILLE_MN_03552402 Phases=3 Switch=T
+New Line.M2403 Bus1=MOCKSVILLE_MN_0355_BUS1 Bus2=MOCKSVILLE_MN_03552403 Phases=3 Switch=T
+New Line.M2404 Bus1=MOCKSVILLE_MN_0355_BUS1 Bus2=MOCKSVILLE_MN_03552404 Phases=3 Switch=T
+
+! Declare Voltage Regulators:
+Redirect MAIN_SVRs.dss
+! --------------------------------------------------------------------------------------------
+! Library Data
+Redirect Libraries\WireData.dss
+Redirect Libraries\LineSpacing.dss
+Redirect Libraries\UGLineCodes.dss
+
+! Loadshapes
+Redirect Shapes.dss
+
+
+
+! --------------------------------------------------------------------------------------------
+! Circuit #1 Element Data
+Redirect MOCKS_01\Elements\Lines.dss
+Redirect MOCKS_01\Elements\Loads.dss
+Redirect MOCKS_01\Elements\Capacitors.dss
+
+! Circuit #2 Element Data
+Redirect MOCKS_02\Elements\Lines.dss
+Redirect MOCKS_02\Elements\Loads.dss
+Redirect MOCKS_02\Elements\Capacitors.dss
+
+! Circuit #3 Element Data
+Redirect MOCKS_03\Elements\Lines.dss
+Redirect MOCKS_03\Elements\Loads.dss
+Redirect MOCKS_03\Elements\Capacitors.dss
+
+! Circuit #4 Element Data
+Redirect MOCKS_04\Elements\Lines.dss
+Redirect MOCKS_04\Elements\Loads.dss
+Redirect MOCKS_04\Elements\Capacitors.dss
+! --------------------------------------------------------------------------------------------
+
+! Set the voltage bases
+Set voltagebases = [ 23.90 0.480 0.208 0.240 0.120 ]
+CalcVoltageBases
+
+! Define the bus coordinates
+Buscoords BusCoords.dss
+! --------------------------------------------------------------------------------------------
+! Define Energy meters
+!	MOCKS_01
+New EnergyMeter.CircuitMeter LINE.254399393 terminal=1 option=R PhaseVoltageReport=yes
+~ peakcurrent=[ 478 466.728 440 ]
+!	MOCKS_02
+New EnergyMeter.CircuitMeter LINE.254432411 terminal=1 option=R PhaseVoltageReport=yes
+~ peakcurrent=[ 336.56 384 311 ]
+!	MOCKS_03
+New EnergyMeter.CircuitMeter LINE.624622044 terminal=1 option=R PhaseVoltageReport=yes
+~ peakcurrent=[ 282.8567 310.7864 290]
+!	MOCKS_04
+New EnergyMeter.CircuitMeter LINE.254466666 terminal=1 option=R PhaseVoltageReport=yes
+~ peakcurrent=[ 151 152 157]
+

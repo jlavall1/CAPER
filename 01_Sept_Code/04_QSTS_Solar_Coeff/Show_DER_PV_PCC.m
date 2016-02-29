@@ -3,7 +3,8 @@ clear
 clc
 close all
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis');
-feeder_NUM=2;
+base_dir='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+feeder_NUM=4;
 %Declare Varaibles needed:
 if feeder_NUM == 2
     mainFile ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Master.DSS'; 
@@ -37,6 +38,14 @@ elseif feeder_NUM == 3
     legal_buses{2,1}=num2str(MAX_PV.SU_MIN(POI_loc(2),9));
     legal_buses{3,1}=num2str(MAX_PV.SU_MIN(POI_loc(3),9));
     
+elseif feeder_NUM == 4
+    mainFile =strcat(base_dir,'\Mocksville_2_Circuit_Opendss\Master.dss');
+    peak_current = [478,466.728,440];
+    energy_line = '254432411';
+    %Locations:
+    legal_buses{1,1}='179695371';
+    legal_buses{2,1}='165933146';
+    legal_buses{3,1}='379186018';
 end
 %DSS Open:
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;

@@ -35,7 +35,7 @@ elseif slt_DAY_RUN == 2
     DAY = 1;
     MNTH = 2;
     DOY=calc_DOY(MNTH,DAY);
-    DAY_F = MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
+    DAY_F = DOY+MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
 elseif slt_DAY_RUN == 3
     %Annual run
     DAY = 1;
@@ -48,6 +48,12 @@ elseif slt_DAY_RUN == 4
     MNTH = 6;
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY+6;
+elseif slt_DAY_RUN == 5
+    %Summer run:
+    DAY = 1;
+    MNTH = 6;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY+MTH_LN(6)+MTH_LN(7)+MTH_LN(8)-1;
 end
 %%
 cap_timer = 0;
@@ -121,10 +127,10 @@ for DAY_I=DOY:1:DAY_F
         cap_pos = 0; %used to be 1
         DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,'1.00625');
         if VRR_Scheme == 1
-            DSSText.command=sprintf('New RegControl.%s Transformer=%s Winding=2 R=0 X=0 Vreg=124 Band=2 PTratio=%s CTPrim=%s Delay=%s PTPhase=%s',trans_name,trans_name,'60','100','45','3');
+            DSSText.command=sprintf('New RegControl.%s Transformer=%s Winding=2 R=0 X=0 Vreg=124 Band=1 PTratio=%s CTPrim=%s Delay=%s PTPhase=%s',trans_name,trans_name,'60','100','45','3');
         end
     else
-        DSSText.command=sprintf('Edit Capacitor.38391707_sw states=%s',num2str(CAP_DAY));
+        DSSText.command=sprintf('Edit Capacitor.%s states=%s',swcap_name,num2str(CAP_DAY));
         DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,TAP_DAY);
     end
     %--  Run QSTS 24hr sim:
@@ -182,9 +188,6 @@ for DAY_I=DOY:1:DAY_F
 end
 %%
 %Save necessary datasets:
-%root = 'FLAY_0';
-%root1='03_FLAY';
-%Zsc_loc=[00,10,25,50];
 filedir = strcat(base_path,'\01_Sept_Code\04_QSTS_Solar_Coeff\');
 filedir = strcat(filedir,root1);
 scen_nm = strcat(root,num2str(Zsc_loc(LC)));
@@ -228,12 +231,16 @@ fn8='\YR_SIM_CAP2_';
 fn8=strcat(filedir,fn8);
 fn8=strcat(fn8,scen_nm);
 save(fn8,'YEAR_CAPCNTRL');
-%%
 %9]
 fn9='\YR_SIM_FDR_V_';
 fn9=strcat(filedir,fn9);
 fn9=strcat(fn9,scen_nm);
 save(fn9,'YEAR_FDR');
+%10]
+fn10='\YR_SIM_LTC_CTL';
+fn10=strcat(filedir,fn10);
+fn10=strcat(fn10,scen_nm);
+save(fn10,'YEAR_LTCSTATUS');
 
 
 

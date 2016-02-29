@@ -20,7 +20,7 @@ h.st(2) = uicontrol('style','text','unit','normalized','position',[0.01 0.893 0.
 h.st(3) = uicontrol('style','text','unit','normalized','position',[0.01 0.75 0.068 0.036],...
     'min',0,'max',1,'fontsize',12,'string','DEP:',...
     'backgroundColor',[0.973 0.973 0.973],'FontWeight','bold');
-h.st(4) = uicontrol('style','text','unit','normalized','position',[0.01 0.608 0.068 0.036],...
+h.st(4) = uicontrol('style','text','unit','normalized','position',[0.01 0.613 0.068 0.036],...
     'min',0,'max',1,'fontsize',12,'string','EPRI:',...
     'backgroundColor',[0.973 0.973 0.973],'FontWeight','bold');
 h.st(5) = uicontrol('style','text','unit','normalized','position',[0.641 0.947 0.351 0.036],...
@@ -50,6 +50,9 @@ h.st(12) = uicontrol('style','text','unit','normalized','position',[0.759 0.792 
 h.st(13) = uicontrol('style','text','unit','normalized','position',[0.6 0.324 0.157 0.036],...
     'min',0,'max',1,'fontsize',10,'string','Week Number (out of 53)',...
     'backgroundColor',[0.973 0.973 0.973],'FontWeight','bold'); %0.678 0.324 0.04 0.035
+h.st(14) = uicontrol('style','text','unit','normalized','position',[0.01 0.543 0.068 0.036],...
+    'min',0,'max',1,'fontsize',12,'string','MOCKS:',...
+    'backgroundColor',[0.973 0.973 0.973],'FontWeight','bold');
 %%
 %Add all popupmenu:
 h.ppm(1) = uicontrol('style','popup','units','normalized','position',[0.185 0.746 0.235 0.237],...
@@ -107,11 +110,17 @@ h.rb(5) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
 h.rb(6) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
     'position',[0.038 0.65 0.139 0.032],'string','East Raleigh','backgroundcolor',bk_color);
 h.rb(7) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
-    'position',[0.038 0.573 0.139 0.032],'string','Circuit #5','backgroundcolor',bk_color);
+    'position',[0.038 0.58 0.139 0.032],'string','Circuit #7','backgroundcolor',bk_color);
 h.rb(8) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
-    'position',[0.038 0.543 0.139 0.032],'string','Circuit #7','backgroundcolor',bk_color);
+    'position',[0.038 0.51 0.139 0.032],'string','Mocks 2401','backgroundcolor',bk_color);
 h.rb(9) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
-    'position',[0.038 0.51 0.139 0.032],'string','Circuit #24','backgroundcolor',bk_color);
+    'position',[0.038 0.477 0.139 0.032],'string','Mocks 2402','backgroundcolor',bk_color);
+h.rb(10) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
+    'position',[0.038 0.444 0.139 0.032],'string','Mocks 2403','backgroundcolor',bk_color);
+h.rb(11) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
+    'position',[0.038 0.411 0.139 0.032],'string','Mocks 2404','backgroundcolor',bk_color);
+h.rb(12) = uicontrol('style','radiobutton','units','normalized','fontsize',10,...
+    'position',[0.038 0.378 0.139 0.032],'string','Mocks Main','backgroundcolor',bk_color);
 %%
 %Add all checkboxes:
 h.ckbx(1) = uicontrol('style','checkbox','units','normalized',...
@@ -308,22 +317,22 @@ function m=p_run(varargin)
             cat_choice = 2;
         end
         if checked{7} == 1
-            s2 = '\EPRI_ckt5\Master.dss';
+            s2 = '\EPRI_ckt7\Master.dss';
             ckt_num = 6;
             COUNT = COUNT + 1;
             cat_choice = 3;
         end
         if checked{8} == 1
-            s2 = '\EPRI_ckt7\Master.dss';
+            s2 = '\Mocksville_1_Circuit_Opendss\Master.dss';
             ckt_num = 7;
             COUNT = COUNT + 1;
-            cat_choice = 3;
+            cat_choice = 4;
         end
         if checked{9} == 1
-            s2 = '\EPRI_ckt24\Master.dss';
+            s2 = '\Mocksville_2_Circuit_Opendss\Master.dss';
             ckt_num = 8;
             COUNT = COUNT + 1;
-            cat_choice = 3;
+            cat_choice = 4;
         end
     end
     %%

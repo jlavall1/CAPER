@@ -29,7 +29,7 @@ New RegControl.MOCKS_2403 Transformer=MOCKS_2403 Winding=2 R= 0  X= 0
 ~ PTratio= 115  
 ~ CTPrim= 100 
 ~ Delay = 45
-~ PTphase=3
+~ PTphase=2
 
 ! Circuit Element Data
 Redirect Elements\Lines.dss

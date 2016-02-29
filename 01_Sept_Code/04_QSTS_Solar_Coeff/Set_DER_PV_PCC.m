@@ -10,15 +10,15 @@ elseif feeder_NUM == 1
     load HOSTING_CAP_CMNW.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
     %Now set where PV Farm is located:
     %PV_ON_OFF=2;
-    LC=2;
+    LC=3;
     
     %POI_loc=[63,184,771];   %   10%,25%,50%
     POI_loc=[183,183,120,27]; 
     Zsc_loc=[00,10,25,50];
-    POI_pmpp=[0,4500,4500,4500];
+    POI_pmpp=[0,10000,7100,4500];
     PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9); %258903893
     PV_pmpp=POI_pmpp(LC);
-    fprintf('%0.1f kW PV, %0.0f away from sub\n',PV_pmpp,MAX_PV.SU_MIN(POI_loc(LC),6));
+    fprintf('%0.1f kW PV, %0.3f km away from sub\n',PV_pmpp,MAX_PV.SU_MIN(POI_loc(LC),6));
     if PV_ON_OFF == 1
         LC=1;
     end

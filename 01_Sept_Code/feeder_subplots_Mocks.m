@@ -19,7 +19,7 @@ base_dir='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
 if feeder_NUM == 1
     fileloc =strcat(base_dir,'\Mocksville_1_Circuit_Opendss');
     peak_current = [478,466.728,440];
-    peak_kW = 2940.857+2699.883+3092.130;
+    peak_kW = 6425.715+6293.03+5950.89; %2/28/16
     min_kW = 1937.500;
     if load_LVL == 1
         ratio = 1.0;
@@ -58,8 +58,8 @@ elseif feeder_NUM == 3
     fprintf('Characteristics for:\t1 - Mocks 24_03\n\n');
     vbase = 13;
 elseif feeder_NUM == 4
-    fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss';
-    peak_current = [232.766663065503,242.994085721044,238.029663479192];
+    fileloc =strcat(base_dir,'\Mocksville_4_Circuit_Opendss');
+    peak_current = [151,152,157];
     peak_kW = 3189.476+3319.354+3254.487;
     min_kW = 3157.978;
     if load_LVL == 1
@@ -68,38 +68,19 @@ elseif feeder_NUM == 4
         ratio = min_kW/peak_kW;
     end
     
-    energy_line = 'PH997__2571841';
-    fprintf('Characteristics for:\t1 - ROXBORO\n\n');
+    energy_line = '254466666';
+    fprintf('Characteristics for:\t1 - Mocks 24_04\n\n');
     vbase = 13;
 elseif feeder_NUM == 5
-    fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\HollySprings_Circuit_Opendss';
-    peak_current = [263.73641240095,296.245661392728,201.389207853812];
-    peak_kW=3585.700+4021.705+2741.913;
-    min_kW = 2022.5799;
+    fileloc =strcat(base_dir,'\Mocksville_Main_Circuit_Opendss');
+    
     if load_LVL == 1
         ratio = 1.0;
     elseif load_LVL == 2
-        ratio = min_kW/peak_kW;
+        ratio = 0.5;
     end
-    
-    energy_line = '10EF34__2663676';
-    fprintf('Characteristics for:\t1 - HOLLY SPRINGS\n\n');
+    fprintf('Characteristics for:\t1 - Mocks 24 Main\n\n');
     vbase = 13;
-elseif feeder_NUM == 6
-    %fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\ERaleigh_Circuit_Opendss';
-    fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\ERaleigh_Circuit_1';
-    peak_current = [214.80136594272,223.211693408696,217.825750072964];
-    peak_kW=(1545.687+1606.278+1569.691);
-    min_kW = 1351.478;
-    if load_LVL == 1
-        ratio = 1.0;
-    elseif load_LVL == 2
-        ratio = min_kW/peak_kW;
-    end
-    
-    energy_line = 'PDP28__2843462';
-    fprintf('Characteristics for:\t1 - E.RALEIGH\n\n');
-    vbase = 7;
 end
 
 str = strcat(fileloc,'\Master.DSS');
@@ -107,8 +88,10 @@ str = strcat(fileloc,'\Master.DSS');
 [DSSCircObj, DSSText] = DSSStartup; 
 DSSText.command = ['Compile ' str];
 DSSText.command = 'BatchEdit Load..* kV=13.7987';
-DSSText.command = sprintf('New EnergyMeter.CircuitMeter LINE.%s terminal=1 option=R PhaseVoltageReport=yes',energy_line);
-DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
+if feeder_NUM < 5
+    DSSText.command = sprintf('New EnergyMeter.CircuitMeter LINE.%s terminal=1 option=R PhaseVoltageReport=yes',energy_line);
+    DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
+end
 DSSText.command = 'Disable Capacitor.*';
 DSSText.command = 'AllocateLoad';
 DSSText.command = 'AllocateLoad';
@@ -138,153 +121,155 @@ Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
 ii = 1;
 j = 1;
-while ii<length(Buses)
-    if Buses(ii,1).numPhases == 3 && Buses(ii,1).kVBase > vbase && Buses(ii,1).distance ~= 0
-        legal_buses{j,1} = Buses(ii,1).name;
-        legal_distances{j,1} = Buses(ii,1).distance;
-        j = j + 1;
+if feeder_NUM < 5
+    while ii<length(Buses)
+        if Buses(ii,1).numPhases == 3 && Buses(ii,1).kVBase > vbase && Buses(ii,1).distance ~= 0
+            legal_buses{j,1} = Buses(ii,1).name;
+            legal_distances{j,1} = Buses(ii,1).distance;
+            j = j + 1;
+        end
+        ii =ii + 1;
     end
-    ii =ii + 1;
-end
-%------------------------------------------------------------------------
-%%
-%%
-%-------------------------------------------------------------------------
-%Find Conductor total distance:
-total_length=0;
-min_voltage=1.1;
-max_3ph_distance=0;
-max_distance=-1;
-n=length(Lines_Distance);
-feeder_LD = Lines_Distance(1,1).bus1PowerReal;
-load_center=0;
-P_diff_min=100e6;
+    %------------------------------------------------------------------------
+    %%
+    %%
+    %-------------------------------------------------------------------------
+    %Find Conductor total distance:
+    total_length=0;
+    min_voltage=1.1;
+    max_3ph_distance=0;
+    max_distance=-1;
+    n=length(Lines_Distance);
+    feeder_LD = Lines_Distance(1,1).bus1PowerReal;
+    load_center=0;
+    P_diff_min=100e6;
 
-for i=1:1:n
-    total_length=total_length + Lines_Distance(i,1).length;
-    if Lines_Distance(i,1).numPhases == 3
-        VOLT=max(Lines_Distance(i,1).bus1PhaseVoltagesPU(1,:));
-        if min_voltage > VOLT
-            min_voltage=VOLT;
-            if min_voltage < .8
-                min_voltage=1.1;
+    for i=1:1:n
+        total_length=total_length + Lines_Distance(i,1).length;
+        if Lines_Distance(i,1).numPhases == 3
+            VOLT=max(Lines_Distance(i,1).bus1PhaseVoltagesPU(1,:));
+            if min_voltage > VOLT
+                min_voltage=VOLT;
+                if min_voltage < .8
+                    min_voltage=1.1;
+                end
+            end
+
+            if Lines_Distance(i,1).bus1Distance > max_3ph_distance
+                max_3ph_distance = Lines_Distance(i,1).bus1Distance;
             end
         end
-
-        if Lines_Distance(i,1).bus1Distance > max_3ph_distance
-            max_3ph_distance = Lines_Distance(i,1).bus1Distance;
+        if Lines_Distance(i,1).bus1Distance > max_distance
+            max_distance=Lines_Distance(i,1).bus1Distance;
+            max_dist_bus=i;
+        end
+        P_diff = abs(feeder_LD*0.5-abs(Lines_Distance(i,1).bus1PowerReal));
+        if P_diff < P_diff_min && i ~= 1
+            load_center=i;
+            P_diff_min=P_diff;
         end
     end
-    if Lines_Distance(i,1).bus1Distance > max_distance
-        max_distance=Lines_Distance(i,1).bus1Distance;
-        max_dist_bus=i;
-    end
-    P_diff = abs(feeder_LD*0.5-abs(Lines_Distance(i,1).bus1PowerReal));
-    if P_diff < P_diff_min && i ~= 1
-        load_center=i;
-        P_diff_min=P_diff;
-    end
-end
-%Find load center from distance:
-distance_diff(1,1) = 1000;
-distance_diff(1,2) = 0;
-for i=1:1:n
-    diff_km = abs((max_distance/2)-Lines_Distance(i,1).bus1Distance);
-    if diff_km < distance_diff(1,1)
-        distance_diff(1,1) = diff_km;
-        distance_diff(1,2) = i;
-    end
-end
-
-if load_LVL < 3
-    fprintf('(Solved at %s%%)\n\n',num2str(ratio*100));
-    fprintf('Peak Load (MW): %3.3f\n',Lines_Distance(1,1).bus1PowerReal/1000);
-    fprintf('Total Length: %3.3f mi\n',(total_length*0.621371)/1000);
-    fprintf('Peak Load Headroom: %3.3f P.U.\n',(1.05-min_voltage));
-    fprintf('Overall End Distance: %3.3f km\n',max_distance);
-    fprintf('3-ph End Distance: %3.3f km\n\n',max_3ph_distance);
-elseif load_LVL == 3
-    fprintf('End Feeder  Located @ Bus: %s\n',Lines_Distance(max_dist_bus,1).name);
-    fprintf('Load Center Located @ Bus: %s\n',Lines_Distance(load_center,1).name);
-    fprintf('Overall End Resistance: %3.3f ohms\n',Lines_Distance(max_dist_bus,1).bus1Zsc1(1,1));
-    fprintf('KW Load Center Resistance: %3.3f ohms\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
-    fprintf('Distance Load Center Resistance: %3.3f ohms\n',Lines_Distance(distance_diff(1,2),1).bus1Zsc1(1,1));
-    SC_Imped=struct('Zsc1', {Buses(1:end).Zsc1}, 'Zsc0', {Buses(1:end).Zsc0});
-    %Plot Rsc1 vs km from sub:
-%%
-    figure(1);
-    count = 0;
-    sum = 0;
-    for j=1:1:n
-        sum = sum + Lines_Distance(j,1).bus1Zsc1(1,1);
-        if Lines_Distance(j,1).bus1Zsc1(1,1) > 100 || Lines_Distance(j,1).bus1Zsc1(1,1) < -100
-            count = count + 1;
-            fprintf('Error Located %d\n',j);
-        end
-        plot(Lines_Distance(j,1).bus1Distance,Lines_Distance(j,1).bus1Zsc1(1,1),'bo');
-        hold on
-    end
-    %fprintf('Load Center Resistance: %3.3f ohm\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
-    fprintf('Number of Violations: %d\t SUM: %d\n',count,sum);
-end
-%%
-%Now lets find kVA/phase & proportion of 100kVA:
-KVA_ph = zeros(1,3); 
-count = zeros(1,2); %Residential & Commercial
-for j=1:1:length(Loads)
-    if Loads(j,1).nodes == 1
-        KVA_ph(1,1) = KVA_ph(1,1) + Loads(j,1).xfkVA;
-    elseif Loads(j,1).nodes == 2
-        KVA_ph(1,2) = KVA_ph(1,2) + Loads(j,1).xfkVA;
-    elseif Loads(j,1).nodes == 3
-        KVA_ph(1,3) = KVA_ph(1,3) + Loads(j,1).xfkVA;
-    else
-        fprintf('missing here: %d\n',j);
-    end
-    %Customer Count:
-    if Loads(j,1).xfkVA > 100
-        count(1,2) = count(1,2) + 1;
-    else
-        count(1,1) = count(1,1) + 1;
-    end
-end
-
-total_KVA = KVA_ph(1,1)+KVA_ph(1,2)+KVA_ph(1,3);
-fprintf('Connected kVA:\n A:%3.3f\n B:%3.3f\n C:%3.3f\n',KVA_ph(1,1),KVA_ph(1,2),KVA_ph(1,3));
-fprintf('Connected kVA(PU):\n A:%3.3f\n B:%3.3f\n C:%3.3f\n',(KVA_ph(1,1)/total_KVA)*100,(KVA_ph(1,2)/total_KVA)*100,(KVA_ph(1,3)/total_KVA)*100);
-total_LD = count(1,1) + count(1,2);
-fprintf('R=%3.3f %% and C=%3.3f %%\n',(count(1,1)/total_LD)*100,(count(1,2)/total_LD)*100);
-%%
-for i=1:1:length(Lines_Distance)
-    phase_check(i,1).name = Lines_Distance(i,1).name;
-    phase_check(i,1).bus1 = Lines_Distance(i,1).bus1;
-    phase_check(i,1).bus2 = Lines_Distance(i,1).bus2;
-    phase_check(i,1).bus1phC=Lines_Distance(i,1).bus1PhaseCurrent;
-    phase_check(i,1).bus1Voltage=Lines_Distance(i,1).bus1Voltage;
-end
-figure(2)
-plot([phase_check.bus1Voltage])
-%%
-%-------------------------------------------------------------------------
-%Find Conductor type breakdown:
-AMP_HOLD = zeros(2,6); %row1 = AMP row2 = total distance
-AMP_HOLD(1,:) = [0 200 400 600 800 1000];
-k = 1;
-HIT = 0;
-for i=1:1:length(Lines_Distance)
-    %search for saved amp:
-    for j=2:1:6
-        if Lines_Distance(i,1).lineRating <= AMP_HOLD(1,j) && Lines_Distance(i,1).lineRating > AMP_HOLD(1,j-1) && Lines_Distance(i,1).numPhases == 3
-            %Found hit:
-            AMP_HOLD(2,j-1) = AMP_HOLD(2,j-1) + Lines_Distance(i,1).length;
-            HIT = 1;
+    %Find load center from distance:
+    distance_diff(1,1) = 1000;
+    distance_diff(1,2) = 0;
+    for i=1:1:n
+        diff_km = abs((max_distance/2)-Lines_Distance(i,1).bus1Distance);
+        if diff_km < distance_diff(1,1)
+            distance_diff(1,1) = diff_km;
+            distance_diff(1,2) = i;
         end
     end
+
+    if load_LVL < 3
+        fprintf('(Solved at %s%%)\n\n',num2str(ratio*100));
+        fprintf('Peak Load (MW): %3.3f\n',Lines_Distance(1,1).bus1PowerReal/1000);
+        fprintf('Total Length: %3.3f mi\n',(total_length*0.621371)/1000);
+        fprintf('Peak Load Headroom: %3.3f P.U.\n',(1.05-min_voltage));
+        fprintf('Overall End Distance: %3.3f km\n',max_distance);
+        fprintf('3-ph End Distance: %3.3f km\n\n',max_3ph_distance);
+    elseif load_LVL == 3
+        fprintf('End Feeder  Located @ Bus: %s\n',Lines_Distance(max_dist_bus,1).name);
+        fprintf('Load Center Located @ Bus: %s\n',Lines_Distance(load_center,1).name);
+        fprintf('Overall End Resistance: %3.3f ohms\n',Lines_Distance(max_dist_bus,1).bus1Zsc1(1,1));
+        fprintf('KW Load Center Resistance: %3.3f ohms\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
+        fprintf('Distance Load Center Resistance: %3.3f ohms\n',Lines_Distance(distance_diff(1,2),1).bus1Zsc1(1,1));
+        SC_Imped=struct('Zsc1', {Buses(1:end).Zsc1}, 'Zsc0', {Buses(1:end).Zsc0});
+        %Plot Rsc1 vs km from sub:
+    %%
+        figure(1);
+        count = 0;
+        sum = 0;
+        for j=1:1:n
+            sum = sum + Lines_Distance(j,1).bus1Zsc1(1,1);
+            if Lines_Distance(j,1).bus1Zsc1(1,1) > 100 || Lines_Distance(j,1).bus1Zsc1(1,1) < -100
+                count = count + 1;
+                fprintf('Error Located %d\n',j);
+            end
+            plot(Lines_Distance(j,1).bus1Distance,Lines_Distance(j,1).bus1Zsc1(1,1),'bo');
+            hold on
+        end
+        %fprintf('Load Center Resistance: %3.3f ohm\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
+        fprintf('Number of Violations: %d\t SUM: %d\n',count,sum);
+    end
+    %%
+    %Now lets find kVA/phase & proportion of 100kVA:
+    KVA_ph = zeros(1,3); 
+    count = zeros(1,2); %Residential & Commercial
+    for j=1:1:length(Loads)
+        if Loads(j,1).nodes == 1
+            KVA_ph(1,1) = KVA_ph(1,1) + Loads(j,1).xfkVA;
+        elseif Loads(j,1).nodes == 2
+            KVA_ph(1,2) = KVA_ph(1,2) + Loads(j,1).xfkVA;
+        elseif Loads(j,1).nodes == 3
+            KVA_ph(1,3) = KVA_ph(1,3) + Loads(j,1).xfkVA;
+        else
+            fprintf('missing here: %d\n',j);
+        end
+        %Customer Count:
+        if Loads(j,1).xfkVA > 100
+            count(1,2) = count(1,2) + 1;
+        else
+            count(1,1) = count(1,1) + 1;
+        end
+    end
+
+    total_KVA = KVA_ph(1,1)+KVA_ph(1,2)+KVA_ph(1,3);
+    fprintf('Connected kVA:\n A:%3.3f\n B:%3.3f\n C:%3.3f\n',KVA_ph(1,1),KVA_ph(1,2),KVA_ph(1,3));
+    fprintf('Connected kVA(PU):\n A:%3.3f\n B:%3.3f\n C:%3.3f\n',(KVA_ph(1,1)/total_KVA)*100,(KVA_ph(1,2)/total_KVA)*100,(KVA_ph(1,3)/total_KVA)*100);
+    total_LD = count(1,1) + count(1,2);
+    fprintf('R=%3.3f %% and C=%3.3f %%\n',(count(1,1)/total_LD)*100,(count(1,2)/total_LD)*100);
+    %%
+    for i=1:1:length(Lines_Distance)
+        phase_check(i,1).name = Lines_Distance(i,1).name;
+        phase_check(i,1).bus1 = Lines_Distance(i,1).bus1;
+        phase_check(i,1).bus2 = Lines_Distance(i,1).bus2;
+        phase_check(i,1).bus1phC=Lines_Distance(i,1).bus1PhaseCurrent;
+        phase_check(i,1).bus1Voltage=Lines_Distance(i,1).bus1Voltage;
+    end
+    figure(2)
+    plot([phase_check.bus1Voltage])
+    %%
+    %-------------------------------------------------------------------------
+    %Find Conductor type breakdown:
+    AMP_HOLD = zeros(2,6); %row1 = AMP row2 = total distance
+    AMP_HOLD(1,:) = [0 200 400 600 800 1000];
+    k = 1;
+    HIT = 0;
+    for i=1:1:length(Lines_Distance)
+        %search for saved amp:
+        for j=2:1:6
+            if Lines_Distance(i,1).lineRating <= AMP_HOLD(1,j) && Lines_Distance(i,1).lineRating > AMP_HOLD(1,j-1) && Lines_Distance(i,1).numPhases == 3
+                %Found hit:
+                AMP_HOLD(2,j-1) = AMP_HOLD(2,j-1) + Lines_Distance(i,1).length;
+                HIT = 1;
+            end
+        end
+    end
+    AMP_HOLD(2,:)=0.000621371.*AMP_HOLD(2,:); %convert meters to mi
+    fprintf('Distribution of Conductor Ampere Ratings\n');
+    fprintf('0\t\t200\t\t400\t\t600\t\t800\t\t1000\n');
+    fprintf('\t%0.2f\t%0.2f\t %0.2f\t%0.2f\t%0.2f\t%0.2f\n',AMP_HOLD(2,1),AMP_HOLD(2,2),AMP_HOLD(2,3),AMP_HOLD(2,4),AMP_HOLD(2,5),AMP_HOLD(2,6));
 end
-AMP_HOLD(2,:)=0.000621371.*AMP_HOLD(2,:); %convert meters to mi
-fprintf('Distribution of Conductor Ampere Ratings\n');
-fprintf('0\t\t200\t\t400\t\t600\t\t800\t\t1000\n');
-fprintf('\t%0.2f\t%0.2f\t %0.2f\t%0.2f\t%0.2f\t%0.2f\n',AMP_HOLD(2,1),AMP_HOLD(2,2),AMP_HOLD(2,3),AMP_HOLD(2,4),AMP_HOLD(2,5),AMP_HOLD(2,6));
 %%
 gcf=plotCircuitLines(DSSCircObj,'Coloring','voltage120','MappingBackground','none');        
     

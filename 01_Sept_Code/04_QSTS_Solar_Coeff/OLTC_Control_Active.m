@@ -13,7 +13,7 @@ DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
 TAP_POS = str2double(DSSText.Result);
 %	 Settings:
 LTC_CTRL_DELAY=45;
-LTC_BAND=2;
+LTC_BAND=1;
 LTC_VREG=124;
 VREG_MAX=LTC_VREG+LTC_BAND/2;
 VREG_MIN=LTC_VREG-LTC_BAND/2;

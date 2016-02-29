@@ -18,7 +18,7 @@ Redirect Shapes.dss
 ! Declare Feeder SVR:
 New Transformer.MOCKS_2402 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[MOCKSVILLE_MN_03552402.1.2.3 MOCKSVILLE_MN_03552402_REG.1.2.3] 
 ~ kvas=[40000.0 40000.0]
-~ kVs=[22.870000   22.870000]
+~ kVs=[23.90   23.90]
 ~ mintap=0.9
 ~ maxtap=1.1
 ~ sub=yes
