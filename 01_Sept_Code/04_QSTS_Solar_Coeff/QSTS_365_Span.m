@@ -72,7 +72,57 @@ for DAY_I=DOY:1:DAY_F
     fprintf('\nQSTS Simulation: DOY= %d\n',DAY_I);
     %%
     PV_loadshape_daily = (PV_ON_OFF-1)*M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
+    sim_num=1440*12;
+    s_step=5; %sec
+    PV_loadshape_daily_1 = interp(PV_loadshape_daily,12);
+    CAP_OPS_STEP2_1(DAY_I).kW(:,1) = interp(CAP_OPS_STEP2(DAY_I).kW(:,1),12); %60s -> 30s
+    CAP_OPS_STEP2_1(DAY_I).kW(:,2) = interp(CAP_OPS_STEP2(DAY_I).kW(:,2),12); %60s -> 30s
+    CAP_OPS_STEP2_1(DAY_I).kW(:,3) = interp(CAP_OPS_STEP2(DAY_I).kW(:,3),12); %60s -> 30s
+    CAP_OPS_1(DAY_I).DSS(:,1) = interp(CAP_OPS(DAY_I).DSS(:,1),12);
+    CAP_OPS_1(DAY_I).DSS(:,2) = interp(CAP_OPS(DAY_I).DSS(:,2),12);
+    CAP_OPS_1(DAY_I).DSS(:,3) = interp(CAP_OPS(DAY_I).DSS(:,3),12);
     
+    if DAY_I == DOY
+        %--  Generate Solar Shapes:
+        filelocation=strcat(s,'\');
+        fileID = fopen([filelocation,'Loadshape_PV.dss'],'wt');
+        fprintf(fileID,['New loadshape.LS_Solar npts=%s sinterval=%s mult=(',...
+            sprintf('%f ',PV_loadshape_daily_1(:,1)),')\n'],num2str(sim_num),num2str(s_step));
+        %if PV_ON_OFF == 2
+            fprintf(fileID,'new generator.PV bus1=%s phases=3 kv=12.47 kW=%s pf=1.00 Daily=LS_Solar enable=true\n',num2str(PV_bus),num2str(PV_pmpp));
+        %end
+        fclose(fileID);
+        %--  Generate Load Shapes:
+        filelocation=strcat(s,'\');
+        fileID = fopen([filelocation,'Loadshape.dss'],'wt');
+        fprintf(fileID,['New loadshape.LS_PhaseA npts=%s sinterval=%s pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,1)),') qmult=(',...
+            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,1)),')\n\n'],num2str(sim_num),num2str(s_step));
+        fprintf(fileID,['New loadshape.LS_PhaseB npts=%s sinterval=%s pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,2)),') qmult=(',...
+            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,2)),')\n\n'],num2str(sim_num),num2str(s_step));
+        fprintf(fileID,['New loadshape.LS_PhaseC npts=%s sinterval=%s pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,3)),') qmult=(',...
+            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,3)),')\n\n'],num2str(sim_num),num2str(s_step));
+        fclose(fileID);
+        
+    else
+        %-- Edit Loadshapes for next day:
+        DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseA pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,1)),') qmult=(',...
+            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,1)),')']);
+        DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseB pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,2)),') qmult=(',...
+            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,2)),')']);
+        DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseC pmult=(',...
+            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,3)),') qmult=(',...
+            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,3)),')']);
+        DSSText.Command = sprintf(['Edit Loadshape.LS_Solar mult=(',...
+            sprintf('%f ',PV_loadshape_daily_1(:,1)),')']);
+    end
+    
+    
+    %{
     if DAY_I == DOY
         %--  Generate Solar Shapes:
         filelocation=strcat(s,'\');
@@ -111,6 +161,7 @@ for DAY_I=DOY:1:DAY_F
         DSSText.Command = sprintf(['Edit Loadshape.LS_Solar mult=(',...
             sprintf('%f ',PV_loadshape_daily(:,1)),')']);
     end
+    %}
     %%
     %--  Find {actual} reactive power:
     KVAR_ACTUAL.data=CAP_OPS_STEP1(DAY_I).data(:,1:6);
@@ -138,7 +189,7 @@ for DAY_I=DOY:1:DAY_F
         %(1) DAY, 24hr, 1 second timestep for MATLAB controls.
         %
         % Configure Simulation:
-        DSSText.command='set mode=daily stepsize=1 number=1';
+        DSSText.command='set mode=daily stepsize=1 number=1 controlMode=TIME';
         DSSCircuit.Solution.dblHour = 0.0;
         i = 1; %counter for TVD sample & voltage violation check
         for t = 1:1:1440*60
