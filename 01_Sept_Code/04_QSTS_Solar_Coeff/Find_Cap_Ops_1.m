@@ -51,6 +51,7 @@ for i=1:1:sim_num
     KVAR_ACTUAL.data(i,10) = KVAR_diff; %3ph dQ
     KVAR_ACTUAL.data(i,11) = KVAR_mag;  % |dQ_3ph|
     KVAR_ACTUAL.dP(i,4) = abs(KW_diff); %3ph dP
+    KVAR_ACTUAL.data(i,12) = KW_diff; %comment out.
     
     if KVAR_ACTUAL.dP(i,4) < 250 %&& KVAR_ACTUAL.PF(i,4) < 0.98 %To filter out any events:
         

@@ -14,9 +14,9 @@ feeder_NUM=menu('Which Feeder?','(BELL) Feeder 01','(CMNWH) Feeder 02','(FLAY) F
 while feeder_NUM<1
     feeder_NUM=menu('Which Feeder?','(BELL) Feeder 01','(CMNWH) Feeder 02','(FLAY) Feeder 03','(ROX) Feeder 04');
 end
-plot_op=menu('Plot what?','none','base figures','Results of all derived Q');
+plot_op=menu('Plot what?','none','base figures','Results of all derived Q','Chapter 4');
 while plot_op<1
-    plot_op=menu('Plot what?','none','base figures','Results of all derived Q');
+    plot_op=menu('Plot what?','none','base figures','Results of all derived Q','Chapter 4');
 end
 
 if feeder_NUM == 1
@@ -90,7 +90,7 @@ for DOY=1:1:DAY_FIN
     if feeder_NUM == 2
         [KVAR_ACTUAL,E,OPS]=Find_Cap_Ops_2(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,LOAD_ACTUAL,LOAD_ACTUAL_1,cap_pos,DOY);
     elseif feeder_NUM == 3
-        [KVAR_ACTUAL,E,OPS]=Find_Cap_Ops_1(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,LOAD_ACTUAL,LOAD_ACTUAL_1,cap_pos,DOY);
+        [KVAR_ACTUAL,E,OPS]=Find_Cap_Ops_1(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,LOAD_ACTUAL,LOAD_ACTUAL_1,cap_pos);
     end
     %3]Update capacitor position for next day:
     cap_pos = KVAR_ACTUAL.data(1440,4);
@@ -122,7 +122,8 @@ CAP_OPS(1).datanames=KVAR_ACTUAL.datanames;
 
 
 %%
-if plot_op == 2 || plot_op == 3
+fig = 0;
+if plot_op == 2
     figure(1)
     s = 1;
     for i=1:1:364
@@ -176,7 +177,7 @@ elseif plot_op == 3
         fig = 4;
         %close all
 
-        for i=1:10:341
+        for i=1:1:10:341
             if CAP_OPS(i).oper ~= 0
                 fig = fig + 1;
                 figure(fig)
@@ -201,6 +202,51 @@ elseif plot_op == 3
             end
         end
     end
+elseif plot_op == 4
+    %This will be in Chapter 4
+    T_DAY = 152;
+    fig = fig + 1;
+    figure(fig)
+    plot(CAP_OPS_STEP1(T_DAY).data(:,10),'r-','LineWidth',3)
+    hold on
+    plot(CAP_OPS_STEP1(T_DAY).data(:,12),'b-','LineWidth',1.5)
+    hold on
+    X=1:1:1440;
+    Y=202.5000*ones(1,1440);
+    plot(X,Y,'k--','LineWidth',2);
+    hold on
+    plot(X,-1*Y,'k--','LineWidth',2);
+    %Settings:
+    legend('{\Delta}Q_{3{\phi}}','{\Delta}P_{3{\phi}}','Upper Q Bound','Lower Q Bound','Location','NorthWest');
+    xlabel('Minute of Day','FontSize',12,'FontWeight','bold');
+    ylabel('Derivative of Powers (P,Q) [kW & kVAR]','FontSize',12,'FontWeight','bold')
+    axis([0 1440 -400 400])
+    set(gca,'FontWeight','bold');
+    
+    fig = fig + 1;
+    figure(fig)
+    plot(CAP_OPS_STEP1(T_DAY).data(:,1),'r-','LineWidth',3)
+    hold on
+    plot(CAP_OPS_STEP1(T_DAY).data(:,2),'g-','LineWidth',3)
+    hold on
+    plot(CAP_OPS_STEP1(T_DAY).data(:,3),'b-','LineWidth',3)
+    hold on
+    plot(CAP_OPS(T_DAY).DSS(:,1),'r--','LineWidth',1.5)
+    hold on
+    plot(CAP_OPS(T_DAY).DSS(:,2),'g--','LineWidth',1.5)
+    hold on
+    plot(CAP_OPS(T_DAY).DSS(:,3),'b--','LineWidth',1.5)
+    hold on
+    plot(CAP_OPS_STEP1(T_DAY).data(:,4)*-1*Caps.Swtch,'k-','LineWidth',3);
+    %Settings
+    legend('DSCADA Qa','DSCADA Qb','DSCADA Qc','Derived Qa','Derived Qb','Derived Qc','Capacitor Q');
+    xlabel('Minute of Day','FontSize',12,'FontWeight','bold');
+    ylabel('Reactive Power (Q) [kVAR]','FontSize',12,'FontWeight','bold')
+    axis([0 1440 -200 800]);
+    set(gca,'FontWeight','bold');
+    
+
+    %1-min derivative of Q
 end
 %SAVE following structs as follows:
 %{

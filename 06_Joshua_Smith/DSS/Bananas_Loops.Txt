@@ -1,0 +1,13 @@
+Loops and Paralleled Lines in all EnergyMeter Zones
+
+(circuitmeter) Transformer.VR2C: LOOPED TO     Transformer.vr2b
+(circuitmeter) Transformer.VR3C: LOOPED TO     Transformer.vr3b
+(circuitmeter) Transformer.VR4B: LOOPED TO     Transformer.vr4a
+(circuitmeter) Transformer.VR4A: LOOPED TO     Line.dd1
+(circuitmeter) Transformer.VR3B: LOOPED TO     Line.z1
+(circuitmeter) Transformer.VR3A: LOOPED TO     Line.z1
+(circuitmeter) Transformer.VR2B: LOOPED TO     Line.w1
+(circuitmeter) Transformer.VR2A: LOOPED TO     Line.w1
+(circuitmeter) Transformer.VR1C: LOOPED TO     Transformer.vr1b
+(circuitmeter) Transformer.VR1B: LOOPED TO     Line.l1
+(circuitmeter) Transformer.VR1A: LOOPED TO     Line.l1

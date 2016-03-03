@@ -1,0 +1,17 @@
+Loops and Paralleled Lines in all EnergyMeter Zones
+
+(circuitmeter) Transformer.152J55__103161240C: LOOPED TO     Transformer.152j55__103161240b
+(circuitmeter) Transformer.152J55__103161240B: LOOPED TO     Transformer.152j55__103161240c
+(circuitmeter) Transformer.152J55__103161240A: LOOPED TO     Transformer.152j55__103161240c
+(circuitmeter) Transformer.17FK87__104175233C: LOOPED TO     Transformer.17fk87__104175233b
+(circuitmeter) Line.E0X71__104175287C: PARALLEL WITH Line.e0x71__104175287b
+(circuitmeter) Line.E0X71__104175287C: LOOPED TO     Line.e0x71__104175287b
+(circuitmeter) Transformer.152B04__104329420B: LOOPED TO     Line.152b04__104329420a
+(circuitmeter) Line.18GJ19_18GJ21_105595293: LOOPED TO     Line.18gj17_18gj19_105595292
+(circuitmeter) Line.18GJ17_18GJ19_105595292: LOOPED TO     Line.18gj19_18gj21_105595293
+(circuitmeter) Line.152B04__104329420A: LOOPED TO     Transformer.152b04__104329420b
+(circuitmeter) Line.E0X71__104175287B: PARALLEL WITH Line.e0x71__104175287c
+(circuitmeter) Line.E0X71__104175287B: LOOPED TO     Line.e0x71__104175287c
+(circuitmeter) Transformer.E0X71__104175287A: LOOPED TO     Line.e0x71__104175287c
+(circuitmeter) Transformer.17FK87__104175233B: LOOPED TO     Transformer.17fk87__104175233c
+(circuitmeter) Transformer.17FK87__104175233A: LOOPED TO     Transformer.17fk87__104175233c

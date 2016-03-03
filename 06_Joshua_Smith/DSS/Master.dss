@@ -19,7 +19,7 @@ New Transformer.T5240B12 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[00_1
 
 New RegControl.T5240B12 Transformer=T5240B12 Winding=2 R= 0  X= 0 
 ~ Vreg= 123.987758181313  
-~ Band= 2 
+~ Band= 1 
 ~ PTratio= 110  
 ~ CTPrim= 100 
 ~ Delay = 45
@@ -39,7 +39,7 @@ Redirect Loads.dss
 ! 
 ! Set the voltage bases
 ! 
-Set voltagebases = [ 22.87 0.480, 0.208, 0.24, 0.12]
+Set voltagebases = [ 22.87, 0.480, 0.208, 0.24, 0.12]
 CalcVoltageBases
 ! 
 ! Define the bus coordinates
