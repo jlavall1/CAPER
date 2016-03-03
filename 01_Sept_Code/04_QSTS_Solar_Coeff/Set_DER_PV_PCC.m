@@ -28,10 +28,10 @@ elseif feeder_NUM == 2
     load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
     %Now set where PV Farm is located:
     %PV_ON_OFF=2;
-    LC=2;
+    LC=3;
     %POI Selection -- 
     POI_loc=[0,142,163,45];
-    POI_pmpp=[0,3700,400,400];
+    POI_pmpp=[0,3700,1000,400];
     Zsc_loc=[00,10,25,50];
     PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9);
     PV_pmpp=POI_pmpp(LC);

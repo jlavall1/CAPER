@@ -258,10 +258,29 @@ fn3=strcat(filedir,fn3);
 fn3=strcat(fn3,scen_nm);
 save(fn3,'YEAR_SIM_P');
 %4]
-fn4='\YR_SIM_Q_';
-fn4=strcat(filedir,fn4);
-fn4=strcat(fn4,scen_nm);
-save(fn4,'YEAR_SIM_Q');
+if slt_DAY_RUN == 2
+    for DOY=1:1:120
+        if DOY <= 60
+            YEAR_SIM_Q_1(DOY).DSS_SUB=YEAR_SIM_Q(DOY).DSS_SUB;
+        else
+            YEAR_SIM_Q_2(DOY).DSS_SUB=YEAR_SIM_Q(DOY).DSS_SUB;
+        end
+    end
+    fn4='\YR_SIM_Q_1_';
+    fn4=strcat(filedir,fn4);
+    fn4=strcat(fn4,scen_nm);
+    save(fn4,'YEAR_SIM_Q_1');
+    fn44='\YR_SIM_Q_2_';
+    fn44=strcat(filedir,fn4);
+    fn44=strcat(fn44,scen_nm);
+    save(fn44,'YEAR_SIM_Q_2');
+else
+    fn4='\YR_SIM_Q_';
+    fn4=strcat(filedir,fn4);
+    fn4=strcat(fn4,scen_nm);
+    save(fn4,'YEAR_SIM_Q');
+end
+
 %5]
 fn5='\YR_SIM_TVD_';
 fn5=strcat(filedir,fn5);

@@ -1,13 +1,23 @@
 %fix file sizes
 clear
 clc
-load YR_SIM_CAPOP_FLAY_00.mat
+addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\04_QSTS_Solar_Coeff\03_FLAY\Three_Month_Runs\POI_1_Avg');
+%load YR_SIM_CAPOP_FLAY_00.mat
 %load YR_SIM_PQ_FLAY_00.mat
-load YR_SIM_LTC_FLAY_00.mat
+%load YR_SIM_LTC_FLAY_00.mat
 %YEAR_SIM_V=YEAR_SIM_LTC.DSS_LTC_V;
 %hold=YEAR_SIM_LTC.DSS_LTC_OP;
 %clear YEAR_SIM_LTC
 %YEAR_SIM_LTC_OP=hold;
+load YR_SIM_Q_FLAY_010.mat
+
+for DOY=1:1:120
+    if DOY <= 60
+        YEAR_SIM_Q_1(DOY).DSS_SUB=YEAR_SIM_Q(DOY).DSS_SUB;
+    else
+        YEAR_SIM_Q_2(DOY).DSS_SUB=YEAR_SIM_Q(DOY).DSS_SUB;
+    end
+end
 %%
 %{
 YEAR_P(1).headers={'A','B','C'};
