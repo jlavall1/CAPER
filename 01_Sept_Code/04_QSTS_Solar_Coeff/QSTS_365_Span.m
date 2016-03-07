@@ -271,7 +271,7 @@ if slt_DAY_RUN == 2
     fn4=strcat(fn4,scen_nm);
     save(fn4,'YEAR_SIM_Q_1');
     fn44='\YR_SIM_Q_2_';
-    fn44=strcat(filedir,fn4);
+    fn44=strcat(filedir,fn44);
     fn44=strcat(fn44,scen_nm);
     save(fn44,'YEAR_SIM_Q_2');
 else

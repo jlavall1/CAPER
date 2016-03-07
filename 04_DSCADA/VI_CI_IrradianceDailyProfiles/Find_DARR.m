@@ -53,11 +53,15 @@ i = 1;
 %End Results:
 %Solar_Constants = zeros(365,5); %DoY | Month | DoM | VI | CI
 Solar_Constants(:,6) = zeros(365,1); %Clear DARR
+DAEP = zeros(365,5);
 Top = 0;
 Bot = 0;
 MEAS = 0;
 CALC = 0;
 SUM_DARR = 0;
+SUM_KW = 0;
+time_m = 0;
+
 while MNTH < 13
     while DAY < MTH_LN(1,MNTH)+1
         while hr < 24
@@ -78,6 +82,10 @@ while MNTH < 13
                     CALC = CALC + B_nck;
                     %Find DARR:
                     SUM_DARR = SUM_DARR + abs(GHI_k - GHI_k1)/1000;
+                    %Find DAEP:
+                    PV_KW = M_PVSITE(MNTH).kW(time2int(DAY,hr,min),1);
+                    SUM_KW = SUM_KW + PV_KW;
+                    time_m = time_m + 1;
                 end
                 %Find Ramp Rate:
                 PV_KW = M_PVSITE(MNTH).DAY(time2int(DAY,hr,min),1);
@@ -103,8 +111,13 @@ while MNTH < 13
         %DARR:
         DARR = SUM_DARR;
         Solar_Constants(day_num,6) = DARR;
+        DAEP(day_num,1) = SUM_DARR; %kW
+        DAEP(day_num,2) = time_m;   %min
+        DAEP(day_num,3) = SUM_DARR/(time_m/60); %kWh
             SUM_DARR = 0;
+            time_m = 0;
             DARR = 0;
+            SUM_KW = 0;
         
             
         DAY = DAY + 1;

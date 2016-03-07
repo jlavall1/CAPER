@@ -55,70 +55,96 @@ elseif feeder_NUM == 3
     % -- Flay 13.27km long --
     root = 'Flay';
     root1= 'Flay';
+elseif feeder_NUM == 4
+    cap_pos = 1;
+    load ROX.mat
+    FEEDER = ROX;
+    clearvars ROX
+    kW_peak = [3.189154306704542e+03,3.319270338767296e+03,3.254908188719974e+03];
+    Caps.Fixed(1)=1200/3;
+    Caps.Fixed(2)=1200/3;
+    Caps.Fixed(3)=1200/3;
+    eff_KW(1,1) = 1;
+    eff_KW(1,2) = 1;
+    eff_KW(1,3) = 1;
+    V_LTC = 124*60;
+    polar =1;
+    root = 'ROX';
+    root1 = 'ROX';
 end
+    
+    
 DAY_FIN=364;
+if feeder_NUM < 4
+    for DOY=1:1:DAY_FIN
+        fprintf('\n%d DOY\n',DOY);
 
-for DOY=1:1:DAY_FIN
-    fprintf('\n%d DOY\n',DOY);
-    
-    %1] Declare duration & timestep:
-    if strcmp(time_int,'1h') == 1
-        t_int=0;
-        s_step=3600;
-        sim_num='24';
-        fprintf('Sim. timestep=1hr\n');
-    elseif strcmp(time_int,'1m') == 1
-        t_int=1;
-        s_step=60;
-        sim_num='1440';
-        %fprintf('Sim. timestep=60s\n');
-    elseif strcmp(time_int,'30s') == 1
-        t_int=2;
-        s_step=30;
-        sim_num='2880';
-        fprintf('Sim. timestep=30s\n');
-    elseif strcmp(time_int,'5s') == 1
-        t_int=12;
-        s_step=5;
-        sim_num='17280';
-        fprintf('Sim. timestep=5s\n');
-    end
-    [LOAD_ACTUAL,KVAR_ACTUAL]=Pull_DSCADA(DOY,FEEDER,t_int,sim_num,polar);
-    [LOAD_ACTUAL_1,KVAR_ACTUAL_1]=Pull_DSCADA(DOY+1,FEEDER,t_int,sim_num,polar);
-    %fprintf('%0.3f\n',KVAR_ACTUAL.data(1,1)/1000);
-    %2]Find CAP ops:
-    if feeder_NUM == 2
-        [KVAR_ACTUAL,E,OPS]=Find_Cap_Ops_2(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,LOAD_ACTUAL,LOAD_ACTUAL_1,cap_pos,DOY);
-    elseif feeder_NUM == 3
-        [KVAR_ACTUAL,E,OPS]=Find_Cap_Ops_1(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,LOAD_ACTUAL,LOAD_ACTUAL_1,cap_pos);
-    end
-    %3]Update capacitor position for next day:
-    cap_pos = KVAR_ACTUAL.data(1440,4);
-    
-    %4]Save all results from Find_Cap_Ops in struct:
-    CAP_OPS_STEP1(DOY).data = KVAR_ACTUAL.data; %CAP_Mult
-    CAP_OPS_STEP1(1).datanames = KVAR_ACTUAL.datanames;
-    CAP_OPS_STEP2(DOY).dP = KVAR_ACTUAL.dP;     %P_Mult
-    CAP_OPS_STEP2(DOY).kW = LOAD_ACTUAL;
-    CAP_OPS(DOY).error = E;                     %Q_Mult
-    CAP_OPS(DOY).oper = OPS;
-    CAP_OPS(DOY).PF = KVAR_ACTUAL.PF;
-    CAP_OPS(DOY).DSS= KVAR_ACTUAL.DSS;
-    
-    %5]Capture the PF when operation occurs:
-    PF=zeros(1,3);
-    hold_PF = 1;
-    for m=1:1:str2num(sim_num)-1
-        if CAP_OPS(DOY).oper ~= 0
-            if CAP_OPS_STEP1(DOY).data(m,4) ~= CAP_OPS_STEP1(DOY).data(m+1,4)
-                PF(1,hold_PF)=CAP_OPS_STEP1(DOY).data(m,6);
-                hold_PF = hold_PF + 1;
+        %1] Declare duration & timestep:
+        if strcmp(time_int,'1h') == 1
+            t_int=0;
+            s_step=3600;
+            sim_num='24';
+            fprintf('Sim. timestep=1hr\n');
+        elseif strcmp(time_int,'1m') == 1
+            t_int=1;
+            s_step=60;
+            sim_num='1440';
+            %fprintf('Sim. timestep=60s\n');
+        elseif strcmp(time_int,'30s') == 1
+            t_int=2;
+            s_step=30;
+            sim_num='2880';
+            fprintf('Sim. timestep=30s\n');
+        elseif strcmp(time_int,'5s') == 1
+            t_int=12;
+            s_step=5;
+            sim_num='17280';
+            fprintf('Sim. timestep=5s\n');
+        end
+        [LOAD_ACTUAL,KVAR_ACTUAL]=Pull_DSCADA(DOY,FEEDER,t_int,sim_num,polar);
+        [LOAD_ACTUAL_1,KVAR_ACTUAL_1]=Pull_DSCADA(DOY+1,FEEDER,t_int,sim_num,polar);
+        %fprintf('%0.3f\n',KVAR_ACTUAL.data(1,1)/1000);
+        %2]Find CAP ops:
+        if feeder_NUM == 2
+            [KVAR_ACTUAL,E,OPS]=Find_Cap_Ops_2(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,LOAD_ACTUAL,LOAD_ACTUAL_1,cap_pos,DOY);
+        elseif feeder_NUM == 3
+            [KVAR_ACTUAL,E,OPS]=Find_Cap_Ops_1(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,LOAD_ACTUAL,LOAD_ACTUAL_1,cap_pos);
+        elseif feeder_NUM == 4
+            [KVAR_ACTUAL,E,OPS]=Find_Cap_Ops_3(KVAR_ACTUAL,KVAR_ACTUAL_1,sim_num,s_step,Caps,LOAD_ACTUAL,LOAD_ACTUAL_1,cap_pos,DOY);
+        end
+        %3]Update capacitor position for next day:
+        cap_pos = KVAR_ACTUAL.data(1440,4);
+
+        %4]Save all results from Find_Cap_Ops in struct:
+        CAP_OPS_STEP1(DOY).data = KVAR_ACTUAL.data; %CAP_Mult
+        CAP_OPS_STEP1(1).datanames = KVAR_ACTUAL.datanames;
+        CAP_OPS_STEP2(DOY).dP = KVAR_ACTUAL.dP;     %P_Mult
+        CAP_OPS_STEP2(DOY).kW = LOAD_ACTUAL;
+        CAP_OPS(DOY).error = E;                     %Q_Mult
+        CAP_OPS(DOY).oper = OPS;
+        CAP_OPS(DOY).PF = KVAR_ACTUAL.PF;
+        CAP_OPS(DOY).DSS= KVAR_ACTUAL.DSS;
+
+        %5]Capture the PF when operation occurs:
+        PF=zeros(1,3);
+        hold_PF = 1;
+        for m=1:1:str2num(sim_num)-1
+            if CAP_OPS(DOY).oper ~= 0
+                if CAP_OPS_STEP1(DOY).data(m,4) ~= CAP_OPS_STEP1(DOY).data(m+1,4)
+                    PF(1,hold_PF)=CAP_OPS_STEP1(DOY).data(m,6);
+                    hold_PF = hold_PF + 1;
+                end
             end
         end
+        CAP_OPS(DOY).PF_op=PF;
     end
-    CAP_OPS(DOY).PF_op=PF;
+    CAP_OPS(1).datanames=KVAR_ACTUAL.datanames;
+else
+    DEP_Historical_CAP
+    %now lets adjust DSCADA based on CAP_OPS
+    
+        
 end
-CAP_OPS(1).datanames=KVAR_ACTUAL.datanames;
 
 
 %%

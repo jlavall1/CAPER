@@ -14,7 +14,7 @@ a_1 = (5.09 * 10 ^ (-5)) * ALT + 0.868;
 a_2 = (3.92 * 10 ^ (-5)) * ALT + 0.0387;
 f_h1 = exp(-1 * ALT / 8000);    %could be -1 as well.
 f_h2 = exp(-1 * ALT / 1250);
-b = 0.664 + 0.163/f_h1;
+b = 0.664 + 0.163/exp(-1*ALT / 8000); 
 
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 %-----------
@@ -27,7 +27,7 @@ min = 0;
 hr = 0;
 i = 1;
 n = 1;
-while MNTH < 2%13
+while MNTH < 13
     while DAY < MTH_LN(1,MNTH)+1
         while hr < 24
             while min < 60
@@ -42,12 +42,13 @@ while MNTH < 2%13
                 %-------------Method used
                 %extraterrestrial irradiance on a plane perp. to Sun's:
                 %n = M_PVSITE(MNTH).DAY(time2int(DAY,hr,min),6);   
-                I_o(i,n) = I_sc *(1 + 0.034 * cos(deg2rad(2*pi * (n / 265.25))));
-                
+                %I_o(i,n) = I_sc *(1 + 0.034 * cos(deg2rad(2*pi * (n / 265.25))));
+                I_o(i,n) = I_sc*(1+0.033*cos((2*pi)*(n/365)));
                 %Beam clear sky (normal irradiance)
             %Old Method:
                 %optical Air Mass:
-                AM(i,n) = 1/cos(deg2rad(h));
+                AM(i,n) = 1/sin(deg2rad(h));
+                
                 if h > 0
                     B_ncI(i,n) = b * I_o(i,n) * exp(-0.09*AM(i,n)*(T_L-1));
                 else
@@ -76,12 +77,12 @@ while MNTH < 2%13
         end
         hr = 0;
         min = 0;
-        DAY = DAY + 1
+        DAY = DAY + 1;
         n = n + 1;
         i = 1;
     end
     DAY = 1;
-    MNTH = MNTH + 1;
+    MNTH = MNTH + 1
 end
 %{
 for n=1:1:365
@@ -93,7 +94,23 @@ end
 %}
 %%
 figure(1)
-plot(G_hcI(:,1))
+plot(G_hcI(:,1),'b-','LineWidth',2)
 hold on
-plot(B_ncI(:,1))
-legend('Global Horiz. CSI','Direct Beam Irradiance');
+plot(B_ncI(:,1),'b--','LineWidth',2)
+hold on
+plot(G_hcI(:,181),'r-','LineWidth',2)
+hold on
+plot(B_ncI(:,181),'r--','LineWidth',2)
+%Settings:
+xlabel('Minute of Day','FontSize',12,'FontWeight','bold');
+ylabel('Solar Irradiance (I) [W/m^2]','FontSize',12,'FontWeight','bold');
+legend('(1/1) CSI','(1/1) B_{ncI}','(6/1) CSI','(6/1) B_{ncI}','Location','NorthWest');
+set(gca,'xtick',[0:120:1440]);
+axis([0 1440 0 1200]);
+set(gca,'FontWeight','bold');
+grid on
+
+figure(2)
+%plot(I_o_1(1,:),'b-')
+%hold on
+plot(I_o(1,:),'r-')
