@@ -79,7 +79,7 @@ elseif feeder_NUM == 4
     fprintf('Characteristics for:\t1 - ROXBORO\n\n');
     vbase = 13;
 elseif feeder_NUM == 5
-    fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\HollySprings_Circuit_Opendss';
+    fileloc ='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss';
     peak_current = [263.73641240095,296.245661392728,201.389207853812];
     peak_kW=3585.700+4021.705+2741.913;
     min_kW = 2022.5799;
@@ -89,7 +89,7 @@ elseif feeder_NUM == 5
         ratio = min_kW/peak_kW;
     end
     
-    energy_line = '10EF34__2663676';
+    energy_line = 'PH997__2571841';
     fprintf('Characteristics for:\t1 - HOLLY SPRINGS\n\n');
     vbase = 13;
 elseif feeder_NUM == 6
