@@ -19,6 +19,12 @@ elseif feeder_NUM == 2
     %For export .txt file --
     filename = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\TIME_RESULTS';
     monitorfile_base= 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Results';
+elseif feeder_NUM == 3
+    %Roxboro --
+    temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss';
+    addpath(temp_dir)
+    filename = strcat(temp_dir,'\TIME_RESULTS');
+    monitorfile_base= 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss\Results';
 elseif feeder_NUM == 8
     %EPRI CKT7 --
     temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\EPRI_ckt24';

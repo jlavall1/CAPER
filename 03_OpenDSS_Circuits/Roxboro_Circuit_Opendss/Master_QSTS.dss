@@ -29,7 +29,7 @@ Redirect Loadshape_PV.dss	!NEW
 ! 
 Redirect UGLines.dss
 Redirect LinesByPhase.dss
-Redirect Loads.dss 		!NEW
+Redirect Loads_QSTS.dss 	!NEW
 Redirect Regulators.dss
 Redirect Capacitors.dss
 ! 
@@ -60,8 +60,8 @@ Buscoords Buscoords.CSV
 !
 ! Define an energy meter -- needed for plot profile and yearly simulations
 !
-New EnergyMeter.CircuitMeter LINE.259363665 terminal=1 option=R PhaseVoltageReport=yes
-EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ] 
+New EnergyMeter.CircuitMeter LINE.PH997__2571841 terminal=1 option=R PhaseVoltageReport=yes
+EnergyMeter.CircuitMeter.peakcurrent=[232.766663065503 242.994085721044 238.029663479192]
 ! 
 ! Disable Capacitors for load allocation
 Disable Capacitor.*
@@ -73,4 +73,3 @@ AllocateLoad
 ! 
 ! Enable capacitors before solving
 Enable Capacitor.*
-

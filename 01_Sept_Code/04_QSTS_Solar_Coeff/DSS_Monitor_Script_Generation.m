@@ -4,7 +4,7 @@ clear
 clc
 close all
 %Lets create the needed monitors:
-feeder_NUM = 1;
+feeder_NUM = 3;
 
 if feeder_NUM == 1
     %Commonwealth --
@@ -24,6 +24,12 @@ elseif feeder_NUM == 2
     
     addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis');
      load config_LOADSBASE_FLAY.mat %Loads_Base
+elseif feeder_NUM == 3
+    %--------    ROX   ---------
+    temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss';
+    addpath(temp_dir)
+    load config_DISTANCE_ROX.mat %Lines_Distance:
+    filename='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss\Monitors_GEN.txt';
 elseif feeder_NUM == 8
     temp_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\EPRI_ckt24';
     addpath(temp_dir)

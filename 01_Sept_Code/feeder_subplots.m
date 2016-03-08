@@ -129,6 +129,7 @@ DSSText.command = 'AllocateLoad';
 DSSText.command = 'Enable Capacitor.*';
  
 if load_LVL < 3
+    DSSText.command = 'BatchEdit Load..* PF=0.95';
     DSSText.command = sprintf('solve loadmult=%s',num2str(ratio));
 elseif load_LVL == 3
     DSSText.command = 'Solve mode=faultstudy';
@@ -140,6 +141,27 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 Buses=getBusInfo(DSSCircObj);
 Lines=getLineInfo(DSSCircObj);
 Loads=getLoadInfo(DSSCircObj);
+LoadNames = DSSCircuit.Loads.AllNames;
+for i = 1:length(LoadNames)
+    % Separate out ID from Phase Designation
+    Loads_save(i).ID = LoadNames{i};
+    Phase = regexp(LoadNames{i},'(?<=[_]).*?$','match');
+    switch Phase{1}
+        case '1'
+            Loads_save(i).Phase = 'A';
+        case '2'
+            Loads_save(i).Phase = 'B';
+        case '3'
+            Loads_save(i).Phase = 'C';
+    end
+    DSSCircuit.SetActiveElement(['Load.',LoadNames{i}]);
+    Powers = DSSCircuit.ActiveCktElement.Powers;
+    Loads_save(i).kW = Powers(1);
+    Loads_save(i).kVAR = Powers(2);
+end
+LoadTotals = LoadsByPhase(DSSCircObj);
+
+%%
 [~,index] = sortrows([Lines.bus1Distance].'); 
 Lines_Distance = Lines(index); 
 %For Post_Process & Post_Process_2

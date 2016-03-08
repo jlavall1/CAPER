@@ -54,6 +54,10 @@ elseif feeder_NUM == 1
     eff_KW(1,2) = 1;
     eff_KW(1,3) = 1;
     V_LTC = 124*60;
+    PT_RATIO = '60';
+    CT_RATIO = '100';
+    PT_PHASE = '3';
+    V_LL = '12.47';
     polar = -1;
     
     % -- Commonwealth --
@@ -67,10 +71,7 @@ elseif feeder_NUM == 1
     %Unique Component Names:
     trans_name='COMMONWEALTH_RET_01311205';
     swcap_name='258903785';
-    %%
-    %Things needed for Export_Monitors_Timeseries:
-    addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis');
-    %load config_LOADSBASE_CMNW.mat %Loads_Base
+    %Export_Monitors_Timeseries:
     load config_LINESBASE_CMNWLTH.mat %Lines_Base
     [~,index] = sortrows([Lines_Base.bus1Distance].'); 
     Lines_Distance = Lines_Base(index); 
@@ -88,6 +89,10 @@ elseif feeder_NUM == 2
     eff_KW(1,3) = 0.9894;
     V_LTC_PU = 1.03;
     V_LTC = V_LTC_PU*((12.47e3)/sqrt(3));
+    PT_RATIO = '60';
+    CT_RATIO = '100';
+    PT_PHASE = '3';
+    V_LL = '12.47';
     % -- Flay 13.27km long --
     dss_rt = 'Flay';
     root = 'FLAY_0';
@@ -105,18 +110,45 @@ elseif feeder_NUM == 3
     FEEDER = ROX;
     clearvars ROX
     kW_peak = [3.189154306704542e+03,3.319270338767296e+03,3.254908188719974e+03];
+    %Unique Things:
+    eff_KW(1,1) = 1;
+    eff_KW(1,2) = 1;
+    eff_KW(1,3) = 1;
+    V_LTC = 124*60;
+    polar = -1;
+    PT_RATIO = '110';
+    CT_RATIO = '100';
+    PT_PHASE = '2';
+    V_LL = '22.87';
+    %String Names:
+    dss_rt = 'Rox';
+    root = 'ROX_0';
+    root1= '04_ROX';
+    %Background Datasets:
+    load CAP_Mult_60s_ROX.mat   %CAP_OPS_STEP1
+    load P_Mult_60s_ROX.mat     %CAP_OPS_STEP2
+    load Q_Mult_60s_ROX.mat     %CAP_OPS.DSS & .oper
+    %Component Names:
+    Caps.Name{1}='E1183_2582120';
+    Caps.Name{2}='E2M13_104080657';
+    Caps.Name{3}='EXF80_2573355';
+    Caps.Swtch(1)=1200/3; 
+    Caps.Swtch(2)=1200/3; 
+    Caps.Swtch(3)=1200/3;
+    trans_name='T5240B12';
+    sub_line='PH997__2571841';
+    %Export_Monitors_Timeseries:
+    load config_LINESBASE_ROX.mat   %Lines_Base
+    
+    [~,index] = sortrows([Lines_Base.bus1Distance].'); 
+    Lines_Distance = Lines_Base(index); 
+    load Loads_Total.mat %LoadTotals
 elseif feeder_NUM == 4
     load HOLLY.mat
 elseif feeder_NUM == 5
     load ERalh.mat
 elseif feeder_NUM == 8
-    load FLAY.mat
-    FEEDER = FLAY;
-    clearvars FLAY
-    kW_peak = [1.424871573296857e+03,1.347528364235151e+03,1.716422704604557e+03];
-    %EPRI Circuit 24
-    root = 'ckt24';
-    root1 = 'ckt24';
+
 end
 %Connect DER-PV to desired position:
 Set_DER_PV_PCC
@@ -127,6 +159,8 @@ if feeder_NUM == 1
     CUTOFF=11;
 elseif feeder_NUM == 2
     CUTOFF=10;
+elseif feeder_NUM == 3
+    CUTOFF=11;
 else
     CUTOFF=23;
 end

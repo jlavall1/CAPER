@@ -41,6 +41,21 @@ elseif feeder_NUM == 2
     end
     
 elseif feeder_NUM == 3
+    %ROX
+    load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
+    %This needs to change ?!?
+    LC=2;
+    %POI Selection -- 
+    %POI_loc=[0,142,163,45];
+    POI_pmpp=[0,2000,0,0];
+    Zsc_loc=[00,10,0,0];
+    PV_bus=1599464;
+    PV_pmpp=POI_pmpp(LC);
+    %fprintf('%0.1f kW PV, %0.0f away from sub\n',PV_pmpp,MAX_PV.SU_MIN(POI_loc(LC),6));
+    if PV_ON_OFF == 1
+        LC=1;
+    end
+    
 elseif feeder_NUM == 4
 elseif feeder_NUM == 5
     %E.Raleigh

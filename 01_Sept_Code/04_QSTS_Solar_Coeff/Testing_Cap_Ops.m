@@ -141,7 +141,6 @@ if feeder_NUM < 4
     CAP_OPS(1).datanames=KVAR_ACTUAL.datanames;
 else
     DEP_Historical_CAP
-    %now lets adjust DSCADA based on CAP_OPS
     
         
 end
