@@ -12,7 +12,7 @@ j = 1;
 % use to check for distrubution types
 dis = 'DIST';
 
-% 2037 because thats how many rows there are
+% length is how many rows there are
 for i = 1:length(substation_types)
     % if strcmp returns true then set values for dis, lat, and lon and
     % increment j
