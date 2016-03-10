@@ -53,6 +53,10 @@ elseif feeder_NUM == 1
     eff_KW(1,1) = 1;
     eff_KW(1,2) = 1;
     eff_KW(1,3) = 1;
+    eff_KVAR(1,1) = 1;
+    eff_KVAR(1,2) = 1;
+    eff_KVAR(1,3) = 1;
+    
     V_LTC = 124*60;
     PT_RATIO = '60';
     CT_RATIO = '100';
@@ -87,6 +91,9 @@ elseif feeder_NUM == 2
     eff_KW(1,1) = 0.9862;
     eff_KW(1,2) = 0.993;
     eff_KW(1,3) = 0.9894;
+    eff_KVAR(1,1) = 1;
+    eff_KVAR(1,2) = 1;
+    eff_KVAR(1,3) = 1;
     V_LTC_PU = 1.03;
     V_LTC = V_LTC_PU*((12.47e3)/sqrt(3));
     PT_RATIO = '60';
@@ -104,6 +111,7 @@ elseif feeder_NUM == 2
     load Q_Mult_60s_Flay.mat    %CAP_OPS
     %Component Names:
     trans_name='FLAY_RET_16271201';
+    sub_line='259363665';
     swcap_name='38391707_sw';
 elseif feeder_NUM == 3
     load ROX.mat
@@ -111,9 +119,9 @@ elseif feeder_NUM == 3
     clearvars ROX
     kW_peak = [3.189154306704542e+03,3.319270338767296e+03,3.254908188719974e+03];
     %Unique Things:
-    eff_KW(1,1) = 1;
-    eff_KW(1,2) = 1;
-    eff_KW(1,3) = 1;
+    eff_KVAR(1,1) = 3.18;
+    eff_KVAR(1,2) = 4.00;
+    eff_KVAR(1,3) = 3.58;
     V_LTC = 124*60;
     polar = -1;
     PT_RATIO = '110';

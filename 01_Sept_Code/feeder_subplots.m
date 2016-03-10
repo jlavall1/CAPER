@@ -142,6 +142,10 @@ Buses=getBusInfo(DSSCircObj);
 Lines=getLineInfo(DSSCircObj);
 Loads=getLoadInfo(DSSCircObj);
 LoadNames = DSSCircuit.Loads.AllNames;
+Transformers=getTransformerInfo(DSSCircObj);
+Capacitors=getCapacitorInfo(DSSCircObj);
+gcf=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none','Capacitors',Capacitors,'Transformers',Transformers);
+
 for i = 1:length(LoadNames)
     % Separate out ID from Phase Designation
     Loads_save(i).ID = LoadNames{i};
@@ -339,6 +343,7 @@ fprintf('\t%0.2f\t%0.2f\t %0.2f\t%0.2f\t%0.2f\t%0.2f\n',AMP_HOLD(2,1),AMP_HOLD(2
 %%
 %   This section was made to give an initial assessment of what feeder
 %   looks like V,I, P,Q vs. distance
+
 %{
 figure(1);
 subplot(2,2,1);

@@ -231,19 +231,35 @@ figure(1)
 i=1;
 for DOY=1:1:DAY_FIN
     %X(1,i:i+95) = [(i*15-15):15:(i)*1425];
-    Y(i:i+95,1) = CAP_OPS(DOY).oper(:,1);
-    Y(i:i+95,2) = CAP_OPS(DOY).oper(:,2)+1;
-    Y(i:i+95,3) = CAP_OPS(DOY).oper(:,3)+2;
+    Y(i:i+95,1) = CAP_OPS(DOY).oper(:,3);
+    Y(i:i+95,2) = CAP_OPS(DOY).oper(:,1)+1;
+    Y(i:i+95,3) = CAP_OPS(DOY).oper(:,2)+2;
     i = i + 96;
     %plot(X,CAP_OPS(DOY).oper(:,1),'b-');
     %hold on
 end
 X=[0:(15):DAY_FIN*24*60-15];
-plot(X/1440,Y)
+plot(X/1440,Y(:,1),'r-','Linewidth',1.25)
+hold on
+plot(X/1440,Y(:,2),'b-','Linewidth',1.25)
+hold on
+plot(X/1440,Y(:,3),'g-','Linewidth',1.25)
+hold on
+
+legend('SC1','SC2','SC3','Location','NorthWest');
+xlabel('Day of Year (DOY)','FontSize',12,'FontWeight','bold');
+ylabel('State of Distribution Capacitor Banks','FontSize',12,'FontWeight','bold');
+set(gca,'FontWeight','bold');
 axis([0 DAY_FIN -0.5 3.5]);
 %-------------------------
 figure(3)
-plot(KVAR_ACTUAL.DSS)
+X=[1/96:1/96:364];
+plot(X,KVAR_ACTUAL.DSS)
+xlabel('Day of Year (DOY)','FontSize',12,'FontWeight','bold');
+ylabel('Single Phase Reactive Power (Q) [kVAR]','FontSize',12,'FontWeight','bold');
+legend('Phase A','Phase B','Phase C');
+set(gca,'FontWeight','bold');
+axis([0 364 -200 1400]);
 %-------------------------
 figure(4)
 X=1:1:1440;

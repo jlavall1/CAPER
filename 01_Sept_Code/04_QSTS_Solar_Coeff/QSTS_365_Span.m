@@ -11,18 +11,19 @@ DSSText.command = ['Compile ',ckt_direct_prime]; %Master_General.dss
 %location = cd;
 %cd(location);
 
-%Cap_info = getCapacitorInfo(DSSCircObj);
-%Lines_info = getLineInfo(DSSCircObj);
-%[~,index] = sortrows([Lines_info.bus1Distance].');
-%Lines_info = Lines_info(index);
-
+if feeder_NUM < 3
+    Cap_info = getCapacitorInfo(DSSCircObj);
+    Lines_info = getLineInfo(DSSCircObj);
+    [~,index] = sortrows([Lines_info.bus1Distance].');
+    Lines_info = Lines_info(index);
+end
 %Loads_info = getLoadInfo(DSSCircObj);
 %%
 % 4. Main Loop
 %---------------------------------
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % 5. User Select run length:
-slt_DAY_RUN = 6;
+slt_DAY_RUN = 1;
 
 if slt_DAY_RUN == 1
     %One day run on 2/13
@@ -61,6 +62,28 @@ elseif slt_DAY_RUN == 6
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY+6; %1 week run.
 end
+
+int_select=3;
+if int_select == 1
+    %5sec load sim step:
+    int_1m=12;
+    s_step=5; %sec
+    ss=1;
+    NUM_INC=60;
+elseif int_select == 2
+    %60sec load sim step:
+    int_1m=1;
+    s_step=60; %sec
+    ss=1;
+    NUM_INC=1;
+elseif int_select == 3
+    %5sec load sim step:
+    int_1m=12;
+    s_step=5; %sec
+    ss=5;
+    NUM_INC=60/5;
+end
+
 %%
 cap_timer = 0;
 tap_timer = 0;
@@ -77,27 +100,26 @@ for DAY_I=DOY:1:DAY_F
     end
     fprintf('\nQSTS Simulation: DOY= %d\n',DAY_I);
     %%
+    %Obtain Historical Datasets:
     PV_loadshape_daily = (PV_ON_OFF-1)*M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
-    sim_num=1440*12;
-    s_step=5; %sec
-    PV_loadshape_daily_1 = interp(PV_loadshape_daily,12);
-    CAP_OPS_STEP2_1(DAY_I).kW(:,1) = interp(CAP_OPS_STEP2(DAY_I).kW(:,1),12); %60s -> 30s
-    CAP_OPS_STEP2_1(DAY_I).kW(:,2) = interp(CAP_OPS_STEP2(DAY_I).kW(:,2),12); %60s -> 30s
-    CAP_OPS_STEP2_1(DAY_I).kW(:,3) = interp(CAP_OPS_STEP2(DAY_I).kW(:,3),12); %60s -> 30s
-    %CAP_OPS_STEP2_1(DAY_I).kW(:,1) = CAP_OPS_STEP2_2(DAY_I).kW(:,1)-CAP_OPS_STEP2_2(DAY_I).kW(:,1)*0.044;
-    %CAP_OPS_STEP2_1(DAY_I).kW(:,2) = CAP_OPS_STEP2_2(DAY_I).kW(:,2)+CAP_OPS_STEP2_2(DAY_I).kW(:,2)*0.042;
-    %CAP_OPS_STEP2_1(DAY_I).kW(:,3) = CAP_OPS_STEP2_2(DAY_I).kW(:,3)+CAP_OPS_STEP2_2(DAY_I).kW(:,3)*0.032;
+    sim_num_PV=1440*12;
+    sim_num=1440*int_1m;
     
-    CAP_OPS_1(DAY_I).DSS(:,1) = 3.28*interp(CAP_OPS(DAY_I).DSS(:,1),12);
-    CAP_OPS_1(DAY_I).DSS(:,2) = 4.05*interp(CAP_OPS(DAY_I).DSS(:,2),12);
-    CAP_OPS_1(DAY_I).DSS(:,3) = 3.68*interp(CAP_OPS(DAY_I).DSS(:,3),12);
+    PV_loadshape_daily_1 = interp(PV_loadshape_daily,12);
+    CAP_OPS_STEP2_1(DAY_I).kW(:,1) = interp(CAP_OPS_STEP2(DAY_I).kW(:,1),int_1m); %60s -> 5s
+    CAP_OPS_STEP2_1(DAY_I).kW(:,2) = interp(CAP_OPS_STEP2(DAY_I).kW(:,2),int_1m); %60s -> 5s
+    CAP_OPS_STEP2_1(DAY_I).kW(:,3) = interp(CAP_OPS_STEP2(DAY_I).kW(:,3),int_1m); %60s -> 5s
+    CAP_OPS_1(DAY_I).DSS(:,1) = eff_KVAR(1,1)*interp(CAP_OPS(DAY_I).DSS(:,1),int_1m);
+    CAP_OPS_1(DAY_I).DSS(:,2) = eff_KVAR(1,2)*interp(CAP_OPS(DAY_I).DSS(:,2),int_1m);
+    CAP_OPS_1(DAY_I).DSS(:,3) = eff_KVAR(1,3)*interp(CAP_OPS(DAY_I).DSS(:,3),int_1m);
+    
     if feeder_NUM < 4
         if DAY_I == DOY
             %--  Generate Solar Shapes:
             filelocation=strcat(s,'\');
             fileID = fopen([filelocation,'Loadshape_PV.dss'],'wt');
             fprintf(fileID,['New loadshape.LS_Solar npts=%s sinterval=%s mult=(',...
-                sprintf('%f ',PV_loadshape_daily_1(:,1)),')\n'],num2str(sim_num),num2str(s_step));
+                sprintf('%f ',PV_loadshape_daily_1(:,1)),')\n'],num2str(sim_num_PV),num2str(s_step));
             %if PV_ON_OFF == 2
                 fprintf(fileID,'new generator.PV bus1=%s phases=3 kv=%s kW=%s pf=1.00 Daily=LS_Solar enable=true\n',num2str(PV_bus),V_LL,num2str(PV_pmpp));
             %end
@@ -131,12 +153,13 @@ for DAY_I=DOY:1:DAY_F
                 sprintf('%f ',PV_loadshape_daily_1(:,1)),')']);
         end
     else
+        %Feeder 04
         if DAY_I == DOY
             %--  Generate Solar Shapes:
             filelocation=strcat(s,'\');
             fileID = fopen([filelocation,'Loadshape_PV.dss'],'wt');
             fprintf(fileID,['New loadshape.LS_Solar npts=%s sinterval=%s mult=(',...
-                sprintf('%f ',PV_loadshape_daily_1(:,1)),')\n'],num2str(sim_num),num2str(s_step));
+                sprintf('%f ',PV_loadshape_daily_1(:,1)),')\n'],num2str(sim_num_PV),num2str(s_step));
             %if PV_ON_OFF == 2
                 fprintf(fileID,'new generator.PV bus1=%s phases=3 kv=%s kW=%s pf=1.00 Daily=LS_Solar enable=true\n',num2str(PV_bus),V_LL,num2str(PV_pmpp));
             %end
@@ -253,10 +276,11 @@ for DAY_I=DOY:1:DAY_F
         %(1) DAY, 24hr, 1 second timestep for MATLAB controls.
         %
         % Configure Simulation:
-        DSSText.command='set mode=daily stepsize=1 number=1 controlMode=TIME';
+        DSSText.command=sprintf('set mode=daily stepsize=%s number=1 controlMode=TIME','0.083333'); %num2str(ss)
         DSSCircuit.Solution.dblHour = 0.0;
         i = 1; %counter for TVD sample & voltage violation check
-        for t = 1:1:1440*60
+        for t = 1:1:1440*NUM_INC
+            
             % Solve at current time step
             if t == 3
                 Buses_info = getBusInfo(DSSCircObj);
@@ -283,7 +307,7 @@ for DAY_I=DOY:1:DAY_F
                     i = i + 1;
                 end
             end  
-            % Switching Capacitor Control
+            % Switching Capacitor Control to verify accuracy.
             %{
             if mod(t,60) == 0
                 Cap_Control_1
@@ -291,16 +315,21 @@ for DAY_I=DOY:1:DAY_F
             %}
             if feeder_NUM < 3
                 Cap_Control_Active_Q
+                BESS_Control_PeakShaving
                 OLTC_Control_Active
             elseif feeder_NUM == 3
+                %ROX
                 if mod(t,900) == 0
                     %Every 15 mins..
                     Cap_Control_DSDR
                 end
                 SVR_Tap_Pos_DSDR
             end
-            if mod(t,3600) == 0
-                fprintf('Hour: %d\n',t/3600);
+            if mod(5*t,3600) == 0
+                fprintf('Hour: %d\n',5*t/3600);
+                if 5*t/3600 == 12
+                    DSSText.command='Edit Storage.BESS1 State=IDLING';
+                end
             end
             
         end
@@ -418,5 +447,8 @@ YEAR_CAPSTATUS(DOY).Q_CAP(t,1)=MEAS(t).PF(1,7); %Reactive Power of cap_bank
 YEAR_CAPCNTRL(DOY).CTL_PF(t,1)=MEAS(t).PF(1,4); %control PF
 YEAR_CAPCNTRL(DOY).LD_LG(t,1)=MEAS(t).PF(1,6); %lead/lag
 %}
-
+%%
+plot([BESS(1:17280).PCC])
+hold on
+plot([BESS(1:17280).kW])
     
