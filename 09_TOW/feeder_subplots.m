@@ -256,6 +256,8 @@ elseif load_LVL == 3
         plot(Lines_Distance(j,1).bus1Distance,Lines_Distance(j,1).bus1Zsc1(1,1),'bo');
         hold on
     end
+    xlabel('Bus Number')
+    ylabel('Voltage')
     %fprintf('Load Center Resistance: %3.3f ohm\n',Lines_Distance(load_center,1).bus1Zsc1(1,1));
     fprintf('Number of Violations: %d\t SUM: %d\n',count,sum);
 end
@@ -296,6 +298,8 @@ for i=1:1:length(Lines_Distance)
 end
 figure(2)
 plot([phase_check.bus1Voltage])
+xlabel('Bus Number')
+ylabel('Voltage')
 %%
 %-------------------------------------------------------------------------
 %Find Conductor type breakdown:
@@ -331,24 +335,40 @@ fprintf('\t%0.2f\t%0.2f\t %0.2f\t%0.2f\t%0.2f\t%0.2f\n',AMP_HOLD(2,1),AMP_HOLD(2
 %%
 %   This section was made to give an initial assessment of what feeder
 %   looks like V,I, P,Q vs. distance
-%{
-figure(1);
-subplot(2,2,1);
-plotKWProfile(DSSCircObj);
+
+figure(3);
+%subplot(2,2,1);
+plotKWProfile(DSSCircObj)
 %title('kw Profile');
-subplot(2,2,2);
-plotKVARProfile(DSSCircObj,'Only3Phase','on');
+%subplot(2,2,2);
+figure(4);
+plotKVARProfile(DSSCircObj,'Only3Phase','on')
 %title('
-subplot(2,2,3);
-plotVoltageProfile(DSSCircObj,'SecondarySystem','off');
-subplot(2,2,4);
+%subplot(2,2,3);
+figure(5);
+plotVoltageProfile(DSSCircObj,'SecondarySystem','off')
+%figure(6);
+%plotAmpProfile(DSSCircObj,'261280520')
+figure(7);
+j=1
+for i=1:length(Lines_Distance)
+    if Lines_Distance(i).numPhases == 3
+        plotAmpMatrix(j,1) = mean([Lines_Distance(i).bus1PhaseCurrent])
+        plotAmpMatrix(j,2) = Lines_Distance(i).bus1Distance
+        j=j+1
+    end
+end
+plot(plotAmpMatrix(:,2),plotAmpMatrix(:,1))
+xlabel('Distance')
+ylabel('Current')
+%subplot(2,2,4);
 %plotAmpProfile(DSSCircObj,'258904005');    %Commonwealth
 %plotAmpProfile(DSSCircObj,'258126280');     %Flay
 %plotAmpProfile(DSSCircObj,'1713339'); %Roxboro
 % Lines2=getLineInfo_DJM(DSSCircObj, DSSText);
 %%
-gcf=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');
-%}
+%gcf=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');
+
 %%
 %{
 %Search function to see what buses have loads on them, 3ph,2ph,1ph.
