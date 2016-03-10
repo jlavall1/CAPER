@@ -69,7 +69,7 @@ elseif feeder_NUM == 4
     peak_kW = 3189.476+3319.354+3254.487;
     min_kW = 3157.978;
     if load_LVL == 1
-        ratio = 1.0;
+        ratio = 1;
     elseif load_LVL == 2
         ratio = min_kW/peak_kW;
     end
@@ -80,9 +80,9 @@ elseif feeder_NUM == 4
     vbase = 13;
 elseif feeder_NUM == 5
     fileloc ='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss';
-    peak_current = [263.73641240095,296.245661392728,201.389207853812];
-    peak_kW=3585.700+4021.705+2741.913;
-    min_kW = 2022.5799;
+    peak_current = [232.766663065503,242.994085721044,238.029663479192];
+    peak_kW = 3189.476+3319.354+3254.487;
+    min_kW = 3157.978;
     if load_LVL == 1
         ratio = 1.0;
     elseif load_LVL == 2
@@ -90,7 +90,7 @@ elseif feeder_NUM == 5
     end
     
     energy_line = 'PH997__2571841';
-    fprintf('Characteristics for:\t1 - HOLLY SPRINGS\n\n');
+    fprintf('Characteristics for:\t1 - ROXBORO\n\n');
     vbase = 13;
 elseif feeder_NUM == 6
     %fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\ERaleigh_Circuit_Opendss';
@@ -118,7 +118,8 @@ str = strcat(fileloc,'\Master.DSS');
 
 %peak_current = [196.597331353572,186.718068471483,238.090235458346];
 %peak_current = [100,100,100];
-DSSText.command = ['Compile ' str]; 
+DSSText.command = ['Compile ' str];
+%DSSText.command = 'BatchEdit Load..* PF=0.99';
 DSSText.command = sprintf('New EnergyMeter.CircuitMeter LINE.%s terminal=1 option=R PhaseVoltageReport=yes',energy_line);
 %DSSText.command = 'EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ]';
 DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
@@ -138,6 +139,7 @@ end
 warnSt = circuitCheck(DSSCircObj);
 
 DSSCircuit = DSSCircObj.ActiveCircuit;
+gcf=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');
 Buses=getBusInfo(DSSCircObj);
 Lines=getLineInfo(DSSCircObj);
 Loads=getLoadInfo(DSSCircObj);
@@ -328,7 +330,7 @@ gcf=plotCircuitLines(DSSCircObj,'Coloring','voltage120','MappingBackground','non
 %%
 %   This section was made to give an initial assessment of what feeder
 %   looks like V,I, P,Q vs. distance
-%{
+
 figure(1);
 subplot(2,2,1);
 plotKWProfile(DSSCircObj);
@@ -344,8 +346,8 @@ subplot(2,2,4);
 %plotAmpProfile(DSSCircObj,'1713339'); %Roxboro
 % Lines2=getLineInfo_DJM(DSSCircObj, DSSText);
 %%
-gcf=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');
-%}
+%gcf=plotCircuitLines(DSSCircObj,'Coloring','numPhases','MappingBackground','none');
+
 %%
 %{
 %Search function to see what buses have loads on them, 3ph,2ph,1ph.

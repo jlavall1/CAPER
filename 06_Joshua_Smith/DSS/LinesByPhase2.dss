@@ -24,23 +24,13 @@ New Line.K1 Phases=3 Bus1=08_1.1.2.3 Bus2=08_A1.1.2.3 Length=2833.6 units=ft Spa
 New Line.K2 Phases=3 Bus1=08_A1.1.2.3 Bus2=09_1.1.2.3 Length=708.4 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
 
 /**********************************************************************************************/
-<<<<<<< HEAD
-New Transformer.VR1A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.1 09_2.1] kvas=[1440 1440] kVs=[14.4 14.4] mintap=0.95 maxtap=1.05
-New Transformer.VR1B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.2 09_2.2] kvas=[1440 1440] kVs=[14.4 14.4] mintap=0.95 maxtap=1.05
-New Transformer.VR1C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.3 09_2.3] kvas=[1440 1440] kVs=[14.4 14.4] mintap=0.95 maxtap=1.05
+New Transformer.VR1A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.1 09_2.1] kvas=[1440 1440] kVs=[13.2 13.2] mintap=0.95 maxtap=1.05 NumTaps=16
+New Transformer.VR1B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.2 09_2.2] kvas=[1440 1440] kVs=[13.2 13.2] mintap=0.95 maxtap=1.05 NumTaps=16
+New Transformer.VR1C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.3 09_2.3] kvas=[1440 1440] kVs=[13.2 13.2] mintap=0.95 maxtap=1.05 NumTaps=16
 
-New Regcontrol.VR1A Transformer=VR1A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
-New Regcontrol.VR1B Transformer=VR1B Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
-New Regcontrol.VR1C Transformer=VR1C Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
-=======
-New Transformer.VR1A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.1 09_2.1] kvas=[1440 1440] kVs=[13.2040 13.2040]
-New Transformer.VR1B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.2 09_2.2] kvas=[1440 1440] kVs=[13.2040 13.2040]
-New Transformer.VR1C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[09_1.3 09_2.3] kvas=[1440 1440] kVs=[13.2040 13.2040]
-
-New Regcontrol.VR1A Transformer=VR1A Winding=2 Vreg=125 Band=1 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
-New Regcontrol.VR1B Transformer=VR1B Winding=2 Vreg=125 Band=1 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
-New Regcontrol.VR1C Transformer=VR1C Winding=2 Vreg=125 Band=1 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
->>>>>>> fa9a1c5c0ff8bf891303080c40de549980ae95ab
+New Regcontrol.VR1A Transformer=VR1A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 maxtapchange=1
+New Regcontrol.VR1B Transformer=VR1B Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 maxtapchange=1
+New Regcontrol.VR1C Transformer=VR1C Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 maxtapchange=1
 /**********************************************************************************************/
 
 New Line.L1 Phases=3 Bus1=09_2.1.2.3 Bus2=09_3.1.2.3 Length=2065 units=ft Spacing=PEC_PEC_23kV_VERT_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
@@ -70,19 +60,13 @@ New Line.V1 Phases=3 Bus1=16_1.1.2.3 Bus2=16_2.1.2.3 Length=412.22 units=ft Spac
 New Line.V2 Phases=3 Bus1=16_2.1.2.3 Bus2=17_1.1.2.3 Length=412.22 units=ft Spacing=PEC_PEC_23kV_TRIA_3P wires=['PEC_#4AWG_CHD' 'PEC_#4AWG_CHD' 'PEC_#4AWG_CHD' 'PEC_#2AWG_ACSR']
 
 /**********************************************************************************************/
-<<<<<<< HEAD
-New Transformer.VR2A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.1 17_2.1] kvas=[1440 1440] kVs=[14.4 14.4] mintap=0.95 maxtap=1.05
-New Transformer.VR2B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.2 17_2.2] kvas=[1440 1440] kVs=[14.4 14.4] mintap=0.95 maxtap=1.05
-New Transformer.VR2C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.3 17_2.3] kvas=[1440 1440] kVs=[14.4 14.4] mintap=0.95 maxtap=1.05
-=======
-New Transformer.VR2A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.1 17_2.1] kvas=[1440 1440] kVs=[13.2040 13.2040]
-New Transformer.VR2B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.2 17_2.2] kvas=[1440 1440] kVs=[13.2040 13.2040]
-New Transformer.VR2C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.3 17_2.3] kvas=[1440 1440] kVs=[13.2040 13.2040]
->>>>>>> fa9a1c5c0ff8bf891303080c40de549980ae95ab
+New Transformer.VR2A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.1 17_2.1] kvas=[1440 1440] kVs=[13.2 13.2] mintap=0.95 maxtap=1.05 NumTaps=16
+New Transformer.VR2B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.2 17_2.2] kvas=[1440 1440] kVs=[13.2 13.2] mintap=0.95 maxtap=1.05 NumTaps=16
+New Transformer.VR2C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[17_1.3 17_2.3] kvas=[1440 1440] kVs=[13.2 13.2] mintap=0.95 maxtap=1.05 NumTaps=16
 
-New Regcontrol.VR2A Transformer=VR2A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
-New Regcontrol.VR2B Transformer=VR2B Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
-New Regcontrol.VR2C Transformer=VR2C Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+New Regcontrol.VR2A Transformer=VR2A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 maxtapchange=1
+New Regcontrol.VR2B Transformer=VR2B Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 maxtapchange=1
+New Regcontrol.VR2C Transformer=VR2C Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 maxtapchange=1
 /**********************************************************************************************/
 
 New Line.W1 Phases=3 Bus1=17_2.1.2.3 Bus2=17_3.1.2.3 Length=2259.62 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
@@ -93,16 +77,16 @@ New Line.Y1 Phases=3 Bus1=18_1.1.2.3 Bus2=18_B1.1.2.3 Length=2325 units=ft Spaci
 New Line.Y2 Phases=3 Bus1=18_B1.1.2.3 Bus2=19_1.1.2.3 Length=1550 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
 
 /**********************************************************************************************/
-<<<<<<< HEAD
-!New Transformer.VR3A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[19_1.1 19_2.1] kvas=[1440 1440] kVs=[14.4 14.4] mintap=0.95 maxtap=1.05
+!New Transformer.VR3A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[19_1.1 19_2.1] kvas=[1440 1440] kVs=[13.2 13.2] mintap=0.95 maxtap=1.05
 
 !New Regcontrol.VR3A Transformer=VR3A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
 
 New Transformer.VR3A Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[19_1.1.2.3 19_2.1.2.3]
 ~ kvas=[4320 4320]
-~ kVs=[24.912 24.912]
+~ kVs=[22.8 22.8]
 ~ mintap=0.95
 ~ maxtap=1.05
+~ NumTaps=16
 
 New RegControl.VR3A Transformer=VR3A Winding=2 R= 0  X= 0 
 ~ Vreg= 125 
@@ -111,16 +95,8 @@ New RegControl.VR3A Transformer=VR3A Winding=2 R= 0  X= 0
 ~ CTPrim= 100 
 ~ Delay = 30
 ~ PTphase=1 !Phase A has the highest conn. capacity
+~ maxtapchange=1
 
-=======
-New Transformer.VR3A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[19_1.1 19_2.1] kvas=[1440 1440] kVs=[13.2040 13.2040]
-New Transformer.VR3B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[19_1.2 19_2.2] kvas=[1440 1440] kVs=[13.2040 13.2040]
-New Transformer.VR3C Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[19_1.3 19_2.3] kvas=[1440 1440] kVs=[13.2040 13.2040]
-
-New Regcontrol.VR3A Transformer=VR3A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
-New Regcontrol.VR3B Transformer=VR3B Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
-New Regcontrol.VR3C Transformer=VR3C Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
->>>>>>> fa9a1c5c0ff8bf891303080c40de549980ae95ab
 /**********************************************************************************************/
 !New Line.YZ1 Phases=2 Bus1=19_1.2.3 Bus2=19_2.2.3 Length=1 units=ft Spacing=PEC_PEC_23kV_TRIA_2P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR']
 
@@ -133,13 +109,8 @@ New Line.CC1 Phases=2 Bus1=20_2.1.2 Bus2=20_B1.1.2 Length=2362.5 units=ft Spacin
 New Line.CC2 Phases=2 Bus1=20_B1.1.2 Bus2=21_1.1.2 Length=262.5 units=ft Spacing=PEC_PEC_23kV_TRIA_2P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
 
 /**********************************************************************************************/
-<<<<<<< HEAD
-New Transformer.VR4A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[21_1.1 21_2.1] kvas=[1440 1440] kVs=[14.4 14.4] mintap=0.95 maxtap=1.05 NumTaps=16
-New Transformer.VR4B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[21_1.2 21_2.2] kvas=[1440 1440] kVs=[14.4 14.4] mintap=0.95 maxtap=1.05 NumTaps=16
-=======
-New Transformer.VR4A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[21_1.1 21_2.1] kvas=[1440 1440] kVs=[13.2040 13.2040]
-New Transformer.VR4B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[21_1.2 21_2.2] kvas=[1440 1440] kVs=[13.2040 13.2040]
->>>>>>> fa9a1c5c0ff8bf891303080c40de549980ae95ab
+New Transformer.VR4A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[21_1.1 21_2.1] kvas=[1440 1440] kVs=[13.2 13.2] mintap=0.95 maxtap=1.05 NumTaps=16
+New Transformer.VR4B Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[21_1.2 21_2.2] kvas=[1440 1440] kVs=[13.2 13.2] mintap=0.95 maxtap=1.05 NumTaps=16
 
 New Regcontrol.VR4A Transformer=VR4A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
 New Regcontrol.VR4B Transformer=VR4B Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
@@ -151,14 +122,14 @@ New Line.EE1 Phases=2 Bus1=21_4.1.2 Bus2=21_5.1.2 Length=9484.66 units=ft Spacin
 New Line.EE2 Phases=2 Bus1=21_5.1.2 Bus2=22_1.1.2 Length=2371.16 units=ft Spacing=PEC_PEC_23kV_TRIA_2P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
 
 /**********************************************************************************************/
-New Transformer.VR5A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[22_1.1 22_2.1] kvas=[1440 1440] kVs=[14.4 14.4] mintap=0.95 maxtap=1.05 NumTaps=16
+!New Transformer.VR5A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[22_1.1 22_2.1] kvas=[1440 1440] kVs=[13.2 13.2] mintap=0.95 maxtap=1.05 NumTaps=16
 
-New Regcontrol.VR5A Transformer=VR5A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 !maxtapchange=1
+!New Regcontrol.VR5A Transformer=VR5A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 maxtapchange=1
 /**********************************************************************************************/
 
-New Line.HH1 Phases=1 Bus1=22_2.1 Bus2=22_A1.1 Length=8651.58 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
+New Line.HH1 Phases=1 Bus1=22_1.1 Bus2=22_A1.1 Length=865.158 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']  !.
 New Line.HH2 Phases=1 Bus1=22_A1.1 Bus2=22_A2.1 Length=2162.9 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
-New Line.II1 Phases=1 Bus1=22_2.1 Bus2=22_B1.1 Length=13596.8 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
+New Line.II1 Phases=1 Bus1=22_1.1 Bus2=22_B1.1 Length=1359.68 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']  !.
 New Line.II2 Phases=1 Bus1=22_B1.1 Bus2=22_B2.1 Length=3399.2 units=ft Spacing=PEC_PEC_23kV_TRIA_1P wires=['PEC_#1/0AWG_AAAC' 'PEC_#1/0AWG_AAAC']
 New Line.FF1 Phases=3 Bus1=20_2.1.2.3 Bus2=20_C1.1.2.3 Length=419 units=ft Spacing=PEC_PEC_23kV_HORZ_3P wires=['PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#2AWG_ACSR' 'PEC_#4AWG_CHD']
 

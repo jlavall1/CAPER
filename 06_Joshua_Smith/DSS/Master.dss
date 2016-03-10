@@ -2,8 +2,8 @@ Clear    ! Always start the Master with a Clear command
 ! 
 ! Define the Circuit
 ! 
-New Circuit.Bananas Bus1=00_1
-~ BasekV= 22.87  pu= 1.03323131817761  angle= 0 
+New Circuit.Feeder4 Bus1=00_1
+~ BasekV= 22.87  pu= 1.03  angle= 0 
 ~ Z1=[ 0.078336 ,  1.86336 ] ! Actual ohms
 ~ Z2=[ 0.041472 ,  3.483072 ]
 ~ Z0=[ 0 ,  13.642787 ]
@@ -33,16 +33,20 @@ Redirect Wiredata.dss
 Redirect linespacing.dss
 Redirect CNLineCodes.dss
 
-Redirect LinesByPhase.dss
+Redirect LinesByPhase2.dss
 Redirect Loads.dss
 
 ! 
 ! Set the voltage bases
 ! 
+<<<<<<< HEAD
+Set voltagebases = [ 22.87 13.2 0.480, 0.208, 0.24, 0.12]
+=======
 Set voltagebases = [ 22.87, 0.480, 0.208, 0.24, 0.12]
+>>>>>>> fa9a1c5c0ff8bf891303080c40de549980ae95ab
 CalcVoltageBases
 ! 
 ! Define the bus coordinates
 ! 
-! Buscoords Buscoords.CSV
+Buscoords Buses.CSV
 ! 
