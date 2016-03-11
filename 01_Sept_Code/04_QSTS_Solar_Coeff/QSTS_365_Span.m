@@ -63,7 +63,7 @@ elseif slt_DAY_RUN == 6
     DAY_F = DOY+6; %1 week run.
 end
 
-int_select=3;
+int_select=1;
 if int_select == 1
     %5sec load sim step:
     int_1m=12;
@@ -276,7 +276,7 @@ for DAY_I=DOY:1:DAY_F
         %(1) DAY, 24hr, 1 second timestep for MATLAB controls.
         %
         % Configure Simulation:
-        DSSText.command=sprintf('set mode=daily stepsize=%s number=1 controlMode=TIME','5');  %num2str(ss)num2str(ss/60)
+        DSSText.command=sprintf('set mode=daily stepsize=%s number=1 controlMode=TIME',num2str(ss));  %num2str(ss/60)
         DSSCircuit.Solution.dblHour = 0.0;
         i = 1; %counter for TVD sample & voltage violation check
         for t = 1:1:1440*NUM_INC
@@ -298,7 +298,7 @@ for DAY_I=DOY:1:DAY_F
             MEAS(t).Sub_Q_PhC = Power(6);
             
             % Calc TVD every 5sec & only during PV hours
-            if t>=10*3600 && t<16*3600
+            if t>=10*3600/ss && t<16*3600/ss
                 if mod(t,5) == 0
                     Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
                     YEAR_FDR(i).V=[Voltages'];
@@ -325,9 +325,10 @@ for DAY_I=DOY:1:DAY_F
                 end
                 SVR_Tap_Pos_DSDR
             end
-            if mod(5*t,3600) == 0
-                fprintf('Hour: %d\n',5*t/3600);
-                if 5*t/3600 == 12
+            if mod(ss*t,3600) == 0
+                fprintf('Hour: %d\n',ss*t/3600);
+                if ss*t/3600 == 12
+                    %At noon, move state to idle
                     DSSText.command='Edit Storage.BESS1 State=IDLING';
                 end
             end

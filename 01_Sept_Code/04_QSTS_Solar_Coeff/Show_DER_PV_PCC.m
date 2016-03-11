@@ -4,7 +4,7 @@ clc
 close all
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\Result_Analysis');
 base_dir='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
-feeder_NUM=4;
+feeder_NUM=3;
 %Declare Varaibles needed:
 if feeder_NUM == 2
     mainFile ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Commonwealth_Circuit_Opendss\Master.DSS'; 
@@ -29,14 +29,15 @@ elseif feeder_NUM == 3
     energy_line = '259363665';
     %Locations:
     %POI_loc=[183,120,27];
-    POI_loc=[142,163,45];
+    POI_loc=[143,164,46]; %46 to 116
     load HOSTING_CAP_FLAY.mat
     %0)  699613275 -> [482] & 3.7MW MHC (2.7748ohm) / 143
     %1)  258425294 -> [259] & 0.4MW MHC (6.5394ohm) / 45
     %2)  260007367 -> [522] & 0.4MW MHC (5.7497ohm) / 163
-    legal_buses{1,1}=num2str(MAX_PV.SU_MIN(POI_loc(1),9));%'258903893';
-    legal_buses{2,1}=num2str(MAX_PV.SU_MIN(POI_loc(2),9));
-    legal_buses{3,1}=num2str(MAX_PV.SU_MIN(POI_loc(3),9));
+    legal_buses{1,1}=num2str(MAX_PV.WN_MIN(POI_loc(1),9));%'258903893';
+    legal_buses{2,1}=num2str(MAX_PV.WN_MIN(POI_loc(2),9));
+    legal_buses{3,1}=num2str(MAX_PV.WN_MIN(POI_loc(3),9));
+    legal_buses{4,1}='258406388'; %switch cap
     
 elseif feeder_NUM == 4
     mainFile =strcat(base_dir,'\Mocksville_2_Circuit_Opendss\Master.dss');
@@ -46,6 +47,7 @@ elseif feeder_NUM == 4
     legal_buses{1,1}='179695371';
     legal_buses{2,1}='165933146';
     legal_buses{3,1}='379186018';
+    
 end
 %DSS Open:
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
@@ -92,6 +94,20 @@ max_PVkw(:,2)=max_PV_Select(:,9);
 %%
 for i=1:1:length(addBuses)
     circ_size = 10;
-    h_1 = plot(repmat(BusesCoords(i,2)',2,1),repmat(BusesCoords(i,1)',2,1),'ko','MarkerSize',circ_size,'MarkerFaceColor','r','LineStyle','none','DisplayName','Bottleneck');
+    if i == 1
+        h_2 = plot(repmat(BusesCoords(i,2)',2,1),repmat(BusesCoords(i,1)',2,1),'ko','MarkerSize',circ_size,'MarkerFaceColor','g','LineStyle','none','DisplayName','Bottleneck');
+        hold on
+    elseif i == 2
+        h_1 = plot(repmat(BusesCoords(i,2)',2,1),repmat(BusesCoords(i,1)',2,1),'ko','MarkerSize',circ_size,'MarkerFaceColor','r','LineStyle','none','DisplayName','Bottleneck');
+        hold on
+    elseif i == 3
+        h_3 = plot(repmat(BusesCoords(i,2)',2,1),repmat(BusesCoords(i,1)',2,1),'ko','MarkerSize',circ_size,'MarkerFaceColor','b','LineStyle','none','DisplayName','Bottleneck');
+        hold on
+    elseif i == 4
+        h_4 = plot(repmat(BusesCoords(i,2)',2,1),repmat(BusesCoords(i,1)',2,1),'ks','MarkerSize',circ_size,'MarkerFaceColor','m','LineStyle','none','DisplayName','Bottleneck');
+        hold on
+    end 
 end
-legend([gcf.legendHandles,h_1'],[gcf.legendText,'DER-PV Test POIs'] )
+
+
+legend([gcf.legendHandles,h_4',h_1',h_3',h_2'],[gcf.legendText,'Swt Cap','DER-PV 1 (3MW-4.1MW)','DER-PV 2 (0.4MW-0.9MW)','BESS'] )

@@ -26,6 +26,9 @@ elseif feeder_NUM == 1
 elseif feeder_NUM == 2
     %FLAY
     load HOSTING_CAP_FLAY.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
+    %MAX_PV.headers={'MHC','Bus # Index in Lines Distance','Reason for
+    %Violation (1.05=HV & >100=Thermal)','km','Rsc','Zsc','Ampacity of
+    %immediate upstream line from POI','kW thru power','Bus Name'}
     %Now set where PV Farm is located:
     %PV_ON_OFF=2;
     LC=2;
