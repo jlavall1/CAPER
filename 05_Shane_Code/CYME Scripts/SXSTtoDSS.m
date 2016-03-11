@@ -14,7 +14,7 @@ BusesCoords.dss - Bus Coordinates for plotting circuit
 % *LinesNO.dss - OpenDSS line definitions for Normally Open points for loops
 % Loads.dss - OpenDSS load definitions
 % Capacitors.dss - OpenDSS capacitor definitions
-% *Regulators.dss - OpenDSS regulator definitions
+% Regulators.dss - OpenDSS regulator definitions
 
 \Controls
 % *FuseContrl.dss - OpenDSS fuse control settings
@@ -44,7 +44,7 @@ filelocation = rootlocation; filename = 0;
 %filename = 'Bellhaven 12-04 - 8-14 loads.xst (original).sxst'
 %filename = 'Commonwealth_ret_01311205.sxst';
 %filename = 'Bellhaven_ret_01291204.sxst';
-filename = 'Mocksville_Main_2404.sxst';
+filename = 'Mocksville_Main_2401.sxst';
 
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select SXST file to Convert',...
@@ -119,9 +119,24 @@ for i =1:length(EquipmentDB.Substation)
     EquipmentDB.Substation(i).X0 = str2double(regexp(EquipmentDB.Substation(i).Info,'(?<=<ZeroSequenceReactance>)(.*?)(?=</ZeroSequenceReactance>)','match'));
 end
 
+% <RegulatorDB>
+EquipmentDB.Regulator = struct('Info',regexp(EquipmentDB.Info{1},'<RegulatorDB>(.*?)</RegulatorDB>','match'));
+for i = 1:length(EquipmentDB.Regulator)
+    EquipmentDB.Regulator(i).ID = regexp(EquipmentDB.Regulator(i).Info,'(?<=<EquipmentID>)(.*?)(?=</EquipmentID>)','match'); EquipmentDB.Regulator(i).ID = EquipmentDB.Regulator(i).ID{1};
+    EquipmentDB.Regulator(i).Type = regexp(EquipmentDB.Regulator(i).Info,'(?<=<Type>)(.*?)(?=</Type>)','match'); EquipmentDB.Regulator(i).Type = EquipmentDB.Regulator(i).Type{1};
+    EquipmentDB.Regulator(i).Band = str2double(regexp(EquipmentDB.Regulator(i).Info,'(?<=<Bandwidth>)(.*?)(?=</Bandwidth>)','match')); 
+    EquipmentDB.Regulator(i).PTRatio = str2double(regexp(EquipmentDB.Regulator(i).Info,'(?<=<PTRatio>)(.*?)(?=</PTRatio>)','match'));
+    EquipmentDB.Regulator(i).CTPrim = str2double(regexp(EquipmentDB.Regulator(i).Info,'(?<=<CTPrimaryRating>)(.*?)(?=</CTPrimaryRating>)','match'));
+    
+    EquipmentDB.Regulator(i).MaxTap = 1+str2double(regexp(EquipmentDB.Regulator(i).Info,'(?<=<MaximumBoost>)(.*?)(?=</MaximumBoost>)','match'))/100;
+    EquipmentDB.Regulator(i).MinTap = 1-str2double(regexp(EquipmentDB.Regulator(i).Info,'(?<=<MaximumBuck>)(.*?)(?=</MaximumBuck>)','match'))/100;
+    EquipmentDB.Regulator(i).NumTaps = str2double(regexp(EquipmentDB.Regulator(i).Info,'(?<=<NumberOfTaps>)(.*?)(?=</NumberOfTaps>)','match'));
+    EquipmentDB.Regulator(i).kVA = str2double(regexp(EquipmentDB.Regulator(i).Info,'(?<=<RatedKVA>)(.*?)(?=</RatedKVA>)','match'));
+    
+end
 % <SwitchDB>
 EquipmentDB.Switch = struct('Info',regexp(EquipmentDB.Info{1},'<SwitchDB>(.*?)</SwitchDB>','match'));
-for i =1:length(EquipmentDB.Switch)
+for i = 1:length(EquipmentDB.Switch)
     EquipmentDB.Switch(i).ID = regexp(EquipmentDB.Switch(i).Info,'(?<=<EquipmentID>)(.*?)(?=</EquipmentID>)','match'); EquipmentDB.Switch(i).ID = EquipmentDB.Switch(i).ID{1};
     
     % Read Data
@@ -287,6 +302,7 @@ Lines = struct('Info',regexp(FILE,'<Section>(.*?)</Section>','match'));
 fid(4) = fopen([savelocation,'Elements\Lines.dss'],'wt');
 fid(5) = fopen([savelocation,'Elements\Loads.dss'],'wt');
 fid(6) = fopen([savelocation,'Elements\Capacitors.dss'],'wt');
+fid(11)= fopen([savelocation,'Elements\Regulators.dss'],'wt');
 for l = 1:s
     Lines(l).ID = regexp(Lines(l).Info,'(?<=<SectionID>)(.*?)(?=</SectionID>)','match'); Lines(l).ID = Lines(l).ID{1};
     Lines(l).Phase = regexp(Lines(l).Info,'(?<=<Phase>)(.*?)(?=</Phase>)','match','once');
@@ -504,6 +520,15 @@ for l = 1:s
     end
     
     % Regulators (counter = rg)
+    regulatorinfo = regexp(Lines(l).Info,'<Regulator>(.*?)</Regulator>','match');
+    if ~isempty(regulatorinfo)
+        DB = regexp(regulatorinfo{1},'(?<=<DeviceID>)(.*?)(?=</DeviceID>)','match');
+        index = ismember({EquipmentDB.Regulator.ID},DB);
+        Regulator(rg) = EquipmentDB.Regulator(index);
+        
+        
+        rg = rg+1;
+    end
     
     % Reclosers (counter = rc)
     
@@ -511,6 +536,7 @@ end
 fclose(fid(4));
 fclose(fid(5));
 fclose(fid(6));
+fclose(fid(11));
 Lines = rmfield(Lines,'Info');
 
 %% Generate Master File
