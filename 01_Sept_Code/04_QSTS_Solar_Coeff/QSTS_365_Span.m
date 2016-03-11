@@ -276,7 +276,7 @@ for DAY_I=DOY:1:DAY_F
         %(1) DAY, 24hr, 1 second timestep for MATLAB controls.
         %
         % Configure Simulation:
-        DSSText.command=sprintf('set mode=daily stepsize=%s number=1 controlMode=TIME','0.083333'); %num2str(ss)
+        DSSText.command=sprintf('set mode=daily stepsize=%s number=1 controlMode=TIME','5');  %num2str(ss)num2str(ss/60)
         DSSCircuit.Solution.dblHour = 0.0;
         i = 1; %counter for TVD sample & voltage violation check
         for t = 1:1:1440*NUM_INC

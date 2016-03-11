@@ -1,10 +1,10 @@
 New Storage.BESS1 Bus1=260007367 Phases=3 kV=12.47
 ~ kWRated=1000
-~ kWhRated=8000
+~ kWhRated=10000
 ~ %stored=100
-~ %reserve=33
-~ %EffCharge=0.93
-~ %EffDischarge=0.967
+~ %reserve=20
+~ %EffCharge=93
+~ %EffDischarge=96.7
 
 !~ State=DISCHARGING
 !~ %Discharge=20
@@ -15,4 +15,6 @@ New StorageController.BESS_C1 element=line.259363665 terminal=1
 ~ TimeChargeTrigger=-1
 ~ eventlog=y
 ~ modedischarge=PeakShave
+
+
 
