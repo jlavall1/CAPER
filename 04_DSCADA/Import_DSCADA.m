@@ -358,10 +358,11 @@ if action == 1 || action == 3 || action == 4
         BELL=FEED;
         save(filename,'BELL');
     elseif ckt_num == 1
-        filename = strcat(maindir,'\CMNWLTH.mat');
-        delete(filename);
-        CMNWLTH=FEED;
-        save(filename,'CMNWLTH');
+        %filename = strcat(maindir,'\CMNWLTH.mat');
+        %delete(filename);
+        %CMNWLTH=FEED;
+        %filename = strcat(maindir,'\CMNWLTH_1.mat');
+        %save(filename,'CMNWLTH');
     elseif ckt_num == 2
         filename = strcat(maindir,'\FLAY.mat');
         delete(filename);
