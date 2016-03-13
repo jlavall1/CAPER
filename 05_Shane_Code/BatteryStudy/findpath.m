@@ -1,4 +1,4 @@
-function BusNames = findpath(bus1,bus2,Buses,Lines)
+function [dist,BusNames] = findpath(bus1,bus2,Buses,Lines)
 
 v = length(Buses); % Number of Buses
 e = length(Lines); % Number of Lines
@@ -28,7 +28,7 @@ j = [index2(v+1:end)';index1(v+1:end)'];
 v = [Lines.Length,Lines.Length]';
 G = sparse(i,j,v);
 
-[~,path,~] = graphshortestpath(G,ic(end-1),ic(end));
+[dist,path,~] = graphshortestpath(G,ic(end-1),ic(end));
 
 BusNames = {Buses(path).ID};
 
