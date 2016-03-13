@@ -6,9 +6,9 @@ UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 fig = 0;
 base_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\04_QSTS_Solar_Coeff\03_FLAY\Three_Month_Runs';
-section=menu('What Section of Chapter 4 would you like to initiate?','Section 1 (Vreg control schemes)','Section 2 (Solar Coeff)','Section 3 (Intro of DER-PV)','Section 4 (Centralized Approach)');
+section=menu('What Section of Chapter 4 would you like to initiate?','Section 1 (Vreg control schemes)','Section 2 (Centralized Approach)','Section 3 (Intro of DER-PV)');
 while section<1
-    section=menu('What Section of Chapter 4 would you like to initiate?','Section 1 (Vreg control schemes)','Section 2 (Solar Coeff)','Section 3 (Intro of DER-PV)','Section 4 (Centralized Approach)');
+    section=menu('What Section of Chapter 4 would you like to initiate?','Section 1 (Vreg control schemes)','Section 2 (Centralized Approach)','Section 3 (Intro of DER-PV)');
 end
 if section == 1
     plot_type=menu('what plot?','All LTC Ops','Select DOY LTC Ops & V_PT','POI_1');
@@ -171,7 +171,7 @@ if section == 1
         
     end
         
-elseif section == 4
+elseif section == 2
     %DSDR on ROX:
     fig = 0;
     run=menu('What run on ROX?','1 DAY','1 WEEK');
@@ -537,15 +537,7 @@ elseif section == 4
         set(gca,'ytick',[.975:0.00625*2:1.025]);
         grid on
         set(gca,'FontWeight','bold');
-        xlabel('Day of Year (DOY)','FontSize',12,'FontWeight','bold');
-        
-            
-            
-        
-        
-        
-        
-        
+        xlabel('Day of Year (DOY)','FontSize',12,'FontWeight','bold');   
     end
 
     
