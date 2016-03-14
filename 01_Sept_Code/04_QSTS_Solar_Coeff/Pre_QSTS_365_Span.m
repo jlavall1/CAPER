@@ -42,9 +42,9 @@ if feeder_NUM == 0
     root = 'Bell';
     root1= 'Bell';
 elseif feeder_NUM == 1
-    load CMNWLTH.mat
-    FEEDER = CMNWLTH;
-    clearvars CMNWLTH
+    %load CMNWLTH.mat
+    %FEEDER = CMNWLTH;
+    %clearvars CMNWLTH
     kW_peak = [2.475021572579630e+03,2.609588847297235e+03,2.086659558753901e+03];
     Caps.Swtch(1)=300/3;
     Caps.Fixed(2)=600/3;
@@ -75,6 +75,7 @@ elseif feeder_NUM == 1
     %Unique Component Names:
     trans_name='COMMONWEALTH_RET_01311205';
     swcap_name='258903785';
+    sub_line='259355408';
     %Export_Monitors_Timeseries:
     load config_LINESBASE_CMNWLTH.mat %Lines_Base
     [~,index] = sortrows([Lines_Base.bus1Distance].'); 
@@ -177,5 +178,12 @@ str = ckt_direct;
 idx = strfind(str,'\');
 str = str(1:idx(8)-1);
 idx = strfind(ckt_direct,'.');
-ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_QSTS.dss');
+%%
+BESS = 0;
+if BESS == 0
+    ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_QSTS.dss');
+elseif BESS == 1
+    ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_QSTS_BESS.dss');
+end
+    
 

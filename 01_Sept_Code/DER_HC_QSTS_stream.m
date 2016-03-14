@@ -39,7 +39,7 @@ time_int        = gui_response{1,14};%timestep length
 QSTS_select     = gui_response{1,15};%selective timeseries run:
 PV_ON_OFF       = gui_response{1,16};%1=off & 2=on;
 %PV_pmpp         = gui_response{1,17};%kw
-PV_location     = gui_response{1,18};
+LC              = gui_response{1,18}+1;
 SHC_LoadLVL     = gui_response{1,19};
 %%
 % 1. Add paths of background files:

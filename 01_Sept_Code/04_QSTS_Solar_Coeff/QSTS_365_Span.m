@@ -23,7 +23,7 @@ end
 %---------------------------------
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % 5. User Select run length:
-slt_DAY_RUN = 1;
+slt_DAY_RUN = 4;
 
 if slt_DAY_RUN == 1
     %One day run on 2/13
@@ -61,7 +61,16 @@ elseif slt_DAY_RUN == 6
     MNTH = 6;
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY+6; %1 week run.
+elseif slt_DAY_RUN == 7
+    %DAY to show increase in TVD vs. Distance: (110)
+    %One day run on 2/13
+    DAY = 20;
+    MNTH = 4;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY;
 end
+    
+    
 
 int_select=1;
 if int_select == 1
@@ -286,6 +295,7 @@ for DAY_I=DOY:1:DAY_F
                 Buses_info = getBusInfo(DSSCircObj);
             end
             DSSCircuit.Solution.Solve
+           
             DSSCircuit.SetActiveElement(sprintf('Line.%s',sub_line));
             Power   = DSSCircuit.ActiveCktElement.Powers;
             %Single Phase Real Power:
@@ -303,7 +313,9 @@ for DAY_I=DOY:1:DAY_F
                     Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
                     YEAR_FDR(i).V=[Voltages'];
                     phaseVoltagesPU = {Buses_info.phaseVoltagesPU}.';
-                    TVD_SAVE(i,1:4)=TVD_Calc_5sec(Voltages',phaseVoltagesPU);
+                    phaseVoltagesPH = {Buses_info.numPhases}.';
+                    phasesVoltageNODE = {Buses_info.nodes}.';
+                    TVD_SAVE(i,1)=TVD_Calc_5sec(Voltages',phaseVoltagesPH,phasesVoltageNODE,feeder_NUM);
                     i = i + 1;
                 end
             end  
@@ -315,8 +327,12 @@ for DAY_I=DOY:1:DAY_F
             %}
             if feeder_NUM < 3
                 Cap_Control_Active_Q
-                BESS_Control_PeakShaving
+                if feeder_NUM == 2 && BESS == 1
+                    BESS_Control_PeakShaving
+                end
                 OLTC_Control_Active
+                
+                
             elseif feeder_NUM == 3
                 %ROX
                 if mod(t,900) == 0
@@ -325,15 +341,19 @@ for DAY_I=DOY:1:DAY_F
                 end
                 SVR_Tap_Pos_DSDR
             end
+
             if mod(ss*t,3600) == 0
                 fprintf('Hour: %d\n',ss*t/3600);
-                if ss*t/3600 == 12
-                    %At noon, move state to idle
-                    DSSText.command='Edit Storage.BESS1 State=IDLING';
+                
+                if PV_ON_OFF == 3
+                    if ss*t/3600 == 12
+                        %At noon, move state to idle
+                        DSSText.command='Edit Storage.BESS1 State=IDLING';
+                    end
                 end
             end
-            
         end
+        i = 1;
         
         %save tap pos to reset after next day load allocation:
         DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
@@ -349,10 +369,18 @@ for DAY_I=DOY:1:DAY_F
     %Save Substation Info:
     %%
     YEAR_SUB(DAY_I).V=DATA_SAVE(1).phaseV;
+    YEAR_SUB(DAY_I).TVD_SAVE = TVD_SAVE;
+    YEAR_SUB(DAY_I).max_V=max([YEAR_FDR.V]);
+    YEAR_SUB(DAY_I).min_V=min([YEAR_FDR.V]);
+    if slt_DAY_RUN == 7
+        %Special case to save all voltages:
+        YEAR_SUB(DAY_I).all_V=[YEAR_FDR.V];
+    end
     YEAR_LTC(DAY_I).OP=DATA_SAVE(1).LTC_Ops;
     YEAR_SIM_P(DAY_I).DSS_SUB=DATA_SAVE(1).phaseP;
     YEAR_SIM_Q(DAY_I).DSS_SUB=DATA_SAVE(1).phaseQ;
     if feeder_NUM == 3
+        %only for ROX
         for LTC_n=1:1:5
             YEAR_LTCSTATUS(DAY_I).SVR(LTC_n).ph=SVR(LTC_n).ph;
             YEAR_LTCSTATUS(DAY_I).SVR(LTC_n).TAP=SVR(LTC_n).TAP;

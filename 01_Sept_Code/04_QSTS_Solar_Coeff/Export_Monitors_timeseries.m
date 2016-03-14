@@ -176,6 +176,7 @@ if feeder_NUM ~= 8
     end
     Settings(DOY).TVD_avg=SUM_TVD/(1440*3600);
     %}
+    %{
     Settings(DOY).TVD_t = TVD_SAVE;
     SUM_TVD=zeros(1,3);
     for tt=1:1:length(Settings(DOY).TVD_t)
@@ -183,8 +184,9 @@ if feeder_NUM ~= 8
             SUM_TVD(1,ph)=SUM_TVD(1,ph)+Settings(DOY).TVD_t(tt,ph);
         end
     end
+    %}
     %%
-    Settings(DOY).TVD_avg=SUM_TVD/(6*3600/5);
+    %Settings(DOY).TVD_avg=SUM_TVD/(6*3600/5);
     
     OPS=CUM_TapCount(DATA_SAVE);
     Settings(DOY).LTCops = OPS;

@@ -34,7 +34,6 @@ Redirect UGLines.dss
 Redirect LinesByPhase.dss
 Redirect Loads_matchQ.dss 
 Redirect Capacitors_CTRL.dss
-Redirect BESS_1.dss
 !
 ! Set the voltage bases
 !

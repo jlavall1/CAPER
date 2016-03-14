@@ -10,18 +10,17 @@ elseif feeder_NUM == 1
     load HOSTING_CAP_CMNW.mat %SU_MIN ; WN_MIN ; SU_AVG ; WN_AVG;
     %Now set where PV Farm is located:
     %PV_ON_OFF=2;
-    LC=3;
-    
-    %POI_loc=[63,184,771];   %   10%,25%,50%
-    POI_loc=[183,183,120,27]; 
-    Zsc_loc=[00,10,25,50];
-    POI_pmpp=[0,10000,7100,4500];
-    PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9); %258903893
-    PV_pmpp=POI_pmpp(LC);
-    fprintf('%0.1f kW PV, %0.3f km away from sub\n',PV_pmpp,MAX_PV.SU_MIN(POI_loc(LC),6));
     if PV_ON_OFF == 1
         LC=1;
     end
+    %POI_loc=[63,184,771];   %   10%,25%,50%
+    POI_loc=[183,183,120,27]; 
+    Zsc_loc=[00,25,50,10];
+    POI_pmpp=[5,7100,4500,0];
+    PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9); %258903893
+    PV_pmpp=POI_pmpp(LC);
+    fprintf('%0.1f kW PV, %0.3f km away from sub\n',PV_pmpp,MAX_PV.SU_MIN(POI_loc(LC),6));
+    
     
 elseif feeder_NUM == 2
     %FLAY
@@ -34,26 +33,32 @@ elseif feeder_NUM == 2
     %POI saved locations:
     POI_loc=[143,164,46,46]; %BESS, PV1, PV2
     Zsc_loc=[00,10,25,50];
-    FNC=1; %1=Chapter4 2=Chapter 5
+    %FNC=1; %1=Chapter4 2=Chapter 5
     
-    if FNC == 1
-        if PV_ON_OFF == 1
-            LC=1;
-        else
-            LC=2; %can be 2,3,0 for POI Selection.
-        end
-        POI_pmpp=[5,3700,1000,400]; %5kW default when not running PV
+    
+    if PV_ON_OFF == 1
+        %BASE CASE
+        LC=1;
+        POI_pmpp=[5,3000,500,400]; %5kW default when not running PV (was 4MW but wayyy too big)
         PV_pmpp=POI_pmpp(LC);
         PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9);
-        fprintf('%0.1f kW PV, %0.0f away from sub\n',PV_pmpp,MAX_PV.SU_MIN(POI_loc(LC),6));
+        fprintf('BASE: %0.1f kW PV, %0.3f km away from sub\n',PV_pmpp,MAX_PV.SU_MIN(POI_loc(LC),6));
+        fprintf('file ending: %s\n',num2str(Zsc_loc(LC)));
+    elseif PV_ON_OFF == 2
+        POI_pmpp=[5,3000,500,400]; %5kW default when not running PV
+        PV_pmpp=POI_pmpp(LC);
+        PV_bus=MAX_PV.SU_MIN(POI_loc(LC),9);
+        fprintf('%0.1f kW PV, %0.3f km away from sub\n',PV_pmpp,MAX_PV.SU_MIN(POI_loc(LC),6));
         fprintf('At Bus=%d\n',PV_bus);
+        fprintf('file ending: %s\n',num2str(Zsc_loc(LC)));
         
-    elseif FC == 2
+    elseif PV_ON_OFF == 3
+        %BESS, PV1, & PV2
         BESS_bus=(MAX_PV.WN_MIN(POI_loc(1),9));
         PV1_bus=(MAX_PV.WN_MIN(POI_loc(2),9));
         PV2_bus=(MAX_PV.WN_MIN(POI_loc(3),9));
-        
         POI_pmpp=[1000,4000,500,0]; %1000kW BESS, 4MW PV1, 0.5MW PV2
+        fprintf('BESS,PV1,PV2 connected\n');
     end
     
     
