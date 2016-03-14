@@ -69,7 +69,7 @@ elseif feeder_NUM == 4
     peak_kW = 3189.476+3319.354+3254.487;
     min_kW = 3157.978;
     if load_LVL == 1
-        ratio = 1;
+        ratio = 1.0;
     elseif load_LVL == 2
         ratio = min_kW/peak_kW;
     end
