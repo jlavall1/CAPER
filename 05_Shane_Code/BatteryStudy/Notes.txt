@@ -7,7 +7,9 @@ MIN == 2 STDs
 ----------------------
 	QSTS -> New Monitor.LTC element=Transformer.FLAY_RET_16271201 terminal=2 mode=2 (observe tap pos)
 	     -> Cap_Control_Active_Q.m (cap_timer = 0 before timeseries)
+
 	     -> 03 -> Flay_Circuit -> Master_QSTS.dss
+
 	     -> %Component Names:
 		trans_name='FLAY_RET_16271201';
     		sub_line='259363665';

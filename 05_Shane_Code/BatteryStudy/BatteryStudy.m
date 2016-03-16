@@ -1,6 +1,9 @@
 % BatteryStudy.m
-%   This function will place a battery at every bus on the Backbone of the
-%   feeder 
+%   BatteryStudy.m will run 3 different simulations with a battery placed 
+%    at every bus on the Backbone of the chosen feeder and  and collect
+%    data. The goal of this study is to find a relationship between the
+%    effectiveness of a battery to mitigate PV impact and it's location on
+%    the feeder.
 
 clear
 clc
@@ -40,67 +43,99 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 DSSText.command = ['Compile ',[filelocation,filename]];
 DSSCircuit.Solution.Solve
 
-%% Load Historical Data
-%{
+kVBase = DSSCircuit.Settings.VoltageBases;
+
+%% Load Historical Data and Generate Load Shapes
 toc
 disp('Loading Historical Data...')
-load('CMNWLTH.mat');
 
+load('FlayLoad.mat');
 % Data Characteristics
-start = '01/01/2014'; % Date at which data starts
-res   = 60;           % [s] - Resolution of data
-ndat  = 525600;       % Number of Data Points
+start = DATA(1).Date; % Date at which data starts
+res   = round(86400*(DATA(2).DateNumber - DATA(1).DateNumber)); % [s] - Resolution of data
+ndat  = length(DATA);       % Number of Data Points
+
+% Simulation 2 - High Variability Day (VI)
+% [~,ind] = max([M_MOCKS_INFO.VI]+[M_SHELBY_INFO.VI])
+%  DOY - 121 (5/1/2014)
+date1 = '05/1/2014';
+
+% Simulation 3 - High Penetration Day (CI)
+% [~,ind] = max([M_MOCKS_INFO.CI]+[M_SHELBY_INFO.CI])
+% DOY - 106 (4/16/2014)
+date2 = '04/16/2014';
+
+nstp = 1440; % Number of steps
+step = 60;   % [s] - Resolution of step
 
 % Find desired indicies
-index = (step/res)*(0:nstp-1) + (86400/res)*(datenum(date)-datenum(start));
+index2 = (step/res)*(1:nstp) + (86400/res)*(datenum(date1)-datenum(start));
+index3 = (step/res)*(1:nstp) + (86400/res)*(datenum(date2)-datenum(start));
+
+DATA2 = DATA(index2);
+DATA3 = DATA(index3);
+
+clear DATA
 
 % Check for Errors
 if mod(step,res)
     error('Desired Resolution must be an integer multiple of the Data resolution')
-elseif max(index) > ndat
+elseif max([index2,index3]) > ndat
     error('Desired Data out of range')
 end
 
-% Parce out Data
-for i=1:nstp
-    DATA(i).Date = datestr(floor(index(i)*(res/86400)) + datenum(start));
-    DATA(i).Time = [sprintf('%02d',mod(floor(index(i)*res/3600),24)),':',...
-        sprintf('%02d',mod(floor(index(i)*res/60),60))];
-    
-    DATA(i).VoltagePhaseA = CMNWLTH.Voltage.A(index(i));
-    DATA(i).VoltagePhaseB = CMNWLTH.Voltage.B(index(i));
-    DATA(i).VoltagePhaseC = CMNWLTH.Voltage.C(index(i));
-    
-    DATA(i).CurrentPhaseA = CMNWLTH.Amp.A(index(i));
-    DATA(i).CurrentPhaseB = CMNWLTH.Amp.B(index(i));
-    DATA(i).CurrentPhaseC = CMNWLTH.Amp.C(index(i));
-    
-    DATA(i).RealPowerPhaseA = CMNWLTH.kW.A(index(i));
-    DATA(i).RealPowerPhaseB = CMNWLTH.kW.B(index(i));
-    DATA(i).RealPowerPhaseC = CMNWLTH.kW.C(index(i));
-    
-    DATA(i).ReactivePowerPhaseA = CMNWLTH.kVAR.A(index(i));
-    DATA(i).ReactivePowerPhaseB = CMNWLTH.kVAR.B(index(i));
-    DATA(i).ReactivePowerPhaseC = CMNWLTH.kVAR.C(index(i));
-end
-clear CMNWLTH
-
-%% Generate Load Shapes
-
 % Find Peak Demand by Phase for normalization
 LoadTotals = LoadsByPhase(DSSCircObj);
+% Find kVAR Shapes from Capacitors to add to kVAR Load
+CAPDATA2 = 150+200;
+CAPDATA3 = 150+200;
 
-% Define Load shapes ***Add 300kvar per phase for capacitors
-DSSText.Command = sprintf(['Edit Loadshape.DailyA npts=%d sinterval=%d pmult=(',...
-    sprintf('%f ',[DATA.RealPowerPhaseA]/LoadTotals.kWA),') qmult=(',...
-    sprintf('%f ',([DATA.ReactivePowerPhaseA]+300)/LoadTotals.kVARA),')'],nstp,step);
-DSSText.Command = sprintf(['Edit Loadshape.DailyB npts=%d sinterval=%d pmult=(',...
-    sprintf('%f ',[DATA.RealPowerPhaseB]/LoadTotals.kWB),') qmult=(',...
-    sprintf('%f ',([DATA.ReactivePowerPhaseB]+300)/LoadTotals.kVARB),')'],nstp,step);
-DSSText.Command = sprintf(['Edit Loadshape.DailyC npts=%d sinterval=%d pmult=(',...
-    sprintf('%f ',[DATA.RealPowerPhaseC]/LoadTotals.kWC),') qmult=(',...
-    sprintf('%f ',([DATA.ReactivePowerPhaseC]+300)/LoadTotals.kVARC),')'],nstp,step);
-%}
+% Define Load shapes
+DSSText.Command = sprintf(['New Loadshape.LSSim2A npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA2.RealPowerPhaseA]/LoadTotals.kWA),') qmult=(',...
+    sprintf('%f ',([DATA2.ReactivePowerPhaseA]+CAPDATA2)/LoadTotals.kVARA),')'],nstp,step);
+DSSText.Command = sprintf(['New Loadshape.LSSim2B npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA2.RealPowerPhaseB]/LoadTotals.kWB),') qmult=(',...
+    sprintf('%f ',([DATA2.ReactivePowerPhaseB]+CAPDATA2)/LoadTotals.kVARB),')'],nstp,step);
+DSSText.Command = sprintf(['New Loadshape.LSSim2C npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA2.RealPowerPhaseC]/LoadTotals.kWC),') qmult=(',...
+    sprintf('%f ',([DATA2.ReactivePowerPhaseC]+CAPDATA2)/LoadTotals.kVARC),')'],nstp,step);
+
+% Define Load shapes
+DSSText.Command = sprintf(['New Loadshape.LSSim3A npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA3.RealPowerPhaseA]/LoadTotals.kWA),') qmult=(',...
+    sprintf('%f ',([DATA3.ReactivePowerPhaseA]+CAPDATA3)/LoadTotals.kVARA),')'],nstp,step);
+DSSText.Command = sprintf(['New Loadshape.LSSim3B npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA3.RealPowerPhaseB]/LoadTotals.kWB),') qmult=(',...
+    sprintf('%f ',([DATA3.ReactivePowerPhaseB]+CAPDATA3)/LoadTotals.kVARB),')'],nstp,step);
+DSSText.Command = sprintf(['New Loadshape.LSSim3C npts=%d sinterval=%d pmult=(',...
+    sprintf('%f ',[DATA3.RealPowerPhaseC]/LoadTotals.kWC),') qmult=(',...
+    sprintf('%f ',([DATA3.ReactivePowerPhaseC]+CAPDATA3)/LoadTotals.kVARC),')'],nstp,step);
+
+%% Add PV to System and Generate Generator Shapes
+tic
+disp('Adding PV to System...')
+
+% PV Specifications
+PV(1).Bus1 = '260007367';
+PV(1).kW = 4000;
+PV(1).pf = 1;
+
+PV(2).Bus1 = '258406388';
+PV(2).kW = 500;
+PV(2).pf = 1;
+
+% Load PV Data
+
+% Generate Generator Shapes
+
+% Creat PV Generator Element
+for i = 1:2
+    DSSText.Command = sprintf(['New Generator.PV%d Bus1=%s Phases=3 kV=%.2f ',...
+        'kW=%d pf=%.3f'],i,PV(i).Bus1,kVBase(1),PV(i).kW,PV(i).pf);
+end
+        
+
 %% Find BESS Locations
 tic
 disp('Finding BESS Locations...')
@@ -129,7 +164,7 @@ end
 tic
 disp('Running BESS Simulations...')
 
-% Create Battery
+% Battery Specs
 VoltageBases = DSSCircuit.Settings.VoltageBases;
 Battery.kV = VoltageBases(1);
 Battery.kWRated = 1000;
@@ -138,12 +173,13 @@ Battery.PctReserve = 20;
 Battery.PctEffCharge = 93;
 Battery.PctEffDisChrg = 96.7;
 
-DSSText.Command = [sprintf('New Storage.BESS1 Bus1=%s Phases=3 kv=%.2f ',SubBus,Battery.kV),...
-    sprintf('kWRated=%d kWhRated=%d ',Battery.kWRated,Battery.kWhRated),...
-    sprintf('%%reserve=%d %%EffCharge=%.1f ',Battery.PctReserve,Battery.PctEffCharge),...
-    sprintf('%%EffDischarge=%.1f',Battery.PctEffDisChrg)];
+% Create Battery Storage Element
+DSSText.Command = sprintf(['New Storage.BESS1 Bus1=%s Phases=3 kv=%.2f ',...
+    'kWRated=%d kWhRated=%d %%reserve=%d %%EffCharge=%.1f %%EffDischarge=%.1f'],...
+    SubBus,Battery.kV,Battery.kWRated,Battery.kWhRated,Battery.PctReserve,...
+    Battery.PctEffCharge,Battery.PctEffDisChrg);
 DSSText.Command = ['New StorageController.BESS1 element=Line.259363665 terminal=1 ',...
-    'kWTarget=3400 TimeChargeTrigger=-1 eventlog=yes modedischarge=PeakShave enable=no'];
+    'kWTarget=3400 TimeChargeTrigger=-1 eventlog=yes modedischarge=PeakShave'];
 
 % Initialize Loop and Collect Data for BESS Locations
 pcc = length(BESBus);
@@ -164,39 +200,89 @@ end
 
 % Place Battery on Each Bus
 for i = 1:pcc
-    
-    %Results(i)
-    
     DSSText.Command = sprintf('Edit Storage.BESS1 Bus1=%s %%stored=60',Results(i).PCC);
-    %Results(i)
     
-    % Simulation 1: Static Power Flow at light loading and High PV
-    %   Battery Control Algoritm : Voltage
+    % Simulation 1: Static Power Flow at 4 different load levels
+    %  Load Levels - [ SU_min  WN_min  SU_avg  WN_avg ]
+    LoadMult = [0.3 0.25 0.5 0.4];
+    %  PV - Set all PV to max rated output
+    DSSText.Command = 'BatchEdit Generator..* Status=Fixed';
+    %  Battery Control - Find operating point that minimizes
+    %   Voltage Variation
+    DSSText.Command = 'Edit StorageController.BESS1 enable=no';
+    
     DSSText.Command = 'Set Mode=Snapshot';
-    DSSCircuit.Solution.Solve
+    for j = 1:4
+        DSSCircuit.Solution.LoadMult = LoadMult(j);
+        DSSCircuit.Solution.Solve
+        
+        % Collect Data
+        DSSCircuit.SetActiveBus(SubBus);
+        SubVmagAng = DSSCircuit.ActiveBus.VMagAngle;
+        SubVmagAvg = mean(SubVmagAng([1,3,5]));
+        Results(i).(sprintf('VoltageVar_LoadMult%.2f',LoadMult(j))) =...
+            mean(abs(SubVmagAvg-DSSCircuit.AllBusVmag));
+    end
     
-    % Collect Data
-    DSSCircuit.SetActiveBus(SubBus);
-    SubVmagAng = DSSCircuit.ActiveBus.VMagAngle;
-    SubVmagAvg = mean(SubVmagAng([1,3,5]));
-    Results(i).VoltageVar = mean(abs(SubVmagAvg-DSSCircuit.AllBusVmag));
     
     
     
     
     % Simulation 2: Timseries simulation on high variability day
+    %  Loadshapes - 
+    %    Load - LSSim2(A,B,&C)
+    %    PV1 - GSPV1Sim2
+    %    PV2 - GSPV2Sim2
+    DSSText.Command = 'BatchEdit Generator..* Status=Variable';
+    DSSText.Command = 'Edit Loadshape.DailyA like=LSSim2A';
+    DSSText.Command = 'Edit Loadshape.DailyB like=LSSim2B';
+    DSSText.Command = 'Edit Loadshape.DailyC like=LSSim2C';
+    DSSText.Command = 'Edit Generator.PV1 Daily=GSPV1Sim2';
+    DSSText.Command = 'Edit Generator.PV2 Daily=GSPV2Sim2';
+    
     %   Battery Control Algoritm : Smoothing
+    DSSText.Command = 'Edit StorageController.BESS1 enable=yes';
+    
+    % Initialize Simualtion
     DSSText.Command = 'Set Mode=Daily';
     DSSCircuit.Solution.Number = 1;
     DSSCircuit.Solution.Stepsize = step;
     DSSCircuit.Solution.dblHour = 0.0;
     
-    DSSText.Command = 'Edit StorageController.BESS1 enable=yes';
+    % Begin Timeseries
+    for t = 1:nstp
+        DSSCircuit.Solution.Solve
+    end
     
     
     
     
-    DSSText.Command = 'Edit StorageController.BESS1 enable=no';
+    
+    
+    
+    
+    % Simulation 3: Timseries simulation on high penetration day
+    %  Loadshapes - 
+    %    Load - LSSim3(A,B,&C)
+    %    PV1 - GSPV1Sim3
+    %    PV2 - GSPV1Sim3
+    DSSText.Command = 'Edit Loadshape.DailyA like=LSSim3A';
+    DSSText.Command = 'Edit Loadshape.DailyB like=LSSim3B';
+    DSSText.Command = 'Edit Loadshape.DailyC like=LSSim3C';
+    DSSText.Command = 'Edit Generator.PV1 Daily=GSPV1Sim3';
+    DSSText.Command = 'Edit Generator.PV2 Daily=GSPV2Sim3';
+    
+    % Initialize Simualtion
+    DSSText.Command = 'Set Mode=Daily';
+    DSSCircuit.Solution.Number = 1;
+    DSSCircuit.Solution.Stepsize = step;
+    DSSCircuit.Solution.dblHour = 0.0;
+    
+    % Begin Timeseries
+    for t = 1:nstp
+        DSSCircuit.Solution.Solve
+    end
+    
 end
 
 %% Plot Results
