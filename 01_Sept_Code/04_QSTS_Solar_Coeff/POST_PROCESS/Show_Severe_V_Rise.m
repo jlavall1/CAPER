@@ -100,15 +100,51 @@ set(gca,'XTick',[0:1:6],'XTickLabel',days);
 if Feeder == 2
     legend('7.1MW @ POI1','4.5MW @ POI2','Location','SouthEast');
 elseif Feeder == 3
-    legend('No DER-PV','4.0MW @ POI1','0.5MW @ POI2','Location','NorthEast');
+    legend('No DER-PV','3.0MW @ POI1','0.5MW @ POI2','Location','NorthEast');
 end
 set(gca,'FontWeight','bold','FontSize',13);
 grid on
 ylabel('Three Phase Real Power (MW)','FontSize',14,'FontWeight','bold');
 xlabel('Date','FontSize',12,'FontWeight','bold');
 %-----------------------------------------------------
+%%
 fig = fig + 1;
-
-
-
-
+figure(fig);
+i = 1;
+SHIFT = 4319;
+X=1/4320:1/4320:1;
+for j=1:1:7
+    %make 3ph MW & put in one column:
+    FDR_MAX(i:i+SHIFT,1)=X+(j-1);
+    
+    FDR_MAX(i:i+SHIFT,2)=(RUN(1).WK_V(j).max_V)';
+    FDR_MAX(i:i+SHIFT,3)=(RUN(2).WK_V(j).max_V)';
+    FDR_MAX(i:i+SHIFT,4)=(RUN(3).WK_V(j).max_V)';
+    %   minimum voltage:
+    FDR_MIN(i:i+SHIFT,2)=(RUN(1).WK_V(j).min_V)';
+    FDR_MIN(i:i+SHIFT,3)=(RUN(2).WK_V(j).min_V)';
+    FDR_MIN(i:i+SHIFT,4)=(RUN(3).WK_V(j).min_V)';
+    i = i + SHIFT;
+end
+h1=plot(FDR_MAX(:,1),FDR_MAX(:,2),'b-','LineWidth',5);
+hold on
+h2=plot(FDR_MAX(:,1),FDR_MAX(:,3),'g-','LineWidth',1.5);
+hold on
+h3=plot(FDR_MAX(:,1),FDR_MAX(:,4),'r-','LineWidth',2);
+hold on
+h4=plot(FDR_MAX(:,1),FDR_MIN(:,2),'b--','LineWidth',2);
+hold on
+h5=plot(FDR_MAX(:,1),FDR_MIN(:,3),'g--','LineWidth',1.5);
+hold on
+h6=plot(FDR_MAX(:,1),FDR_MIN(:,4),'r--','LineWidth',1.5);
+%   Settings:
+if Feeder == 2
+    legend('7.1MW @ POI1','4.5MW @ POI2','Location','SouthEast');
+elseif Feeder == 3
+    legend('No DER-PV (MaxV)','3.0MW @ POI1 (MaxV)','0.5MW @ POI2 (MaxV)','Location','NorthEast');
+end
+set(gca,'FontWeight','bold','FontSize',13);
+grid on
+ylabel('Min./Max. Observed Voltage (PU)','FontSize',14,'FontWeight','bold');
+xlabel('kth Daytime Interval','FontSize',12,'FontWeight','bold');
+axis([0 7 .99 1.10]);

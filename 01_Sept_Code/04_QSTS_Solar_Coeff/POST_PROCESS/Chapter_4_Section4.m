@@ -4,11 +4,17 @@ clc
 close all
 %================
 %Select Choice--
-Feeder = 2;
-Plot_NUM = 8;
-%1=Solar Coeff VS load  2=Show POIs         3=Sum. OLTC Tap Changes
-%4=TVD Impact           5=Peak Dev. TVD     6=Peak Dev. in Tap Changes
-%7=(1) Week Plot        8=Concept of TVD    9=
+Feeder = 3;
+Plot_NUM = 4;
+%1=Solar Coeff VS load  
+%2=Show POIs         
+%3=Sum. OLTC TapCngs(
+%4=TVD Impact       (4plots)  [Show_TVD_Impact]         
+%5=Peak Dev. TVD    (1plot )  [Show_SUBV_peak]
+%6=Peak Dev. in Tap Changes   [Show_Worst_Tap_inv]
+%7=(1) Week Plot    (2plots)           
+%8=Concept of TVD 	(Voltage Deviation & TVD)   
+%9=
 
 
 %===============
@@ -111,7 +117,8 @@ elseif Plot_NUM == 5
     if Feeder == 2
         PEAK_DOY=110;
     elseif Feeder == 3
-        PEAK_DOY=75;
+        %PEAK_DOY=75;
+        PEAK_DOY=45;
     end
     Show_SUBV_peak
 elseif Plot_NUM == 6

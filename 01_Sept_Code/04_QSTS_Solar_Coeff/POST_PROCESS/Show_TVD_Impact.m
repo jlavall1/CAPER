@@ -48,8 +48,8 @@ for n=1:1:3
     k = 1;
     
     for DOY=32:1:120
-        TVD(DOY).V3ph=([RUN(n).TVD(DOY).TVD_SAVE(:,1)]+[RUN(n).TVD(DOY).TVD_SAVE(:,2)]+[RUN(n).TVD(DOY).TVD_SAVE(:,3)])/3;
-        N(k,n) = mean([TVD(DOY).V3ph]);
+        TVD(DOY).V3ph=[RUN(n).TVD(DOY).TVD_SAVE(:,1)/3];%+[RUN(n).TVD(DOY).TVD_SAVE(:,2)]+[RUN(n).TVD(DOY).TVD_SAVE(:,3)])/3;
+        N(k,n) = mean([TVD(DOY).V3ph]);%this is the mean...  %mean([TVD(DOY).V3ph]);
         
         M(j:j+4319,n)=[TVD(DOY).V3ph];
         M(j:j+4319,4)=[h-1+5/3600:5/3600:6+h-1];
@@ -72,47 +72,54 @@ plot(X,N(:,3),'r-','LineWidth',2);
 if Feeder == 2
     legend('No DER-PV','7.1MW @ POI1','4.5MW @ POI2','Location','NorthWest');
 elseif Feeder == 3
-    legend('No DER-PV','4.0MW @ POI1','0.5MW @ POI2');
+    legend('No DER-PV','3.0MW @ POI1','0.5MW @ POI2');
 end
 xlabel('Day of Year (DOY)','FontSize',12,'FontWeight','bold');
 ylabel('Daytime Average TVD','FontSize',12,'FontWeight','bold');
-axis([32 120 0 0.06])
+axis([32 120 0 0.35])
 set(gca,'FontWeight','bold');
 set(gca,'XTick',[32:7:120])
+%%
 %----------------
 %plot select day to show time shift of TVD:
 if Feeder == 2
     DOY=110;
 elseif Feeder == 3
-    DOY=60;%change
+    DOY=101;%change (45, 34, or 101
 end
 fig = fig + 1;
 figure(fig)
 X=10:5/3600:16-5/3600;
 n = 1;
-B=([RUN(n).TVD(DOY).TVD_SAVE(:,1)]+[RUN(n).TVD(DOY).TVD_SAVE(:,2)]+[RUN(n).TVD(DOY).TVD_SAVE(:,3)])/3;
+B=[RUN(n).TVD(DOY).TVD_SAVE(:,1)/3];%+[RUN(n).TVD(DOY).TVD_SAVE(:,2)]+[RUN(n).TVD(DOY).TVD_SAVE(:,3)])/3;
 plot(X,B,'b-','LineWidth',3);
 hold on
 n = 2;
-B=([RUN(n).TVD(DOY).TVD_SAVE(:,1)]+[RUN(n).TVD(DOY).TVD_SAVE(:,2)]+[RUN(n).TVD(DOY).TVD_SAVE(:,3)])/3;
+B=[RUN(n).TVD(DOY).TVD_SAVE(:,1)/3];%+[RUN(n).TVD(DOY).TVD_SAVE(:,2)]+[RUN(n).TVD(DOY).TVD_SAVE(:,3)])/3;
 plot(X,B,'g-','LineWidth',3);
 hold on
 n = 3;
-B=([RUN(n).TVD(DOY).TVD_SAVE(:,1)]+[RUN(n).TVD(DOY).TVD_SAVE(:,2)]+[RUN(n).TVD(DOY).TVD_SAVE(:,3)])/3;
+B=[RUN(n).TVD(DOY).TVD_SAVE(:,1)/3];%+[RUN(n).TVD(DOY).TVD_SAVE(:,2)]+[RUN(n).TVD(DOY).TVD_SAVE(:,3)])/3;
 plot(X,B,'r-','LineWidth',3);
 %   Settings:
 if Feeder == 2
     legend('No DER-PV','7.1MW @ POI1','4.5MW @ POI2');
 elseif Feeder == 3
-    legend('No DER-PV','4.0MW @ POI1','0.5MW @ POI2');
+    legend('No DER-PV','3.0MW @ POI1','0.5MW @ POI2');
 end
 ylabel('5 Second Average TVD','FontSize',12,'FontWeight','bold');
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 set(gca,'FontWeight','bold');
-axis([10 16 0 0.08]);
+axis([10 16 0 0.3]);
 grid on
+%%
+%----------------
 
 
+
+
+
+%%
 %----------------
 %plot TVD_pv - TVD_base vs DARR
 fig = fig + 1;
@@ -127,7 +134,7 @@ plot(DARR,M2,'ro','LineWidth',2);
 if Feeder == 2
     legend('7.1MW @ POI1','4.5MW @ POI2','Location','SouthEast');
 elseif Feeder == 3
-    legend('4.0MW @ POI1','0.5MW @ POI2','Location','SouthEast');
+    legend('3.0MW @ POI1','0.5MW @ POI2','Location','SouthEast');
 end
 ylabel('Diffence between TVDs (PV-BASE)','FontSize',12,'FontWeight','bold');
 xlabel('Daily Aggregate Ramp Rate (DARR) [P.U.]','FontSize',12,'FontWeight','bold');
@@ -147,7 +154,7 @@ plot(CI,M2,'ro','LineWidth',2);
 if Feeder == 2
     legend('7.1MW @ POI1','4.5MW @ POI2','Location','SouthEast');
 elseif Feeder == 3
-    legend('4.0MW @ POI1','0.5MW @ POI2','Location','SouthEast');
+    legend('3.0MW @ POI1','0.5MW @ POI2','Location','SouthEast');
 end
 ylabel('Diffence between TVDs (PV-BASE)','FontSize',12,'FontWeight','bold');
 xlabel('Clear-sky Index (CI)','FontSize',12,'FontWeight','bold');

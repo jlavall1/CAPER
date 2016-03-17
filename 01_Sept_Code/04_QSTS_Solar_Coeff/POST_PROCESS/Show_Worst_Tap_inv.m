@@ -2,7 +2,7 @@
 if Feeder == 2
     PEAK_DOY=110;
 elseif Feeder == 3
-    PEAK_DOY=101;
+    PEAK_DOY=101; %was 101 %was 34
 end
 %-------------
 n = 1;
@@ -60,7 +60,7 @@ elseif Feeder == 3
     PT_ph=3;
 end
 N=RUN(1).FDR_V.V(:,PT_ph)/60;
-h1=plot(X,N,'b-','LineWidth',2);
+h1=plot(X,N,'b-','LineWidth',4);
 hold on
 N=RUN(2).FDR_V.V(:,PT_ph)/60;
 h2=plot(X,N,'r-','LineWidth',2);
@@ -80,7 +80,7 @@ hold on
 if Feeder == 2
     legend('No DER-PV','7.1MW @ POI1','4.5MW @ POI2','Location','NorthWest');
 elseif Feeder == 3
-    legend([h1 h2 h3 h4 h5],'No DER-PV','4.0MW @ POI1','0.5MW @ POI2','Set Voltage','BandWidth (BW)');
+    legend([h1 h2 h3 h4 h5],'No DER-PV','3.0MW @ POI1','0.5MW @ POI2','Set Voltage','BandWidth (BW)');
 end
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 ylabel('OLTC PT Voltage (120V BASE)','FontSize',12,'FontWeight','bold');
@@ -94,7 +94,7 @@ grid on
 fig = fig + 1;
 figure(fig);
 N=RUN(1).SUB_LTC.OP(:,3);
-h1=plot(X,N,'b-','LineWidth',2);
+h1=plot(X,N,'b-','LineWidth',4);
 hold on
 N=RUN(2).SUB_LTC.OP(:,3);
 h2=plot(X,N,'r-','LineWidth',3);
@@ -113,7 +113,7 @@ ylabel('OLTC Tap Position','FontSize',12,'FontWeight','bold');
 if Feeder == 2
     legend('No DER-PV','7.1MW @ POI1','4.5MW @ POI2','Location','NorthWest');
 elseif Feeder == 3
-    legend([h1 h2 h3],'No DER-PV','4.0MW @ POI1','0.5MW @ POI2','Location','SouthEast');
+    legend([h1 h2 h3],'No DER-PV','3.0MW @ POI1','0.5MW @ POI2','Location','SouthEast');
 end
 set(gca,'FontWeight','bold');
 

@@ -70,16 +70,18 @@ plot(X,M,'r-','LineWidth',3);
 hold on
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 ylabel('OLTC 3-ph Real Power (P) [kW]','FontSize',12,'FontWeight','bold');
-axis([0 24 -4000 4000]);
+axis([10 16 -4000 4000]);
 %7100,4500];
 if Feeder == 2
     legend('No DER-PV','7.1MW @ POI1','4.5MW @ POI2','Location','SouthWest');
+elseif Feeder == 3
+    legend('No DER-PV','3.0MW @ POI1','0.5MW @ POI2','Location','SouthEast');
 end
-set(gca,'XTick',[0:2:24])
+set(gca,'XTick',[0:1:24])
 grid on
 set(gca,'FontWeight','bold');
 %%
-fig = 0;
+%fig = 0;
 %Show OLTC Voltage Impact:
 fig = fig + 1;
 figure(fig)
@@ -117,6 +119,8 @@ axis([0 24 123.4 124.6])
 set(gca,'FontWeight','bold');
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 ylabel('OLTC Voltage-120V Base (V_{L-N} ) [V]','FontSize',12,'FontWeight','bold');
+%%
+
 
 
 
