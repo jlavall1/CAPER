@@ -23,7 +23,7 @@ end
 %---------------------------------
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % 5. User Select run length:
-slt_DAY_RUN = 3;
+slt_DAY_RUN = 8;
 
 if slt_DAY_RUN == 1
     %One day run on 2/13
@@ -65,6 +65,12 @@ elseif slt_DAY_RUN == 7
     %DAY to show increase in TVD vs. Distance: (110)
     %One day run on 2/13
     DAY = 20;
+    MNTH = 4;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY;
+elseif slt_DAY_RUN == 8
+    %DAY run to show examples of VRR controls (115)
+    DAY = 25;
     MNTH = 4;
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY;

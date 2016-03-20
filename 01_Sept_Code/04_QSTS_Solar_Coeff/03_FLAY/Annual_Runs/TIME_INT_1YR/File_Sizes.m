@@ -12,7 +12,7 @@ addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\04_QSTS_Solar_Coef
 %clear YEAR_SIM_LTC
 %YEAR_SIM_LTC_OP=hold;
 
-%%
+%{
 load YR_SIM_Q_FLAY_00.mat
 for DOY=1:1:364
     if DOY <= 60
@@ -27,7 +27,9 @@ for DOY=1:1:364
         YEAR_SIM_Q_5(DOY).DSS_SUB=YEAR_SIM_Q(DOY).DSS_SUB;
     end
 end
+%}
 %%
+%{
 load YR_SIM_P_FLAY_00.mat
 for DOY=1:1:364
     if DOY <= 60
@@ -42,15 +44,27 @@ for DOY=1:1:364
         YEAR_SIM_P_5(DOY).DSS_SUB=YEAR_SIM_P(DOY).DSS_SUB;
     end
 end
+%}
 %%
 load YR_SIM_LTC_CTLFLAY_00.mat
-load YR_SIM_SUBV_FLAY_00.mat
+%load YR_SIM_SUBV_FLAY_00.mat
 
 for DOY=1:1:364
-    YEAR_LTCSTATUS_1(DOY).TAP_POS=YEAR_LTCSTATUS(DOY).TAP_POS;
-    YEAR_LTCSTATUS_2(DOY).WDG_PT=YEAR_LTCSTATUS(DOY).WDG_PT;
-    YEAR_SUB_1(DOY).max_V=YEAR_SUB(DOY).max_V;
-    YEAR_SUB_1(DOY).min_V=YEAR_SUB(DOY).min_V;
+    %YEAR_LTCSTATUS_1(DOY).TAP_POS=YEAR_LTCSTATUS(DOY).TAP_POS;
+    if DOY <= 60
+        YEAR_LTCSTATUS_1(DOY).WDG_PT=YEAR_LTCSTATUS(DOY).WDG_PT;
+    elseif DOY > 60 && DOY <= 120
+        YEAR_LTCSTATUS_2(DOY).WDG_PT=YEAR_LTCSTATUS(DOY).WDG_PT;
+    elseif DOY > 120 && DOY <= 200
+        YEAR_LTCSTATUS_3(DOY).WDG_PT=YEAR_LTCSTATUS(DOY).WDG_PT;
+    elseif DOY > 200 && DOY <= 280
+        YEAR_LTCSTATUS_4(DOY).WDG_PT=YEAR_LTCSTATUS(DOY).WDG_PT;
+    else
+        YEAR_LTCSTATUS_5(DOY).WDG_PT=YEAR_LTCSTATUS(DOY).WDG_PT;
+    end
+    
+    %YEAR_SUB_1(DOY).max_V=YEAR_SUB(DOY).max_V;
+    %YEAR_SUB_1(DOY).min_V=YEAR_SUB(DOY).min_V;
 end
 
 %%

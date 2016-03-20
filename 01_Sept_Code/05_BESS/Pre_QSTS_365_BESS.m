@@ -1,30 +1,30 @@
+clear
+clc
+close all
 %Pre QSTS_365_Span
 
 ckt_direct      = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Master.dss'; %entire directory string of where the cktfile is locatted
 feeder_NUM      = 2;
 base_path       = 'C:\Users\jlavall\Documents\GitHub\CAPER';
 
-PV_Site_1       = 4; %( 1 - 7) site#s;
-PV_Site_2       = 1; %
+PV_Site_1       = 4; %MOCKS
+PV_Site_2       = 1; %SHELBY
 PV_Site_path_1  = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\04_Mocksville_NC';
 PV_Site_path_2  = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\01_Shelby_NC';
-PV_ON_OFF       = 1;
 
-timeseries_span = 2; %(1) day ; (1) week ; (1) year ; etc.
-time_int        = '1m';
+timeseries_span = 2; %Simulates 1 day (24hr) at a time.
+%time_int        = '1m';
 QSTS_select     = 4;
-
-
-VRR_Scheme      = 2;%DSS, Sequential, Time Int, V_avg
-LC              = 3;
-BESS            = 0;%0 is no battery, 1 is a battery
+VRR_Scheme      = 2;
+BESS            = 1;%0 is no battery, 1 is a battery
 
 addpath(strcat(base_path,'\04_DSCADA'));
-%addpath(strcat(base_path,'\01_Sept_Code\04_QSTS_Solar_Coeff'));
-%addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
+addpath(strcat(base_path,'\01_Sept_Code\05_BESS'));
+addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
 %Objective:
 %       To load in all background files nessessary to run sim.
 %%
+%{
 % Simulation info:
 if strcmp(time_int,'1h') == 1
     t_int=0;
@@ -47,6 +47,7 @@ elseif strcmp(time_int,'5s') == 1
     sim_num='17280';
     fprintf('Sim. timestep=5s\n');
 end
+%}
 %%
 % Feeder info:
 path = strcat(base_path,'\04_DSCADA\Feeder_Data');
@@ -143,13 +144,7 @@ idx = strfind(str,'\');
 str = str(1:idx(8)-1);
 idx = strfind(ckt_direct,'.');
 %%
-
-if BESS == 0
-    ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_QSTS.dss');
-elseif BESS == 1
-    ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_QSTS_BESS.dss');
-end
 %Connect DER-PV to desired position:
-Set_DER_PV_PCC    
 PV_SITE_DATA_import
+Set_DER_PV_PCC    
 QSTS_365_BESS

@@ -11,8 +11,15 @@ while section<1
     section=menu('What Section of Chapter 4 would you like to initiate?','Section 1 (Vreg control schemes)','Section 2 (Centralized Approach)','Section 3 (Intro of DER-PV)');
 end
 if section == 1
-    %(2 Figures)
-    Show_Annual_Sim_Results_NEW
+    run=menu('What run on FLAY?','1 YEAR','1 DAY');
+    while run<1
+        run=menu('What run on FLAY?','1 YEAR','1 DAY');
+    end
+    if run == 1
+        Show_Annual_VREG %(2 Figures)
+    elseif run == 2
+        Show_VREG_DAY
+    end
         
 elseif section == 2
     %DSDR on ROX(FDR_04):

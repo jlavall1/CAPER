@@ -1,7 +1,5 @@
 %Show_Annual_Sim_Results
-clear
-clc
-close all
+
 fig = 0;
 %   1) Tap Position vs. Time
 %   2) PT Phase Voltage Meas

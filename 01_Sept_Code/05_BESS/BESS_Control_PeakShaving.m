@@ -13,24 +13,25 @@ MEAS(t).Sub_Q_PhA = Power(2);
 MEAS(t).Sub_Q_PhB = Power(4);
 MEAS(t).Sub_Q_PhC = Power(6);
 %}
+%%
 %Control Power:
-BESS(t).PCC=MEAS(t).Sub_P_PhA+MEAS(t).Sub_P_PhB+MEAS(t).Sub_P_PhC;
-P_set=3400; %kW
-P_max=1000;
+BESS_M(t).PCC=MEAS(t).Sub_P_PhA+MEAS(t).Sub_P_PhB+MEAS(t).Sub_P_PhC;
+P_set=3500; %kW
+P_max=KW_RATE;
 
 DSSCircuit.SetActiveElement('Storage.BESS1');
 %DSSCircuit.SetActiveElement('Bus.260007367');
 DSSText.command='? Storage.BESS1.%stored';
-BESS(t).SOC=str2double(DSSText.Result);
+BESS_M(t).SOC=str2double(DSSText.Result);
 DSSText.command='? Storage.BESS1.%Discharge';
-BESS(t).kW=P_max*(str2double(DSSText.Result))/100;
-
+BESS_M(t).kW=P_max*(str2double(DSSText.Result))/100;
+%%
 if ss*t/3600 < 12 && t > 2 %>2 to make up for going from 5sec -> 1sec.
-    if BESS(t).PCC>P_set+P_set*0.01
+    if BESS_M(t).PCC>P_set+P_set*0.01
         %-- Upper Bound --
 
         %Discharge
-        P_diff=BESS(t).PCC-P_set;
+        P_diff=BESS_M(t).PCC-P_set;
         if P_diff > P_max
             P_diff=P_max;
         end

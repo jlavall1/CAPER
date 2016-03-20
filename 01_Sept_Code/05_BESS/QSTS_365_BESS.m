@@ -23,7 +23,7 @@ Lines_info = Lines_info(index);
 %---------------------------------
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % 5. User Select run length:
-slt_DAY_RUN = 3;
+slt_DAY_RUN = 1;
 
 if slt_DAY_RUN == 1
     %One day run on 2/13
@@ -79,12 +79,14 @@ if int_select == 1
     s_step=5; %sec
     ss=1;
     NUM_INC=60;
+    fprintf('5 sec. Load w/ 1 sec Sim. stepsize\n');
 elseif int_select == 2
     %60sec load sim step:
     int_1m=1;
     s_step=60; %sec
     ss=1;
     NUM_INC=1;
+    fprintf('60 sec. Load w/ 60 sec Sim. stepsize\n');
 elseif int_select == 3
     %5sec load sim step:
     int_1m=12;
@@ -110,11 +112,24 @@ for DAY_I=DOY:1:DAY_F
     fprintf('\nQSTS Simulation: DOY= %d\n',DAY_I);
     %%
     %Obtain Historical Datasets:
-    PV_loadshape_daily = (PV_ON_OFF-1)*M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
+    if PV_SCEN ~= 4
+        PV_loadshape_daily = (PV_ON_OFF-1)*M_PVSITE(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
+        PV_loadshape_daily_1 = interp(PV_loadshape_daily,12);
+    elseif PV_SCEN == 4
+        %TWO PVs connected:
+        %   (1)
+        PV_loadshape_daily = (PV_ON_OFF-1)*M_PVSITE_1(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
+        PV_loadshape_daily_1 = interp(PV_loadshape_daily,12);
+        %   (2)
+        PV_loadshape_daily = (PV_ON_OFF-1)*M_PVSITE_2(MNTH).PU(time2int(DAY,0,0):time2int(DAY,23,59),1);%1minute interval --
+        PV_loadshape_daily_2 = interp(PV_loadshape_daily,12);
+    end
+        
+        
     sim_num_PV=1440*12;
     sim_num=1440*int_1m;
     
-    PV_loadshape_daily_1 = interp(PV_loadshape_daily,12);
+    
     CAP_OPS_STEP2_1(DAY_I).kW(:,1) = interp(CAP_OPS_STEP2(DAY_I).kW(:,1),int_1m); %60s -> 5s
     CAP_OPS_STEP2_1(DAY_I).kW(:,2) = interp(CAP_OPS_STEP2(DAY_I).kW(:,2),int_1m); %60s -> 5s
     CAP_OPS_STEP2_1(DAY_I).kW(:,3) = interp(CAP_OPS_STEP2(DAY_I).kW(:,3),int_1m); %60s -> 5s
@@ -129,10 +144,9 @@ for DAY_I=DOY:1:DAY_F
         fileID = fopen([filelocation,'Loadshape_PV.dss'],'wt');
         fprintf(fileID,['New loadshape.LS_Solar npts=%s sinterval=%s mult=(',...
             sprintf('%f ',PV_loadshape_daily_1(:,1)),')\n'],num2str(sim_num_PV),num2str(s_step));
-        %if PV_ON_OFF == 2
-            fprintf(fileID,'new generator.PV bus1=%s phases=3 kv=%s kW=%s pf=1.00 Daily=LS_Solar enable=true\n',num2str(PV_bus),V_LL,num2str(PV_pmpp));
-        %end
+        fprintf(fileID,'new generator.PV bus1=%s phases=3 kv=%s kW=%s pf=1.00 Daily=LS_Solar enable=true\n',num2str(PV_bus),V_LL,num2str(PV_pmpp));
         fclose(fileID);
+        
         %--  Generate Load Shapes:
         filelocation=strcat(s,'\');
         fileID = fopen([filelocation,'Loadshape.dss'],'wt');
@@ -170,37 +184,27 @@ for DAY_I=DOY:1:DAY_F
     %--  Find old Cap_Ops & initial status:
     sw_cap= CAP_OPS_STEP1(DAY_I).data(:,4);
     
-    
     if DAY_I==DOY
+        %Starting DAY --> Compile Circuit & set intial states of SVRs & SC
         DSSText.command = ['Compile ',ckt_direct_prime];
-        %Lines_info = getLineInfo(DSSCircObj);
-        %[~,index] = sortrows([Lines_info.bus1Distance].');
-        %Lines_info = Lines_info(index);
-        if feeder_NUM < 3
-            DSSText.command=sprintf('Edit Capacitor.%s states=0',swcap_name);
-            cap_pos = 0;    %used to be 1
-            DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,'1.00625');
-            if VRR_Scheme == 1
-                DSSText.command=sprintf('New RegControl.%s Transformer=%s Winding=2 R=0 X=0 Vreg=124 Band=1 PTratio=%s CTPrim=%s Delay=%s PTPhase=%s',trans_name,trans_name,PT_RATIO,CT_RATIO,'45',PT_PHASE);
-            end
-        elseif feeder_NUM == 3
-            %Roxboro has alot of VRDs:
-            DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{1},num2str(CAP_OPS(DAY_I).oper(1,1)));
-            DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{2},num2str(CAP_OPS(DAY_I).oper(1,2)));
-            DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{3},num2str(CAP_OPS(DAY_I).oper(1,3)));
+        %--  Switched CAP. State of operation:
+        DSSText.command=sprintf('Edit Capacitor.%s states=%s',swcap_name,num2str(sw_cap(1)));
+        cap_pos = sw_cap(1);    %(might not be needed...)
+        %--  OLTC State of operation:
+        DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,'1.00625');
+        if VRR_Scheme == 1
+            %To have solely DSS Default controller on OTLC
+            DSSText.command=sprintf('New RegControl.%s Transformer=%s Winding=2 R=0 X=0 Vreg=124 Band=1 PTratio=%s CTPrim=%s Delay=%s PTPhase=%s',trans_name,trans_name,PT_RATIO,CT_RATIO,'45',PT_PHASE);
+        end
+        %--  Connect BESS if Requested:
+        if BESS == 1
+            DECLARE_BESS
         end
         
     else
-        if feeder_NUM < 3
-            DSSText.command=sprintf('Edit Capacitor.%s states=%s',swcap_name,num2str(CAP_DAY));
-            DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,TAP_DAY);
-        elseif feeder_NUM == 3
-            %Roxboro has alot of VRDs:
-            DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{1},num2str(CAP_OPS(DAY_I).oper(1,1)));
-            DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{2},num2str(CAP_OPS(DAY_I).oper(1,2)));
-            DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{3},num2str(CAP_OPS(DAY_I).oper(1,3)));
-            DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,TAP_DAY);
-        end
+        %Save VRD states for next DAY run.
+        DSSText.command=sprintf('Edit Capacitor.%s states=%s',swcap_name,num2str(CAP_DAY));
+        DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,TAP_DAY);
     end
     %--  Run QSTS 24hr sim:
     if timeseries_span == 2
@@ -217,19 +221,19 @@ for DAY_I=DOY:1:DAY_F
                 Buses_info = getBusInfo(DSSCircObj);
             end
             DSSCircuit.Solution.Solve
-           
+            %--------------------------------------------------------------
             DSSCircuit.SetActiveElement(sprintf('Line.%s',sub_line));
             Power   = DSSCircuit.ActiveCktElement.Powers;
-            %Single Phase Real Power:
+            %   Single Phase Real Power:
             MEAS(t).Sub_P_PhA = Power(1);
             MEAS(t).Sub_P_PhB = Power(3);
             MEAS(t).Sub_P_PhC = Power(5);
-            %Single Phase Reactive Power:
+            %   Single Phase Reactive Power:
             MEAS(t).Sub_Q_PhA = Power(2);
             MEAS(t).Sub_Q_PhB = Power(4);
             MEAS(t).Sub_Q_PhC = Power(6);
-            
-            % Calc TVD every 5sec & only during PV hours
+            %--------------------------------------------------------------
+            % Calc TVD every 5sec & only during PV hours (10AM-4PM)
             if t>=10*3600/ss && t<16*3600/ss
                 if mod(t,5) == 0
                     Voltages=DSSCircObj.ActiveCircuit.AllBusVmagPu;
@@ -241,29 +245,15 @@ for DAY_I=DOY:1:DAY_F
                     i = i + 1;
                 end
             end  
-            % Switching Capacitor Control to verify accuracy.
-            %{
-            if mod(t,60) == 0
-                Cap_Control_1
+            %--------------------------------------------------------------
+            % Voltage Reg. Equip. Controls:
+            Cap_Control_Active_Q
+            if BESS == 1
+                BESS_Control_PeakShaving
             end
-            %}
-            if feeder_NUM < 3
-                Cap_Control_Active_Q
-                if feeder_NUM == 2 && BESS == 1
-                    BESS_Control_PeakShaving
-                end
-                OLTC_Control_Active
-                
-                
-            elseif feeder_NUM == 3
-                %ROX
-                if mod(t,900) == 0
-                    %Every 15 mins..
-                    Cap_Control_DSDR
-                end
-                SVR_Tap_Pos_DSDR
-            end
-
+            OLTC_Control_Active
+            %--------------------------------------------------------------
+            % Print out HoD:
             if mod(ss*t,3600) == 0
                 fprintf('Hour: %d\n',ss*t/3600);
                 
@@ -274,10 +264,11 @@ for DAY_I=DOY:1:DAY_F
                     end
                 end
             end
+            
         end
-        i = 1;
-        
-        %save tap pos to reset after next day load allocation:
+        i = 1; %(index for TVD & FDR_Voltage vectors)
+        %------------------------------------------------------------------
+        %Save tap pos to reset after next day load allocation:
         DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
         TAP_DAY = DSSText.Result;
         if feeder_NUM < 3
@@ -301,13 +292,9 @@ for DAY_I=DOY:1:DAY_F
     YEAR_LTC(DAY_I).OP=DATA_SAVE(1).LTC_Ops;
     YEAR_SIM_P(DAY_I).DSS_SUB=DATA_SAVE(1).phaseP;
     YEAR_SIM_Q(DAY_I).DSS_SUB=DATA_SAVE(1).phaseQ;
-    if feeder_NUM == 3
-        %only for ROX
-        for LTC_n=1:1:5
-            YEAR_LTCSTATUS(DAY_I).SVR(LTC_n).ph=SVR(LTC_n).ph;
-            YEAR_LTCSTATUS(DAY_I).SVR(LTC_n).TAP=SVR(LTC_n).TAP;
-        end
-        
+    if BESS == 1
+        YEAR_BESS(DAY_I).SOC = BESS_M(:).SOC;
+        YEAR_BESS(DAY_I).kW  = BESS_M(:).kW;
     end
     %Go onto next day...    
     DAY = DAY + 1;
@@ -389,7 +376,12 @@ fn10='\YR_SIM_LTC_CTL';
 fn10=strcat(filedir,fn10);
 fn10=strcat(fn10,scen_nm);
 save(fn10,'YEAR_LTCSTATUS');
-
+if BESS == 1
+    fn11='\YR_SIM_BESS_STATE';
+    fn11=strcat(filedir,fn11);
+    fn11=strcat(fn11,scen_nm);
+    save(fn11,'YEAR_BESS');
+end
 
 
 %{
