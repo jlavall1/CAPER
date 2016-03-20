@@ -76,7 +76,11 @@ elseif Feeder == 3
 end
 xlabel('Day of Year (DOY)','FontSize',12,'FontWeight','bold');
 ylabel('Daytime Average TVD','FontSize',12,'FontWeight','bold');
-axis([32 120 0 0.35])
+if Feeder == 3
+    axis([32 120 0 0.35])
+elseif Feeder == 2
+    axis([32 120 0 0.10])
+end
 set(gca,'FontWeight','bold');
 set(gca,'XTick',[32:7:120])
 %%
