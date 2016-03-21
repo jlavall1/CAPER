@@ -170,6 +170,10 @@ bar(X,E_kWh(:,2),'r')
 xlabel('Hour of Day');
 ylabel('Energy (kWh)');
 axis([1 49 0 2500]);
+%%
+figure(3)
+X=1:1:1440;
+plot(X,CSI)
 
 
 
