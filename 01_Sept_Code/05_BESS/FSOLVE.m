@@ -15,6 +15,29 @@ DAY = 1;
 MNTH = 6;
 DOY=calc_DOY(MNTH,DAY);
 
+
+
+%-----------------
+CSI=M_MOCKS(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),3);
+BncI=M_MOCKS(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),1); %1minute interval:
+%convert to P.U.
+CSI=CSI/max(CSI);
+BncI=BncI/max(BncI);
+CSI_TH=0.2;
+ON = 0;
+OFF = 0;
+
+for m=1:1:length(CSI)
+    if CSI(m,1) > 0.2 && ON == 0
+        T_ON=round((m/1440)*24);
+        ON = 1;
+    elseif CSI(m,1) < 0.2 && ON == 1 && OFF == 0
+        T_OFF=round((m/1440)*24);
+        OFF = 1;
+    end
+end
+%=======================
+%   Attempting to find Discharge Interval...
 P_DAY1=CAP_OPS_STEP2(DOY).kW(:,1)+CAP_OPS_STEP2(DOY).kW(:,2)+CAP_OPS_STEP2(DOY).kW(:,3);
 P_DAY2=CAP_OPS_STEP2(DOY+1).kW(:,1)+CAP_OPS_STEP2(DOY+1).kW(:,2)+CAP_OPS_STEP2(DOY+1).kW(:,3);
 hr=1;
@@ -46,28 +69,78 @@ for m=1:1:length(P_DAY1)
         P_max(2,2) = m;
     end
 end
-
-
-%-----------------
-CSI=M_MOCKS(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),3);
-BncI=M_MOCKS(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),1); %1minute interval:
-%convert to P.U.
-CSI=CSI/max(CSI);
-BncI=BncI/max(BncI);
-CSI_TH=0.2;
-ON = 0;
-OFF = 0;
-
-for m=1:1:length(CSI)
-    if CSI(m,1) > 0.2 && ON == 0
-        T_ON=round((m/1440)*24);
-        ON = 1;
-    elseif CSI(m,1) < 0.2 && ON == 1 && OFF == 0
-        T_OFF=round((m/1440)*24);
-        OFF = 1;
-    end
+%%
+if P_max(2,2)/60 < 9
+    %then we have a peak during the morning, save energy!
+    t_max=P_max(2,2)+24*60; %hours
+else
+    t_max=P_max(2,1);
 end
-        
+fprintf('Target peak kth min: %0.2f\n',t_max);
+
+%Initial conditions:
+sigma=0.05;
+bat_en = 500; %kWh available (estimate then actual after CR period over.
+j =1;
+t_A = 16*60;
+t_B = 18*60;
+end_loop = 0;
+
+while end_loop ~= 1
+    %Find new time interval:
+    peak(j).t_A = t_A;
+    peak(j).t_B = t_B;
+    time=t_A:1:t_B;
+    %Find energy under curve (discrete)
+    peak(j).top = trapz(time,P_DAY1(time))/60;
+
+    %Now find bottom energy:
+    P_DAY1_bot(1,1)=P_DAY1(t_A);
+    P_DAY1_srt = P_DAY1_bot(1,1);
+    P_DAY1_bot(1,2)=t_A;
+    for i=2:1:(t_B-t_A+1)
+        %P_DAY1_bot(i,1)=P_DAY1_bot(i-1)+(P_DAY1(t_B)-P_DAY1(t_A))/(t_B-t_A+1);
+        if P_DAY1_srt > P_DAY1(t_A+i-1)
+            %this means the actual load dipped below starting kW:
+            P_DAY1_bot(i,1) = P_DAY1(t_A+i-1);
+        else
+            P_DAY1_bot(i,1) = P_DAY1_srt;
+        end
+        P_DAY1_bot(i,2)=t_A+i-1;
+    end
+    peak(j).bot = trapz(P_DAY1_bot(:,2),P_DAY1_bot(:,1))/60; %kWh
+    
+    %Find energy that will be covered:
+    peak(j).en = peak(j).top - peak(j).bot;
+
+    %Find Energy Error:
+    peak(j).error = peak(j).en - bat_en;
+    if peak(j).error < -1*bat_en*sigma
+        %not enough energy covered, need to increase time span:
+        if j ~= 1
+            if peak(j-1).error > peak(j).error
+                t_A = t_A + 1;
+            else
+                t_B = t_B + 1;
+            end
+        end
+    elseif peak(j).error > bat_en*sigma
+        %too much energy covered, decrement time span:
+        if j ~= 1
+            if peak(j-1).error < peak(j).error
+                t_A = t_A - 1;
+            else
+                t_B = t_B - 1;
+            end
+        end
+    else
+        end_loop = 1;
+        %stop iterations:
+    end
+    j = j + 1;
+end
+
+
         
 %%
 
@@ -118,8 +191,13 @@ end
 
 %%
 %Now lets calc Discharge:
-T_ON_1=17;
-T_OFF_1=21;
+C=bat_en;
+
+T_ON_1=peak(j-1).t_A/60;
+T_OFF_1=peak(j-1).t_B/60;
+%Estimate:
+%T_ON_1=17;
+%T_OFF_1=21;
 T_D=T_OFF_1-T_ON_1;
 ToS2=0.9;
 ToS1=0.83;
@@ -145,13 +223,23 @@ grid on
 xlabel('Hour of Day');
 ylabel('Charge/Discharge Rate (kW)');
 %%
+% Load Forecasting:
 figure(2);
 subplot(1,2,1);
 X=1:1:1440;
-plot(X,P_DAY1,'b-');
+plot(X,P_DAY1,'b-','LineWidth',3);
 hold on
 plot(P_max(2,1),P_max(1,1),'bo','LineWidth',3);
 hold on
+
+%Show DR period:
+plot(P_DAY1_bot(:,2),P_DAY1_bot(:,1),'c-','LineWidth',1.5);
+hold on
+plot([peak(j-1).t_A],P_DAY1([peak(j-1).t_A],1),'c.','LineWidth',6);
+hold on
+plot([peak(j-1).t_B],P_DAY1([peak(j-1).t_B],1),'c.','LineWidth',6);
+hold on
+
 X=X+1440;
 plot(X,P_DAY2,'r-');
 hold on
