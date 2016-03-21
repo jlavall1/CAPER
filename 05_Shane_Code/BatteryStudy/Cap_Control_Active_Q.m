@@ -72,7 +72,7 @@ elseif MEAS(t).PF(1,6) == 0 && MEAS(t).PF(1,5) > Caps.Swtch*3*1.1
             fprintf('SW_CAP Timer to close Initiated\n');
         end
     end
-elseif MEAS(t).PF(1,6) == 1 && abs(MEAS(t).PF(1,5)) > Caps.Swtch*3*1.1 %to prevent low PF lag 
+elseif MEAS(t).PF(1,6) == 1 && abs(MEAS(t).PF(1,5)) > Caps.Swtch*3*0.8 %to prevent low PF lag 
     if cap_pos == 1
         if cap_timer == 0
             vio_time=t;

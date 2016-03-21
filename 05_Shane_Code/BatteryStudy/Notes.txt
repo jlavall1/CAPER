@@ -16,7 +16,6 @@ MIN == 2 STDs
     		swcap_name='38391707_sw';
 
 
-
 Simulation 2 -> Variability High DARR (column 6) for each PV1 & PV2
 	(1) max DARR (sum of both facilities)
 Simulation 3 -> High Variability && High CI
@@ -24,3 +23,11 @@ Simulation 3 -> High Variability && High CI
 	PV1 = DOY 134
 	PV2 = DOY 161
 	Combined = DOY 134
+
+
+% Loadshapes
+CAP_OPS_STEP2(DOY).KW(:,1:3) = ABC KW
+CAP_OPS_STEP(DOY).DSS(:,1:3) = ABC KVAR
+
+% PV Shapes
+01_Sept/05_BESS/PV_SITE_DATA_import
