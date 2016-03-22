@@ -24,6 +24,6 @@ for i = 1:length(substation_types)
 end
 
 %this is used to run the plotGoogleMap function
-plot([dist.LONG],[dist.LAT],'.y','MarkerSize',10);
-plotGoogleMap
+%plot([dist.LONG],[dist.LAT],'xw','MarkerSize',5);
+%plotGoogleMap
 
