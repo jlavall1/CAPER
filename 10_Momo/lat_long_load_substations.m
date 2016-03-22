@@ -22,7 +22,7 @@ for i = 1:length(substation_types)
         j = j + 1;
     end
 end
-
+% number 344 is dist struct is bellhaven.
 %this is used to run the plotGoogleMap function
 %plot([dist.LONG],[dist.LAT],'xw','MarkerSize',5);
 %plotGoogleMap
