@@ -1,6 +1,6 @@
 clear
 clc
-close all
+%close all
 %This is to try and solve for:
 %T_ON=10;
 %T_OFF=16;
@@ -20,6 +20,7 @@ DOY=calc_DOY(MNTH,DAY);
 %-----------------
 CSI=M_MOCKS(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),3);
 BncI=M_MOCKS(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),1); %1minute interval:
+GHI=M_MOCKS(MNTH).kW(time2int(DAY,0,0):time2int(DAY,23,59),1)/5000; %PU
 %convert to P.U.
 CSI=CSI/max(CSI);
 BncI=BncI/max(BncI);
@@ -69,7 +70,7 @@ for m=1:1:length(P_DAY1)
         P_max(2,2) = m;
     end
 end
-%%
+%
 if P_max(2,2)/60 < 9
     %then we have a peak during the morning, save energy!
     t_max=P_max(2,2)+24*60; %hours
@@ -79,11 +80,16 @@ end
 fprintf('Target peak kth min: %0.2f\n',t_max);
 
 %Initial conditions:
-sigma=0.05;
-bat_en = 500; %kWh available (estimate then actual after CR period over.
+sigma=0.1;
+bat_en = 1000; %kWh available (estimate then actual after CR period over.
+peak = DR_INT(t_max,P_DAY1,bat_en,sigma);
+%%
+%{
 j =1;
-t_A = 16*60;
-t_B = 18*60;
+t_A = t_max-1;
+t_B = t_max+1;
+%t_A = 16*60;
+%t_B = 18*60;
 end_loop = 0;
 
 while end_loop ~= 1
@@ -118,18 +124,18 @@ while end_loop ~= 1
     if peak(j).error < -1*bat_en*sigma
         %not enough energy covered, need to increase time span:
         if j ~= 1
-            if peak(j-1).error > peak(j).error
-                t_A = t_A + 1;
-            else
-                t_B = t_B + 1;
+            if peak(j-1).error > peak(j).error && t_A-1 < t_B && t_A-1 < t_max 
+                t_A = t_A - 1; %move backward
+            elseif t_B+1 > t_A 
+                t_B = t_B + 1; %move forward
             end
         end
     elseif peak(j).error > bat_en*sigma
         %too much energy covered, decrement time span:
         if j ~= 1
-            if peak(j-1).error < peak(j).error
+            if peak(j-1).error < peak(j).error && t_A-1 < t_B
                 t_A = t_A - 1;
-            else
+            elseif t_B-1 > t_A
                 t_B = t_B - 1;
             end
         end
@@ -139,11 +145,11 @@ while end_loop ~= 1
     end
     j = j + 1;
 end
-
+%}
 
         
 %%
-
+figure(1);
 
 T=T_OFF-T_ON;
 
@@ -189,12 +195,12 @@ for t=T_ON*t_int+1:1:T_OFF*t_int
     i = i + 1;
 end
 
-%%
+%
 %Now lets calc Discharge:
 C=bat_en;
-
-T_ON_1=peak(j-1).t_A/60;
-T_OFF_1=peak(j-1).t_B/60;
+n=length(peak);
+T_ON_1=round(peak(n).t_A/60);
+T_OFF_1=round(peak(n).t_B/60);
 %Estimate:
 %T_ON_1=17;
 %T_OFF_1=21;
@@ -225,19 +231,19 @@ ylabel('Charge/Discharge Rate (kW)');
 %%
 % Load Forecasting:
 figure(2);
-subplot(1,2,1);
+subplot(1,3,1);
 X=1:1:1440;
 plot(X,P_DAY1,'b-','LineWidth',3);
 hold on
 plot(P_max(2,1),P_max(1,1),'bo','LineWidth',3);
 hold on
-
+P_DAY1_bot=[peak(n).P_DAY1_bot];
 %Show DR period:
 plot(P_DAY1_bot(:,2),P_DAY1_bot(:,1),'c-','LineWidth',1.5);
 hold on
-plot([peak(j-1).t_A],P_DAY1([peak(j-1).t_A],1),'c.','LineWidth',6);
+plot([peak(n).t_A],P_DAY1([peak(n).t_A],1),'c.','LineWidth',6);
 hold on
-plot([peak(j-1).t_B],P_DAY1([peak(j-1).t_B],1),'c.','LineWidth',6);
+plot([peak(n).t_B],P_DAY1([peak(n).t_B],1),'c.','LineWidth',6);
 hold on
 
 X=X+1440;
@@ -248,8 +254,8 @@ hold on
 %Settings:
 xlabel('Minute of Day');
 ylabel('3PH KW');
-axis([1 2880 0 2500])
-subplot(1,2,2);
+axis([1 2880 900 2500])
+subplot(1,3,2);
 X=1:1:24;
 bar(X,E_kWh(:,1),'b')
 X=X+24;
@@ -257,11 +263,20 @@ hold on
 bar(X,E_kWh(:,2),'r')
 xlabel('Hour of Day');
 ylabel('Energy (kWh)');
-axis([1 49 0 2500]);
-%%
-figure(3)
+axis([1 49 900 2500]);
+
+subplot(1,3,3);
 X=1:1:1440;
-plot(X,CSI)
+X=X/60;
+plot(X,CSI,'b-')
+hold on
+plot(T_ON,CSI(T_ON*60),'bo','LineWidth',2.5);
+hold on
+plot(T_OFF,CSI(T_OFF*60),'bo','LineWidth',2.5);
+hold on
+plot(X,BncI,'r-');
+hold on
+plot(X,GHI,'c-');
 
 
 
