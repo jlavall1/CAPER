@@ -1,0 +1,50 @@
+Clear    ! Always start the Master with a Clear command
+! 
+! Define the Circuit
+! 
+New Circuit.Feeder4 Bus1=00_1
+~ BasekV= 22.87  pu= 1.03  angle= 0 
+/*
+~ Z1=[ 0.078336 ,  1.86336 ] ! Actual ohms
+~ Z2=[ 0.041472 ,  3.483072 ]
+~ Z0=[ 0 ,  13.642787 ]
+*/
+
+! OLTC
+New Transformer.T5240B12 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[00_1.1.2.3 01_1.1.2.3] 
+~ kvas=[40000.0 40000.0]
+~ kVs=[22.870000   22.870000]
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes
+
+New RegControl.T5240B12 Transformer=T5240B12 Winding=2 R= 0  X= 0 
+~ Vreg= 123.987758181313  
+~ Band= 1 
+~ PTratio= 110  
+~ CTPrim= 100 
+~ Delay = 45
+~ PTphase=1 !Phase B has the highest conn. capacity
+!~ maxtapchange=1
+
+! 
+! Library Data
+! 
+Redirect Wiredata.dss
+Redirect linespacing.dss
+Redirect CNLineCodes.dss
+
+Redirect LinesByPhase.dss
+Redirect Loads_QSTS.dss
+
+! 
+! Set the voltage bases
+! 
+Set voltagebases = [ 22.87 13.2 0.480, 0.208, 0.24, 0.12]
+
+CalcVoltageBases
+! 
+! Define the bus coordinates
+! 
+Buscoords Buses.CSV
+! 
