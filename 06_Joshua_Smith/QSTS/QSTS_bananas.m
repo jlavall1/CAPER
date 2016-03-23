@@ -1,3 +1,6 @@
+clear;
+clc;
+close all
 % 1. Generate Real Power & PV loadshape files:
 %PV_Loadshape_generation
 %cap_pos=1;
@@ -6,69 +9,20 @@
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 DSSCircuit = DSSCircObj.ActiveCircuit;
 %
+addpath('C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS');
 % 2. Compile the user selected circuit:
 ckt_direct_prime='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS\Master_QSTS.dss';
 DSSText.command = ['Compile ',ckt_direct_prime]; %Master_General.dss
-% Get gridpv information
-Cap_info = getCapacitorInfo(DSSCircObj);
-Lines_info = getLineInfo(DSSCircObj);
-% Sort lines by distance
-[~,index] = sortrows([Lines_info.bus1Distance].');
-Lines_info = Lines_info(index);
+
 
 %Loads_info = getLoadInfo(DSSCircObj);
-
-
+%%
 ReferenceData
-
-MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31]; %number of days/month
-
-slt_DAY_RUN = 1;
-% Scenarios
-if slt_DAY_RUN == 1
-    %One day run on 2/13
-    DAY = 13;
-    MNTH = 2;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F = DOY;
-elseif slt_DAY_RUN == 2
-    %3 mnth run 2/1 - 5/1
-    DAY = 1;
-    MNTH = 2;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F = DOY+MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
-elseif slt_DAY_RUN == 3
-    %Annual run
-    DAY = 1;
-    MNTH = 1;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F=364;
-end
-
-int_select=2;
-if int_select == 1
-    %5sec load sim step:
-    int_1m=12;
-    s_step=5; %sec
-    ss=1;
-    NUM_INC=60;
-elseif int_select == 2
-    %60sec load sim step:
-    int_1m=1;
-    s_step=60; %sec
-    ss=60;
-    NUM_INC=1;
-elseif int_select == 3
-    %5sec load sim step:
-    int_1m=12;
-    s_step=5; %sec
-    ss=5;
-    NUM_INC=60/5;
-end
 
 %%
 for DAY_I=DOY:1:DAY_F
     tic
+    %%
     %-- Update Irradiance/PV_KW
     if DAY > MTH_LN(MNTH)
         MNTH = MNTH + 1;
@@ -87,6 +41,7 @@ for DAY_I=DOY:1:DAY_F
     CAP_OPS_1(DAY_I).DSS(:,3) = eff_KVAR(1,3)*interp(CAP_OPS(DAY_I).DSS(:,3),int_1m);
     
 %Feeder 04
+        
     if DAY_I == DOY
         %--  Generate Solar Shapes:
         %{
@@ -100,6 +55,8 @@ for DAY_I=DOY:1:DAY_F
         fclose(fileID);
         %}
         %--  Generate Load Shapes:
+        %%
+        
         s='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS';
         filelocation=strcat(s,'\');
         fileID = fopen([filelocation,'Loadshape.dss'],'wt');
@@ -125,8 +82,8 @@ for DAY_I=DOY:1:DAY_F
         DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseC pmult=(',...
             sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,3)/LoadTotals.kWC),') qmult=(',...
             sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,3)/LoadTotals.kVARC),')']);
-        DSSText.Command = sprintf(['Edit Loadshape.LS_Solar mult=(',...
-            sprintf('%f ',PV_loadshape_daily_1(:,1)),')']);
+        %DSSText.Command = sprintf(['Edit Loadshape.LS_Solar mult=(',...
+            %sprintf('%f ',PV_loadshape_daily_1(:,1)),')']);
     end
     
     if DAY_I==DOY
@@ -157,11 +114,17 @@ for DAY_I=DOY:1:DAY_F
         for t = 1:1:1440*NUM_INC
             
             % Solve at current time step
+            
+            DSSCircuit.Solution.Solve
             if t == 1
                 Buses_info = getBusInfo(DSSCircObj);
+                % Get gridpv information
+                Cap_info = getCapacitorInfo(DSSCircObj);
+                Lines_info = getLineInfo(DSSCircObj);
+                % Sort lines by distance
+                [~,index] = sortrows([Lines_info.bus1Distance].');
+                Lines_info = Lines_info(index);
             end
-            DSSCircuit.Solution.Solve
-           
             DSSCircuit.SetActiveElement(sprintf('Line.%s',sub_line));
             Power   = DSSCircuit.ActiveCktElement.Powers;
             %Single Phase Real Power:
@@ -172,6 +135,16 @@ for DAY_I=DOY:1:DAY_F
             MEAS(t).Sub_Q_PhA = Power(2);
             MEAS(t).Sub_Q_PhB = Power(4);
             MEAS(t).Sub_Q_PhC = Power(6);
+            
+            %Potential Transformer Equivalent:
+            DSSCircuit.SetActiveElement(sprintf('Transformer.%s',trans_name)); % trans_name - OLTC name
+            Phs_V=DSSCircuit.ActiveElement.Voltages; % pulls all the fricking voltages
+            V_phC_s=Phs_V(13)+1i*Phs_V(14); %Phase C on secondary side
+            MEAS(t).V_OLTC_PT =abs(V_phC_s)/110; % develop logic to check turns ratio
+            %------------------------------------
+            %Voltage Regulation Relay Equiv:
+            DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
+            MEAS(t).OLTC_tap = str2double(DSSText.Result);
             
             %{
             Calc TVD every 5sec & only during PV hours
@@ -189,6 +162,8 @@ for DAY_I=DOY:1:DAY_F
             %}
 
             %ROX
+            %{ 
+            ***Update tap position and cap control
             if mod(t,900) == 0
                 %Every 15 mins..
                 Cap_Control_DSDR
@@ -198,6 +173,7 @@ for DAY_I=DOY:1:DAY_F
             if mod(ss*t,3600) == 0
                 fprintf('Hour: %d\n',ss*t/3600);
             end
+            %}
             
         end
         i = 1;
@@ -205,9 +181,9 @@ for DAY_I=DOY:1:DAY_F
         %save tap pos to reset after next day load allocation:
         DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
         TAP_DAY = DSSText.Result;
-        if feeder_NUM < 3
-            CAP_DAY = YEAR_CAPSTATUS(DAY_I).CAP_POS(t,1);
-        end
+        %if feeder_NUM < 3
+            %CAP_DAY = YEAR_CAPSTATUS(DAY_I).CAP_POS(t,1);
+        %end
         
     end
 end

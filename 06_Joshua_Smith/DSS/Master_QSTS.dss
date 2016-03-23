@@ -19,7 +19,7 @@ New Transformer.T5240B12 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[00_1
 ~ sub=yes
 
 New RegControl.T5240B12 Transformer=T5240B12 Winding=2 R= 0  X= 0 
-~ Vreg= 123.987758181313  
+~ Vreg= 124
 ~ Band= 1 
 ~ PTratio= 110  
 ~ CTPrim= 100 
@@ -35,7 +35,9 @@ Redirect linespacing.dss
 Redirect CNLineCodes.dss
 
 Redirect LinesByPhase.dss
+Redirect Loadshape.dss
 Redirect Loads_QSTS.dss
+
 
 ! 
 ! Set the voltage bases
