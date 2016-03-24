@@ -23,7 +23,7 @@ POI_loc=[143,164,46,46]; %BESS, PV1, PV2
 Zsc_loc=[00,10,25,50];
 %FNC=1; %1=Chapter4 2=Chapter 5
 
-if BESS == 1
+if BESS_ON == 1
     BESS_bus=(MAX_PV.WN_MIN(POI_loc(1),9));
 end
 

@@ -16,7 +16,8 @@ timeseries_span = 2; %Simulates 1 day (24hr) at a time.
 %time_int        = '1m';
 QSTS_select     = 4;
 VRR_Scheme      = 2;
-BESS            = 1;%0 is no battery, 1 is a battery
+BESS_ON         = 1; %0 is no battery, 1 is a battery
+BESS_TYPE       = 2; %1=8000kWh 2=4000kWh 3=1000kWh
 
 addpath(strcat(base_path,'\04_DSCADA'));
 addpath(strcat(base_path,'\01_Sept_Code\05_BESS'));
@@ -48,6 +49,8 @@ elseif strcmp(time_int,'5s') == 1
     fprintf('Sim. timestep=5s\n');
 end
 %}
+%%
+
 %%
 % Feeder info:
 path = strcat(base_path,'\04_DSCADA\Feeder_Data');

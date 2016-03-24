@@ -23,7 +23,7 @@ Lines_info = Lines_info(index);
 %---------------------------------
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % 5. User Select run length:
-slt_DAY_RUN = 1;
+slt_DAY_RUN = 8;
 
 if slt_DAY_RUN == 1
     %One day run on 2/13
@@ -68,8 +68,13 @@ elseif slt_DAY_RUN == 7
     MNTH = 4;
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY;
+elseif slt_DAY_RUN == 8
+    %One day run on 2/13
+    DAY = 1;
+    MNTH = 6;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY;
 end
-    
     
 
 int_select=1;
@@ -197,7 +202,7 @@ for DAY_I=DOY:1:DAY_F
             DSSText.command=sprintf('New RegControl.%s Transformer=%s Winding=2 R=0 X=0 Vreg=124 Band=1 PTratio=%s CTPrim=%s Delay=%s PTPhase=%s',trans_name,trans_name,PT_RATIO,CT_RATIO,'45',PT_PHASE);
         end
         %--  Connect BESS if Requested:
-        if BESS == 1
+        if BESS_ON == 1
             DECLARE_BESS
         end
         
@@ -248,8 +253,9 @@ for DAY_I=DOY:1:DAY_F
             %--------------------------------------------------------------
             % Voltage Reg. Equip. Controls:
             Cap_Control_Active_Q
-            if BESS == 1
-                BESS_Control_PeakShaving
+            if BESS_ON == 1
+                %BESS_Control_PeakShaving
+                BESS_PV_Control
             end
             OLTC_Control_Active
             %--------------------------------------------------------------
@@ -292,9 +298,10 @@ for DAY_I=DOY:1:DAY_F
     YEAR_LTC(DAY_I).OP=DATA_SAVE(1).LTC_Ops;
     YEAR_SIM_P(DAY_I).DSS_SUB=DATA_SAVE(1).phaseP;
     YEAR_SIM_Q(DAY_I).DSS_SUB=DATA_SAVE(1).phaseQ;
-    if BESS == 1
+    if BESS_ON == 1
         YEAR_BESS(DAY_I).SOC = BESS_M(:).SOC;
-        YEAR_BESS(DAY_I).kW  = BESS_M(:).kW;
+        YEAR_BESS(DAY_I).CR  = BESS_M(:).CR;
+        YEAR_BESS(DAY_I).DR  = BESS_M(:).DR;
     end
     %Go onto next day...    
     DAY = DAY + 1;
@@ -376,7 +383,7 @@ fn10='\YR_SIM_LTC_CTL';
 fn10=strcat(filedir,fn10);
 fn10=strcat(fn10,scen_nm);
 save(fn10,'YEAR_LTCSTATUS');
-if BESS == 1
+if BESS_ON == 1
     fn11='\YR_SIM_BESS_STATE';
     fn11=strcat(filedir,fn11);
     fn11=strcat(fn11,scen_nm);
@@ -390,6 +397,20 @@ YEAR_CAPSTATUS(DOY).Q_CAP(t,1)=MEAS(t).PF(1,7); %Reactive Power of cap_bank
 YEAR_CAPCNTRL(DOY).CTL_PF(t,1)=MEAS(t).PF(1,4); %control PF
 YEAR_CAPCNTRL(DOY).LD_LG(t,1)=MEAS(t).PF(1,6); %lead/lag
 %}
+%%
+if BESS_ON == 1
+    figure(1)
+    plot([BESS_M.SOC],'b-','LineWidth',2);
+    hold on
+    plot(SOC_ref*100,'b--','LineWidth',1);
+    figure(2)
+    plot([BESS_M.CR],'b-','LineWidth',3);
+    hold on
+    plot(CR_ref,'r--','LineWidth',2);
+    figure(3)
+    plot([BESS_M.PCC],'b-','LineWidth',2);
+    
+end
 %{
 plot([BESS(1:17280).PCC])
 hold on

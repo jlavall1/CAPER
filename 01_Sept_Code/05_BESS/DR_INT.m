@@ -8,9 +8,13 @@ function [ peak ] = DR_INT( t_max,P_DAY1,bat_en,sigma )
     t_B_o = t_max+1;
     end_loop = 0;
     
+    DAY = 1;
+    MNTH = 6;
+    DOY=calc_DOY(MNTH,DAY)
+    
     while end_loop ~= 1
-        %while t_B <= 1440
-        for t_B=t_B_o:1:1440
+        t_B = t_B_o;
+        while t_B <= 1440
             %Save scenerio:
             peak(j).t_A = t_A;
             peak(j).t_B = t_B;
@@ -34,8 +38,8 @@ function [ peak ] = DR_INT( t_max,P_DAY1,bat_en,sigma )
             end
             KW=P_DAY1(time);
             KD=P_DAY1_bot(:,1);
-            length(KW)
-            length(P_DAY1_bot(:,1))
+            length(KW);
+            length(P_DAY1_bot(:,1));
             peak(j).en = trapz(P_DAY1_bot(:,2),KW-KD)/60; %kWh    
             %--------------------------
             %Find energy that will be covered:
@@ -44,15 +48,34 @@ function [ peak ] = DR_INT( t_max,P_DAY1,bat_en,sigma )
             %Check to see if energy covered is enough:
             if peak(j).error > -1*bat_en*sigma && peak(j).error < bat_en*sigma
                 end_loop = 1;
+                t_B = 1440;
+                %save optimum position info.
                 peak(j).P_DAY1_bot = [P_DAY1_bot];
                 peak(j).time = time;
                 peak(j).P_DAY1_top = [P_DAY1(time)];
+                peak(j).P_BESS = [KW-KD];
             else
-                j = j + 1; %move onto next scenerio:
+                
+                %to make faster, check to see if error is constant:
+                
+                if t_B == 600
+                    if peak(j).error == peak(j-1).error
+                        t_B = 1440; %skip all remaining options b/c kw is not above anymore
+                    else
+                        t_B = t_B + 1;
+                    end
+                else
+                    %only for j = 1 case
+                    t_B = t_B + 1;
+                end 
+                j = j + 1;
+                %}
             end
+            %move onto next scenerio:
+            t_B = t_B + 1;
+            %j = j + 1; 
         end
-        
-        t_A = t_A -1; %find new P_A
+        t_A = t_A - 1; %find new P_A
         clear P_DAY1_bot
     end
         

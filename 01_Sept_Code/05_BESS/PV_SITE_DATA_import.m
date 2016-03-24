@@ -41,6 +41,7 @@ for i=1:1:12
     M_PVSITE_1(i).DAY(:,:) = M_SHELBY(i).DAY(1:end-1,1:6);    
     M_PVSITE_1(i).RR_1MIN(:,:) = M_SHELBY(i).RR_1MIN(:,1:3);
     M_PVSITE_1(i).PU(:,:) = M_SHELBY(i).kW(1:end-1,1)./M_PVSITE_INFO_1.kW;
+    M_PVSITE_1(i).GHI = M_SHELBY(i).GHI;
 end
 load M_SHELBY_SC.mat
 M_PVSITE_SC_1 = M_SHELBY_SC;
@@ -60,6 +61,7 @@ for i=1:1:12
     M_PVSITE_2(i).DAY(:,:) = M_MOCKS(i).DAY(1:end-1,1:6);    
     M_PVSITE_2(i).RR_1MIN(:,:) = M_MOCKS(i).RR_1MIN(:,1:3);
     M_PVSITE_2(i).PU(:,:) = M_MOCKS(i).kW(1:end-1,1)./M_PVSITE_INFO_2.kW;
+    M_PVSITE_2(i).GHI = M_MOCKS(i).GHI;
 end
 load M_MOCKS_SC.mat
 M_PVSITE_SC_2 = M_MOCKS_SC;
