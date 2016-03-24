@@ -13,9 +13,10 @@ PV_Site_path_1  = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_Irrad
 PV_Site_path_2  = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\01_Shelby_NC';
 
 timeseries_span = 2; %Simulates 1 day (24hr) at a time.
-%time_int        = '1m';
+int_select=1;   %1: 5s load, 1s sim 2:60s load, 60s sim
 QSTS_select     = 4;
-VRR_Scheme      = 2;
+%VRR_Scheme      = 2;
+
 BESS_ON         = 1; %0 is no battery, 1 is a battery
 BESS_TYPE       = 2; %1=8000kWh 2=4000kWh 3=1000kWh
 
@@ -25,31 +26,84 @@ addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
 %Objective:
 %       To load in all background files nessessary to run sim.
 %%
-%{
 % Simulation info:
-if strcmp(time_int,'1h') == 1
-    t_int=0;
-    s_step=3600;
-    sim_num='24';
-    fprintf('Sim. timestep=1hr\n');
-elseif strcmp(time_int,'1m') == 1
-    t_int=1;
-    s_step=60;
-    sim_num='1440';
-    fprintf('Sim. timestep=60s\n');
-elseif strcmp(time_int,'30s') == 1
-    t_int=2;
-    s_step=30;
-    sim_num='2880';
-    fprintf('Sim. timestep=30s\n');
-elseif strcmp(time_int,'5s') == 1
-    t_int=12;
-    s_step=5;
-    sim_num='17280';
-    fprintf('Sim. timestep=5s\n');
+MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
+% 5. User Select run length:
+slt_DAY_RUN = 8;
+
+
+if slt_DAY_RUN == 1
+    %One day run on 2/13
+    DAY = 13;
+    MNTH = 2;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY;
+elseif slt_DAY_RUN == 2
+    %3 mnth run 2/1 - 5/1
+    DAY = 1;
+    MNTH = 2;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY+MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
+elseif slt_DAY_RUN == 3
+    %Annual run
+    DAY = 1;
+    MNTH = 1;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F=364;
+elseif slt_DAY_RUN == 4
+    %One week run
+    DAY = 1;
+    MNTH = 6;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY+6;
+elseif slt_DAY_RUN == 5
+    %Summer run:
+    DAY = 1;
+    MNTH = 6;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY+MTH_LN(6)+MTH_LN(7)+MTH_LN(8)-1;
+elseif slt_DAY_RUN == 6
+    %DSDR to show cap movements:
+    DAY = 13;
+    MNTH = 6;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY+6; %1 week run.
+elseif slt_DAY_RUN == 7
+    %DAY to show increase in TVD vs. Distance: (110)
+    %One day run on 2/13
+    DAY = 20;
+    MNTH = 4;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY;
+elseif slt_DAY_RUN == 8
+    %One day run on 2/13
+    DAY = 1;
+    MNTH = 6;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY;
 end
-%}
-%%
+    
+if int_select == 1
+    %5sec load sim step:
+    int_1m=12;
+    s_step=5; %sec
+    ss=1;
+    NUM_INC=60;
+    fprintf('5 sec. Load w/ 1 sec Sim. stepsize\n');
+elseif int_select == 2
+    %60sec load sim step:
+    int_1m=1;
+    s_step=60; %sec
+    ss=1;
+    NUM_INC=1;
+    fprintf('60 sec. Load w/ 60 sec Sim. stepsize\n');
+elseif int_select == 3
+    %5sec load sim step:
+    int_1m=12;
+    s_step=5; %sec
+    ss=5;
+    NUM_INC=60/5;
+end
 
 %%
 % Feeder info:

@@ -95,10 +95,11 @@ function [ SOC_ref ,CR_ref, t_CR ] = SOCref_CR(BncI,CSI,CSI_TH,BESS,C,DoD)
         CR_ref(t,1)=CR_m(i,1);
         i = i + 1;
     end
-    CR_ref=CR_ref*COMP_CR;
+    %CR_ref=CR_ref*COMP_CR;
     i = 2;
     for t=T_ON*t_int+1:1:T_OFF*t_int
         %Calculate Energy Charged per kth interval:
+        CR_ref(t,1)=CR_ref(t,1)*COMP_CR;
         kWh_ref(i,1)=kWh_ref(i-1,1)+EFF_CR*CR_ref(t,1)*(1/3600); %kWh
         
         %Save for reference w/ QSTS:

@@ -1,104 +1,104 @@
 
-%Goal: To implement an external capacitor controller.
+%Inputs each kth interval:
+%   cap_timer
+%   vio_time
+%   t
+%SWC_STATE
+cap_timer=SWC_STATE(t).SC_TMR;
+vio_time=SWC_STATE(t).VIO_TIME;
+SC_OP=SWC_STATE(t).SC_OP;
+SC_CL=SWC_STATE(t).SC_CL;
+%LTC_STATE
+SVR_TMR=LTC_STATE(t).SVR_TMR;
+%MSTR_STATE
+F_CAP_CL = MSTR_STATE(t).F_CAP_CL;
+F_CAP_OP = MSTR_STATE(t).F_CAP_OP;
 
-%References:
-%   Cap_info
-%   Bus_info
-%   Line_info
-%   KVAR_ACTUAL.sw_cap(:,1)
-%%
-DSSCircuit.SetActiveElement(sprintf('Line.%s',Lines_info(1).name));
-Power   = DSSCircuit.ActiveCktElement.Powers;
-%Single Phase Real Power:
-MEAS(t).Sub_P_PhA = Power(1);
-MEAS(t).Sub_P_PhB = Power(3);
-MEAS(t).Sub_P_PhC = Power(5);
-%Single Phase Reactive Power:
-MEAS(t).Sub_Q_PhA = Power(2);
-MEAS(t).Sub_Q_PhB = Power(4);
-MEAS(t).Sub_Q_PhC = Power(6);
-%Calculate Substation PF:
-MEAS(t).PF(1,1) = abs(MEAS(t).Sub_P_PhA)/(sqrt((MEAS(t).Sub_P_PhA^2)+(MEAS(t).Sub_Q_PhA^2))); %PF_phA
-MEAS(t).PF(1,2) = abs(MEAS(t).Sub_P_PhB)/(sqrt((MEAS(t).Sub_P_PhB^2)+(MEAS(t).Sub_Q_PhB^2))); %PF_phB
-MEAS(t).PF(1,3) = abs(MEAS(t).Sub_P_PhC)/(sqrt((MEAS(t).Sub_P_PhC^2)+(MEAS(t).Sub_Q_PhC^2))); %PF_phC
-MEAS(t).PF(1,4) = (MEAS(t).PF(1,1)+MEAS(t).PF(1,2)+MEAS(t).PF(1,3))/3;                        %average PF
-MEAS(t).PF(1,5) = MEAS(t).Sub_Q_PhA+MEAS(t).Sub_Q_PhB+MEAS(t).Sub_Q_PhC;
-%See if PF is lead/lag:
-if MEAS(t).PF(1,5) < 0
-    MEAS(t).PF(1,6)=1; %lead
-else
-    MEAS(t).PF(1,6)=0; %lag
-end
-%%
-DSSCircuit.SetActiveElement(sprintf('Capacitor.%s',swcap_name));
-Power   = DSSCircuit.ActiveCktElement.Powers;
-%Single Phase Reactive Power:
-MEAS(t).CAP_Q_PhA = Power(2);
-MEAS(t).CAP_Q_PhB = Power(4);
-MEAS(t).CAP_Q_PhC = Power(6);
-MEAS(t).PF(1,7) = MEAS(t).CAP_Q_PhA+MEAS(t).CAP_Q_PhB+MEAS(t).CAP_Q_PhC;
-%DSSText.command = sprintf('? Capacitor.%s.states',swcap_name);
-if abs(MEAS(t).CAP_Q_PhA) > Caps.Swtch*0.4
-    cap_pos=1;
-else
-    cap_pos=0;
-end
-%%
-%-- CAP. CONTROL:
+
+%-- CAP. CONTROL Settings:
 PF_SUB_LG=0.96;  %lagging setpoint
 PF_SUB_LD=0.98; %leading setpoint
 CAP_CTRL_DELAY=45; %secs
+Caps.Swtch=150; %kVAR
+%-- Inputs from SCADA_PULL:
+cap_pos = SCADA(t).SC_S;
+LD_LG = SCADA(t).Sub_LDLG; %1=lead & 0=lag
+SUB_3Q = SCADA(t).Sub_3Q;
+
+%%
+%-- Relay Logic:
 if cap_timer == CAP_CTRL_DELAY
     %Now change the state accordingly:
     if cap_pos == 0
         DSSText.command=sprintf('Edit Capacitor.%s states=1',swcap_name);
-        cap_pos=1;
+        SC_CL=0;
         cap_timer=0;
+        vio_time=0;
         fprintf('\tCap Closed.\n');
     elseif cap_pos == 1
         DSSText.command=sprintf('Edit Capacitor.%s states=0',swcap_name);
-        cap_pos=1;
+        SC_OP=0;
         cap_timer=0;
+        vio_time=0;
         fprintf('\tCap Opened.\n');
     end
 elseif cap_timer ~= 0
     %A timer is still running...
     cap_timer = cap_timer + 1;
-elseif MEAS(t).PF(1,6) == 0 && MEAS(t).PF(1,5) > Caps.Swtch*3*1.1
+    if SVR_TMR ~= 0
+        %Prevent both Operating at once.
+        SVR_TMR=0;
+    end
+elseif F_CAP_CL == 1
+    %Override the capacitor to close in order to fix LV @ OLTC
+    %   Condition is that cap_timer = 0
+    if cap_pos == 0
+        vio_time=t;
+        SC_CL=1;
+        cap_timer = cap_timer+1;
+        fprintf('Override of SW_CAP Closing Initiated\n');
+    else
+        vio_time=0;
+        SC_CL=0;
+        cap_timer = 0;
+    end
+elseif F_CAP_OP == 1
+    %Override the capacitor to open in order to fix HV @ OLTC
+    %   Condition is that cap_timer = 0
+    if cap_pos == 1
+        vio_time=t;
+        SC_OP=1;
+        cap_timer = cap_timer+1;
+        fprintf('Override of SW_CAP Opening Initiated\n');
+    else
+        vio_time=0;
+        SC_OP=0;
+        cap_timer = 0;
+    end
+elseif LD_LG == 0 && SUB_3Q > Caps.Swtch*3*1.1
     if cap_pos == 0 %meaning it is open right now:
         if cap_timer == 0
             vio_time=t;
+            SC_CL=1;
             cap_timer = cap_timer+1;
             fprintf('SW_CAP Timer to close Initiated\n');
         end
     end
-elseif MEAS(t).PF(1,6) == 1 && abs(MEAS(t).PF(1,5)) > Caps.Swtch*3*1.1 %to prevent low PF lag 
+elseif LD_LG == 1 && abs(SUB_3Q) > Caps.Swtch*3*1.1 %to prevent low PF lag 
     if cap_pos == 1
         if cap_timer == 0
             vio_time=t;
+            SC_OP=1;
             cap_timer = cap_timer+1;
             fprintf('SW_CAP Timer to open Initiated\n');
         end
     end
 end
+%Output Communication to Other Equipment:
+SWC_STATE(t+1).VIO_TIME = vio_time;
+SWC_STATE(t+1).SC_TMR = cap_timer;
+SWC_STATE(t+1).SC_OP = SC_OP;
+SWC_STATE(t+1).SC_CL = SC_CL;
 
-        
-        
-%%
-%Save cap_pos command for next 1 sec of operation:
-YEAR_CAPSTATUS(DAY_I).CAP_POS(t,1)=cap_pos;
-YEAR_CAPSTATUS(DAY_I).Q_CAP(t,1)=MEAS(t).PF(1,7); %Reactive Power of cap_bank
-YEAR_CAPCNTRL(DAY_I).CTL_PF(t,1)=MEAS(t).PF(1,4); %control PF
-YEAR_CAPCNTRL(DAY_I).LD_LG(t,1)=MEAS(t).PF(1,6); %lead/lag
-
-%CAPCNTRL_TROUBLE{1,1:4}={'cap_pos','Q_Cap','PF','Lead/lag'};
-
-CAPCNTRL_TROUBLE{t+1,1}=cap_pos;
-CAPCNTRL_TROUBLE{t+1,2}=MEAS(t).PF(1,7);
-CAPCNTRL_TROUBLE{t+1,3}=MEAS(t).PF(1,4);
-CAPCNTRL_TROUBLE{t+1,4}=MEAS(t).PF(1,6);
-CAPCNTRL_TROUBLE{t+1,5}=cap_timer;
-CAPCNTRL_TROUBLE{t+1,6}=MEAS(t).Sub_P_PhA+MEAS(t).Sub_P_PhB+MEAS(t).Sub_P_PhC;
-CAPCNTRL_TROUBLE{t+1,7}=MEAS(t).PF(1,5);
-
+LTC_STATE(t+1).SVR_TMR=SVR_TMR;
 

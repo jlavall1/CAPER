@@ -27,18 +27,6 @@ if t == 1
     [SOC_ref,CR_ref,t_CR]=SOCref_CR(BncI,CSI,CSI_TH,BESS,C,DoD);
 end
 %%
-%Control Power:
-BESS_M(t).PCC=MEAS(t).Sub_P_PhA+MEAS(t).Sub_P_PhB+MEAS(t).Sub_P_PhC;
-%P_set=3500; %kW
-%P_max=KW_RATE;
-%   Feed back on state of Battery:
-DSSCircuit.SetActiveElement('Storage.BESS1');
-DSSText.command='? Storage.BESS1.%stored';
-BESS_M(t).SOC=str2double(DSSText.Result);
-DSSText.command='? Storage.BESS1.%Discharge';
-BESS_M(t).DR=BESS.Prated*(str2double(DSSText.Result))/100;
-DSSText.command='? Storage.BESS1.%Charge';
-BESS_M(t).CR=BESS.Prated*(str2double(DSSText.Result))/100;
 
 %%
 

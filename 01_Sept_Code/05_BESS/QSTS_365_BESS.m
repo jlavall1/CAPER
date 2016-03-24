@@ -8,104 +8,24 @@ DSSCircuit = DSSCircObj.ActiveCircuit;
 %
 % 2. Compile the user selected circuit:
 DSSText.command = ['Compile ',ckt_direct_prime]; %Master_General.dss
-%location = cd;
-%cd(location);
 
-
+%   This will not be available without solving circuit first.
 Cap_info = getCapacitorInfo(DSSCircObj);
 Lines_info = getLineInfo(DSSCircObj);
 [~,index] = sortrows([Lines_info.bus1Distance].');
 Lines_info = Lines_info(index);
-
 %Loads_info = getLoadInfo(DSSCircObj);
-%%
-% 4. Main Loop
-%---------------------------------
-MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
-% 5. User Select run length:
-slt_DAY_RUN = 8;
-
-if slt_DAY_RUN == 1
-    %One day run on 2/13
-    DAY = 13;
-    MNTH = 2;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F = DOY;
-elseif slt_DAY_RUN == 2
-    %3 mnth run 2/1 - 5/1
-    DAY = 1;
-    MNTH = 2;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F = DOY+MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
-elseif slt_DAY_RUN == 3
-    %Annual run
-    DAY = 1;
-    MNTH = 1;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F=364;
-elseif slt_DAY_RUN == 4
-    %One week run
-    DAY = 1;
-    MNTH = 6;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F = DOY+6;
-elseif slt_DAY_RUN == 5
-    %Summer run:
-    DAY = 1;
-    MNTH = 6;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F = DOY+MTH_LN(6)+MTH_LN(7)+MTH_LN(8)-1;
-elseif slt_DAY_RUN == 6
-    %DSDR to show cap movements:
-    DAY = 13;
-    MNTH = 6;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F = DOY+6; %1 week run.
-elseif slt_DAY_RUN == 7
-    %DAY to show increase in TVD vs. Distance: (110)
-    %One day run on 2/13
-    DAY = 20;
-    MNTH = 4;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F = DOY;
-elseif slt_DAY_RUN == 8
-    %One day run on 2/13
-    DAY = 1;
-    MNTH = 6;
-    DOY=calc_DOY(MNTH,DAY);
-    DAY_F = DOY;
-end
-    
-
-int_select=1;
-if int_select == 1
-    %5sec load sim step:
-    int_1m=12;
-    s_step=5; %sec
-    ss=1;
-    NUM_INC=60;
-    fprintf('5 sec. Load w/ 1 sec Sim. stepsize\n');
-elseif int_select == 2
-    %60sec load sim step:
-    int_1m=1;
-    s_step=60; %sec
-    ss=1;
-    NUM_INC=1;
-    fprintf('60 sec. Load w/ 60 sec Sim. stepsize\n');
-elseif int_select == 3
-    %5sec load sim step:
-    int_1m=12;
-    s_step=5; %sec
-    ss=5;
-    NUM_INC=60/5;
-end
 
 %%
-cap_timer = 0;
-tap_timer = 0;
+% 1. Initialize Flags:
+%cap_timer = 0;
+%tap_timer = 0;
 v_sum = 0;
-BUCK = 0;
-BOOST = 0;
+%BUCK = 0;
+%BOOST = 0;
+%vio_LTC_time=0;
+
+
 
 for DAY_I=DOY:1:DAY_F
     tic
@@ -197,14 +117,26 @@ for DAY_I=DOY:1:DAY_F
         cap_pos = sw_cap(1);    %(might not be needed...)
         %--  OLTC State of operation:
         DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,'1.00625');
-        if VRR_Scheme == 1
-            %To have solely DSS Default controller on OTLC
-            DSSText.command=sprintf('New RegControl.%s Transformer=%s Winding=2 R=0 X=0 Vreg=124 Band=1 PTratio=%s CTPrim=%s Delay=%s PTPhase=%s',trans_name,trans_name,PT_RATIO,CT_RATIO,'45',PT_PHASE);
-        end
+        
         %--  Connect BESS if Requested:
         if BESS_ON == 1
             DECLARE_BESS
         end
+        %-- Initialize State variables:
+        LTC_STATE(1).VIO_TIME=0;
+        LTC_STATE(1).SVR_TMR=0;
+        LTC_STATE(1).HV = 0;
+        LTC_STATE(1).LV = 0;
+        
+        SWC_STATE(1).VIO_TIME=0;
+        SWC_STATE(1).SC_TMR = 0;
+        SWC_STATE(1).SC_OP = 0;
+        SWC_STATE(1).SC_CL = 0;
+        
+        MSTR_STATE(1).F_CAP_CL=0;
+        MSTR_STATE(1).F_CAP_OP=0;
+        MSTR_STATE(1).SC_CL_EN=0;
+        MSTR_STATE(1).SC_OP_EN=0;
         
     else
         %Save VRD states for next DAY run.
@@ -227,6 +159,10 @@ for DAY_I=DOY:1:DAY_F
             end
             DSSCircuit.Solution.Solve
             %--------------------------------------------------------------
+            %   Pull only available field datapoints:
+            SCADA_PULL
+            %^Outputs: SCADA(t) & BESS_M(t)
+            %{
             DSSCircuit.SetActiveElement(sprintf('Line.%s',sub_line));
             Power   = DSSCircuit.ActiveCktElement.Powers;
             %   Single Phase Real Power:
@@ -237,6 +173,7 @@ for DAY_I=DOY:1:DAY_F
             MEAS(t).Sub_Q_PhA = Power(2);
             MEAS(t).Sub_Q_PhB = Power(4);
             MEAS(t).Sub_Q_PhC = Power(6);
+            %}
             %--------------------------------------------------------------
             % Calc TVD every 5sec & only during PV hours (10AM-4PM)
             if t>=10*3600/ss && t<16*3600/ss
@@ -252,12 +189,16 @@ for DAY_I=DOY:1:DAY_F
             end  
             %--------------------------------------------------------------
             % Voltage Reg. Equip. Controls:
-            Cap_Control_Active_Q
+            Master_Control
             if BESS_ON == 1
                 %BESS_Control_PeakShaving
                 BESS_PV_Control
             end
-            OLTC_Control_Active
+            [SWC_STATE(t),LTC_STATE(t),MSTR_STATE(t)]=OLTC_Control(DSSCircObj,SCADA(t),SWC_STATE(t),LTC_STATE(t),MSTR_STATE(t),t);
+            [SWC_STATE(t+1),LTC_STATE(t+1)]=SWC_Control(DSSCircObj,SCADA(t),SWC_STATE(t),LTC_STATE(t),MSTR_STATE(t),t);
+
+            %OLTC_Control_Active
+            
             %--------------------------------------------------------------
             % Print out HoD:
             if mod(ss*t,3600) == 0
@@ -274,38 +215,20 @@ for DAY_I=DOY:1:DAY_F
         end
         i = 1; %(index for TVD & FDR_Voltage vectors)
         %------------------------------------------------------------------
-        %Save tap pos to reset after next day load allocation:
-        DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
-        TAP_DAY = DSSText.Result;
-        if feeder_NUM < 3
-            CAP_DAY = YEAR_CAPSTATUS(DAY_I).CAP_POS(t,1);
-        end
-        
+        %Save Status of Equipement for Next Day Run:
+        TAP_DAY = SCADA(t).OLTC_TAP;
+        CAP_DAY = SCADA(t).SC_S; 
     end
+    %%
     toc
     tic
     Export_Monitors_timeseries
-    %Save Substation Info:
-    %%
-    YEAR_SUB(DAY_I).V=DATA_SAVE(1).phaseV;
-    YEAR_SUB(DAY_I).TVD_SAVE = TVD_SAVE;
-    YEAR_SUB(DAY_I).max_V=max([YEAR_FDR.V]);
-    YEAR_SUB(DAY_I).min_V=min([YEAR_FDR.V]);
-    if slt_DAY_RUN == 7
-        %Special case to save all voltages:
-        YEAR_SUB(DAY_I).all_V=[YEAR_FDR.V];
-    end
-    YEAR_LTC(DAY_I).OP=DATA_SAVE(1).LTC_Ops;
-    YEAR_SIM_P(DAY_I).DSS_SUB=DATA_SAVE(1).phaseP;
-    YEAR_SIM_Q(DAY_I).DSS_SUB=DATA_SAVE(1).phaseQ;
-    if BESS_ON == 1
-        YEAR_BESS(DAY_I).SOC = BESS_M(:).SOC;
-        YEAR_BESS(DAY_I).CR  = BESS_M(:).CR;
-        YEAR_BESS(DAY_I).DR  = BESS_M(:).DR;
-    end
+    %Save Results:
+    DAY_Struct_SAVE
+    toc
+
     %Go onto next day...    
     DAY = DAY + 1;
-    toc
 end
 %%
 %Save necessary datasets:
