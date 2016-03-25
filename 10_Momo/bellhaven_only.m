@@ -15,7 +15,7 @@ end
 
 i = 1;
 j = 1;
-TAR_SUB = zeros(3,4); %col=1(conn) col2=(pending)
+TAR_SUB = zeros(3,5); %col=1(conn) col2=(pending)
 for i = 1:length(substation_matches)
     SUB = substation_matches(i).SUBSTATION;
     for j=1:1:length(conn)
@@ -56,6 +56,10 @@ TAR_SUB(3,3) = sum([utility_conn.KW]);
 TAR_SUB(1,4) = sum([res_pend.KW]);
 TAR_SUB(2,4) = sum([comm_pend.KW]);
 TAR_SUB(3,4) = sum([utility_pend.KW]);
+
+TAR_SUB(1,5) = 100*(TAR_SUB(1,1)*0.2 + TAR_SUB(1,2)*0.8)/((TAR_SUB(1,3)*0.2 + TAR_SUB(1,4)*0.8));
+TAR_SUB(2,5) = 100*(TAR_SUB(2,1)*0.2 + TAR_SUB(2,2)*0.8)/((TAR_SUB(2,3)*0.2 + TAR_SUB(2,4)*0.8));
+TAR_SUB(3,5) = 100*(TAR_SUB(3,1)*0.2 + TAR_SUB(3,2)*0.8)/((TAR_SUB(3,3)*0.2 + TAR_SUB(3,4)*0.8));
 
 
 %{

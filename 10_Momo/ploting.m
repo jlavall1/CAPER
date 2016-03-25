@@ -1,8 +1,8 @@
 close all
 figure(1)
-plot([dist.LONG],[dist.LAT],'xw','MarkerSize',5);
+plot([dist.LONG],[dist.LAT],'.w','MarkerSize',10);
 plotGoogleMap
-%axis([X_min X_Max Y_min Y_max])
+axis([-83.35 -78.55 33.8 36.8 ])
 %%
 figure(2)
 h(1:length(res_conn)) = plot([res_conn.LONG]',[res_conn.LAT]','.c','MarkerSize',10);
