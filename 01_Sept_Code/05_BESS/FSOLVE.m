@@ -7,18 +7,26 @@ clc
 %Try to find correct T_ON & T_OFF:
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\04_Mocksville_NC');
 load M_MOCKS.mat
-
+for i=1:1:12
+    M_PVSITE(i).GHI = M_MOCKS(i).GHI;
+end
 load P_Mult_60s_Flay.mat
 
 %One day run on 6/1:
+
 DAY = 1;
 MNTH = 6;
+%{
+DAY = 1;
+MNTH = 1;
+%}
 DOY=calc_DOY(MNTH,DAY);
 
+
 %-----------------
-CSI=M_MOCKS(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),3);
-BncI=M_MOCKS(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),1); %1minute interval:
-GHI=M_MOCKS(MNTH).kW(time2int(DAY,0,0):time2int(DAY,23,59),1)/5000; %PU
+CSI=M_PVSITE(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),3);
+BncI=M_PVSITE(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),1); %1minute interval:
+%GHI=M_PVSITE(MNTH).kW(time2int(DAY,0,0):time2int(DAY,23,59),1)/5000; %PU
 %convert to P.U.
 %inputs:
 
@@ -37,6 +45,13 @@ BESS.Crated=10000;
 %C=BESS.Crated*BESS.DoD_max; %this will change....
 C=BESS.Crated;
 [SOC_ref,CR_ref,t_CR]=SOCref_CR(BncI,CSI,CSI_TH,BESS,C,BESS.DoD_max);
+
+BESS_INFO.CSI=CSI;
+BESS_INFO.BncI=BncI;
+BESS_INFO.SOC_start=BESS.DoD_max;
+BESS_INFO.SOC_ref=SOC_ref;
+BESS_INFO.CR_ref=CR_ref;
+BESS_INFO.t_CR=t_CR;
 %}
 %%
 %{

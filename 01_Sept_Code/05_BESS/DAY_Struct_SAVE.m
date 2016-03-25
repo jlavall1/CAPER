@@ -19,6 +19,11 @@ if BESS_ON == 1
     YEAR_BESS(DAY_I).SOC = [BESS_M.SOC];
     YEAR_BESS(DAY_I).CR  = [BESS_M.CR];
     YEAR_BESS(DAY_I).DR  = [BESS_M.DR];
+    YEAR_BESS(DAY_I).CSI = CSI;
+    YEAR_BESS(DAY_I).BcnI= BncI;
+    YEAR_BESS(DAY_I).SOC_ref=SOC_ref';
+    YEAR_BESS(DAY_I).CR_ref=CR_ref';
+    YEAR_BESS(DAY_I).t_CR=t_CR;
 end
 
 %OTHER INFO:

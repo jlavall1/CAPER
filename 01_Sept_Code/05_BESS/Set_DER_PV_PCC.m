@@ -54,9 +54,9 @@ elseif PV_SCEN == 2
     fprintf('%0.1f kW PV, %0.3f km away from sub\n',PV_pmpp,MAX_PV.SU_MIN(POI_loc(LC),6));
     fprintf('At Bus=%d\n',PV_bus);
     fprintf('file ending: %s\n',num2str(Zsc_loc(LC)));
-    M_PVSITE = M_PVSITE_1;
-    M_PVSITE_INFO = M_PVSITE_INFO_1;
-    M_PVSITE_SC = M_PVSITE_SC_1;
+    M_PVSITE = M_PVSITE_2;
+    M_PVSITE_INFO = M_PVSITE_INFO_2;
+    M_PVSITE_SC = M_PVSITE_SC_2;
     %Direct to correct Master file:
     ckt_direct_prime = strcat(ckt_direct(1:idx(1)-1),'_QSTS.dss');
     
