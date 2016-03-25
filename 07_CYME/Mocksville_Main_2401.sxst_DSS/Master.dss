@@ -19,6 +19,8 @@ Redirect Shapes.dss
 Redirect Elements\Lines.dss
 Redirect Elements\Loads.dss
 Redirect Elements\Capacitors.dss
+Redirect Elements\Generators.dss
+Redirect Elements\Batteries.dss
 !Redirect Elements\Regulators.dss
 
 ! Circuit Control Settings

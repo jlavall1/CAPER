@@ -1,0 +1,2 @@
+New Generator.PV1 bus1=260889546 phases=3 kv=24.9 kW=10  pf=1.00 Daily=LS_Solar enable=true
+New Generator.PV2 bus1=260889546 phases=3 kv=24.9 kW=336 pf=1.00 Daily=LS_Solar enable=true

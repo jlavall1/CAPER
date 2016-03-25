@@ -19,11 +19,16 @@ for i = 1:length(substation_types)
     if strncmp(substation_types(i,1),dis,4)
         dist(j).LAT = num(i-1,4);
         dist(j).LONG = num(i-1,5);
+        dist(j).NAME = raw{i,1};
         j = j + 1;
     end
 end
-
+bell_lat = 35.2464;
+bell_long = -81.3396;
+% number 344 is dist struct is bellhaven.
 %this is used to run the plotGoogleMap function
-plot([dist.LONG],[dist.LAT],'.y','MarkerSize',10);
-plotGoogleMap
+%plot([dist.LONG],[dist.LAT],'xw','MarkerSize',5);
+%plotGoogleMap
 
+%plot([bell_long],[bell_lat],'.b','MarkerSize',25);
+%plotGoogleMap

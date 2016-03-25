@@ -4,8 +4,8 @@ clc
 close all
 %================
 %Select Choice--
-Feeder = 2;
-Plot_NUM = 3;
+Feeder = 3;
+Plot_NUM = 2;
 %1=Solar Coeff VS load  
 %2=Show POIs         
 %3=Sum. OLTC TapCngs(

@@ -29,41 +29,48 @@ PV_loadshape_daily = (PV_ON_OFF-1)*M_PVSITE_1(MNTH).PU(time2int(DAY,0,0):time2in
         fclose(fileID);
 %}
 %----------------------------------------
-addpath(PV_Site_path_2);
-load M_SHELBY_INFO.mat
-M_PVSITE_INFO_1.RR_distrib = M_SHELBY_INFO.RR_distrib;
-M_PVSITE_INFO_1.kW = M_SHELBY_INFO.kW;
-M_PVSITE_INFO_1.name = M_SHELBY_INFO.name;
-M_PVSITE_INFO_1.VI = M_SHELBY_INFO.VI;
-M_PVSITE_INFO_1.CI = M_SHELBY_INFO.CI;
-load M_SHELBY.mat
-for i=1:1:12
-    M_PVSITE_1(i).DAY(:,:) = M_SHELBY(i).DAY(1:end-1,1:6);    
-    M_PVSITE_1(i).RR_1MIN(:,:) = M_SHELBY(i).RR_1MIN(:,1:3);
-    M_PVSITE_1(i).PU(:,:) = M_SHELBY(i).kW(1:end-1,1)./M_PVSITE_INFO_1.kW;
-end
-load M_SHELBY_SC.mat
-M_PVSITE_SC_1 = M_SHELBY_SC;
-clearvars M_SHELBY_INFO M_SHELBY M_SHELBY_SC
-%----------------------------------------
+%           PV 1        %
 addpath(PV_Site_path_1);
 load M_TAYLOR_INFO.mat
 load M_MOCKS_INFO.mat
-M_PVSITE_INFO_2.RR_distrib = M_MOCKS_INFO.RR_distrib;
-M_PVSITE_INFO_2.kW = M_MOCKS_INFO.kW;
-M_PVSITE_INFO_2.name = M_MOCKS_INFO.name;
-M_PVSITE_INFO_2.VI = M_TAYLOR_INFO.VI;
-M_PVSITE_INFO_2.CI = M_TAYLOR_INFO.CI;
+M_PVSITE_INFO_1.RR_distrib = M_MOCKS_INFO.RR_distrib;
+M_PVSITE_INFO_1.kW = M_MOCKS_INFO.kW;
+M_PVSITE_INFO_1.name = M_MOCKS_INFO.name;
+M_PVSITE_INFO_1.VI = M_TAYLOR_INFO.VI;
+M_PVSITE_INFO_1.CI = M_TAYLOR_INFO.CI;
 load M_MOCKS.mat
 
 for i=1:1:12
-    M_PVSITE_2(i).DAY(:,:) = M_MOCKS(i).DAY(1:end-1,1:6);    
-    M_PVSITE_2(i).RR_1MIN(:,:) = M_MOCKS(i).RR_1MIN(:,1:3);
-    M_PVSITE_2(i).PU(:,:) = M_MOCKS(i).kW(1:end-1,1)./M_PVSITE_INFO_2.kW;
+    M_PVSITE_1(i).DAY(:,:) = M_MOCKS(i).DAY(1:end-1,1:6);    
+    M_PVSITE_1(i).RR_1MIN(:,:) = M_MOCKS(i).RR_1MIN(:,1:3);
+    M_PVSITE_1(i).PU(:,:) = M_MOCKS(i).kW(1:end-1,1)./M_PVSITE_INFO_1.kW;
+    M_PVSITE_1(i).GHI = M_MOCKS(i).GHI;
 end
 load M_MOCKS_SC.mat
-M_PVSITE_SC_2 = M_MOCKS_SC;
+M_PVSITE_SC_1 = M_MOCKS_SC;
 clearvars M_MOCKS_INFO M_MOCKS M_TAYLOR_INFO M_MOCKS_SC
+
+
+%----------------------------------------
+%           PV 2        %
+addpath(PV_Site_path_2);
+load M_SHELBY_INFO.mat
+M_PVSITE_INFO_2.RR_distrib = M_SHELBY_INFO.RR_distrib;
+M_PVSITE_INFO_2.kW = M_SHELBY_INFO.kW;
+M_PVSITE_INFO_2.name = M_SHELBY_INFO.name;
+M_PVSITE_INFO_2.VI = M_SHELBY_INFO.VI;
+M_PVSITE_INFO_2.CI = M_SHELBY_INFO.CI;
+load M_SHELBY.mat
+for i=1:1:12
+    M_PVSITE_2(i).DAY(:,:) = M_SHELBY(i).DAY(1:end-1,1:6);    
+    M_PVSITE_2(i).RR_1MIN(:,:) = M_SHELBY(i).RR_1MIN(:,1:3);
+    M_PVSITE_2(i).PU(:,:) = M_SHELBY(i).kW(1:end-1,1)./M_PVSITE_INFO_2.kW;
+    M_PVSITE_2(i).GHI = M_SHELBY(i).GHI;
+end
+load M_SHELBY_SC.mat
+M_PVSITE_SC_2 = M_SHELBY_SC;
+clearvars M_SHELBY_INFO M_SHELBY M_SHELBY_SC
+
 
 
 

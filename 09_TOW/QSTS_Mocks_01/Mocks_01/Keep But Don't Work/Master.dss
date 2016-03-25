@@ -1,0 +1,55 @@
+Clear
+
+! Define the Circuit
+New Circuit.MOCKSVILLE_MN_03552401 Bus1=MOCKSVILLE_MN_03552401
+~ BasekV=23.90  pu=1.0300  angle=0.00
+~ Z1=[ 0.0103 2.5590 ]
+~ Z2=[ 0.0103 2.5590 ]
+~ Z0=[ 0.0000 2.2448 ]
+
+! Library Data
+Redirect Libraries\WireData.dss
+Redirect Libraries\LineSpacing.dss
+Redirect Libraries\UGLineCodes.dss
+
+! Loadshapes
+Redirect Shapes.dss
+
+
+! Declare Feeder SVR:
+New Transformer.MOCKS_2401 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[MOCKSVILLE_MN_03552401.1.2.3 MOCKSVILLE_MN_03552401_REG.1.2.3] 
+~ kvas=[40000.0 40000.0]
+~ kVs=[23.90   23.90]
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes
+
+New RegControl.MOCKS_2401 Transformer=MOCKS_2401 Winding=2 R= 0  X= 0 
+~ Vreg= 124 
+~ Band= 1 
+~ PTratio= 115  
+~ CTPrim= 100 
+~ Delay = 45
+~ PTphase=3
+
+! Circuit Element Data
+Redirect Elements\Lines.dss
+Redirect Elements\Loads.dss
+Redirect Elements\Capacitors.dss
+!Redirect Elements\Regulators.dss
+
+! Circuit Control Settings
+!Redirect Controls\FuseContrl.dss
+!Redirect Controls\SwitContrl.dss
+!Redirect Controls\ReclContrl.dss
+
+! Set the voltage bases
+Set voltagebases = [ 23.90 0.480 0.208 0.240 0.120 ]
+CalcVoltageBases
+
+! Define the bus coordinates
+Buscoords BusCoords.dss
+
+! Define an energy meter
+!New EnergyMeter.CircuitMeter LINE.254399393 terminal=1 option=R PhaseVoltageReport=yes
+!~ peakcurrent=[ 319.57   314.1   356.4 ]

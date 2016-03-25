@@ -151,6 +151,8 @@ lineNames = DSSCircuit.Lines.AllNames;
 loadNames = DSSCircuit.Loads.AllNames;
 Lines_Base = getLineInfo(DSSCircObj);
 Buses_Base = getBusInfo(DSSCircObj);
+LoadTotals = LoadsByPhase(DSSCircObj);
+
 ii = 1;
 j = 1;
 while ii<length(Buses)
