@@ -55,9 +55,43 @@ for i = 1:r
         end
     end
 end
-% find sizes of the two structs
+
 [r2 c2] = size(conn');
 [r3 c3] = size(pend');
+i = 1;
+j = 1;
+% radius of earth in Miles
+R = 3961;
+for i = 1:r2
+    temp = 1e6;
+    for j = 1:length(dist) 
+        d = distance(dist(j).LONG,conn(i).LONG,dist(j).LAT,conn(i).LAT,R);
+        if d < temp
+            temp = d;
+            substation_number = j;
+        end
+    end
+    conn(i).SUBSTATION = substation_number;
+    conn(i).DISTANCE = temp;
+end
+
+i = 1;
+j = 1;
+for i = 1:r3
+    temp = 1e6;
+    for j = 1:length(dist) 
+        d = distance(dist(j).LONG,pend(i).LONG,dist(j).LAT,pend(i).LAT,R);
+        if d < temp
+            temp = d;
+            substation_number = j;
+        end
+    end
+    pend(i).SUBSTATION = substation_number;
+    pend(i).DISTANCE = temp;
+end
+  
+% find sizes of the two structs
+
 i = 1;
 j = 1;
 k = 1;
@@ -97,58 +131,10 @@ for i = 1:r3
         l = l + 1;
     end
 end
-
-i = 1;
-j = 1;
-% radius of earth in Miles
-R = 3961;
-for i = 1:r2
-    temp = 1e6;
-    for j = 1:length(dist) 
-        d = distance(dist(j).LONG,conn(i).LONG,dist(j).LAT,conn(i).LAT,R);
-        if d < temp
-            temp = d;
-            substation_number = j;
-        end
-    end
-    conn(i).SUBSTATION = substation_number;
-    conn(i).DISTANCE = temp;
-end
-
-i = 1;
-j = 1;
-for i = 1:r3
-    temp = 1e6;
-    for j = 1:length(dist) 
-        d = distance(dist(j).LONG,pend(i).LONG,dist(j).LAT,pend(i).LAT,R);
-        if d < temp
-            temp = d;
-            substation_number = j;
-        end
-    end
-    pend(i).SUBSTATION = substation_number;
-    pend(i).DISTANCE = temp;
-end
-         
-            
-        
         
 % printing the sum of KW of each struct
 fprintf('Connected MW: %3.3f\n',sum([conn.KW])/1000)
 fprintf('Pending MW: %3.3f\n',sum([pend.KW])/1000)
 fprintf('Total MW: %3.3f\n',sum([conn.KW])/1000+sum([pend.KW])/1000)
 % this is to run the plotGoogleMap function.
-plot([res_conn.LONG]',[res_conn.LAT]','.c','MarkerSize',10);
-hold on
-plot([comm_conn.LONG]',[comm_conn.LAT]','.g','MarkerSize',10);
-hold on
-plot([utility_conn.LONG]',[utility_conn.LAT]','.r','MarkerSize',10);
-hold on
-plot([res_pend.LONG]',[res_pend.LAT]','.y','MarkerSize',10);
-hold on
-plot([comm_pend.LONG]',[comm_pend.LAT]','.b','MarkerSize',10);
-hold on
-plot([utility_pend.LONG]',[utility_pend.LAT]','.m','MarkerSize',10);
-plotGoogleMap;
 
-        
