@@ -6,6 +6,7 @@ global NODE visited loop
 [NODE,SECTION,~,~,~,~] = sxstRead;
 
 [NODE.adj] = deal([]);
+[NODE.close] = deal(0);
 for i = 1:length(SECTION)
     index1 = find(ismember({NODE.ID},SECTION(i).FROM));
     index2 = find(ismember({NODE.ID},SECTION(i).TO));
