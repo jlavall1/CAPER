@@ -1,4 +1,6 @@
-function [f,intcon,Aineq,bineq,Aeq,beq,lb,ub] = ResiliencyMILPForm(NODE,SECTION,LOAD,DER,PARAM)
+function [f,A,rl,ru,lb,ub,xint] = ResiliencyMILPForm
+
+global NODE SECTION LOAD DER PARAM
 % N                 - NODE.ID
 % S                 - (SECNTION.FROM,SECTION.TO)
 % D                 - DER.ID
@@ -17,39 +19,39 @@ D = length(DER);        % Number of DER
 L = length(LOAD);       % Number of Loads
 
 %%
-%               max                     sum(w_i * sum(c_id*p_i))
-% a,alpha,b1,b2,bbar,beta,c,gamma       i<N       d<D
+%   min 0.5*x'*H*x + f'*x      subject to:     rl <= A*x <= ru
+%    x                                         qrl <= x'Q'x + l'x <= qru
+%                                              lb <= x <= ub
+%                                              for i = 1..n: xi in Z
+%                                              for j = 1..m: xj in {0,1} 
+%
+%   x = opti_cplex([],f,A,rl,ru,lb,ub,xint) solves a LP/MILP where f is the 
+%   objective vector, A,rl,ru are the linear constraints, lb,ub are the
+%   bounds and xint is a string of integer variables ('C', 'I', 'B').
 
-% Let x = [a;alpha;b1;b2;bbar;c;gamma], then
-% a     = x[           1           :           N           ]
-% alpha = x[          N+1          :        (D+1)*N        ]
-% b1    = x[       (D+1)*N+1       :       (D+1)*N+S       ]
-% b2    = x[      (D+1)*N+S+1      :      (D+1)*N+2*S      ]
-% bbar  = x[     (D+1)*N+2*S+1     :      (D+1)*N+3*S      ]
-% beta  = x[     (D+1)*N+3*S+1     :    (D+1)*N+(3+D)*S    ]
-% c     = x[   (D+1)*N+(3+D)*s+1   :   (D+1)*N+(3+D)*S+L   ]
-% gamma = x[  (D+1)*N+(3+D)*S+L+1  :  (D+1)*N+(3+D)*S+L+D  ]
+% Let x = [a;b;c;d;e], then
+% a     = x[       1       :      D*N      ]
+% b     = x[     D*N+1     :    D*N+D*S    ]
+% c     = x[   D*N+D*S+1   :   D*N+2*D*S   ]
+% d     = x[  D*N+2*D*S+1  :   D*N+3*D*S   ]
+% e     = x[  D*N+3*D*S+1  :  D*N+3*D*S+D  ]
 
 % Define starting indicies
 a       = 0;
-alpha   = a+N;
-B1      = alpha+D*N;
-B2      = B1+S;
-bbar    = B2+S;
-beta    = bbar+S;
-c       = beta+D*S;
-gamma   = c+L*D;
+b       = a+D*N;
+c       = b+D*S;
+d       = c+D*S;
+e       = D+D*S;
 
-f_a     = zeros(N,1);
-f_alpha = zeros(D*N,1);
-f_B1    = zeros(S,1);
-f_B2    = zeros(S,1);
-f_bbar  = ones(S,1);
-f_beta  = zeros(D*S,1);
-f_c     = -repmat([LOAD.w]'.*[LOAD.p]',D,1);
-f_gamma = zeros(D,1);
+f_a     = zeros(D*N,1);
+f_b     = zeros(D*S,1);
+f_c     = zeros(D*S,1);
+f_d     = zeros(D*S,1);
+f_e     = zeros(D,1);
 
-f = [f_a;f_alpha;f_B1;f_B2;f_bbar;f_beta;f_c;f_gamma];
+%f_c     = -repmat([LOAD.w]'.*[LOAD.p]',D,1);
+
+f = [f_a;f_b;f_c;f_d;f_e];
 
 xlen = length(f);
 
@@ -57,7 +59,7 @@ xlen = length(f);
 % All Variables are binary
 lb = zeros(xlen,1);
 ub = ones (xlen,1);
-intcon = 1:xlen;
+xint = repmat('B',1,length(f));
 
 %%  Constraints
 % -DSCC-(1)-to-(4)---------------------------------------------------------
@@ -92,19 +94,19 @@ A2 = zeros(NC,xlen);
 A3 = zeros(SO,xlen);
 A4 = zeros(SC,xlen);
 
-for i = 1:NO
-    % Find index of constrained node
-    index = find(ismember({NODE.ID},PARAM.NO{i}));
-    
-    A1(i,a+index) = 1; % coeff for a_i (1)
-end
-
-for i = 1:NC
-    % Find index of constrained node
-    index = find(ismember({NODE.ID},PARAM.NC{i}));
-    
-    A2(i,a+index) = 1; % coeff for a_i (2)
-end
+% for i = 1:NO
+%     % Find index of constrained node
+%     index = find(ismember({NODE.ID},PARAM.NO{i}));
+%     
+%     A1(i,a+index) = 1; % coeff for a_i (1)
+% end
+% 
+% for i = 1:NC
+%     % Find index of constrained node
+%     index = find(ismember({NODE.ID},PARAM.NC{i}));
+%     
+%     A2(i,a+index) = 1; % coeff for a_i (2)
+% end
 
 for i = 1:SO
     % Find index of constrained section

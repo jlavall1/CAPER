@@ -22,3 +22,15 @@ visited = [];
 loop = {};
 
 dfs(1,0)
+
+% Plot Loops
+DSSInitialize
+DSSText.Command = 'BatchEdit Line..* enable=yes';
+DSSCircuit.Solution.Solve
+figure; plotCircuitLines(DSSCircObj,'Coloring','numPhases')
+hold on
+cmp = colormap;
+k = length(loop);
+for i = 1:k
+    plot([NODE(loop{i}).XCoord],[NODE(loop{i}).YCoord],'o','Color',cmp(round(i*60/k),:))
+end

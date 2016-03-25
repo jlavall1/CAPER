@@ -7,19 +7,19 @@ disp('Reading in Circuit Data...')
 %% Read in Circuit Data
 %[NODE,SECTION,DER,PARAM] = DSSRead(filename);
 %[NODE,SECTION,DER,PARAM] = sxstRead_old2; %(fullfilename);
+global NODE SECTION LOAD DER PARAM DSS
 [NODE,SECTION,LOAD,DER,PARAM,DSS] = sxstRead;
 
-% Add DER
-% [NODE,SECTION,DER] = addDER(NODE,SECTION,DER,...
-%     {'258896301' '258896343' '258896628' '264491247'});
-% LOAD = NODE(logical([NODE.p]));
+%% Pre-Process Circuit Data
+toc
+disp('Pre-Processing Data...')
+MILPPreProcessing();
 
 PARAM.SO =  {'264495349'};
 
-toc
-disp('Formulating MILP Constraints...')
+
 %% Formulate Problem
-[f,intcon,Aineq,bineq,Aeq,beq,lb,ub] = ResiliencyMILPForm(NODE,SECTION,LOAD,DER,PARAM);
+[f,A,rl,ru,lb,ub,xint] = ResiliencyMILPForm();
 
 toc
 disp('Solving LP...')
@@ -27,7 +27,7 @@ disp('Solving LP...')
 %[X,fval,exitflag,output] = intlinprog(f,intcon,Aineq,bineq,Aeq,beq,lb,ub);
 %Opt = opti('f',f,'ineq',Aineq,full(bineq),'eq',Aeq,full(beq),'bounds',lb,ub,'xtype',intcon);
 %[X,fval,exitflag,info] = solve(Opt);
-[X,fval,exitflag,info] = opti_cplex([],f,[Aineq;Aeq],full([-inf*ones(size(bineq));beq]),full([bineq;beq]),lb,ub,repmat('B',1,length(f)));
+[X,fval,exitflag,info] = opti_cplex([],f,A,rl,ru,lb,ub,xint);
 %[X,fval.exitflag,info] = opti-cplex([],f,A,rl,ru,lb,ub,xint);
 %load('BILP.mat');
 disp(info)
