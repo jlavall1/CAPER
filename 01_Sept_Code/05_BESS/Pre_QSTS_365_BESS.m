@@ -4,7 +4,7 @@ close all
 %Pre QSTS_365_Span
 
 ckt_direct      = 'C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss\Master.dss'; %entire directory string of where the cktfile is locatted
-feeder_NUM      = 2;
+feeder_NUM      = 2; %1=CMWTH 2=FLAY 3=ROX
 base_path       = 'C:\Users\jlavall\Documents\GitHub\CAPER';
 
 PV_Site_1       = 4; %MOCKS
@@ -15,7 +15,6 @@ PV_Site_path_2  = 'C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_Irrad
 timeseries_span = 2; %Simulates 1 day (24hr) at a time.
 int_select=1;   %1: 5s load, 1s sim 2:60s load, 60s sim
 QSTS_select     = 4;
-%VRR_Scheme      = 2;
 
 BESS_ON         = 1; %0 is no battery, 1 is a battery
 BESS_TYPE       = 2; %1=8000kWh 2=4000kWh 3=1000kWh
@@ -23,12 +22,14 @@ BESS_TYPE       = 2; %1=8000kWh 2=4000kWh 3=1000kWh
 addpath(strcat(base_path,'\04_DSCADA'));
 addpath(strcat(base_path,'\01_Sept_Code\05_BESS'));
 addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
+
+
+%%
 %Objective:
 %       To load in all background files nessessary to run sim.
-%%
-% Simulation info:
+
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
-% 5. User Select run length:
+% User Select run length:
 slt_DAY_RUN = 8;
 
 
@@ -76,7 +77,7 @@ elseif slt_DAY_RUN == 7
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY;
 elseif slt_DAY_RUN == 8
-    %One day run on 2/13
+    %One day run on 6/1 to test BESS
     DAY = 1;
     MNTH = 6;
     DOY=calc_DOY(MNTH,DAY);
