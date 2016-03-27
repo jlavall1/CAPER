@@ -10,16 +10,19 @@ disp('Reading in Circuit Data...')
 global NODE SECTION LOAD DER PARAM DSS
 [NODE,SECTION,LOAD,DER,PARAM,DSS] = sxstRead;
 
-%% Pre-Process Circuit Data
 toc
 disp('Pre-Processing Data...')
+%% Pre-Process Circuit Data
 MILPPreProcessing();
 
-PARAM.SO =  {'264495349'};
+%PARAM.SO =  {'264495349'};
 
-
+toc
+disp('Formulating Problem...')
 %% Formulate Problem
 [f,A,rl,ru,lb,ub,xint] = ResiliencyMILPForm();
+
+
 
 toc
 disp('Solving LP...')
@@ -43,64 +46,65 @@ if exitflag==1
     L = length(LOAD);       % Number of Loads
     
     
-    % Let x = [a;alpha;b1;b2;bbar;c;gamma], then
-    % a     = x[           1           :           N           ]
-    % alpha = x[          N+1          :        (D+1)*N        ]
-    % b1    = x[       (D+1)*N+1       :       (D+1)*N+S       ]
-    % b2    = x[      (D+1)*N+S+1      :      (D+1)*N+2*S      ]
-    % bbar  = x[     (D+1)*N+2*S+1     :      (D+1)*N+3*S      ]
-    % beta  = x[     (D+1)*N+3*S+1     :    (D+1)*N+(3+D)*S    ]
-    % c     = x[   (D+1)*N+(3+D)*s+1   :   (D+1)*N+(3+D)*S+L   ]
-    % gamma = x[  (D+1)*N+(3+D)*S+L+1  :  (D+1)*N+(3+D)*S+L+D  ]
+    % Let x = [a;alpha;b;bbar;beta1;beta2;c], then
+    % a     = x[    D*N    ]
+    % alpha = x[  D*(L+D)  ]
+    % b     = x[    D*S    ]
+    % bbar  = x[     S     ]
+    % beta1 = x[    D*S    ]
+    % beta2 = x[    D*S    ]
+    % c     = x[     D     ]
     
     % Define starting indicies
     a       = 0;
-    alpha   = a+N;
-    B1      = alpha+D*N;
-    B2      = B1+S;
-    bbar    = B2+S;
-    beta    = bbar+S;
-    c       = beta+D*S;
-    gamma   = c+L*D;
+    alpha   = a+D*N;
+    b       = alpha+D*(L+D);
+    bbar    = b+D*S;
+    beta1   = bbar+S;
+    beta2   = beta1+D*S;
+    c       = beta2+D*S;
     
     
-    fprintf('Active Micro-grids: %s\n',sprintf(' %d ',find(X(gamma+1:gamma+D)>.5)))
+    fprintf('Active Micro-grids: %s\n',sprintf(' %d ',find(X(c+1:c+D)>.5)))
     
     MG = cell(D,1);
     for i = 1:D
         MG{i} = sprintf('MG%d',i);
     end
     
+    for i = 1:D
+        mg = find(X(alpha+L+i+(L+D)*(0:D-1)));
+        DER(i).MGNumber = mg;
+        for j = 1:D
+            DER(i).(['alpha_',MG{j}]) = X(alpha+L+i+(j-1)*(L+D));
+        end
+    end
+    
     for i = 1:N
-        NODE(i).a = X(a+i);
-        mg  = find(X(alpha+i+N*(0:D-1)));
+        mg = find(X(a+i+N*(0:D-1)));
         NODE(i).MGNumber = mg;
         for j = 1:D
-            NODE(i).(['alpha_',MG{j}]) = X(alpha+i+(j-1)*N);
-        end
-        
-        der = find(strcmp({DER.ID},NODE(i).ID));
-        if ~isempty(der)
-            DER(der).MGNumber = mg;
+            NODE(i).(['a_',MG{j}]) = X(a+i+(j-1)*N);
         end
     end
     
     for i = 1:S
-        SECTION(i).b1 = X(B1+i);
-        SECTION(i).b2 = X(B2+i);
-        SECTION(i).b = SECTION(i).b1+SECTION(i).b2;
         SECTION(i).bbar = X(bbar+i);
+        mg = find(X(b+i+S*(0:D-1)));
+        SECTION(i).MGNumber = mg;
         for j = 1:D
-            SECTION(i).(['beta_',MG{j}]) = X(beta+i+(j-1)*S);
+            SECTION(i).(['b_',MG{j}]) = X(b+i+(j-1)*S);
+            SECTION(i).(['beta1_',MG{j}]) = X(beta1+i+(j-1)*S);
+            SECTION(i).(['beta2_',MG{j}]) = X(beta2+i+(j-1)*S);
         end
     end
     
     %LOAD = NODE(logical([NODE.p]));
     for i = 1:L
-        mg  = find(X(c+i+L*(0:D-1)));
+        mg = find(X(alpha+i+(L+D)*(0:D-1)));
         LOAD(i).MGNumber = mg;
         for j = 1:D
-            LOAD(i).(['c_',MG{j}]) = X(c+i+(j-1)*L);
+            LOAD(i).(['alpha_',MG{j}]) = X(alpha+i+(j-1)*(L+D));
         end
     end
     

@@ -18,4 +18,13 @@ visited = [];
 loop = {};
 dfs(1,0)
 
-PARAM.Loops = loop;
+% Find Section IDs for each Loop
+S = length(SECTION);
+for i = 1:length(loop)
+    n = length(loop{i}); % Number of nodes in loop (start & end on same node)
+    
+    [~,~,ic] = unique([{NODE(loop{i}).ID},{SECTION.FROM},{SECTION.TO}],'stable');
+    PARAM.Loops{i} = {SECTION(ic(n+1:n+S)<=n & ic(n+S+1:n+2*S)<=n).ID};
+end
+
+disp('end')
