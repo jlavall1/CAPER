@@ -15,7 +15,15 @@ disp('Pre-Processing Data...')
 %% Pre-Process Circuit Data
 MILPPreProcessing();
 
-PARAM.SO =  {'264495349'};
+%PARAM.SO =  {'699603854'}; % Main Line part of a loop
+%PARAM.SO =  {'259355403','258896319','458944741','258896484','258896576','264495349','699603885'}; % Main Line Faults going down feeder
+%PARAM.SO =  {'263532848'}; % Fault on Lateral
+
+PARAM.SO = {}; % Case 1
+PARAM.SO = 
+
+%PARAM.SO =  {'699603854'} % Current Violation (Commonwealth)
+
 
 toc
 disp('Formulating Problem...')
