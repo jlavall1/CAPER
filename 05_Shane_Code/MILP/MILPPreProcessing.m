@@ -21,10 +21,30 @@ dfs(1,0)
 % Find Section IDs for each Loop
 S = length(SECTION);
 for i = 1:length(loop)
-    n = length(loop{i}); % Number of nodes in loop (start & end on same node)
+    n = length(loop{i}); % Number of nodes in loop
     
+    PARAM.Loop(i).NODE = {NODE(loop{i}).ID};
     [~,~,ic] = unique([{NODE(loop{i}).ID},{SECTION.FROM},{SECTION.TO}],'stable');
-    PARAM.Loops{i} = {SECTION(ic(n+1:n+S)<=n & ic(n+S+1:n+2*S)<=n).ID};
+    PARAM.Loop(i).SECTION = {SECTION(ic(n+1:n+S)<=n & ic(n+S+1:n+2*S)<=n).ID};
+end
+
+% Combine cycles with shared edges
+[PARAM.Loop.Num] = deal(1);
+i = 1;
+while i <= length(PARAM.Loop)
+    j = i+1;
+    while j <= length(PARAM.Loop)
+        A = [PARAM.Loop(i).SECTION,PARAM.Loop(j).SECTION];
+        C = unique(A);
+        if length(C)<length(A)
+            PARAM.Loop(i).SECTION = C;
+            PARAM.Loop(i).NODE = unique([PARAM.Loop(i).NODE,PARAM.Loop(j).NODE]);
+            PARAM.Loop(i).Num = PARAM.Loop(i).Num + 1;
+            PARAM.Loop(j) = [];
+        end
+        j = j+1;
+    end
+    i = i+1;
 end
 
 disp('end')

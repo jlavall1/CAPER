@@ -2,7 +2,8 @@
 N = length(NODE);       % Number of Nodes
 S = length(SECTION);    % Number of Sections
 D = length(DER);        % Number of DER
-L = length(LOAD);       % Number of Loads
+LD = length(LOAD);       % Number of Loads
+LP = length(PARAM.Loop); % Number of Loops
 
 % Let x = [a;alpha;b;bbar;beta1;beta2;c], then
 % a     = x[    D*N    ]
@@ -11,17 +12,19 @@ L = length(LOAD);       % Number of Loads
 % bbar  = x[     S     ]
 % beta1 = x[    D*S    ]
 % beta2 = x[    D*S    ]
-% c     = x[     D     ]
+% c     = x[    D*LP   ]
+% d     = x[     D     ]
 
 
 % Define starting indicies
 a       = 0;
 alpha   = a+D*N;
-b       = alpha+D*(L+D);
+b       = alpha+D*(LD+D);
 bbar    = b+D*S;
 beta1   = bbar+S;
 beta2   = beta1+D*S;
 c       = beta2+D*S;
+d       = c+D*LP;
 
 
 for i = 1:N
@@ -39,16 +42,22 @@ for i = 1:S
     end
 end
 
-for i = 1:L
+for i = 1:LD
     for j = 1:D
-        x{alpha+i+(j-1)*(L+D)} = sprintf('alpha_%s_MG%d',LOAD(i).ID,j);
+        x{alpha+i+(j-1)*(LD+D)} = sprintf('alpha_%s_MG%d',LOAD(i).ID,j);
+    end
+end
+
+for i = 1:LP
+    for j = 1:D
+        x{c+i+(j-1)*LP} = sprintf('LOOP%d_MG%d',i,j);
     end
 end
 
 for i = 1:D
-    x{c+i} = sprintf('c_MG%d',i);
+    x{d+i} = sprintf('c_MG%d',i);
     for j = 1:D
-        x{alpha+L+i+(j-1)*(L+D)} = sprintf('alpha_%s_MG%d',DER(i).ID,j);
+        x{alpha+LD+i+(j-1)*(LD+D)} = sprintf('alpha_%s_MG%d',DER(i).ID,j);
     end
 end
 

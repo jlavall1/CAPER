@@ -94,19 +94,19 @@ PARAM.NC(:,index(index<NC)) = [];
 NC = length(PARAM.NC);
 
 
-% r1 = zeros(NO,1);
-% [~,~,ic] = unique([{LOAD.ID},PARAM.NO],'stable');
-% i1 = reshape(repmat(1:NO,D,1),[],1);
-% j1 = alpha+reshape(repmat(ic(LD+1:end)',D,1)+(LD+D)*repmat((0:D-1)',1,NO),[],1);
-% v1 = ones(NO*D,1);
-% A1 = sparse(i1,j1,v1,NO,xlen);
-% 
-% r2 = ones(NC,1);
-% [~,~,ic] = unique([{LOAD.ID},PARAM.NC],'stable');
-% i2 = reshape(repmat(1:NC,D,1),[],1);
-% j2 = alpha+reshape(repmat(ic(LD+1:end)',D,1)+(LD+D)*repmat((0:D-1)',1,NC),[],1);
-% v2 = ones(NC*D,1);
-% A2 = sparse(i2,j2,v2,NC,xlen);
+r1 = zeros(NO,1);
+[~,~,ic] = unique([{LOAD.ID},PARAM.NO],'stable');
+i1 = reshape(repmat(1:NO,D,1),[],1);
+j1 = alpha+reshape(repmat(ic(LD+1:end)',D,1)+(LD+D)*repmat((0:D-1)',1,NO),[],1);
+v1 = ones(NO*D,1);
+A1 = sparse(i1,j1,v1,NO,xlen);
+
+r2 = ones(NC,1);
+[~,~,ic] = unique([{LOAD.ID},PARAM.NC],'stable');
+i2 = reshape(repmat(1:NC,D,1),[],1);
+j2 = alpha+reshape(repmat(ic(LD+1:end)',D,1)+(LD+D)*repmat((0:D-1)',1,NC),[],1);
+v2 = ones(NC*D,1);
+A2 = sparse(i2,j2,v2,NC,xlen);
 
 r3 = zeros(SO,1);
 [~,~,ic] = unique([{SECTION.ID},PARAM.SO],'stable');
@@ -116,7 +116,7 @@ v3 = ones(SO*D,1);
 A3 = sparse(i3,j3,v3,SO,xlen);
 
 r4 = ones(SC,1);
-[~,~,ic] = unique([{SECTION.ID},PARAM.SC],'stable');
+[~,~,ic] = unique([{NODE.ID},PARAM.SC],'stable');
 i4 = reshape(repmat(1:SC,D,1),[],1);
 j4 = b+reshape(repmat(ic(end-SC+1:end)',D,1)+S*repmat((0:D-1)',1,SC),[],1);
 v4 = ones(SC*D,1);
@@ -188,7 +188,7 @@ j13 = reshape([alpha+(1:D*(D+LD));a+reshape(repmat(ic(N+1:end),1,D)+N*repmat(0:D
 v13 = repmat([1;-1],D*(LD+D),1);
 A13 = sparse(i13,j13,v13,D*(LD+D),xlen);
 
-rl14 = ones(N,1); %-Inf(N,1);
+rl14 = -Inf(N,1);
 ru14 = ones(N,1);
 i14 = reshape(repmat(1:N,D,1),[],1);
 j14 = reshape(a+repmat(1:N,D,1)+N*repmat((0:D-1)',1,N),[],1);
@@ -282,10 +282,10 @@ A19 = sparse(i19,j19,v19,1,xlen);
 % Constraints to Exclude (for debug)
 A1 = []; r1 = [];
 A2 = []; r2 = [];
-%A3 = []; r3 = [];
-%A4 = []; r4 = [];
-%A6 = []; rl6 = []; ru6 = [];
-%A8 = []; rl8 = []; ru8 = [];
+A3 = []; r3 = [];
+A4 = []; r4 = [];
+A6 = []; rl6 = []; ru6 = [];
+A8 = []; rl8 = []; ru8 = [];
 %A10 = []; rl10 = []; ru10 = [];
 %A11 = []; rl11 = []; ru11 = [];
 %A12 = []; rl12 = []; ru12 = [];

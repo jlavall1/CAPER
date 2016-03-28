@@ -31,6 +31,7 @@ figure; plotCircuitLines(DSSCircObj,'Coloring','numPhases')
 hold on
 cmp = colormap;
 k = length(loop);
-for i = 1:k
+%for i = 1:k
+i = 9;
     plot([NODE(loop{i}).XCoord],[NODE(loop{i}).YCoord],'o','Color',cmp(round(i*60/k),:))
-end
+%end

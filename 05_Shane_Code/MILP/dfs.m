@@ -1,7 +1,7 @@
 function dfs(node1,parent)
     global NODE visited loop
     if sum(node1==visited)
-        loop{end+1}=[visited(find(visited==node1,1,'last'):end),node1];
+        loop{end+1}=[visited(find(visited==node1,1,'last'):end)];
         index = true(size(loop{end}));
         for i = 2:length(loop{end})-1
             dup = find(ismember(loop{end}(i+1:end),loop{end}(i)),1,'last');

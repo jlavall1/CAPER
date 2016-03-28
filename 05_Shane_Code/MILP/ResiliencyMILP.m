@@ -15,7 +15,7 @@ disp('Pre-Processing Data...')
 %% Pre-Process Circuit Data
 MILPPreProcessing();
 
-%PARAM.SO =  {'264495349'};
+PARAM.SO =  {'264495349'};
 
 toc
 disp('Formulating Problem...')
@@ -40,11 +40,12 @@ disp(fval)
 if exitflag==1
     toc
     disp('Parcing out Solution Data...')
+    
     N = length(NODE);       % Number of Nodes
     S = length(SECTION);    % Number of Sections
     D = length(DER);        % Number of DER
-    L = length(LOAD);       % Number of Loads
-    
+    LD = length(LOAD);       % Number of Loads
+    LP = length(PARAM.Loop); % Number of Loops
     
     % Let x = [a;alpha;b;bbar;beta1;beta2;c], then
     % a     = x[    D*N    ]
@@ -53,19 +54,22 @@ if exitflag==1
     % bbar  = x[     S     ]
     % beta1 = x[    D*S    ]
     % beta2 = x[    D*S    ]
-    % c     = x[     D     ]
+    % c     = x[    D*LP   ]
+    % d     = x[     D     ]
+    
     
     % Define starting indicies
     a       = 0;
     alpha   = a+D*N;
-    b       = alpha+D*(L+D);
+    b       = alpha+D*(LD+D);
     bbar    = b+D*S;
     beta1   = bbar+S;
     beta2   = beta1+D*S;
     c       = beta2+D*S;
+    d       = c+D*LP;
     
     
-    fprintf('Active Micro-grids: %s\n',sprintf(' %d ',find(X(c+1:c+D)>.5)))
+    fprintf('Active Micro-grids: %s\n',sprintf(' %d ',find(X(d+1:d+D)>.5)))
     
     MG = cell(D,1);
     for i = 1:D
@@ -73,10 +77,10 @@ if exitflag==1
     end
     
     for i = 1:D
-        mg = find(X(alpha+L+i+(L+D)*(0:D-1)));
+        mg = find(X(alpha+LD+i+(LD+D)*(0:D-1)));
         DER(i).MGNumber = mg;
         for j = 1:D
-            DER(i).(['alpha_',MG{j}]) = X(alpha+L+i+(j-1)*(L+D));
+            DER(i).(['alpha_',MG{j}]) = X(alpha+LD+i+(j-1)*(LD+D));
         end
     end
     
@@ -100,11 +104,11 @@ if exitflag==1
     end
     
     %LOAD = NODE(logical([NODE.p]));
-    for i = 1:L
-        mg = find(X(alpha+i+(L+D)*(0:D-1)));
+    for i = 1:LD
+        mg = find(X(alpha+i+(LD+D)*(0:D-1)));
         LOAD(i).MGNumber = mg;
         for j = 1:D
-            LOAD(i).(['alpha_',MG{j}]) = X(alpha+i+(j-1)*(L+D));
+            LOAD(i).(['alpha_',MG{j}]) = X(alpha+i+(j-1)*(LD+D));
         end
     end
     
@@ -121,25 +125,25 @@ if exitflag==1
     disp('Plotting Results...')
     % Plot Results
     PlotResults
-    
-    toc
-    disp('Check for Violations...')
-    % Check for Violations
-    for i = 1:D
-        % Find Source in Micro-grid
-        index = {logical([NODE.(['alpha_',MG{i}])]),logical([SECTION.(['beta_',MG{i}])]),logical([LOAD.(['c_',MG{i}])])};
-        if length(find(index{1}))>1 % Must Contain more than 1 node for simulation
-            [DSSCircuit, DSSCircObj, DSSText, gridpvPath] = DSSDeclare(NODE(index{1}),SECTION(index{2}),LOAD(index{3}),DER([DER.MGNumber]==i),DSS);
-            
-            % Collect Data
-            %Lines = getLineInfo(DSSCircObj);
-            %Bus = getBusInfo(DSSCircObj);
-            %Load = getLoadInfo(DSSCircObj);
-            figure; plotKWProfile(DSSCircObj);
-            figure; plotVoltageProfile(DSSCircObj);
-            figure; plotCircuitLines(DSSCircObj,'Coloring','voltage120')
-        end
-    end
+%     
+%     toc
+%     disp('Check for Violations...')
+%     % Check for Violations
+%     for i = 1:D
+%         % Find Source in Micro-grid
+%         index = {logical([NODE.(['alpha_',MG{i}])]),logical([SECTION.(['beta_',MG{i}])]),logical([LOAD.(['c_',MG{i}])])};
+%         if length(find(index{1}))>1 % Must Contain more than 1 node for simulation
+%             [DSSCircuit, DSSCircObj, DSSText, gridpvPath] = DSSDeclare(NODE(index{1}),SECTION(index{2}),LOAD(index{3}),DER([DER.MGNumber]==i),DSS);
+%             
+%             % Collect Data
+%             %Lines = getLineInfo(DSSCircObj);
+%             %Bus = getBusInfo(DSSCircObj);
+%             %Load = getLoadInfo(DSSCircObj);
+%             figure; plotKWProfile(DSSCircObj);
+%             figure; plotVoltageProfile(DSSCircObj);
+%             figure; plotCircuitLines(DSSCircObj,'Coloring','voltage120')
+%         end
+%     end
     
 end    
 

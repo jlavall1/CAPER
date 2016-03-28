@@ -10,13 +10,13 @@ for i = 1:D
     % Nodes
     index = logical(round([NODE.(['a_MG',int2str(i)])]));
     plot([NODE(index).XCoord],[NODE(index).YCoord],'.',...
-        'Color',cmap(floor(64/D)*(i-1)+round(64/(2*D)),:),'MarkerSize',20) %hsv2rgb([(i-1)/D .5 .5])
+        'Color',cmap(floor(64/D)*(i-1)+round(64/(2,:),'MarkerSize',20) %hsv2rgb([(i-1)/D .5 .5])
     
     % Loads
     index = logical(round([LOAD.(['alpha_MG',int2str(i)])]));
     plot([LOAD(index).XCoord],...
          [LOAD(index).YCoord],'^',...
-        'Color',cmap(floor(64/D)*(i-1)+round(64/(2*D)),:),'MarkerSize',10)
+        'Color',cmap(floor(64/D)*(i-1)+1,:),'MarkerSize',10)
 
     % Sections
     sec = logical(round([SECTION.(['b_MG',int2str(i)])]));
@@ -24,7 +24,7 @@ for i = 1:D
     Closed = SECTION(sec);
     for j = 1:length(Closed)
         index = [find(ismember({NODE.ID},Closed(j).FROM)),find(ismember({NODE.ID},Closed(j).TO))];
-        plot([NODE(index).XCoord],[NODE(index).YCoord],'-','Color',cmap(floor(64/D)*(i-1)+round(64/(2*D)),:))
+        plot([NODE(index).XCoord],[NODE(index).YCoord],'-','Color',cmap(floor(64/D)*(i-1)+1,:))
     end
     
 end
