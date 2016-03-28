@@ -379,7 +379,35 @@ for i=1:1:length(Loads)
 end
 %}
 
+%{
+    Plotting Functions:
+        1. kW vs. Time
+        2. kVAR vs. Time
+    Variables:
+        time - vector for use in ploting x-axis
+        kVmax - maximum value of Sub_P_PhA, Sub_P_PhB, Sub_P_PhC
+        kVmin - minimum value of Sub_P_PhA, Sub_P_PhB, Sub_P_PhC
+        kVARmax - maximum value of Sub_Q_PhA, Sub_Q_PhB, Sub_Q_PhC
+        kVARmin - maximum value of Sub_Q_PhA, Sub_Q_PhB, Sub_Q_PhC
 
+        
+%}
+time=0:1:t;
+
+
+figure();
+plot([min(time),max(time)],[0,0],'LineStyle','-','Color',[0,0,0],'LineWidth',1);
+hold on;
+plot([0,0],[0.9*kVmin,1.1*kVmax],'LineStyle','-','Color',[0,0,0],'LineWidth',1);
+p1=plot(time,MEAS.Sub_P_PhA,'LineStyle','-','Color',[0,0,0.8],'LineWidth',2);
+p2=plot(time,MEAS.Sub_P_PhB,'LineStyle','-','Color',[0,0.8,0],'LineWidth',2);
+p3=plot(time,MEAS.Sub_P_PhB,'LineStyle','-','Color',[0.8,0,0],'LineWidth',2);
+hold off;
+axis([-10,10,0,1.1]);
+title('kW vs. Time');
+xlabel('\omega');
+ylabel('|H|');
+    
 
 
 
