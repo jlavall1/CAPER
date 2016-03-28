@@ -7,13 +7,15 @@
 
 %--------------
 %   Datapoint 1] BESS Information:
-DSSCircuit.SetActiveElement('Storage.BESS1');
-DSSText.command='? Storage.BESS1.%stored';
-BESS_M(t).SOC=str2double(DSSText.Result);           %<---------------------
-DSSText.command='? Storage.BESS1.%Discharge';
-BESS_M(t).DR=BESS.Prated*(str2double(DSSText.Result))/100;%<---------------
-DSSText.command='? Storage.BESS1.%Charge';
-BESS_M(t).CR=BESS.Prated*(str2double(DSSText.Result))/100;%<---------------
+if BESS_ON == 1
+    DSSCircuit.SetActiveElement('Storage.BESS1');
+    DSSText.command='? Storage.BESS1.%stored';
+    BESS_M(t).SOC=str2double(DSSText.Result);           %<---------------------
+    DSSText.command='? Storage.BESS1.%Discharge';
+    BESS_M(t).DR=BESS.Prated*(str2double(DSSText.Result))/100;%<---------------
+    DSSText.command='? Storage.BESS1.%Charge';
+    BESS_M(t).CR=BESS.Prated*(str2double(DSSText.Result))/100;%<---------------
+end
 
 %--------------
 %   Datapoint 2] DER-PV Information:

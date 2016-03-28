@@ -16,7 +16,7 @@ timeseries_span = 2; %Simulates 1 day (24hr) at a time.
 int_select=1;   %1: 5s load, 1s sim 2:60s load, 60s sim
 QSTS_select     = 4;
 
-BESS_ON         = 0; %0 is no battery, 1 is a battery
+BESS_ON         = 1; %0 is no battery, 1 is a battery
 BESS_TYPE       = 2; %1=8000kWh 2=4000kWh 3=1000kWh
 
 addpath(strcat(base_path,'\04_DSCADA'));
@@ -30,7 +30,7 @@ addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
 
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % User Select run length:
-slt_DAY_RUN = 8;
+slt_DAY_RUN = 9;
 
 
 if slt_DAY_RUN == 1
@@ -80,6 +80,12 @@ elseif slt_DAY_RUN == 8
     %One day run on 6/1 to test BESS
     DAY = 1;
     MNTH = 6;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY;
+elseif slt_DAY_RUN == 9
+    %One day run on 2/2 to test BESS
+    DAY = 3;
+    MNTH = 2;
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY;
 end

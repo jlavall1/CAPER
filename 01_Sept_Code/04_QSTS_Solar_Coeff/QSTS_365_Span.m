@@ -23,7 +23,7 @@ end
 %---------------------------------
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % 5. User Select run length:
-slt_DAY_RUN = 8;
+slt_DAY_RUN = 6;
 
 if slt_DAY_RUN == 1
     %One day run on 2/13

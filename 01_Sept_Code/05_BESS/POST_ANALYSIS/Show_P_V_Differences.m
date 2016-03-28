@@ -44,7 +44,7 @@ RUN(n).SUB_TAP= YEAR_LTCSTATUS;
 clear YEAR_SIM_P YEAR_SUB YEAR_BESS YEAR_LTCSTATUS BESS_INFO
 %%
 close all
-DOY=152;
+DOY=34;
 P_3H=0;
 fig = 0;
 fig = fig + 1;
@@ -65,7 +65,7 @@ legend('PV1 w/o BESS','PV1 w/ BESS','Location','SouthEast');
 set(gca,'XTick',0:4:24);
 set(gca,'FontWeight','bold');
 grid on
-%
+%%
 %--------------------------------------------------------------------------
 fig = fig + 1;
 figure(fig);
@@ -85,20 +85,21 @@ set(gca,'FontWeight','bold');
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 ylabel('OLTC PT Voltage (120V BASE)','FontSize',12,'FontWeight','bold');
 grid on
-%
+%%
 %--------------------------------------------------------------------------
+%fig = 0;
 fig = fig + 1;
 figure(fig);
 n=1;
-OLTC_P=RUN(n).SUB_TAP(DOY).TAP_POS(:,1);
+OLTC_P=RUN(n).SUB_TAP(DOY).TAP_POS(1,:)';
 plot(X,OLTC_P,'b-','LineWidth',1.5);
 hold on
 n=2;
-OLTC_P=RUN(n).SUB_TAP(DOY).TAP_POS(:,1);
-plot(X,OLTC_P,'r-','LineWidth',1);
+OLTC_P2=RUN(n).SUB_TAP(DOY).TAP_POS(1,:)';
+plot(X,OLTC_P2,'r-','LineWidth',2);
 %Settings:
 TOP_T=1+2*(.2/32);
-BOT_T=1-2*(.2/32);
+BOT_T=1-1*(.2/32);
 axis([8 24 BOT_T TOP_T])
 set(gca,'XTick',[0:4:24])
 set(gca,'YTick',[BOT_T:(.2/32):TOP_T])
@@ -107,6 +108,19 @@ legend('PV1 w/o BESS','PV1 w/ BESS','Location','SouthEast');
 set(gca,'FontWeight','bold');
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 ylabel('OLTC Tap Position','FontSize',12,'FontWeight','bold');
+COUNT = 0;
+COUNT2 = 0;
+for i=2:1:length(OLTC_P)
+    if OLTC_P(i,1) ~= OLTC_P(i-1,1)
+        COUNT = COUNT + 1;
+    end
+    if OLTC_P2(i,1) ~= OLTC_P2(i-1,1)
+        COUNT2 = COUNT2 + 1;
+    end
+end
+fprintf('Only DER-PV Generation: + %d tap changes\n',COUNT);
+fprintf('Now with BESS Unit &PV: + %d tap changes\n',COUNT2);
+%%
 %--------------------------------------------------------------------------
 fig = fig + 1;
 figure(fig);
@@ -167,5 +181,5 @@ plot(X,[RUN(2).BESS(DOY).CR]','r','LineWidth',1.5);
 axis([8 19 0 800]);
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 ylabel('Charge Rate (CR) [kW]','FontSize',12,'FontWeight','bold');
-legend('CR Reference','OpenDSS CR','Location','NorthWest');
+legend('CR Reference','OpenDSS CR','Location','NorthEast');
 set(gca,'FontWeight','bold');

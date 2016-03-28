@@ -5,20 +5,23 @@ close all
 UIControl_FontSize_bak = get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 18);
 fig = 0;
+base_path = 'C:\Users\jlavall\Documents\GitHub\CAPER';
 base_dir = 'C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\04_QSTS_Solar_Coeff\03_FLAY\Three_Month_Runs';
 section=menu('What Section of Chapter 4 would you like to initiate?','Section 1 (Vreg control schemes)','Section 2 (Centralized Approach)','Section 3 (Intro of DER-PV)');
 while section<1
     section=menu('What Section of Chapter 4 would you like to initiate?','Section 1 (Vreg control schemes)','Section 2 (Centralized Approach)','Section 3 (Intro of DER-PV)');
 end
 if section == 1
-    run=menu('What run on FLAY?','1 YEAR','1 DAY');
+    run=menu('What run on FLAY?','1 YEAR','1 DAY','Q example');
     while run<1
-        run=menu('What run on FLAY?','1 YEAR','1 DAY');
+        run=menu('What run on FLAY?','1 YEAR','1 DAY','Q example');
     end
     if run == 1
         Show_Annual_VREG %(2 Figures)
     elseif run == 2
         Show_VREG_DAY
+    elseif run == 3
+        Show_Derived_Q
     end
         
 elseif section == 2
