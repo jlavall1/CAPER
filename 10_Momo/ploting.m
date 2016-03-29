@@ -1,8 +1,10 @@
 close all
+
 figure(1)
 plot([dist.LONG],[dist.LAT],'.w','MarkerSize',10);
 plotGoogleMap
 axis([-83.35 -78.55 33.8 36.8 ])
+
 %%
 figure(2)
 h(1:length(res_conn)) = plot([res_conn.LONG]',[res_conn.LAT]','.c','MarkerSize',10);
@@ -20,3 +22,12 @@ plotGoogleMap
 axis([-84 -78 34 37])
 legend([h(1) g(1) hh(1) gg(1) jj(1) kk(1)],'Residential (CONN)','Commerical (CONN)','Utility Scale (CONN)','Residential (PEND)','Commerical (PEND)','Utility Scale (PEND)','Location','SouthEast');
 %legend([h(1)],'CSKLJ','Location','SouthEast');
+%%
+figure(3)
+
+qq(1:length(substation_matches)) = plot([substation_matches.LONG]',[substation_matches.LAT]','-kh','MarkerSize',10,'MarkerFaceColor',[0,0.5,1],'LineStyle','none');
+hold on
+pp(1) = plot(bell_long,bell_lat,'xk','MarkerSize',15,'LineWidth',4);
+plotGoogleMap
+axis([-81.69 -80.93 34.94 35.52])
+legend([pp(1) qq(1)],'Substation 1','Vicinity','Location','SouthEast');

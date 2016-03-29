@@ -9,6 +9,8 @@ for i = 1:length(dist)
     d = distance(bell_long,dist(i).LONG,bell_lat,dist(i).LAT,R);
     if d <= 20
         substation_matches(j).SUBSTATION = i;
+        substation_matches(j).LAT = dist(i).LAT;
+        substation_matches(j).LONG = dist(i).LONG;
         j = j + 1;
     end
 end
