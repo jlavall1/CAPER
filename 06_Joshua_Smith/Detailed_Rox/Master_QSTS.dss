@@ -1,0 +1,75 @@
+! ---------------------------------
+!! ROXBORO (FEEDER 04)
+!
+! ---------------------------------
+! 
+Clear    ! Always start the Master with a Clear command
+! 
+! Define the Circuit
+! 
+New Circuit.T5240B12 Bus1=T5240B12_1
+~ BasekV= 22.87  pu= 1.03323131817761  angle= 0 
+~ Z1=[ 0.078336 ,  1.86336 ] ! Actual ohms
+~ Z2=[ 0.041472 ,  3.483072 ]
+~ Z0=[ 0 ,  13.642787 ]
+! 
+! Library Data
+! 
+Redirect Wiredata.dss
+Redirect linespacing.dss
+Redirect CNLineCodes.dss
+!
+! Substation & Loadshape Definitions
+!
+Redirect SourceRegulator_3ph.dss
+Redirect Loadshape.dss		!NEW
+Redirect Loadshape_PV.dss	!NEW
+! 
+! Main Circuit Element Data
+! 
+Redirect UGLines.dss
+Redirect LinesByPhase.dss
+Redirect Loads_QSTS.dss 	!NEW
+Redirect Regulators.dss
+Redirect Capacitors.dss
+! 
+! Aux. Circuit Element Data
+! 
+Redirect SwtControls.dss
+Redirect Reclosers.dss
+Redirect BreakerSettings.dss
+Redirect SectionalizerSettings.DSS
+Redirect FuseSettings.dss
+! 
+! Set the voltage bases
+! 
+Set voltagebases = [ 22.87 0.480, 0.208, 0.24, 0.12]
+CalcVoltageBases
+!
+! Declare where monitors will be going
+!
+Redirect Monitors_Rox.dss	!NEW
+! 
+! Define the bus coordinates
+! 
+Buscoords Buscoords.CSV
+! 
+! Some command templates (commented out)
+! 
+!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!
+! Define an energy meter -- needed for plot profile and yearly simulations
+!
+New EnergyMeter.CircuitMeter LINE.PH997__2571841 terminal=1 option=R PhaseVoltageReport=yes
+EnergyMeter.CircuitMeter.peakcurrent=[232.766663065503 242.994085721044 238.029663479192]
+! 
+! Disable Capacitors for load allocation
+Disable Capacitor.*
+! 
+AllocateLoad
+AllocateLoad
+AllocateLoad
+!Dump AllocationFactors
+! 
+! Enable capacitors before solving
+Enable Capacitor.*

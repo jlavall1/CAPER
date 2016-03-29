@@ -79,7 +79,7 @@ elseif feeder_NUM == 4
     fprintf('Characteristics for:\t1 - ROXBORO\n\n');
     vbase = 13;
 elseif feeder_NUM == 5
-    fileloc ='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\03_OpenDSS_Circuits\Roxboro_Circuit_Opendss';
+    fileloc ='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\Detailed_Rox';
     peak_current = [232.766663065503,242.994085721044,238.029663479192];
     peak_kW = 3189.476+3319.354+3254.487;
     min_kW = 3157.978;
@@ -119,7 +119,7 @@ str = strcat(fileloc,'\Master.DSS');
 %peak_current = [196.597331353572,186.718068471483,238.090235458346];
 %peak_current = [100,100,100];
 DSSText.command = ['Compile ' str];
-%DSSText.command = 'BatchEdit Load..* PF=0.99';
+DSSText.command = 'BatchEdit Load..* PF=0.90';
 DSSText.command = sprintf('New EnergyMeter.CircuitMeter LINE.%s terminal=1 option=R PhaseVoltageReport=yes',energy_line);
 %DSSText.command = 'EnergyMeter.CircuitMeter.peakcurrent=[  196.597331353572   186.718068471483   238.090235458346  ]';
 DSSText.command = sprintf('EnergyMeter.CircuitMeter.peakcurrent=[  %s   %s   %s  ]',num2str(peak_current(1,1)),num2str(peak_current(1,2)),num2str(peak_current(1,3)));
@@ -379,35 +379,7 @@ for i=1:1:length(Loads)
 end
 %}
 
-%{
-    Plotting Functions:
-        1. kW vs. Time
-        2. kVAR vs. Time
-    Variables:
-        time - vector for use in ploting x-axis
-        kVmax - maximum value of Sub_P_PhA, Sub_P_PhB, Sub_P_PhC
-        kVmin - minimum value of Sub_P_PhA, Sub_P_PhB, Sub_P_PhC
-        kVARmax - maximum value of Sub_Q_PhA, Sub_Q_PhB, Sub_Q_PhC
-        kVARmin - maximum value of Sub_Q_PhA, Sub_Q_PhB, Sub_Q_PhC
 
-        
-%}
-time=0:1:t;
-
-
-figure();
-plot([min(time),max(time)],[0,0],'LineStyle','-','Color',[0,0,0],'LineWidth',1);
-hold on;
-plot([0,0],[0.9*kVmin,1.1*kVmax],'LineStyle','-','Color',[0,0,0],'LineWidth',1);
-p1=plot(time,MEAS.Sub_P_PhA,'LineStyle','-','Color',[0,0,0.8],'LineWidth',2);
-p2=plot(time,MEAS.Sub_P_PhB,'LineStyle','-','Color',[0,0.8,0],'LineWidth',2);
-p3=plot(time,MEAS.Sub_P_PhB,'LineStyle','-','Color',[0.8,0,0],'LineWidth',2);
-hold off;
-axis([-10,10,0,1.1]);
-title('kW vs. Time');
-xlabel('\omega');
-ylabel('|H|');
-    
 
 
 

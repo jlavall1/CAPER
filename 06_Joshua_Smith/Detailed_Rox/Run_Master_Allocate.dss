@@ -1,0 +1,27 @@
+! ---------------------------------
+!! Converted from CYME 
+! DATE=May 26, 2015 at 10:38:55
+! CYME_VERSION=5.04
+! CYMDIST_REVISION=02
+! ---------------------------------
+! 
+clear
+Compile 'Master.DSS' 
+! 
+! Recommendation: Add an energymeter here to first line in feeder
+New EnergyMeter.CircuitMeter LINE.PH997__2571841 terminal=1 option=R PhaseVoltageReport=yes
+EnergyMeter.CircuitMeter.peakcurrent=[  232.766663065503   242.994085721044   238.029663479192  ] 
+! 
+! Disable Capacitors for load allocation
+Disable Capacitor.*
+! 
+AllocateLoad
+AllocateLoad
+AllocateLoad
+!Dump AllocationFactors
+! 
+! Enable capacitors before solving
+Enable Capacitor.*
+! 
+Solve
+

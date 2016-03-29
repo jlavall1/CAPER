@@ -1,0 +1,23 @@
+// *****************************
+// NOTE: This file is not complete
+// *****************************
+New Line.EXS02__2563621 Bus1=1709830 Bus2=25805548 Switch=T
+!New Recloser.EXS02__2563621 MonitoredObj=Line.EXS02__2563621 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  
+New Line.EXG29__2586831 Bus1=26409651.3 Bus2=26409652.3 Phases=1 Switch=T
+!New Recloser.EXG29__2586831 MonitoredObj=Line.EXG29__2586831 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  
+New Line.EZZ33__105595328 Bus1=25117321.1.2 Bus2=103655384.1.2 Phases=2 Switch=T
+!New Recloser.EZZ33__105595328 MonitoredObj=Line.EZZ33__105595328 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  
+New Line.E2K53__2586678 Bus1=26403379 Bus2=26403380 Switch=T
+!New Recloser.E2K53__2586678 MonitoredObj=Line.E2K53__2586678 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  
+New Line.E2M78__2569464 Bus1=26403413.1 Bus2=26403414.1 Phases=1 Switch=T
+!New Recloser.E2M78__2569464 MonitoredObj=Line.E2M78__2569464 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  
+New Line.15MF00__103739582 Bus1=103218788.3 Bus2=103218791.3 Phases=1 Switch=T
+!New Recloser.15MF00__103739582 MonitoredObj=Line.15MF00__103739582 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  
+New Line.E0X91__2563617 Bus1=1708787.1.2 Bus2=25872908.1.2 Phases=2 Switch=T
+!New Recloser.E0X91__2563617 MonitoredObj=Line.E0X91__2563617 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  
+New Line.E1138__2586567 Bus1=1708759.2 Bus2=26400498.2 Phases=1 Switch=T
+!New Recloser.E1138__2586567 MonitoredObj=Line.E1138__2586567 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  
+New Line.E1537__2586649 Bus1=26402837 Bus2=26402838 Switch=T
+!New Recloser.E1537__2586649 MonitoredObj=Line.E1537__2586649 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  
+New Line.18DN28__104900917 Bus1=103612806 Bus2=103612807 Switch=T
+!New Recloser.18DN28__104900917 MonitoredObj=Line.18DN28__104900917 MonitoredTerm=M NumFast=0 PhaseTrip= 0  GroundTrip= 0  

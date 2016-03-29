@@ -1,0 +1,14 @@
+New Transformer.T5240B12 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[T5240B12_1.1.2.3 T5240B12_1_reg.1.2.3] 
+~ kvas=[40000.0 40000.0]
+~ kVs=[22.870000   22.870000]
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes
+
+New RegControl.T5240B12 Transformer=T5240B12 Winding=2 R= 0  X= 0 
+~ Vreg= 123.987758181313  
+~ Band= 2 
+~ PTratio= 110  
+~ CTPrim= 100 
+~ Delay = 45
+~ PTphase=2 !Phase B has the highest conn. capacity
