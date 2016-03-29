@@ -152,16 +152,28 @@ sub_line='254399393';
             MEAS(t).Sub_Q_PhB = Power(4);
             MEAS(t).Sub_Q_PhC = Power(6);
             
+            % Get State of Charge
+            BESS.Prated=1000; %kW
+            DSSCircuit.SetActiveElement('Storage.BESS');
+            DSSText.command='? Storage.BESS.%stored';
+            MEAS(t).SOC=str2double(DSSText.Result);           %<---------------------
+            DSSText.command='? Storage.BESS.%Discharge';
+            MEAS(t).DR=BESS.Prated*(str2double(DSSText.Result))/100;%<---------------
+            DSSText.command='? Storage.BESS.%Charge';
+            MEAS(t).CR=BESS.Prated*(str2double(DSSText.Result))/100;%<---------------
+            
             set_point = 5800; %kW
-            band = 500; %kW
+            band = 1000; %kW
+            nptsavg = 3;
             SubkW = [MEAS(t).Sub_P_PhA]+[MEAS(t).Sub_P_PhB]+[MEAS(t).Sub_P_PhC];
-            BatteryPCT(t+1) = (band/10)*round((set_point-SubkW+(1000/100)*BatteryPCT(t))/band);
-            SOC = sign(BatteryPCT(t+1));
-            BatteryPCT(t+1) = SOC*min(100,SOC*BatteryPCT(t+1));
-            if SOC <= 0
-                DSSText.Command = sprintf('Edit Storage.BESS State=DISCHARGE %%Discharge=%d',abs(BatteryPCT(t+1)));
+            BatteryPCT(t+1) = ((band)/10)*round((set_point-SubkW+(1000/100)*BatteryPCT(t))/(band));
+            BatteryPCT(t+1) = mean(BatteryPCT((t-nptsavg+2)+(t<nptsavg-1)*(-t+nptsavg-1):t+1));
+            State = sign(BatteryPCT(t+1));
+            BatteryPCT(t+1) = State*min(100,State*BatteryPCT(t+1));
+            if State <= 0
+                DSSText.Command = sprintf('Edit Storage.BESS State=DISCHARGE %%Discharge=%d %%Charge=0',abs(BatteryPCT(t+1)));
             else 
-                DSSText.Command = sprintf('Edit Storage.BESS State=CHARGE %%Charge=%d',abs(BatteryPCT(t+1)));
+                DSSText.Command = sprintf('Edit Storage.BESS State=CHARGE %%Charge=%d %%Discharge=0',abs(BatteryPCT(t+1)));
             end
             %Potential Transformer Equivalent:
             %DSSCircuit.SetActiveElement(sprintf('Transformer.%s',trans_name)); % trans_name - OLTC name
@@ -213,6 +225,7 @@ sub_line='254399393';
         %end
 
 %% Plot Results
+close all;
 current_time = datenum('6/2/2014')+(0:1440-1)'/1440;
 figure;
 plot(current_time,[MEAS.Sub_P_PhA],'-k','LineWidth',2)
@@ -228,24 +241,51 @@ grid on;
 set(gca,'FontSize',10,'FontWeight','bold')
 datetick(gca)
 xlabel(gca,sprintf('%s [hours]',datestr(current_time(1))),'FontSize',12,'FontWeight','bold')
-ylabel(gca,'kW [pu]','FontSize',12,'FontWeight','bold')
+ylabel(gca,'Three Phase Real Power (P_{3{\phi}}) [kW]','FontSize',12,'FontWeight','bold')
 title('Peak Shave QSTS','FontWeight','bold','FontSize',12);
-legend('Phase A','Phase B','Phase C')
+legend('Phase A','Phase B','Phase C','Location','SouthEast')
 
 figure;
-plot(current_time,[MEAS.Sub_P_PhA]+[MEAS.Sub_P_PhB]+[MEAS.Sub_P_PhC],'-k','LineWidth',2)
+h(1) = plot(current_time,[MEAS.Sub_P_PhA]+[MEAS.Sub_P_PhB]+[MEAS.Sub_P_PhC],'-k','LineWidth',2);
 hold on
-plot(current_time,MOCKS01.kW(:,1)+MOCKS01.kW(:,2)+MOCKS01.kW(:,3),'--r','LineWidth',2)
-plot([current_time(1),current_time(end)],[set_point set_point]+band/2,':k','LineWidth',2)
-plot([current_time(1),current_time(end)],[set_point set_point]-band/2,':k','LineWidth',2)
-hold off
+h(2) = plot(current_time,MOCKS01.kW(:,1)+MOCKS01.kW(:,2)+MOCKS01.kW(:,3),'--r','LineWidth',2);
+h(3) = plot([current_time(1),current_time(end)],[set_point set_point]+band/2,':k','LineWidth',2);
+plot([current_time(1),current_time(end)],[set_point set_point]-band/2,':k','LineWidth',2);
+hold on
+%find transitions:
+j=1;
+jj=1;
+for i=3:1:1440
+    if abs(MEAS(i).DR-MEAS(i-1).DR) > 300
+        if j == 1
+            save_t(j)=i;
+            j = 2;
+        end
+    end
+    if MEAS(i).CR-MEAS(i-1).CR > -300
+        if jj == 1
+            save_t1(jj)=i;
+            jj = 2;
+        end
+    elseif MEAS(i).CR-MEAS(i-1).CR < 300
+        if jj == 2
+            save_t1(jj)=i;
+            jj = 3;
+        end
+    end
+end
+txt1= sprintf('SOC=%s',num2str(MEAS(save_t(1)).SOC));
+text(current_time(save_t(1)),5000,txt1,'Color','b','HorizontalAlignment','Right');
+
+
+%Settings
 grid on;
-set(gca,'FontSize',10,'FontWeight','bold')
+set(gca,'FontSize',10,'FontWeight','bold');
 datetick(gca)
-xlabel(gca,sprintf('%s [hours]',datestr(current_time(1))),'FontSize',12,'FontWeight','bold')
-ylabel(gca,'kW [pu]','FontSize',12,'FontWeight','bold')
+xlabel(gca,sprintf('%s [hours]',datestr(current_time(1))),'FontSize',12,'FontWeight','bold');
+ylabel(gca,'kW [pu]','FontSize',12,'FontWeight','bold');
 title('Peak Shave QSTS','FontWeight','bold','FontSize',12);
-legend('Phase A','Phase B','Phase C')
+legend([h(1) h(2) h(3)],'With Battery','Without Battery','Bandwidth','Location','SouthEast');
 
         
     %end

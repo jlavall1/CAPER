@@ -1,7 +1,7 @@
 New Storage.BESS Bus1=705406810 Phases=3 kV=24.9
 ~ kWRated=1000
 ~ kWhRated=10000
-~ %stored=20
+~ %stored=25
 ~ %reserve=20
 ~ %EffCharge=93
 ~ %EffDischarge=96.7
