@@ -1,20 +1,7 @@
 %BESS_Control_PeakShaving:
-%Objective: Implement MATLAB Control of kW & kVAR of BESS based on
-%measurements from PCC:
-%{
-DSSCircuit.SetActiveElement(sprintf('Line.%s',Lines_info(1).name));
-Power   = DSSCircuit.ActiveCktElement.Powers;
-%Single Phase Real Power:
-MEAS(t).Sub_P_PhA = Power(1);
-MEAS(t).Sub_P_PhB = Power(3);
-MEAS(t).Sub_P_PhC = Power(5);
-%Single Phase Reactive Power:
-MEAS(t).Sub_Q_PhA = Power(2);
-MEAS(t).Sub_Q_PhB = Power(4);
-MEAS(t).Sub_Q_PhC = Power(6);
-%}
+%Objective: Implement MATLAB Control
 
-%%
+
 %obtain SOC-ref:
 if t == 1
     %10seconds into sim, conduct initial guess:
@@ -26,7 +13,7 @@ if t == 1
     DoD=BESS.DoD_max;
     [SOC_ref,CR_ref,t_CR]=SOCref_CR(BncI,CSI,CSI_TH,BESS,C,DoD);
 end
-%%
+
 
 %%
 

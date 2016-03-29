@@ -191,7 +191,7 @@ for DAY_I=DOY:1:DAY_F
             % Voltage Reg. Equip. Controls:
             Master_Control
             if BESS_ON == 1
-                %BESS_Control_PeakShaving
+                %BESS Controller updating CR/DR every 5 seconds.
                 BESS_PV_Control
             end
             [SWC_STATE(t),LTC_STATE(t),MSTR_STATE(t)]=OLTC_Control(DSSCircObj,SCADA(t),SWC_STATE(t),LTC_STATE(t),MSTR_STATE(t),t);

@@ -17,6 +17,7 @@ int_select=1;   %1: 5s load, 1s sim 2:60s load, 60s sim
 QSTS_select     = 4;
 
 BESS_ON         = 1; %0 is no battery, 1 is a battery
+DYN             = 1; %0 for just trap follow; 1 for dP adjustment
 BESS_TYPE       = 2; %1=8000kWh 2=4000kWh 3=1000kWh
 
 addpath(strcat(base_path,'\04_DSCADA'));
@@ -83,7 +84,8 @@ elseif slt_DAY_RUN == 8
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY;
 elseif slt_DAY_RUN == 9
-    %One day run on 2/2 to test BESS
+    %One day run on 2/4 to test BESS
+    %Peak Operations:
     DAY = 3;
     MNTH = 2;
     DOY=calc_DOY(MNTH,DAY);
@@ -210,5 +212,9 @@ idx = strfind(ckt_direct,'.');
 %%
 %Connect DER-PV to desired position:
 PV_SITE_DATA_import
-Set_DER_PV_PCC    
-QSTS_365_BESS
+Set_DER_PV_PCC
+if DYN == 0
+    QSTS_365_BESS
+elseif DYN == 1
+    QSTS_365_BESS_DYN
+end
