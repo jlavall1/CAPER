@@ -9,40 +9,49 @@ close all
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 DSSCircuit = DSSCircObj.ActiveCircuit;
 %
-addpath('C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS');
+addpath('C:\Users\ATOW\Documents\GitHub\CAPER\09_TOW\QSTS\DSS');
 % 2. Compile the user selected circuit:
-ckt_direct_prime='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS\Master_QSTS.dss';
-DSSText.command = ['Compile ',ckt_direct_prime]; %Master_General.dss
+ckt_direct_prime='C:\Users\ATOW\Documents\GitHub\CAPER\09_TOW\QSTS\DSS\Master.dss';
+%DSSText.command = ['Compile ',ckt_direct_prime]; %Master_General.dss
 
 
 %Loads_info = getLoadInfo(DSSCircObj);
 %%
-ReferenceData
-
+load MOCKS01.mat
+load LoadTotals.mat
+load PV_Shape.mat
+Caps.Name{1}='CAP1';
+Caps.Name{2}='CAP2';
+Caps.Name{3}='CAP3';
+Caps.Swtch(1)=1200/3; 
+Caps.Swtch(2)=1200/3; 
+Caps.Swtch(3)=1200/3;
+trans_name='T5240B12';
+sub_line='254399393';
 %%
-for DAY_I=DOY:1:DAY_F
+%for DAY_I=DOY:1:DAY_F
     tic
     %%
     %-- Update Irradiance/PV_KW
-    if DAY > MTH_LN(MNTH)
-        MNTH = MNTH + 1;
-        DAY = 1;
-    end
-    fprintf('\nQSTS Simulation: DOY= %d\n',DAY_I);
+%     if DAY > MTH_LN(MNTH)
+%         MNTH = MNTH + 1;
+%         DAY = 1;
+%     end
+    %fprintf('\nQSTS Simulation: DOY= %d\n',DAY_I);
     
-    eff_KVAR=ones(1,3);
+    %eff_KVAR=ones(1,3);
     
     % interpolate seconds between minutes
-    CAP_OPS_STEP2_1(DAY_I).kW(:,1) = interp(CAP_OPS_STEP2(DAY_I).kW(:,1),int_1m); %60s -> 5s
-    CAP_OPS_STEP2_1(DAY_I).kW(:,2) = interp(CAP_OPS_STEP2(DAY_I).kW(:,2),int_1m); %60s -> 5s
-    CAP_OPS_STEP2_1(DAY_I).kW(:,3) = interp(CAP_OPS_STEP2(DAY_I).kW(:,3),int_1m); %60s -> 5s
-    CAP_OPS_1(DAY_I).DSS(:,1) = eff_KVAR(1,1)*interp(CAP_OPS(DAY_I).DSS(:,1),int_1m);
-    CAP_OPS_1(DAY_I).DSS(:,2) = eff_KVAR(1,2)*interp(CAP_OPS(DAY_I).DSS(:,2),int_1m);
-    CAP_OPS_1(DAY_I).DSS(:,3) = eff_KVAR(1,3)*interp(CAP_OPS(DAY_I).DSS(:,3),int_1m);
+%     CAP_OPS_STEP2_1(DAY_I).kW(:,1) = interp(CAP_OPS_STEP2(DAY_I).kW(:,1),int_1m); %60s -> 5s
+%     CAP_OPS_STEP2_1(DAY_I).kW(:,2) = interp(CAP_OPS_STEP2(DAY_I).kW(:,2),int_1m); %60s -> 5s
+%     CAP_OPS_STEP2_1(DAY_I).kW(:,3) = interp(CAP_OPS_STEP2(DAY_I).kW(:,3),int_1m); %60s -> 5s
+%     CAP_OPS_1(DAY_I).DSS(:,1) = eff_KVAR(1,1)*interp(CAP_OPS(DAY_I).DSS(:,1),int_1m);
+%     CAP_OPS_1(DAY_I).DSS(:,2) = eff_KVAR(1,2)*interp(CAP_OPS(DAY_I).DSS(:,2),int_1m);
+%     CAP_OPS_1(DAY_I).DSS(:,3) = eff_KVAR(1,3)*interp(CAP_OPS(DAY_I).DSS(:,3),int_1m);
     
 %Feeder 04
         
-    if DAY_I == DOY
+    %if DAY_I == DOY
         %--  Generate Solar Shapes:
         %{
         filelocation=strcat(s,'\');
@@ -57,74 +66,81 @@ for DAY_I=DOY:1:DAY_F
         %--  Generate Load Shapes:
         %%
         
-        s='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS';
+        s_step = 60;
+        sim_num = 1440;
+        
+        s='C:\Users\ATOW\Documents\GitHub\CAPER\09_TOW\QSTS\DSS';
         filelocation=strcat(s,'\');
         fileID = fopen([filelocation,'Loadshape.dss'],'wt');
-        fprintf(fileID,['New loadshape.LS_PhaseA npts=%s sinterval=%s pmult=(',...
-            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,1)/LoadTotals.kWA),') qmult=(',...
-            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,1)/LoadTotals.kVARA),')\n\n'],num2str(sim_num),num2str(s_step));
-        fprintf(fileID,['New loadshape.LS_PhaseB npts=%s sinterval=%s pmult=(',...
-            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,2)/LoadTotals.kWB),') qmult=(',...
-            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,2)/LoadTotals.kVARB),')\n\n'],num2str(sim_num),num2str(s_step));
-        fprintf(fileID,['New loadshape.LS_PhaseC npts=%s sinterval=%s pmult=(',...
-            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,3)/LoadTotals.kWC),') qmult=(',...
-            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,3)/LoadTotals.kVARC),')\n\n'],num2str(sim_num),num2str(s_step));
+        fprintf(fileID,['New loadshape.LS_PhaseA npts=%d sinterval=%d pmult=(',...
+            sprintf('%f ',MOCKS01.kW(:,1)/LoadTotals.kWA),') qmult=(',...
+            sprintf('%f ',MOCKS01.kVAR(:,1)/LoadTotals.kVARA),')\n\n'],sim_num,s_step);
+        fprintf(fileID,['New loadshape.LS_PhaseB npts=%d sinterval=%d pmult=(',...
+            sprintf('%f ',MOCKS01.kW(:,2)/LoadTotals.kWB),') qmult=(',...
+            sprintf('%f ',MOCKS01.kVAR(:,2)/LoadTotals.kVARB),')\n\n'],sim_num,s_step);
+        fprintf(fileID,['New loadshape.LS_PhaseC npts=%d sinterval=%d pmult=(',...
+            sprintf('%f ',MOCKS01.kW(:,3)/LoadTotals.kWC),') qmult=(',...
+            sprintf('%f ',MOCKS01.kVAR(:,3)/LoadTotals.kVARC),')\n\n'],sim_num,s_step);
+        
+        fprintf(fileID,['New loadshape.LS_Solar npts=%d sinterval=%d mult=(',...
+            sprintf('%f ',PV_Shape),')\n\n'],sim_num,s_step);
         fclose(fileID);
 
-    else
-        %-- Edit Loadshapes for next day:
-        DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseA pmult=(',...
-            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,1)/LoadTotals.kWA),') qmult=(',...
-            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,1)/LoadTotals.kVARA),')']);
-        DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseB pmult=(',...
-            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,2)/LoadTotals.kWB),') qmult=(',...
-            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,2)/LoadTotals.kVARB),')']);
-        DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseC pmult=(',...
-            sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,3)/LoadTotals.kWC),') qmult=(',...
-            sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,3)/LoadTotals.kVARC),')']);
-        %DSSText.Command = sprintf(['Edit Loadshape.LS_Solar mult=(',...
-            %sprintf('%f ',PV_loadshape_daily_1(:,1)),')']);
-    end
+%     else
+%         %-- Edit Loadshapes for next day:
+%         DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseA pmult=(',...
+%             sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,1)/LoadTotals.kWA),') qmult=(',...
+%             sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,1)/LoadTotals.kVARA),')']);
+%         DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseB pmult=(',...
+%             sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,2)/LoadTotals.kWB),') qmult=(',...
+%             sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,2)/LoadTotals.kVARB),')']);
+%         DSSText.Command = sprintf(['Edit Loadshape.LS_PhaseC pmult=(',...
+%             sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,3)/LoadTotals.kWC),') qmult=(',...
+%             sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,3)/LoadTotals.kVARC),')']);
+%         %DSSText.Command = sprintf(['Edit Loadshape.LS_Solar mult=(',...
+%             %sprintf('%f ',PV_loadshape_daily_1(:,1)),')']);
+%     end
     
-    if DAY_I==DOY
+    %if DAY_I==DOY
         DSSText.command = ['Compile ',ckt_direct_prime];
         %Lines_info = getLineInfo(DSSCircObj);
         %[~,index] = sortrows([Lines_info.bus1Distance].');
         %Lines_info = Lines_info(index);
         %Roxboro has alot of VRDs:
-        DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{1},num2str(CAP_OPS(DAY_I).oper(1,1)));
-        DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{2},num2str(CAP_OPS(DAY_I).oper(1,2)));
-        DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{3},num2str(CAP_OPS(DAY_I).oper(1,3)));
-    else
-        %Roxboro has alot of VRDs:
-        DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{1},num2str(CAP_OPS(DAY_I).oper(1,1)));
-        DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{2},num2str(CAP_OPS(DAY_I).oper(1,2)));
-        DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{3},num2str(CAP_OPS(DAY_I).oper(1,3)));
-        DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,TAP_DAY);
-    end
+%         DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{1},num2str(CAP_OPS(DAY_I).oper(1,1)));
+%         DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{2},num2str(CAP_OPS(DAY_I).oper(1,2)));
+%         DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{3},num2str(CAP_OPS(DAY_I).oper(1,3)));
+%     else
+%         %Roxboro has alot of VRDs:
+%         DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{1},num2str(CAP_OPS(DAY_I).oper(1,1)));
+%         DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{2},num2str(CAP_OPS(DAY_I).oper(1,2)));
+%         DSSText.command=sprintf('Edit Capacitor.%s states=%s',Caps.Name{3},num2str(CAP_OPS(DAY_I).oper(1,3)));
+%         DSSText.command=sprintf('Transformer.%s.Taps=[1.0, %s]',trans_name,TAP_DAY);
+%     end
     
     %--  Run QSTS 24hr sim:
-    if timeseries_span == 2
+    %if timeseries_span == 2
         %(1) DAY, 24hr, 1 second timestep for MATLAB controls.
         %
         % Configure Simulation:
-        DSSText.command=sprintf('set mode=daily stepsize=%s number=1 controlMode=TIME',num2str(ss));  %num2str(ss/60)
+        DSSText.command=sprintf('set mode=daily stepsize=%d number=1 controlMode=TIME',60);  %num2str(ss/60)
         DSSCircuit.Solution.dblHour = 0.0;
-        i = 1; %counter for TVD sample & voltage violation check
-        for t = 1:1:1440*NUM_INC
+        %i = 1; %counter for TVD sample & voltage violation check
+        BatteryPCT = zeros(1441,1);
+        for t = 1:1:1440
             
             % Solve at current time step
             
             DSSCircuit.Solution.Solve
-            if t == 1
-                Buses_info = getBusInfo(DSSCircObj);
-                % Get gridpv information
-                Cap_info = getCapacitorInfo(DSSCircObj);
-                Lines_info = getLineInfo(DSSCircObj);
-                % Sort lines by distance
-                [~,index] = sortrows([Lines_info.bus1Distance].');
-                Lines_info = Lines_info(index);
-            end
+%             if t == 1
+%                 Buses_info = getBusInfo(DSSCircObj);
+%                 % Get gridpv information
+%                 Cap_info = getCapacitorInfo(DSSCircObj);
+%                 Lines_info = getLineInfo(DSSCircObj);
+%                 % Sort lines by distance
+%                 [~,index] = sortrows([Lines_info.bus1Distance].');
+%                 Lines_info = Lines_info(index);
+%             end
             DSSCircuit.SetActiveElement(sprintf('Line.%s',sub_line));
             Power   = DSSCircuit.ActiveCktElement.Powers;
             %Single Phase Real Power:
@@ -136,15 +152,26 @@ for DAY_I=DOY:1:DAY_F
             MEAS(t).Sub_Q_PhB = Power(4);
             MEAS(t).Sub_Q_PhC = Power(6);
             
+            set_point = 5800; %kW
+            band = 500; %kW
+            SubkW = [MEAS(t).Sub_P_PhA]+[MEAS(t).Sub_P_PhB]+[MEAS(t).Sub_P_PhC];
+            BatteryPCT(t+1) = (band/10)*round((set_point-SubkW+(1000/100)*BatteryPCT(t))/band);
+            SOC = sign(BatteryPCT(t+1));
+            BatteryPCT(t+1) = SOC*min(100,SOC*BatteryPCT(t+1));
+            if SOC <= 0
+                DSSText.Command = sprintf('Edit Storage.BESS State=DISCHARGE %%Discharge=%d',abs(BatteryPCT(t+1)));
+            else 
+                DSSText.Command = sprintf('Edit Storage.BESS State=CHARGE %%Charge=%d',abs(BatteryPCT(t+1)));
+            end
             %Potential Transformer Equivalent:
-            DSSCircuit.SetActiveElement(sprintf('Transformer.%s',trans_name)); % trans_name - OLTC name
-            Phs_V=DSSCircuit.ActiveElement.Voltages; % pulls all the fricking voltages
-            V_phC_s=Phs_V(13)+1i*Phs_V(14); %Phase C on secondary side
-            MEAS(t).V_OLTC_PT =abs(V_phC_s)/110; % develop logic to check turns ratio
+            %DSSCircuit.SetActiveElement(sprintf('Transformer.%s',trans_name)); % trans_name - OLTC name
+            %Phs_V=DSSCircuit.ActiveElement.Voltages; % pulls all the fricking voltages
+            %V_phC_s=Phs_V(13)+1i*Phs_V(14); %Phase C on secondary side
+            %MEAS(t).V_OLTC_PT =abs(V_phC_s)/110; % develop logic to check turns ratio
             %------------------------------------
             %Voltage Regulation Relay Equiv:
-            DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
-            MEAS(t).OLTC_tap = str2double(DSSText.Result);
+            %DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
+            %MEAS(t).OLTC_tap = str2double(DSSText.Result);
             
             %{
             Calc TVD every 5sec & only during PV hours
@@ -176,14 +203,50 @@ for DAY_I=DOY:1:DAY_F
             %}
             
         end
-        i = 1;
+        %i = 1;
         
         %save tap pos to reset after next day load allocation:
-        DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
-        TAP_DAY = DSSText.Result;
+        %DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
+        %TAP_DAY = DSSText.Result;
         %if feeder_NUM < 3
             %CAP_DAY = YEAR_CAPSTATUS(DAY_I).CAP_POS(t,1);
         %end
+
+%% Plot Results
+current_time = datenum('6/2/2014')+(0:1440-1)'/1440;
+figure;
+plot(current_time,[MEAS.Sub_P_PhA],'-k','LineWidth',2)
+hold on
+plot(current_time,[MEAS.Sub_P_PhB],'-r','LineWidth',2)
+plot(current_time,[MEAS.Sub_P_PhC],'-b','LineWidth',2)
+
+plot(current_time,MOCKS01.kW(:,1),'--k','LineWidth',1)
+plot(current_time,MOCKS01.kW(:,2),'--r','LineWidth',1)
+plot(current_time,MOCKS01.kW(:,3),'--b','LineWidth',1)
+hold off
+grid on;
+set(gca,'FontSize',10,'FontWeight','bold')
+datetick(gca)
+xlabel(gca,sprintf('%s [hours]',datestr(current_time(1))),'FontSize',12,'FontWeight','bold')
+ylabel(gca,'kW [pu]','FontSize',12,'FontWeight','bold')
+title('Peak Shave QSTS','FontWeight','bold','FontSize',12);
+legend('Phase A','Phase B','Phase C')
+
+figure;
+plot(current_time,[MEAS.Sub_P_PhA]+[MEAS.Sub_P_PhB]+[MEAS.Sub_P_PhC],'-k','LineWidth',2)
+hold on
+plot(current_time,MOCKS01.kW(:,1)+MOCKS01.kW(:,2)+MOCKS01.kW(:,3),'--r','LineWidth',2)
+plot([current_time(1),current_time(end)],[set_point set_point]+band/2,':k','LineWidth',2)
+plot([current_time(1),current_time(end)],[set_point set_point]-band/2,':k','LineWidth',2)
+hold off
+grid on;
+set(gca,'FontSize',10,'FontWeight','bold')
+datetick(gca)
+xlabel(gca,sprintf('%s [hours]',datestr(current_time(1))),'FontSize',12,'FontWeight','bold')
+ylabel(gca,'kW [pu]','FontSize',12,'FontWeight','bold')
+title('Peak Shave QSTS','FontWeight','bold','FontSize',12);
+legend('Phase A','Phase B','Phase C')
+
         
-    end
-end
+    %end
+%end

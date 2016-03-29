@@ -1,8 +1,9 @@
 %Load Historical DSCADA
-load CAP_Mult_60s_ROX.mat
-load P_Mult_60s_ROX.mat
-load Q_Mult_60s_ROX.mat
-load LoadTotals.mat
+%load CAP_Mult_60s_ROX.mat
+%load P_Mult_60s_ROX.mat
+%load Q_Mult_60s_ROX.mat
+%load LoadTotals.mat
+load MOCKS01.mat
 
 %Component Names:
 Caps.Name{1}='CAP1';
@@ -73,7 +74,7 @@ CAP_OPS_1(DAY_I).DSS(:,1) = eff_KVAR(1,1)*interp(CAP_OPS(DAY_I).DSS(:,1),int_1m)
 CAP_OPS_1(DAY_I).DSS(:,2) = eff_KVAR(1,2)*interp(CAP_OPS(DAY_I).DSS(:,2),int_1m);
 CAP_OPS_1(DAY_I).DSS(:,3) = eff_KVAR(1,3)*interp(CAP_OPS(DAY_I).DSS(:,3),int_1m);
 
-s='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS';
+s='C:\Users\ATOW\Documents\GitHub\CAPER\09_TOW\QSTS\DSS';
 filelocation=strcat(s,'\');
 fileID = fopen([filelocation,'Loadshape.dss'],'wt');
 fprintf(fileID,['New loadshape.LS_PhaseA npts=%s sinterval=%s pmult=(',...

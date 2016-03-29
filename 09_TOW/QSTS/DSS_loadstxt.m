@@ -2,7 +2,7 @@ clear;
 clc;
 %blah blah blah
 
-fileloc='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\QSTS';
+fileloc='C:\Users\ATOW\Documents\GitHub\CAPER\09_TOW\QSTS';
 %cd(fileloc);
 [RAW_DATA, A, CELL] = xlsread('Loads.xlsx','Sheet2');
 output_text = cell(length(CELL),1);
@@ -38,7 +38,7 @@ end
 
 %export strings to .txt file:
 
-filename=strcat(fileloc,'\Loads_text.txt');
+filename=strcat(fileloc,'\Loads.txt');
 fileID=fopen(filename,'w');
 for j=1:1:length(output_text_final)
     fprintf(fileID,'%s\r\n',output_text_final{j,1});
