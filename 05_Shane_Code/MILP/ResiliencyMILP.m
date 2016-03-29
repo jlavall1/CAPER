@@ -19,10 +19,18 @@ MILPPreProcessing();
 %PARAM.SO =  {'259355403','258896319','458944741','258896484','258896576','264495349','699603885'}; % Main Line Faults going down feeder
 %PARAM.SO =  {'263532848'}; % Fault on Lateral
 
-PARAM.SO = {}; % Case 1
-PARAM.SO = 
+%PARAM.SO = {}; % Case 1: Normal Operation
+%PARAM.SO = {'264495349'}; % Case 2: Single Main Line Fault
+%PARAM.SO = {'258896299','258896319','258896484','699603885'}; % Case 3: Multiple Main Line Faults
+% DER(3).MVACapacity = 3;
+% DER(4).MVACapacity = 3;
+% PARAM.SO = {'258896319','699603885'}; % Case 4: One Micro-grid with Multiple Sources
 
-%PARAM.SO =  {'699603854'} % Current Violation (Commonwealth)
+DER(3).MVACapacity = 3;
+DER(4).MVACapacity = 3;
+PARAM.SO = {'258896319'}; % Voltage Violation
+
+%PARAM.SO =  {'699603854'} % Current Violation
 
 
 toc
@@ -132,26 +140,26 @@ if exitflag==1
     toc
     disp('Plotting Results...')
     % Plot Results
-    PlotResults
-%     
-%     toc
-%     disp('Check for Violations...')
-%     % Check for Violations
-%     for i = 1:D
-%         % Find Source in Micro-grid
-%         index = {logical([NODE.(['alpha_',MG{i}])]),logical([SECTION.(['beta_',MG{i}])]),logical([LOAD.(['c_',MG{i}])])};
-%         if length(find(index{1}))>1 % Must Contain more than 1 node for simulation
-%             [DSSCircuit, DSSCircObj, DSSText, gridpvPath] = DSSDeclare(NODE(index{1}),SECTION(index{2}),LOAD(index{3}),DER([DER.MGNumber]==i),DSS);
-%             
-%             % Collect Data
-%             %Lines = getLineInfo(DSSCircObj);
-%             %Bus = getBusInfo(DSSCircObj);
-%             %Load = getLoadInfo(DSSCircObj);
-%             figure; plotKWProfile(DSSCircObj);
-%             figure; plotVoltageProfile(DSSCircObj);
-%             figure; plotCircuitLines(DSSCircObj,'Coloring','voltage120')
-%         end
-%     end
+    %PlotResults
+    
+    toc
+    disp('Check for Violations...')
+    % Check for Violations
+    for i = 1:D
+        % Find Source in Micro-grid
+        index = {logical([NODE.(['a_',MG{i}])]),logical([SECTION.(['b_',MG{i}])]),logical([LOAD.(['alpha_',MG{i}])])};
+        if length(find(index{1}))>1 % Must Contain more than 1 node for simulation
+            [DSSCircuit, DSSCircObj, DSSText, gridpvPath] = DSSDeclare(NODE(index{1}),SECTION(index{2}),LOAD(index{3}),DER([DER.MGNumber]==i),DSS);
+            
+            % Collect Data
+            %Lines = getLineInfo(DSSCircObj);
+            %Bus = getBusInfo(DSSCircObj);
+            %Load = getLoadInfo(DSSCircObj);
+            figure; plotKWProfile(DSSCircObj);
+            figure; plotVoltageProfile(DSSCircObj);
+            figure; plotCircuitLines(DSSCircObj,'Coloring','voltage120')
+        end
+    end
     
 end    
 

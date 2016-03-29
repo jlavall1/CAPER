@@ -68,7 +68,7 @@ end
 %!Redirect Controls\ReclContrl.dss
 
 % Set Voltage Bases
-DSSText.command = Source.DSSVoltbase;
+%DSSText.command = Source.DSSVoltbase;
 
 % Define an energy meter
 DSSText.command = Source.EnergyMeter;

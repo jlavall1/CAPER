@@ -40,6 +40,7 @@ DSSCircuit.Solution.Solve
 % figure; plotKWProfile(DSSCircObj);
 % figure; plotVoltageProfile(DSSCircObj);
 %figure; plotCircuitLines(DSSCircObj,'Coloring','voltage120')
+figure; handles = plotCircuitLines(DSSCircObj,'Coloring','numPhases','CapacitorMarker','off','SubstationMarker','off','LoadMarker','on');
 
 %Probs = Lines(cellfun(@isempty,{Lines.length}));
 %Probs = Bus(~logical([Bus.distance]));
