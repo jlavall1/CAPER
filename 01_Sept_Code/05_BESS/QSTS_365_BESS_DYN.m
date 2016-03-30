@@ -325,7 +325,7 @@ if BESS_ON == 1
     hold on
     plot(CR_ref,'r--','LineWidth',2);
     figure(3)
-    plot([BESS_M.PCC],'b-','LineWidth',2);
+    plot([SCADA.Sub_3P],'b-','LineWidth',2);
     
 end
 %{

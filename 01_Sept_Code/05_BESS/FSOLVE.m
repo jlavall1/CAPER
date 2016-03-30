@@ -7,15 +7,22 @@ clc
 %Try to find correct T_ON & T_OFF:
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\04_DSCADA\VI_CI_IrradianceDailyProfiles\04_Mocksville_NC');
 load M_MOCKS.mat
+load M_MOCKS_SC.mat
+M_PVSITE_SC_1 = M_MOCKS_SC;
+%
 for i=1:1:12
     M_PVSITE(i).GHI = M_MOCKS(i).GHI;
+    M_PVSITE(i).kW = M_MOCKS(i).kW;
 end
 load P_Mult_60s_Flay.mat
 
 %One day run on 6/1:
-
+%{
 DAY = 1;
 MNTH = 6;
+%}
+DAY = 3;
+MNTH = 2;
 %{
 DAY = 1;
 MNTH = 1;
@@ -26,11 +33,11 @@ DOY=calc_DOY(MNTH,DAY);
 %-----------------
 CSI=M_PVSITE(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),3);
 BncI=M_PVSITE(MNTH).GHI(time2int(DAY,0,0):time2int(DAY,23,59),1); %1minute interval:
-%GHI=M_PVSITE(MNTH).kW(time2int(DAY,0,0):time2int(DAY,23,59),1)/5000; %PU
+GHI=M_PVSITE(MNTH).kW(time2int(DAY,0,0):time2int(DAY,23,59),1)/5000; %PU
 %convert to P.U.
 %inputs:
 
-CSI_TH=0.2;
+CSI_TH=0.1;
 BESS.Prated=1000;
 BESS.Crated=12121; %4000kWh
 BESS.DoD_max=0.33;
@@ -43,7 +50,13 @@ BESS.DoD_max=0.33;
 BESS.Crated=10000;
 %}
 %C=BESS.Crated*BESS.DoD_max; %this will change....
+
 C=BESS.Crated;
+
+
+
+
+DoD=BESS.DoD_max; %current DoD at start of day:
 [SOC_ref,CR_ref,t_CR]=SOCref_CR(BncI,CSI,CSI_TH,BESS,C,BESS.DoD_max);
 
 BESS_INFO.CSI=CSI;
@@ -53,7 +66,7 @@ BESS_INFO.SOC_ref=SOC_ref;
 BESS_INFO.CR_ref=CR_ref;
 BESS_INFO.t_CR=t_CR;
 %}
-%%
+%
 %{
 
 
@@ -205,13 +218,16 @@ end
 %kWh_ref=kWh_ref/C;
 
 %}
-%%
+%
 %
 %Now lets calc Discharge:
 %=======================
 %   Attempting to find Discharge Interval...
 P_DAY1=CAP_OPS_STEP2(DOY).kW(:,1)+CAP_OPS_STEP2(DOY).kW(:,2)+CAP_OPS_STEP2(DOY).kW(:,3);
 P_DAY2=CAP_OPS_STEP2(DOY+1).kW(:,1)+CAP_OPS_STEP2(DOY+1).kW(:,2)+CAP_OPS_STEP2(DOY+1).kW(:,3);
+[t_max,DAY_NUM,P_max,E_kWh]=Peak_Estimator_MSTR(P_DAY1,P_DAY2);
+
+%{
 hr=1;
 sum1=0;
 sum2=0;
@@ -249,24 +265,50 @@ else
     t_max=P_max(2,1);
 end
 fprintf('\nTarget PEAK KW - kth min: %0.2f\n',t_max);
-
+%}
 %Initial conditions:
-SOC=1; %  100%
+SOC_n=1; %  100%
 
 C_r=BESS.Crated;
 DoD_max=BESS.DoD_max;
 
 sigma=0.1;
-bat_en = SOC*C_r*DoD_max; %kWh available (estimate then actual after CR period over.
+%{
+CI_k1 = M_PVSITE_SC_1(DOY+1,5);
+if CI_k1 > 1
+    CI_k1 = 1;
+end
+VI_k1 = M_PVSITE_SC_1(DOY+1,4);
+beta=[0.44380209  0.01994886  6.51296679];
+P_PV = 3000; %KW
+PU_HR=(DoD_max*C_r)/(P_PV*0.25);
+E_pu(DOY,1)=beta(1)+beta(2)*VI_k1+beta(3)*CI_k1;
+
+%PU_HR = 5.33;
+if E_pu(DOY,1) <= PU_HR %pu.hr
+    DoD_tar(DOY,1)=(0.33/PU_HR)*E_pu(DOY,1);
+else
+    DoD_tar(DOY,1)=DoD_max;
+end
+%}
+%{
+DoD_est = (C_r*SOC_n*CI_k)/C_r;
+if DoD_est < DoD_max
+    DoD_est = DoD_max;
+end
+%}
+%bat_en = SOC_n*C_r*DoD_tar(DOY,1); %kWh available (estimate then actual after CR period over.
 %%
 
-peak = DR_INT(t_max,P_DAY1,bat_en,sigma);
+[peak,P_DR_ON,T_DR_ON] = DR_INT(t_max,P_DAY1,M_PVSITE_SC_1(DOY+1,:),sigma,BESS,1);
 n=length(peak);
 %C=bat_en;
-T_ON_1=round(peak(n).t_A/60);
+%T_ON_1=round(peak(n).t_A/60);
+T_ON_1=T_DR_ON;
 T_OFF_1=round(peak(n).t_B/60);
 fprintf('Battery will begin Discharge...\n');
 fprintf('T_ON=%0.3f \t T_OFF=%0.3f\n',peak(n).t_A,peak(n).t_B);
+fprintf('Target kW=%0.3f \n',P_DR_ON);
 %Estimate:
 %T_ON_1=17;
 %T_OFF_1=21;

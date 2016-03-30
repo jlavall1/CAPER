@@ -31,28 +31,31 @@ axis([0 24 0.65 1]);
 figure(2);
 subplot(1,3,1);
 X=1:1:1440;
-plot(X,P_DAY1,'b-','LineWidth',3);
-hold on
-plot(P_max(2,1),P_max(1,1),'bo','LineWidth',3);
-hold on
-P_DAY1_bot=[peak(n).P_DAY1_bot];
-%Show DR period:
-plot(P_DAY1_bot(:,2),P_DAY1_bot(:,1),'c-','LineWidth',1.5);
-hold on
-plot([peak(n).t_A],P_DAY1([peak(n).t_A],1),'c.','LineWidth',6);
-hold on
-plot([peak(n).t_B],P_DAY1([peak(n).t_B],1),'c.','LineWidth',6);
-hold on
+if DAY_NUM == 1
+    plot(X,P_DAY1,'b-','LineWidth',3);
+    hold on
+    plot(t_max,P_max(1,1),'bo','LineWidth',3);
+    hold on
+    P_DAY1_bot=[peak(n).P_DAY1_bot];
+    %Show DR period:
+    plot(P_DAY1_bot(:,2),P_DAY1_bot(:,1),'c-','LineWidth',1.5);
+    hold on
+    plot([peak(n).t_A],P_DAY1([peak(n).t_A],1),'c.','LineWidth',6);
+    hold on
+    plot([peak(n).t_B],P_DAY1([peak(n).t_B],1),'c.','LineWidth',6);
+    hold on
+elseif DAY_NUM == 2
+    %X=X+1440;
+    plot(X,P_DAY2,'r-');
+    hold on
+    %plot(P_max(2,2)+1440,P_max(1,2),'ro','LineWidth',3);
+    hold on
+    %Settings:
+    xlabel('Minute of Day');
+    ylabel('3PH KW');
+    axis([1 2880 900 2500])
+end
 
-X=X+1440;
-plot(X,P_DAY2,'r-');
-hold on
-plot(P_max(2,2)+1440,P_max(1,2),'ro','LineWidth',3);
-hold on
-%Settings:
-xlabel('Minute of Day');
-ylabel('3PH KW');
-axis([1 2880 900 2500])
 subplot(1,3,2);
 X=1:1:24;
 bar(X,E_kWh(:,1),'b')
@@ -62,6 +65,7 @@ bar(X,E_kWh(:,2),'r')
 xlabel('Hour of Day');
 ylabel('Energy (kWh)');
 axis([1 49 900 2500]);
+title('Next Day load');
 
 subplot(1,3,3);
 X=1:1:1440;

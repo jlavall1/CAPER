@@ -34,6 +34,8 @@ CR_ER = 1.06;
 %%
 %save control variables:
 PV_P = abs(SCADA(t).PV_P);
+
+
 B_TRBL(k).P_PV = PV_P;
 B_TRBL(k).SOC = BESS_M(t).SOC;
 CR(t,1) = BESS_M(t).CR;
@@ -56,6 +58,7 @@ if k > 1
     B_TRBL(k).dP_PV = dP_PV;
     SOC = BESS_M(t).SOC; % Percentage NOT Decimal
     SOC_E = (SOC/100)*BESS.Crated; %kWh
+    P_error = 0.01;
     %-----------------
     a_PV_CR=SOC/100;
     a_PV_DR=SOC/100;
@@ -64,98 +67,99 @@ if k > 1
     B_TRBL(k).SOC_ER = SOC_ERROR;
     B_TRBL(k).SOC_E = SOC_E;
     B_TRBL(k).SOC_E_ref = SOC_ref(t,1)*BESS.Crated;
-    
+    %-----------------
+    Sub_3P = SCADA(t).Sub_3P;
+    P_diff_DR = Sub_3P-P_DR_ON;
+    B_TRBL(k).P_diff_DR = P_diff_DR;
+    B_TRBL(k).Sub_3P = Sub_3P;
+    SOC_tar=(1-DoD_tar)*100;
     
     if CR_ref(t,1) ~= 0 && BESS_M(t).SOC < 100
-        %{
-        if HV == 1
-            A1=a_PV_CR*1.5;
-            A2=a_PV_DR*-1.5;
+        
+        if HV == 1 || LV == 1
+            a_PV_CR=a_PV_CR*1.25;
+            a_PV_DR=a_PV_DR*1.25;
+        end    
+%{
+            %High voltage is 
+            if DR(t,1) ~= 0
+                %BESS is currently discharging as gen, decrease this:
+                A2=a_PV_DR*-.25;
+                DR_k = DR(t,1)+A2*DR(t,1);
+                if DR_k < 0
+                    CR_k = abs(DR_k);
+                    DR_k = 0;
+                    S_state='CHARGING';
+                else
+                    S_state='DISCHARGING';
+                end
+            elseif CR(t,1) ~= 0
+                %BESS is currently charging, increase this:
+                A1=a_PV_CR*.25;
+                CR_k = CR(t,1)+A1*CR(t,1);
+                if CR_k > BESS.Prated
+                    CR_k = BESS.Prated;
+                end
+                S_state='CHARGING';
+            end
+
         elseif LV == 1
             A1=a_PV_CR*-1.5;
             A2=a_PV_CR*1.5;
-        %}
-        if dP_PV_pu < P_TH 
-            %Extreme Decrease of generation!
-            A1=a_PV_CR*-1;
-            A2=a_PV_DR;
-        elseif dP_PV_pu > -1*P_TH
-            %Extreme increase in generation!
-            A1=a_PV_CR;
-            A2=a_PV_DR*-1;
-        elseif CR(t,1) < CR_ref_5
-            %Recovering from Decrease of gen!
-            A1=a_PV_CR;
-            A2=a_PV_DR*-1;
-        elseif CR(t,1) == 0 && DR(t,1) ~= 0
-            %Extreme Recovery from Dec. of gen!
-            A1=0;
-            A2=a_PV_DR;
-        else
-            %Continue normal ops:
-            A1=0;
-            A2=0;
-        end
-        
-        %Update charge or discharge rate:
-        if CR(t,1) == 0
-            %   In discharge mode:
-            DR_k = DR(t,1)+A2*abs(dP_PV);
-            if DR_k > BESS.Prated
-                %over kW capacity!
-                DR_k = BESS.Prated;
-                S_state='DISCHARGING';
-            elseif DR_k < 0
-                %Moving to Charging Mode:
-                CR_k = abs(DR_k);
-                DR_k = 0;
-                S_state='CHARGING';
-            else
-                S_state='DISCHARGING';
-            end
-        elseif CR(t,1) < CR_ref_5
-            %   In Charging mode:
-            CR_k=CR(t,1)+A1*abs(dP_PV); %kW
-            if CR_k < 0
-                %Moving to Discharge mode:
-                DR_k = abs(CR_k);
-                CR_k = 0;
-                S_state='DISCHARGING';
-            elseif CR_k > BESS.Prated
-                %over kW Capacity!
-                CR_k = BESS.Prated;
-                S_state='CHARGING';
-            else
-                S_state='CHARGING';
-            end
-        elseif CR(t,1) >= CR_ref_5
-            %   On Schedule or in STC mode:
-            if A1 ~= 0
-                %   Decrease CR b/c loss of gen.
-                CR_k=CR(t,1)+A1*abs(dP_PV); %kW
-                if CR_k > BESS.Prated 
-                    CR_k = BESS.Prated;
-                end
-                S_state='CHARGING';
-            elseif SOC_ERROR > SOC_TH
-                %   Check SOC Schedule:
-                CR_k = CR(t,1)+epison*(SOC_ref(t,1)*BESS.Crated-(SOC_E+CR(t,1)*dT))/dT; %kW
-                if CR_k > BESS.Prated 
+%}
+        ST_LT_DER_PV_CONTROL
 
-                    CR_k = BESS.Prated;
-                    if CR_k > P_PV
-                        CR_k = P_PV;
-                    end
-                    %putting a cap on charing state:
-                end
-                S_state='CHARGING';
+    elseif t > T_DR_ON
+        %---Now lets move to peak discharge mode:
+        
+        
+        %fprintf('hit charging period\n');
+        if Sub_3P >= P_DR_ON+P_DR_ON*P_error
+            %-- Upper Bound --
+            
+            %change discharge rate:
+            DR_k = DR(t,1)+abs(Sub_3P-P_DR_ON);
+            
+            if DR_k > BESS.Prated
+                DR_k = BESS.Prated;
+            end
+            S_state='DISCHARGING';
+            
+        elseif t < T_DR_OFF
+            %continue discharge rate if within BW or below Lower Bound.
+            if SOC < SOC_tar
+                %   Stop DR
+                DR_k = 0;
+                S_state='IDLING';
+            elseif Sub_3P < P_DR_ON-P_DR_ON*P_error
+                %   -- Lower Bound --
+                %   change discharge rate:
+                DR_k = DR(t-5,1);
+                S_state='DISCHARGING';
+                fprintf('hit: %d\n',k);
             else
-                %   Under normal schedule:
-                CR_k = CR_ref_5;
-                S_state='CHARGING';
+                DR_k = DR(t,1);
+                if DR_k == 0
+                    S_state='IDLING';
+                else
+                    S_state='DISCHARGING';
+                end
+            end
+            
+        elseif t > T_DR_OFF
+            if SOC > SOC_tar
+                %continue to Discharge:
+                DR_k = DR(t-5,1);
+                S_state='DISCHARGING';
+            else
+                %Target DoD is hit!
+                DR_k = 0;
+                CR_k = 0;
+                S_state='IDLING';
             end
         end
-    else
+    else 
+        
         %Either not in scheduled window or SOC = 100%
         %   stay IDLE:
         CR_k = 0;
@@ -165,8 +169,10 @@ if k > 1
     %Implement new rate:
     if strcmp(S_state,'DISCHARGING') == 1
         DSSText.command=sprintf('Edit Storage.BESS1 %%Charge=0 %%Discharge=%s State=%s',num2str(100*(DR_k/BESS.Prated)),S_state);
-    else
+    elseif strcmp(S_state,'CHARGING') == 1
         DSSText.command=sprintf('Edit Storage.BESS1 %%Charge=%s %%Discharge=0 State=%s',num2str(100*(CR_k/BESS.Prated)),S_state);
+    else
+        DSSText.command=sprintf('Edit Storage.BESS1 %%Charge=0 %%Discharge=0 State=%s',S_state);
     end
     
 end
