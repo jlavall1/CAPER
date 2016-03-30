@@ -3,6 +3,7 @@ clear
 clc
 close all
 main_dir='C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\04_QSTS_Solar_Coeff\03_FLAY\BESS';
+BESS_CNTL = 2;
 
 %load SOC_ref_6_1.mat
 %load CR_ref_6_1.mat
@@ -27,21 +28,38 @@ RUN(n).SUB_V= YEAR_SUB;
 RUN(n).SUB_TAP= YEAR_LTCSTATUS;
 
 clear YEAR_SIM_P YEAR_SUB YEAR_LTCSTATUS
+if BESS_CNTL == 1
+    n=n+1;
+    addpath(strcat(main_dir,'\POI_1_BESS'));
+    load YR_SIM_P_FLAY_010.mat      %YEAR_SIM_P
+    load YR_SIM_SUBV_FLAY_010.mat   %YEAR_SUB
+    load YR_SIM_BESS_STATEFLAY_010.mat %YEAR_BESS
+    load YR_SIM_LTC_CTLFLAY_010.mat %YEAR_LTCSTATUS
+    load BESS_SETTINGS_1.mat        %BESS_SETTINGS
 
-n=n+1;
-addpath(strcat(main_dir,'\POI_1_BESS'));
-load YR_SIM_P_FLAY_010.mat      %YEAR_SIM_P
-load YR_SIM_SUBV_FLAY_010.mat   %YEAR_SUB
-load YR_SIM_BESS_STATEFLAY_010.mat %YEAR_BESS
-load YR_SIM_LTC_CTLFLAY_010.mat %YEAR_LTCSTATUS
-load BESS_SETTINGS_1.mat        %BESS_SETTINGS
+    RUN(n).SUB_P= YEAR_SIM_P;
+    RUN(n).SUB_V= YEAR_SUB;
+    RUN(n).BESS = YEAR_BESS;
+    RUN(n).SUB_TAP= YEAR_LTCSTATUS;
 
-RUN(n).SUB_P= YEAR_SIM_P;
-RUN(n).SUB_V= YEAR_SUB;
-RUN(n).BESS = YEAR_BESS;
-RUN(n).SUB_TAP= YEAR_LTCSTATUS;
+    clear YEAR_SIM_P YEAR_SUB YEAR_BESS YEAR_LTCSTATUS BESS_INFO
+elseif BESS_CNTL == 2
+    n=n+1;
+    addpath(strcat(main_dir,'\WITH_DYN_POI_1_BESSS')); 
+    load YR_SIM_P_FLAY_010.mat      %YEAR_SIM_P
+    load YR_SIM_SUBV_FLAY_010.mat   %YEAR_SUB
+    load YR_SIM_BESS_STATEFLAY_010.mat %YEAR_BESS
+    load YR_SIM_LTC_CTLFLAY_010.mat %YEAR_LTCSTATUS
+    load BESS_SETTINGS_1.mat        %BESS_SETTINGS
 
-clear YEAR_SIM_P YEAR_SUB YEAR_BESS YEAR_LTCSTATUS BESS_INFO
+    RUN(n).SUB_P= YEAR_SIM_P;
+    RUN(n).SUB_V= YEAR_SUB;
+    RUN(n).BESS = YEAR_BESS;
+    RUN(n).SUB_TAP= YEAR_LTCSTATUS;
+
+    clear YEAR_SIM_P YEAR_SUB YEAR_BESS YEAR_LTCSTATUS BESS_INFO
+end
+
 %%
 close all
 DOY=34;
@@ -154,6 +172,16 @@ figure(fig);
 %Show DSS & Commanded SOC
 %RUN(2).SOC_ref = YEAR_BESS.SOC_ref';
 %RUN(2).CR_ref
+HOLD_ON = 0;
+for i=1:1:length(RUN(2).BESS(DOY).SOC_ref)
+    RUN(2).BESS(DOY).SOC_ref-.99;
+    if RUN(2).BESS(DOY).SOC_ref-.99 < -0.005
+        HOLD_ON = 1;
+    end
+    if HOLD_ON == 1
+        RUN(2).BESS(DOY).SOC_ref=1;
+    end
+end
 
 plot(X,[RUN(2).BESS(DOY).SOC_ref'*100],'b','LineWidth',4);
 hold on

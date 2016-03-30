@@ -67,13 +67,15 @@ if k > 1
     
     
     if CR_ref(t,1) ~= 0 && BESS_M(t).SOC < 100
+        %{
         if HV == 1
             A1=a_PV_CR*1.5;
             A2=a_PV_DR*-1.5;
         elseif LV == 1
             A1=a_PV_CR*-1.5;
             A2=a_PV_CR*1.5;
-        elseif dP_PV_pu < P_TH 
+        %}
+        if dP_PV_pu < P_TH 
             %Extreme Decrease of generation!
             A1=a_PV_CR*-1;
             A2=a_PV_DR;
