@@ -190,24 +190,25 @@ plot(X,[RUN(2).BESS(DOY).SOC]','r','LineWidth',1.5);
 %plot(X,SOC_ref*100,'c--');
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 ylabel('State of Charge (SOC) [%]','FontSize',12,'FontWeight','bold');
-axis([8 19 65 105]);
+axis([8 24 65 105]);
 grid on
 set(gca,'FontWeight','bold');
 legend('SOC Reference','OpenDSS SOC','Location','NorthWest');
 %--------------------------------------------------------------------------
+% 12 to 13 days... Send Note to Dr. Collins.
 %%
 fig = fig + 1;
 figure(fig);
 %Show DSS & Commanded CR:
 %RUN(2).BESS(DOY).CR(1,1)=0;
 
-plot(X,[RUN(2).BESS(DOY).CR_ref*1.06],'b','LineWidth',4);
+plot(X,-1*[RUN(2).BESS(DOY).CR_ref*1.06],'b','LineWidth',4);
 hold on
-plot(X,[RUN(2).BESS(DOY).CR]','r','LineWidth',1.5);
-%hold on
-%plot(X,CR_ref,'c--');
-axis([8 19 0 800]);
+plot(X,-1*[RUN(2).BESS(DOY).CR]','r:','LineWidth',1.5);
+hold on
+plot(X,[RUN(2).BESS(DOY).DR],'b:','LineWidth',1.5);
+axis([8 24 -1200 1200]);
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
-ylabel('Charge Rate (CR) [kW]','FontSize',12,'FontWeight','bold');
-legend('CR Reference','OpenDSS CR','Location','NorthEast');
+ylabel('BESS Injection Rate (CR) [kW]','FontSize',12,'FontWeight','bold');
+legend('CR Reference','OpenDSS CR','OpenDSS DR','Location','NorthEast');
 set(gca,'FontWeight','bold');
