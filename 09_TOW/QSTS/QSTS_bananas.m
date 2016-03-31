@@ -227,23 +227,23 @@ sub_line='254399393';
 %% Plot Results
 close all;
 current_time = datenum('6/2/2014')+(0:1440-1)'/1440;
-figure;
-plot(current_time,[MEAS.Sub_P_PhA],'-k','LineWidth',2)
-hold on
-plot(current_time,[MEAS.Sub_P_PhB],'-r','LineWidth',2)
-plot(current_time,[MEAS.Sub_P_PhC],'-b','LineWidth',2)
-
-plot(current_time,MOCKS01.kW(:,1),'--k','LineWidth',1)
-plot(current_time,MOCKS01.kW(:,2),'--r','LineWidth',1)
-plot(current_time,MOCKS01.kW(:,3),'--b','LineWidth',1)
-hold off
-grid on;
-set(gca,'FontSize',10,'FontWeight','bold')
-datetick(gca)
-xlabel(gca,sprintf('%s [hours]',datestr(current_time(1))),'FontSize',12,'FontWeight','bold')
-ylabel(gca,'Three Phase Real Power (P_{3{\phi}}) [kW]','FontSize',12,'FontWeight','bold')
-title('Peak Shave QSTS','FontWeight','bold','FontSize',12);
-legend('Phase A','Phase B','Phase C','Location','SouthEast')
+% figure;
+% plot(current_time,[MEAS.Sub_P_PhA],'-k','LineWidth',2)
+% hold on
+% plot(current_time,[MEAS.Sub_P_PhB],'-r','LineWidth',2)
+% plot(current_time,[MEAS.Sub_P_PhC],'-b','LineWidth',2)
+% 
+% plot(current_time,MOCKS01.kW(:,1),'--k','LineWidth',1)
+% plot(current_time,MOCKS01.kW(:,2),'--r','LineWidth',1)
+% plot(current_time,MOCKS01.kW(:,3),'--b','LineWidth',1)
+% hold off
+% grid on;
+% set(gca,'FontSize',10,'FontWeight','bold')
+% datetick(gca)
+% xlabel(gca,sprintf('%s [hours]',datestr(current_time(1))),'FontSize',12,'FontWeight','bold')
+% ylabel(gca,'Three Phase Real Power (P_{3{\phi}}) [kW]','FontSize',12,'FontWeight','bold')
+% title('Peak Shave QSTS','FontWeight','bold','FontSize',12);
+% legend('Phase A','Phase B','Phase C','Location','SouthEast')
 
 figure;
 h(1) = plot(current_time,[MEAS.Sub_P_PhA]+[MEAS.Sub_P_PhB]+[MEAS.Sub_P_PhC],'-k','LineWidth',2);
