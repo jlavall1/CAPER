@@ -1,4 +1,5 @@
 %ST_LT_DER_PV_CONTROL
+%Controller A
 if dP_PV_pu < P_TH 
     %Extreme Decrease of generation!
     A1=a_PV_CR*-1;

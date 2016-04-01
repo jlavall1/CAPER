@@ -31,7 +31,7 @@ addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
 
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % User Select run length:
-slt_DAY_RUN = 9;
+slt_DAY_RUN = 8; %was 9
 
 
 if slt_DAY_RUN == 1
@@ -90,6 +90,12 @@ elseif slt_DAY_RUN == 9
     MNTH = 2;
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY;
+elseif slt_DAY_RUN == 10
+    %TWO day run on 2/13 to 2/14
+    DAY = 13;
+    MNTH = 2;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY+1;
 end
     
 if int_select == 1

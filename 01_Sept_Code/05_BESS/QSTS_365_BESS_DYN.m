@@ -24,7 +24,9 @@ v_sum = 0;
 %BUCK = 0;
 %BOOST = 0;
 %vio_LTC_time=0;
-
+DAY_ON = DOY; %when 1, wait until next day to peak shave.
+PEAK_COMPLETE = 0;
+%PEAK_CARRY = 0;
 
 
 for DAY_I=DOY:1:DAY_F
@@ -211,7 +213,8 @@ for DAY_I=DOY:1:DAY_F
         %------------------------------------------------------------------
         %Save Status of Equipement for Next Day Run:
         TAP_DAY = SCADA(t).OLTC_TAP;
-        CAP_DAY = SCADA(t).SC_S; 
+        CAP_DAY = SCADA(t).SC_S;
+        DoD_DAY = (100-BESS_M(t).SOC)/100; %depth of discharge
     end
     %%
     toc

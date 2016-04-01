@@ -72,7 +72,7 @@ if k > 1
     P_diff_DR = Sub_3P-P_DR_ON;
     B_TRBL(k).P_diff_DR = P_diff_DR;
     B_TRBL(k).Sub_3P = Sub_3P;
-    SOC_tar=(1-DoD_tar)*100;
+    
     
     if CR_ref(t,1) ~= 0 && BESS_M(t).SOC < 100
         
@@ -111,55 +111,8 @@ if k > 1
 
     elseif t > T_DR_ON
         %---Now lets move to peak discharge mode:
-        
-        
-        %fprintf('hit charging period\n');
-        if Sub_3P >= P_DR_ON+P_DR_ON*P_error
-            %-- Upper Bound --
-            
-            %change discharge rate:
-            DR_k = DR(t,1)+abs(Sub_3P-P_DR_ON);
-            
-            if DR_k > BESS.Prated
-                DR_k = BESS.Prated;
-            end
-            S_state='DISCHARGING';
-            
-        elseif t < T_DR_OFF
-            %continue discharge rate if within BW or below Lower Bound.
-            if SOC < SOC_tar
-                %   Stop DR
-                DR_k = 0;
-                S_state='IDLING';
-            elseif Sub_3P < P_DR_ON-P_DR_ON*P_error
-                %   -- Lower Bound --
-                %   change discharge rate:
-                DR_k = DR(t-5,1);
-                S_state='DISCHARGING';
-                fprintf('hit: %d\n',k);
-            else
-                DR_k = DR(t,1);
-                if DR_k == 0
-                    S_state='IDLING';
-                else
-                    S_state='DISCHARGING';
-                end
-            end
-            
-        elseif t > T_DR_OFF
-            if SOC > SOC_tar
-                %continue to Discharge:
-                DR_k = DR(t-5,1);
-                S_state='DISCHARGING';
-            else
-                %Target DoD is hit!
-                DR_k = 0;
-                CR_k = 0;
-                S_state='IDLING';
-            end
-        end
+        PK_SV_CTRL
     else 
-        
         %Either not in scheduled window or SOC = 100%
         %   stay IDLE:
         CR_k = 0;

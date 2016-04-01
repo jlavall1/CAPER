@@ -1,9 +1,9 @@
-function [ peak,P_DR_ON,T_DR_ON,T_DR_OFF,DoD_tar] = DR_INT( t_max,P_DAY1,M_PVSITE_SC_1,BESS,SOC_n)
+function [ peak,P_DR_ON,T_DR_ON,T_DR_OFF] = DR_INT( t_max,P_DAY1,DoD_tar,BESS,SOC_n)
 %Steps:
 %1] Find bat_en:
-    DoD_max=BESS.DoD_max;
+    %DoD_max=BESS.DoD_max;
     C_r = BESS.Crated;
-    
+    %{
     CI_k1 = M_PVSITE_SC_1(1,5);
     if CI_k1 > 1
         CI_k1 = 1;
@@ -22,6 +22,7 @@ function [ peak,P_DR_ON,T_DR_ON,T_DR_OFF,DoD_tar] = DR_INT( t_max,P_DAY1,M_PVSIT
         DoD_tar=DoD_max;
     end
     %   Calculate available energy planned to discharge:
+    %}
     bat_en = SOC_n*C_r*DoD_tar;
 
 %2] Set initital position of t_A & t_B  
