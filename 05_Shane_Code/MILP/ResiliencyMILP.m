@@ -26,11 +26,13 @@ MILPPreProcessing();
 % DER(4).MVACapacity = 3;
 % PARAM.SO = {'258896319','699603885'}; % Case 4: One Micro-grid with Multiple Sources
 
-DER(3).MVACapacity = 3;
-DER(4).MVACapacity = 3;
-PARAM.SO = {'258896319'}; % Voltage Violation
+% DER(3).MVACapacity = 3;
+% DER(4).MVACapacity = 3; % Cause Problem
+% DER(5).MVACapacity = 3; % Resolution
+% PARAM.SO = {'258896319'}; % Voltage Violation
 
-%PARAM.SO =  {'699603854'} % Current Violation
+%PARAM.SO =  {'699603854'}; % Current Violation
+PARAM.SO =  {'699603854','264256760'}; % Resolution
 
 
 toc
@@ -140,27 +142,34 @@ if exitflag==1
     toc
     disp('Plotting Results...')
     % Plot Results
-    %PlotResults
+    PlotResults
     
     toc
     disp('Check for Violations...')
     % Check for Violations
-    for i = 1:D
-        % Find Source in Micro-grid
-        index = {logical([NODE.(['a_',MG{i}])]),logical([SECTION.(['b_',MG{i}])]),logical([LOAD.(['alpha_',MG{i}])])};
-        if length(find(index{1}))>1 % Must Contain more than 1 node for simulation
-            [DSSCircuit, DSSCircObj, DSSText, gridpvPath] = DSSDeclare(NODE(index{1}),SECTION(index{2}),LOAD(index{3}),DER([DER.MGNumber]==i),DSS);
-            
-            % Collect Data
-            %Lines = getLineInfo(DSSCircObj);
-            %Bus = getBusInfo(DSSCircObj);
-            %Load = getLoadInfo(DSSCircObj);
-            figure; plotKWProfile(DSSCircObj);
-            figure; plotVoltageProfile(DSSCircObj);
-            figure; plotCircuitLines(DSSCircObj,'Coloring','voltage120')
-        end
-    end
-    
+%     for i = 1:D
+%         % Find Source in Micro-grid
+%         index = {logical([NODE.(['a_',MG{i}])]),logical([SECTION.(['b_',MG{i}])]),logical([LOAD.(['alpha_',MG{i}])])};
+%         if length(find(index{1}))>1 % Must Contain more than 1 node for simulation
+%             [DSSCircuit, DSSCircObj, DSSText, gridpvPath] = DSSDeclare(NODE(index{1}),SECTION(index{2}),LOAD(index{3}),DER([DER.MGNumber]==i),DSS);
+%             
+%             % Collect Data
+%             %Lines = getLineInfo(DSSCircObj);
+%             %Bus = getBusInfo(DSSCircObj);
+%             %Load = getLoadInfo(DSSCircObj);
+%             %figure; plotKWProfile(DSSCircObj);
+%             %figure; plotVoltageProfile(DSSCircObj);
+%             handles = plotCircuitLines(DSSCircObj,'Coloring','voltage120',...
+%                 'ContourScale',[112 120],'CapacitorMarker','off','SubstationMarker','off','LoadMarker','on');
+%             set(gca,'YTick',[])
+%             set(gca,'XTick',[])
+%             hold on
+%             [~,~,ic] = unique([{NODE.ID},{DER([DER.MGNumber]==i).ID}],'stable');
+%             hs = plot([NODE(ic(N+1:end)).XCoord],[NODE(ic(N+1:end)).YCoord],'kh','MarkerSize',15,'MarkerFaceColor',[0,0.5,1],'LineStyle','none');
+% 
+%         end
+%     end
+%     legend([hs,handles.legendHandles],'Source','Load')
 end    
 
 toc

@@ -39,5 +39,5 @@ for i = 1:length(Open)
 end
 
 %legend([hs,hl,ho],'Source','Load','Normally Open Section')
-legend(h,MG)
+legend(h(2:end),MG)
 %legend([hs,hl,ho,h],'Source','Load','Normally Open Section',MG)

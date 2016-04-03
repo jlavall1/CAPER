@@ -14,9 +14,9 @@ rootlocation = [rootlocation,'07_CYME\'];
 filename = 0;
 % ******To skip UIGETFILE uncomment desired filename*******
 % ***(Must be in rootlocation CAPER03_OpenDSS_Circuits\)***
-filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
+%filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
 %filename = 'Master.dss'; filelocation = [rootlocation,'Test\'];
-%filename = 'Master.dss'; filelocation = [rootlocation,'Mocksville_Main_2401.sxst_DSS\'];
+filename = 'Master.dss'; filelocation = [rootlocation,'Mocksville_Main_2401.sxst_DSS\'];
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
         rootlocation);
@@ -40,7 +40,7 @@ DSSCircuit.Solution.Solve
 % figure; plotKWProfile(DSSCircObj);
 % figure; plotVoltageProfile(DSSCircObj);
 %figure; plotCircuitLines(DSSCircObj,'Coloring','voltage120')
-figure; handles = plotCircuitLines(DSSCircObj,'Coloring','numPhases','CapacitorMarker','off','SubstationMarker','off','LoadMarker','on');
+%figure; handles = plotCircuitLines(DSSCircObj);
 
 %Probs = Lines(cellfun(@isempty,{Lines.length}));
 %Probs = Bus(~logical([Bus.distance]));

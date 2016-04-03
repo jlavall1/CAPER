@@ -73,6 +73,9 @@ end
 % Define an energy meter
 DSSText.command = Source.EnergyMeter;
 
+% Set Voltage Bases
+DSSText.command = Source.DSSVoltbase;
+DSSText.command = 'CalcVoltageBases';
 
 % Configure Simulation
 DSSText.command = 'Set Mode=Snapshot';
