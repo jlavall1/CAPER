@@ -5,7 +5,8 @@ function [ SOC_ref ,CR_ref, t_CR ] = SOCref_CR(BncI,CSI,CSI_TH,BESS,C,DoD)
     %CSI=Clear SKy Iradiance, Global.
     %CSI_TH=threshold to estimate time when PV in generating.
     %BESS=Struct with battery specs.
-    %C = Available energy at beginning of Charging Window.
+    %C = Available Energy Capacity of BESS
+    %DoD = Current Depth of Discharge right before solar gen. period.
     %------------------
 %Variables:
     %PAR_CB_min = minimum ratio during year at specific site.
@@ -43,7 +44,7 @@ function [ SOC_ref ,CR_ref, t_CR ] = SOCref_CR(BncI,CSI,CSI_TH,BESS,C,DoD)
     h_1=(C*DoD)/T;
     ToS2=0.95; %Always keep a 5% threshold for downramp of CR to end of Solar Interval. 
         %typically 3hr ramp at h_1 will yield 0.95*h_1 (485kWh) for 8000kWh
-    [ToS1,PAR_CB]=ToS1_EST(BncI,CSI,DoD);
+    [ToS1,PAR_CB]=ToS1_EST(BncI,CSI,DoD_max); %was DoD (4/3/2016)
     fprintf('ToS1=%0.4f & ToS2=%0.4f\n',ToS1,ToS2);
     fprintf('Solar Irradiance has a PAR_CB = %0.3f\n',PAR_CB);
     f=@(x)solve_SCR_h2(x,T,C,h_1,ToS1,ToS2);

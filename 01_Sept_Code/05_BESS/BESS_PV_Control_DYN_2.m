@@ -73,8 +73,9 @@ if k > 1
     B_TRBL(k).P_diff_DR = P_diff_DR;
     B_TRBL(k).Sub_3P = Sub_3P;
     
-    
-    if CR_ref(t,1) ~= 0 && BESS_M(t).SOC < 100
+    if t > T_DR_ON && CR_ref(t,1) < 30
+        PK_SV_CTRL
+    elseif CR_ref(t,1) ~=0 && BESS_M(t).SOC < 100
         
         if HV == 1 || LV == 1
             a_PV_CR=a_PV_CR*1.25;
@@ -109,9 +110,9 @@ if k > 1
 %}
         ST_LT_DER_PV_CONTROL
 
-    elseif t > T_DR_ON
+    %elseif t > T_DR_ON
         %---Now lets move to peak discharge mode:
-        PK_SV_CTRL
+        %PK_SV_CTRL
     else 
         %Either not in scheduled window or SOC = 100%
         %   stay IDLE:

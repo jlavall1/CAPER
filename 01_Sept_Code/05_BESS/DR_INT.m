@@ -85,6 +85,12 @@ function [ peak,P_DR_ON,T_DR_ON,T_DR_OFF] = DR_INT( t_max,P_DAY1,DoD_tar,BESS,SO
                     else
                         t_B = t_B + 1;
                     end
+                elseif t_max < 540
+                    %morning peak:
+                    if t_B > 630 && t_A > 2
+                        %move to next t_A
+                        t_B = 1441;
+                    end
                 else
                     %only for j = 1 case
                     t_B = t_B + 1;
@@ -97,6 +103,11 @@ function [ peak,P_DR_ON,T_DR_ON,T_DR_OFF] = DR_INT( t_max,P_DAY1,DoD_tar,BESS,SO
             %j = j + 1; 
         end
         t_A = t_A - 1; %find new P_A
+        if t_A == 0
+            t_A=1;
+            end_loop=1;
+        end
+            
         clear P_DAY1_bot
     end
     n = length(peak);

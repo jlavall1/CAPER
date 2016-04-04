@@ -49,7 +49,8 @@ elseif t < T_DR_OFF
 elseif t > T_DR_OFF
     if SOC > SOC_tar
         %continue to Discharge to reach DOD_tar
-        DR_k = DR(t,1);
+        DR_k = DR(t,1); %4/4
+        DR_k = 1000;
         S_state='DISCHARGING';
     end
 end

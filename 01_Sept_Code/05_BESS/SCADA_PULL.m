@@ -15,8 +15,11 @@ if BESS_ON == 1
     BESS_M(t).DR=BESS.Prated*(str2double(DSSText.Result))/100;%<---------------
     DSSText.command='? Storage.BESS1.%Charge';
     BESS_M(t).CR=BESS.Prated*(str2double(DSSText.Result))/100;%<---------------
+else
+    BESS_M(t).SOC=0;
+    BESS_M(t).DR=0;
+    BESS_M(t).CR=0;
 end
-
 %--------------
 %   Datapoint 2] DER-PV Information:
 DSSCircuit.SetActiveElement('generator.PV');

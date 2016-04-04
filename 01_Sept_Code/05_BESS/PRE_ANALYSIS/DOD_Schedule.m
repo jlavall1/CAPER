@@ -84,23 +84,66 @@ for DOY=1:1:365
         DoD_tar(DOY,1)=0.33;
     end
 end
-X=1:1:365;
-%max(E(:,1))
+i =1;
 
+for E_PUHR=0:0.1:max_DEY
+    if E_PUHR <= PU_HR %pu.hr
+        DoD_p(i,1)=(0.33/PU_HR)*E_PUHR;
+    else
+        DoD_p(i,1)=0.33;
+    end
+    DoD_p(i,2)=E_PUHR;
+    i = i + 1;
+end
+%----------------
+fig=1;
+figure(fig);
+plot([0 9],[33 33],'k--','LineWidth',2.5);
+hold on
+plot(DoD_p(:,2),DoD_p(:,1)*100,'b-','LineWidth',3)
+hold on
+plot([PU_HR PU_HR],[0 35],'r--','LineWidth',2.5);
+hold on
+plot(DoD_p(31,2),DoD_p(31,1)*100,'bo','LineWidth',3)
+
+xlabel('Normalized Daily Energy Yield (DEY) [p.u.h]','FontWeight','bold','FontSize',12);
+ylabel('Depth of Discharge Target ( DoD_{t} ) [ % ]','FontWeight','bold','FontSize',12);
+set(gca,'FontWeight','bold');
+grid on
+
+
+%   to show the DoD estimator function:
+%%
+fig=fig+1;
+figure(fig)
+X=1:1:365;
 plot(X,E(:,1),'r-');
 hold on
 plot(X,SET_REG(:,1),'b.');
 fprintf('mean=%0.4f\n',mean(E(:,1)));
-figure(2)
-plot(X,DoD_tar)
+%---------------------------------
 
-figure(3)
+fig=fig+1;
+figure(fig)
+%plot(X,DoD_tar)
+stairs(X,DoD_tar*100)
+axis([1 365 0 35]);
+xlabel('Day of Year (DoY)','FontWeight','bold','FontSize',12);
+ylabel('Depth of Discharge Target ( DoD_{t} ) [ % ]','FontWeight','bold','FontSize',12);
+set(gca,'xtick',[1:31:372])
+set(gca,'FontWeight','bold');
+
+
+%%
+%---------------------------------
+fig=fig+1;
+figure(fig)
 %plot3(SET_REG(:,3),SET_REG(:,2),SET_REG(:,1))
 %scatter3(SET_REG(:,3),SET_REG(:,2),SET_REG(:,1))
 Z=ones(365,365);
 X=ones(365,365);
 Y=ones(365,365);
-%%
+%
 SET_REG_1 = sortrows(SET_REG,2);
 %SET_REG_1 = SET_REG(index);
 
@@ -117,7 +160,7 @@ end
 %hold off
 %contour(SET_REG_1(:,2),SET_REG_1(:,3),SET_REG_1(:,1))
 %contour(X,Y,Z,20,'k')
-%%
+%
 %figure;
 %[X,Y] = meshgrid(-8:.5:8);
 %R = sqrt(X.^2 + Y.^2) + eps;
@@ -131,7 +174,22 @@ end
 subplot(1,2,1)
 scatter(X(:,1),Z(:,1),[],Y(:,1))
 axis([0 1.1 0 8])
-colorbar
+c=colorbar('location','eastoutside');
+set(get(c,'title'),'string','Variability Index (VI)','Rotation',90.0,'FontSize',12);
+
+pos=get(get(c,'title'),'position');
+X_move=2.1;
+Y_move=-26.9;
+pos(1,1) = pos(1,1)+X_move;
+pos(1,2) = pos(1,2)+Y_move;
+set(get(c,'title'),'position',pos);
+%}
+
+
+
+
+
+
 VI_avg = mean(SET_REG_1(:,2));
 BT2=[-0.343198   11.170313   -4.055665];
 for DOY=1:1:365
@@ -160,10 +218,45 @@ hold on
 %plot([0:0.01:1],E_plot_2(:,2),'k-')
 %hold on
 plot([0:0.01:1],E_plot_2(:,1),'k-','LineWidth',2)
-xlabel('Clear Sky Index (CI)');
-ylabel('Normalized Daily Energy Yield  (DEY)');
-
+xlabel('Clear Sky Index (CI)','FontWeight','bold','FontSize',12);
+ylabel('Normalized Daily Energy Yield  (DEY)','FontWeight','bold','FontSize',12);
+set(gca,'FontWeight','bold');
+%--------------------------------------
 subplot(1,2,2)
 scatter(Y(:,1),X(:,1),[],Z(:,1))
-colorbar
+c=colorbar('location','eastoutside');
+set(get(c,'title'),'string','Normalized Daily Energy Yield (DEY)','Rotation',90.0,'FontSize',12);
+pos=get(get(c,'title'),'position');
+
+X_move=1.8;
+Y_move=-4.3;
+pos(1,1) = pos(1,1)+X_move;
+pos(1,2) = pos(1,2)+Y_move;
+set(get(c,'title'),'position',pos);
+%}
 axis([0 40 0 1.1])
+xlabel('Variability Index (VI)','FontWeight','bold','FontSize',12);
+ylabel('Clear-Sky Index (CI)','FontWeight','bold','FontSize',12);
+set(gca,'FontWeight','bold');
+
+%{
+c = colorbar('location','eastoutside');
+    %Edit title string:
+    set(get(c,'title'),'string','PV Size (MW)','Rotation',90.0,'FontWeight','bold');
+    pos = get(get(c,'title'),'position');
+    if ckt_num == 2
+        X_move=1.8;
+        Y_move=-5;
+    else
+        X_move=1.8;
+        Y_move=-5;
+    end
+    pos(1,1) = pos(1,1)+X_move;
+    pos(1,2) = pos(1,2)+Y_move;
+    set(get(c,'title'),'position',pos);
+%}
+
+
+
+
+%%
