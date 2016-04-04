@@ -66,7 +66,7 @@ if BESS_ON == 1
             T_DR_ON = 25*3600; %(to ensure peak shaving will not operate)
             P_DR_ON = 0;
         end
-
+        fprintf('Init. Discharge Time: %0.3f\n',T_DR_ON);
         %3] Generate SOC reference profile based on known datasets.
         C=BESS.Crated;
         [SOC_ref,CR_ref,t_CR]=SOCref_CR(BncI,CSI,CSI_TH,BESS,C,DoD_DAY_SRT);
