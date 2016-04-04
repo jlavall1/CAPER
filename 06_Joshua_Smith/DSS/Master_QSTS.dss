@@ -37,6 +37,9 @@ Redirect CNLineCodes.dss
 Redirect LinesByPhase.dss
 Redirect Loadshape.dss
 Redirect Loads_QSTS.dss
+Redirect Regulators.dss
+redirect Capacitors.dss
+
 
 
 ! 

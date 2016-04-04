@@ -1,3 +1,6 @@
+clear; clc; close all;
+addpath('C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS');
+ckt_direct_prime='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS\Master_QSTS';
 %Load Historical DSCADA
 load CAP_Mult_60s_ROX.mat
 load P_Mult_60s_ROX.mat
@@ -5,9 +8,9 @@ load Q_Mult_60s_ROX.mat
 load LoadTotals.mat
 
 %Component Names:
-Caps.Name{1}='CAP1';
-Caps.Name{2}='CAP2';
-Caps.Name{3}='CAP3';
+Caps.Name{1}='CAP2';
+Caps.Name{2}='CAP3';
+Caps.Name{3}='CAP1';
 Caps.Swtch(1)=1200/3; 
 Caps.Swtch(2)=1200/3; 
 Caps.Swtch(3)=1200/3;
@@ -18,20 +21,20 @@ timeseries_span = 2;
 
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31]; %number of days/month
 
-slt_DAY_RUN = 1;
+slt_DAY_RUN = 2;
 % Scenarios
 if slt_DAY_RUN == 1
-    %One day run on 2/13
-    DAY = 13;
-    MNTH = 2;
+    %One day run on 6/18
+    DAY = 18;
+    MNTH = 6;
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY;
 elseif slt_DAY_RUN == 2
-    %3 mnth run 2/1 - 5/1
-    DAY = 1;
-    MNTH = 2;
+    %One week run
+    DAY = 13;
+    MNTH = 6;
     DOY=calc_DOY(MNTH,DAY);
-    DAY_F = DOY+MTH_LN(2)+MTH_LN(3)+MTH_LN(4)-1;
+    DAY_F = DOY+6; %1 week run.
 elseif slt_DAY_RUN == 3
     %Annual run
     DAY = 1;
@@ -86,5 +89,7 @@ fprintf(fileID,['New loadshape.LS_PhaseC npts=%s sinterval=%s pmult=(',...
     sprintf('%f ',CAP_OPS_STEP2_1(DAY_I).kW(:,3)/LoadTotals.kWC),') qmult=(',...
     sprintf('%f ',CAP_OPS_1(DAY_I).DSS(:,3)/LoadTotals.kVARC),')\n\n'],num2str(sim_num),num2str(s_step));
 fclose(fileID);
+
+QSTS_bananas
 
 

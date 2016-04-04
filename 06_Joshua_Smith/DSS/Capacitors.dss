@@ -1,3 +1,3 @@
-New Capacitor.CAP1 Phases=3 Bus1=05_2.1.2.3 kvar=1200 kV=22.8630706656 states=0
-New Capacitor.CAP2 Phases=3 Bus1=10_1.1.2.3 kvar=1200 kV=22.8630706656 states=0
-New Capacitor.CAP3 Phases=3 Bus1=20_C1.1.2.3 kvar=1200 kV=22.8630706656 states=0
+New Capacitor.CAP1 Phases=3 Bus1=05_2.1.2.3 kvar=1200 kV=22.8630706656 !states=1
+New Capacitor.CAP2 Phases=3 Bus1=10_1.1.2.3 kvar=1200 kV=22.8630706656 !states=1
+New Capacitor.CAP3 Phases=3 Bus1=20_C1.1.2.3 kvar=1200 kV=22.8630706656 !states=1

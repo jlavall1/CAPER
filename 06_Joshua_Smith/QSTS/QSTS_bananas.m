@@ -1,6 +1,6 @@
-clear;
-clc;
-close all
+%clear;
+%clc;
+%close all
 % 1. Generate Real Power & PV loadshape files:
 %PV_Loadshape_generation
 %cap_pos=1;
@@ -9,19 +9,18 @@ close all
 [DSSCircObj, DSSText, gridpvPath] = DSSStartup;
 DSSCircuit = DSSCircObj.ActiveCircuit;
 %
-addpath('C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS');
 % 2. Compile the user selected circuit:
 ckt_direct_prime='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS\Master_QSTS.dss';
 DSSText.command = ['Compile ',ckt_direct_prime]; %Master_General.dss
-
+addpath('C:\Users\jms6\Documents\GitHub\CAPER\CAPER\06_Joshua_Smith\DSS');
 
 %Loads_info = getLoadInfo(DSSCircObj);
 %%
-ReferenceData
-
+%ReferenceData
+tic
 %%
 for DAY_I=DOY:1:DAY_F
-    tic
+    
     %%
     %-- Update Irradiance/PV_KW
     if DAY > MTH_LN(MNTH)
@@ -125,16 +124,8 @@ for DAY_I=DOY:1:DAY_F
                 [~,index] = sortrows([Lines_info.bus1Distance].');
                 Lines_info = Lines_info(index);
             end
-            DSSCircuit.SetActiveElement(sprintf('Line.%s',sub_line));
-            Power   = DSSCircuit.ActiveCktElement.Powers;
-            %Single Phase Real Power:
-            MEAS(t).Sub_P_PhA = Power(1);
-            MEAS(t).Sub_P_PhB = Power(3);
-            MEAS(t).Sub_P_PhC = Power(5);
-            %Single Phase Reactive Power:
-            MEAS(t).Sub_Q_PhA = Power(2);
-            MEAS(t).Sub_Q_PhB = Power(4);
-            MEAS(t).Sub_Q_PhC = Power(6);
+            SCADA_PULL
+            
             
             %Potential Transformer Equivalent:
             DSSCircuit.SetActiveElement(sprintf('Transformer.%s',trans_name)); % trans_name - OLTC name
@@ -162,9 +153,9 @@ for DAY_I=DOY:1:DAY_F
             %}
 
             %ROX
-            %{ 
-            ***Update tap position and cap control
-            if mod(t,900) == 0
+            
+            %***Update tap position and cap control
+            if mod(t,15) == 0 %900
                 %Every 15 mins..
                 Cap_Control_DSDR
             end
@@ -177,7 +168,7 @@ for DAY_I=DOY:1:DAY_F
             
         end
         i = 1;
-        
+        YEAR_CAPSTATUS(DAY_I).SCADA=[MEAS];
         %save tap pos to reset after next day load allocation:
         DSSText.command = sprintf('? Transformer.%s.Tap',trans_name);
         TAP_DAY = DSSText.Result;
@@ -187,3 +178,4 @@ for DAY_I=DOY:1:DAY_F
         
     end
 end
+toc

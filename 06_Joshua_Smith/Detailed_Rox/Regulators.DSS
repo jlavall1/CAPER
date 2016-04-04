@@ -20,8 +20,8 @@ New RegControl.17FK87__104175233B Transformer=17FK87__104175233B Winding=2 Vreg=
 New RegControl.17FK87__104175233C Transformer=17FK87__104175233C Winding=2 Vreg=125 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30 PTphase=1
 
 //(2) VREG:
-New Transformer.18GJ19__105595290A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[18GJ19_105595290.1 T5240B12_10000008.1] kvas=[144 144] kVs=[13.2040 13.2040] mintap=0.95 maxtap=1.05
-New RegControl.18GJ19__105595290A Transformer=18GJ19__105595290A Winding=2 Vreg=125 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
+!New Transformer.18GJ19__105595290A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[18GJ19_105595290.1 T5240B12_10000008.1] kvas=[144 144] kVs=[13.2040 13.2040] mintap=0.95 maxtap=1.05
+!New RegControl.18GJ19__105595290A Transformer=18GJ19__105595290A Winding=2 Vreg=125 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30
 
 New Transformer.152B04__104329420B Phases=2 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[152B04_104329420.1.2 103392725.1.2] kvas=[288 288] kVs=[22.9 22.9] mintap=0.95 maxtap=1.05
 New RegControl.152B04__104329420B Transformer=152B04__104329420B Winding=2 Vreg=125 Band=2.000000 PTratio= 110  CTPrim= 100  R=0 X=0 Delay=30 PTphase=2

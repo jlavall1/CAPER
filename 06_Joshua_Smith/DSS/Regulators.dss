@@ -15,8 +15,8 @@ New Regcontrol.VR2C Transformer=VR2C Winding=2 Vreg=125 Band=2 PTratio=110 CTPri
 New Transformer.VR3A Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[19_1.1.2.3 19_2.1.2.3] kvas=[432 432] kVs=[22.9 22.9] mintap=0.95 maxtap=1.05
 New RegControl.VR3A Transformer=VR3A Winding=2 R= 0  X= 0 Vreg= 125 Band= 2 PTratio= 110  CTPrim= 100 Delay = 30 PTphase=1
 
-New Transformer.VR4B Phases=2 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[21_1.1 21_2.1] kvas=[288 288] kVs=[22.9 22.9] mintap=0.95 maxtap=1.05
+New Transformer.VR4B Phases=2 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[21_1.1.2 21_2.1.2] kvas=[288 288] kVs=[22.9 22.9] mintap=0.95 maxtap=1.05
 New Regcontrol.VR4B Transformer=VR4B Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30 PTphase=2
 
-New Transformer.VR5A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[22_1.1 22_2.1] kvas=[144 144] kVs=[13.2040 13.2040] mintap=0.95 maxtap=1.05
-New Regcontrol.VR5A Transformer=VR5A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30
+!New Transformer.VR5A Phases=1 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[22_1.1 22_2.1] kvas=[144 144] kVs=[13.2040 13.2040] mintap=0.95 maxtap=1.05
+!New Regcontrol.VR5A Transformer=VR5A Winding=2 Vreg=125 Band=2 PTratio=110 CTPrim=100 R=0 X=0 Delay=30
