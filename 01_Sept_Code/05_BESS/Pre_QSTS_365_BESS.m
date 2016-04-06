@@ -31,7 +31,7 @@ addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
 
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % User Select run length:
-slt_DAY_RUN = 11; %was 9
+slt_DAY_RUN = 13; %was 9
 %----BENCHMARK DAYS--------
 
 %9 = [4]max. decrease in OLTC Operations
@@ -109,6 +109,18 @@ elseif slt_DAY_RUN == 11
     %11= [1] 5/24: Cleak Sky Day with high evening peak
     DAY = 24;
     MNTH = 5;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY;
+elseif slt_DAY_RUN == 12
+    %12= [2] 10/15: Highly Variable Day
+    DAY = 15;
+    MNTH = 10;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY;
+elseif slt_DAY_RUN == 13
+    %13= [3] 11/23: Low Irradiance Day with Next Day High Irradiance
+    DAY = 23;
+    MNTH = 11;
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY;
 end
