@@ -73,7 +73,7 @@ if k > 1
     B_TRBL(k).P_diff_DR = P_diff_DR;
     B_TRBL(k).Sub_3P = Sub_3P;
     
-    if t > T_DR_ON && P_PV < 0.1*PV_pmpp
+    if t > T_DR_ON && CR_ref(t,1) < 30
         PK_SV_CTRL
     elseif CR_ref(t,1) ~=0 && BESS_M(t).SOC < 100
         
