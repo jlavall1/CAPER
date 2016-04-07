@@ -1,0 +1,5 @@
+New Transformer.FLAY_RET_16271201 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[FLAY_RET_16271201.1.2.3 FLAY_RET_16271201_reg.1.2.3] kvas=[10561.31 10561.31]
+~ kVs=[12.47 12.47] 		
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes
