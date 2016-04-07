@@ -91,7 +91,12 @@ if BESS_ON == 1
     if t == T_DR_ON && T_MAX_HOLD == 0
         %adjust peak shaving by updating SOC @ start
         fprintf('updated peak shaving based on actual SOC\n');
-        DoD_tar = DoD_tar_est( M_PVSITE_SC_1(DAY_I+1,:),BESS,PV_pmpp);
+        if [BESS_M(t).SOC] > 80
+            %needs to discharge still...
+            DoD_tar = DoD_tar_est( M_PVSITE_SC_1(DAY_I+1,:),BESS,PV_pmpp);
+        else
+            DoD_tar = DoD_tar_est( M_PVSITE_SC_1(DAY_I+1,:),BESS,PV_pmpp);
+        end
         fprintf('>>>DoD_tar for NEXT DAY=%0.3f\n',DoD_tar);
         [peak,P_DR_ON,T_DR_ON,T_DR_OFF] = DR_INT(t_max,P_DAY1,DoD_tar,BESS,[BESS_M(t).SOC]/100);
     end

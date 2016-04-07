@@ -4,7 +4,9 @@ clear
 clc
 close all
 addpath('C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\05_BESS');
-main_dir='C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\04_QSTS_Solar_Coeff\03_FLAY\CHAPTER_5';
+%main_dir='C:\Users\jlavall\Documents\GitHub\CAPER\01_Sept_Code\04_QSTS_Solar_Coeff\03_FLAY\CHAPTER_5';
+main_dir='R:\CHAPTER_5';
+
 DAY_RUN=menu('what day?','[1] 5/24 Clear Sky Day w/ high evening peak','[2] 10/15 Highly Variable Day','[3] Low Irradiance Day w/ next day high Irrad','[4] OLTC Tap changing Example');
 while DAY_RUN < 0
     DAY_RUN=menu('what day?','[1] 5/24 Clear Sky Day w/ high evening peak','[2] 10/15 Highly Variable Day','[3] Low Irradiance Day w/ next day high Irrad','[4] OLTC Tap changing Example');
@@ -96,6 +98,8 @@ xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 ylabel('OLTC 3-ph Real Power (P) [kW]','FontSize',12,'FontWeight','bold');
 if DAY_RUN == 1
     axis([7 24 -1500 2600]);
+elseif DAY_RUN == 3
+    axis([7 24 -500 3000]);
 else
     axis([7 24 -1500 2500]);
 end
@@ -194,6 +198,16 @@ if DAY_RUN == 4
             RUN(2).BESS(DOY).SOC_ref(1,i)=.874615;
         end
     end
+elseif DAY_RUN == 3
+    HOLD_ON = 0;
+    for i=11*3600:1:length([RUN(2).BESS(DOY).SOC_ref])
+        if [RUN(2).BESS(DOY).SOC_ref(1,i)] > 0.95 && HOLD_ON == 0
+            HOLD_ON = 1;
+        end
+        if HOLD_ON == 1 && [RUN(2).BESS(DOY).SOC_ref(1,i)] < 0.96
+            RUN(2).BESS(DOY).SOC_ref(1,i)=.667;
+        end
+    end
 end
 %}
 plot(X,[RUN(2).BESS(DOY).SOC_ref'*100],'Color',[0.4 0.6 0.8],'LineWidth',3);
@@ -203,7 +217,11 @@ plot(X,[RUN(2).BESS(DOY).SOC]','r','LineWidth',2.5);
 %plot(X,SOC_ref*100,'c--');
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 ylabel('State of Charge (SOC) [%]','FontSize',12,'FontWeight','bold');
-axis([7 24 65 105]);
+if DAY_RUN == 3
+    axis([7 24 65 105]);
+else
+    axis([7 24 65 105]);
+end
 grid on
 set(gca,'FontWeight','bold','FontSize',12);
 legend('SOC Reference','OpenDSS SOC','Location','NorthWest');
