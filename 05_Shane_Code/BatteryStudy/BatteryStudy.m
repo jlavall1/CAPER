@@ -75,6 +75,9 @@ for i = 1:length(Lines)
 end
 Lines(rmv) = [];
 
+n = length(Buses);
+s = length(Lines);
+
 %% Load Historical Data and Generate Load Shapes
 toc
 disp('Loading Historical Data...')
@@ -184,6 +187,7 @@ clear DATA DATA2 DATA3
 toc
 disp('Finding BESS Locations...')
 
+SubLine = '259363665';
 SubBus = 'flay_ret_16271201';
 EndBus = {'259596204' '258126280' '255192292'};
 PCC = {};
@@ -245,25 +249,66 @@ for i = 1:pcc
     
     % Simulation 1: Static Power Flow at 4 different load levels
     %  Load Levels - [ SU_min  WN_min  SU_avg  WN_avg ]
-    LoadMult = [0.3 0.25 0.5 0.4]; % From Joe's Calculations
-    PctCharge = [55 60 55 60]; % From flat part of Joe's Trapezoids
-    fields = {'SU_min' 'WM_min' 'SU_avg' 'WN_avg'};
+    %  LoadMult    - [  0.3     0.25     0.5     0.4  ] % From Joe's Calculations
+    %  PctCharge   - [   55      60       55      60  ] % From flat part of Joe's Trapezoids
+    Results(i).Sim1 = struct('LoadLevel',{'SU_min' 'WM_min' 'SU_avg' 'WN_avg'},...
+        'LoadMult',{0.3 0.25 0.5 0.4},'PctCharge',{55 60 55 60});
+    
     %  PV - Set all PV to max rated output
     DSSText.Command = 'BatchEdit Generator..* Status=Fixed';
-    
     DSSText.Command = 'Set Mode=Snapshot';
+    
     for j = 1:4
-        DSSCircuit.Solution.LoadMult = LoadMult(j);
-        DSSText.Command = sprintf('Edit Storage.BESS1 State=Charge %%Charge=%d',PctCharge(j));
+        DSSCircuit.Solution.LoadMult = Results(i).Sim1(j).LoadMult;
+        DSSText.Command = sprintf('Edit Storage.BESS1 State=Charge %%Charge=%d',...
+            Results(i).Sim1(j).PctCharge);
 
         DSSCircuit.Solution.Solve
         
         % Collect Data
-        Results(i).Sim1 = struct('BusID',{Buses.ID});
-        for k = 1:length(Buses)
+        Results(i).Sim1(j).Va = zeros(n+1,1); % Initialize
+        Results(i).Sim1(j).Vb = zeros(n+1,1);
+        Results(i).Sim1(j).Vc = zeros(n+1,1);
+        
+        % Sub Bus Voltage
+        DSSCircuit.SetActiveBus(SubBus);
+        Voltages = DSSCircuit.ActiveBus.puVmagAng;
+        Results(i).Sim1(j).Va(1) = Voltages(1);
+        Results(i).Sim1(j).Vb(1) = Voltages(3);
+        Results(i).Sim1(j).Vc(1) = Voltages(5);
+        % All 3phase Bus Voltages
+        for k = 1:n
             DSSCircuit.SetActiveBus(Buses(k).ID);
-            Results(i).Sim1(k).VmagAng = DSSCircuit.ActiveBus.VMagAngle;
+            Voltages = DSSCircuit.ActiveBus.puVmagAng;
+            Results(i).Sim1(j).Va(k+1) = Voltages(1);
+            Results(i).Sim1(j).Vb(k+1) = Voltages(3);
+            Results(i).Sim1(j).Vc(k+1) = Voltages(5);
         end
+        % Voltage Deviation Index
+        Results(i).Sim1(j).TVD = sqrt(sum([(Results(i).Sim1(j).Va(1)-Results(i).Sim1(j).Va(2:end)).^2;...
+            (Results(i).Sim1(j).Vb(1)-Results(i).Sim1(j).Vb(2:end)).^2;...
+            (Results(i).Sim1(j).Vc(1)-Results(i).Sim1(j).Vc(2:end)).^2]));
+        
+        % Maximum & Minimum Voltages
+        [Results(i).Sim1(j).MaxV,index] = max([Results(i).Sim1(j).Va;Results(i).Sim1(j).Vb;Results(i).Sim1(j).Vc]);
+        Results(i).Sim1(j).MaxVbus = Buses(mod(index+1,n)).ID;
+        
+        [Results(i).Sim1(j).MinV,index] = min([Results(i).Sim1(j).Va;Results(i).Sim1(j).Vb;Results(i).Sim1(j).Vc]);
+        Results(i).Sim1(j).MinVbus = Buses(mod(index+1,n)).ID;
+        
+        % Power Loses
+        DSSCircuit.SetActiveElement(['Line.',SubLine]);
+        powers = DSSCircuit.ActiveElement.Powers;
+        Results(i).Sim1(j).Ploss = sum([powers([1 3 5]),[PV.kW],-Results(i).Sim1(j).PctCharge/100*BESS.Prated])-...
+            Results(i).Sim1(j).LoadMult*sum([LoadTotals.kWA,LoadTotals.kWB,LoadTotals.kWC]);
+        
+%         % Collect Data
+%         Results(i).Sim1 = struct('BusID',{Buses.ID});
+%         for k = 1:length(Buses)
+%             DSSCircuit.SetActiveBus(Buses(k).ID);
+%             Results(i).Sim1(k).VmagAng = DSSCircuit.ActiveBus.VMagAngle;
+%         end
+        
 %         % TVD (Voltage Deviation Index) Change to include only 3 phase
 %         SubVmagAng = DSSCircuit.ActiveBus.VMagAngle;
 %         SubVmagAvg = mean(SubVmagAng([1,3,5]));
@@ -273,12 +318,10 @@ for i = 1:pcc
         % Power Losses (Head of Feeder - LoadMult*ConnectedKVA)
         %Results(i).Sim1.Losses
         
-        % Max Voltage & Bus
-        
     end
     
     
-    
+    %{
     
     % Simulation 2: Timseries simulation on high variability day
     %  Loadshapes - 
@@ -350,6 +393,8 @@ for i = 1:pcc
         BESSControllerB(DSSCircuitObj,date3,t);
     end
     
+    %}
+    
     % Print progress to Command Window
     toc
     fprintf('Completed PCC %d/%d\n',i,pcc)
@@ -358,3 +403,24 @@ end
 %% Plot Results
 tic
 disp('Plotting Results...')
+
+% Simulation 1 Results
+%  PlossMax vs |Z1Sub|
+magZ1Sub = zeros(pcc,1);
+PlossMax = zeros(pcc,1);
+for i = 1:pcc
+    magZ1Sub(i) = mean([abs(Results(i).Data.Z1Sub),6*abs(Results(i).Data.Z1PV1),abs(Results(i).Data.Z1PV2)]);
+    %PlossMax(i) = max([Results(i).Sim1.Ploss]);
+    PlossMax(i) = mean([Results(i).Sim1.Ploss]);
+end
+figure;
+plot(magZ1Sub,PlossMax,'.')
+    
+    
+    
+    
+    
+    
+    
+    
+    
