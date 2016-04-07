@@ -45,9 +45,7 @@ DSSCircuit.Solution.Solve
 
 kVBase = DSSCircuit.Settings.VoltageBases;
 
-
-% Set DSS to Fault study mode for Data Collection
-
+% Get Line info
 Buses = struct('ID',DSSCircuit.AllBusNames);
 Lines = struct('ID',DSSCircuit.Lines.AllNames);
 for i = 1:length(Lines)
@@ -55,6 +53,7 @@ for i = 1:length(Lines)
     Lines(i).Bus1   = get(DSSCircuit.Lines,'Bus1');
     Lines(i).Bus2   = get(DSSCircuit.Lines,'Bus2');
     Lines(i).Length = get(DSSCircuit.Lines,'Length');
+    Lines(i).Z1     = get(DSSCircuit.Lines,'R1')+1i*get(DSSCircuit.Lines,'X1');
 end
 
 %% Load Historical Data and Generate Load Shapes
@@ -181,19 +180,28 @@ DSSText.Command = ['New StorageController.BESS1 element=Line.259363665 terminal=
 pcc = length(PCC);
 Results = struct('PCC',PCC);
 
-DSSText.Command = 'Set Mode=FaultStudy';
-DSSCircuit.Solution.Solve;
+% Collect Data for Study at each PCC
 for i = 1:pcc
-    % Record Zsc
-    DSSCircuit.SetActiveBus(Results(i).PCC);
-    Results(i).Zsc1 = DSSCircuit.ActiveBus.Zsc1;
-    Results(i).Zsc0 = DSSCircuit.ActiveBus.Zsc0;
-    
-    % Record distance to each PV
-    %[Results(i).DistPV1,~] = findpath(Results(i).PCC, PVLOCATION1 ,Buses,Lines);
-    %[Results(i).DistPV2,~] = findpath(Results(i).PCC, PVLOCATION2 ,Buses,Lines);
-    
+    % Record Positiv Seq Resistance to each source
+    [Results(i).Data.Z1Sub,~] = findpath(Results(i).PCC,SubBus,Buses,Lines,[Lines.Z1]);
+    [Results(i).Data.Z1PV1,~] = findpath(Results(i).PCC,PV(1).Bus1,Buses,Lines,[Lines.Z1]);
+    [Results(i).Data.Z1PV2,~] = findpath(Results(i).PCC,PV(2).Bus1,Buses,Lines,[Lines.Z1]);
 end
+
+% % Set DSS to Fault study mode for Data Collection
+% DSSText.Command = 'Set Mode=FaultStudy';
+% DSSCircuit.Solution.Solve;
+% for i = 1:pcc
+%     % Record Zsc
+%     DSSCircuit.SetActiveBus(Results(i).PCC);
+%     Results(i).Zsc1 = DSSCircuit.ActiveBus.Zsc1;
+%     Results(i).Zsc0 = DSSCircuit.ActiveBus.Zsc0;
+%     
+%     % Record distance to each PV
+%     %[Results(i).DistPV1,~] = findpath(Results(i).PCC, PVLOCATION1 ,Buses,Lines);
+%     %[Results(i).DistPV2,~] = findpath(Results(i).PCC, PVLOCATION2 ,Buses,Lines);
+%     
+% end
 
 % Place Battery on Each Bus
 for i = 1:pcc
@@ -221,7 +229,6 @@ for i = 1:pcc
         Results(i).(fields{j}) =...
             mean(abs(SubVmagAvg-DSSCircuit.AllBusVmag));
     end
-    
     
     
     
