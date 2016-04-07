@@ -20,7 +20,7 @@ MNTH = 2;
 DAY = 1;
 MNTH = 1;
 %}
-DOY=calc_DOY(MNTH,DAY);
+DOY=calc_DOY(MNTH,DAY)
 
 
 %-----------------

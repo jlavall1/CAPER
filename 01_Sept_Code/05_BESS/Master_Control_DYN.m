@@ -74,9 +74,9 @@ if BESS_ON == 1
 
         %7] Update day of peak shaving for future operation:
         if DAY_NUM == 1
-            DAY_ON = DOY;
+            DAY_ON = DAY_I;
         elseif DAY_NUM == 2
-            DAY_ON = DOY+1;
+            DAY_ON = DAY_I+1;
         end
 
         %7] Initialize needed variables for BESS controller.

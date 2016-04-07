@@ -31,7 +31,7 @@ addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
 
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % User Select run length:
-slt_DAY_RUN = 13; %was 9
+slt_DAY_RUN = 14; %was 9
 %----BENCHMARK DAYS--------
 
 %9 = [4] 2/04: max. decrease in OLTC Operations
@@ -39,8 +39,8 @@ slt_DAY_RUN = 13; %was 9
 %12= [2] 10/15: Highly Variable Day
 %13= [3] 11/23: Low Irradiance Day with Next Day High Irradiance
 
-%13= (3) Day run in Spring
-%14= (3) Day run in Summer
+%14= (3) Day run in Spring
+%15= (3) Day run in Summer
 %---------------------------
 
 if slt_DAY_RUN == 1
@@ -123,6 +123,12 @@ elseif slt_DAY_RUN == 13
     MNTH = 11;
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY;
+elseif slt_DAY_RUN == 14
+    %14= [5] 2/2 to 2/4: Three Day Run showing MEC functionality
+    DAY = 3;
+    MNTH = 2;
+    DOY=calc_DOY(MNTH,DAY);
+    DAY_F = DOY+2;
 end
     
 if int_select == 1
