@@ -16,7 +16,7 @@ timeseries_span = 2; %Simulates 1 day (24hr) at a time.
 int_select=1;   %1: 5s load, 1s sim 2:60s load, 60s sim
 QSTS_select     = 4;
 
-BESS_ON         = 1; %0 is no battery, 1 is a battery
+BESS_ON         = 0; %0 is no battery, 1 is a battery
 DYN             = 1; %0 for just trap follow; 1 for dP adjustment
 BESS_TYPE       = 2; %1=8000kWh 2=4000kWh 3=1000kWh
 
@@ -31,10 +31,10 @@ addpath(strcat(base_path,'\01_Sept_Code\Result_Analysis'));
 
 MTH_LN(1,1:12) = [31,28,31,30,31,30,31,31,30,31,30,31];
 % User Select run length:
-slt_DAY_RUN = 13; %was 9
+slt_DAY_RUN = 11; %was 9
 %----BENCHMARK DAYS--------
 
-%9 = [4]max. decrease in OLTC Operations
+%9 = [4] 2/04: max. decrease in OLTC Operations
 %11= [1] 5/24: Cleak Sky Day with high evening peak
 %12= [2] 10/15: Highly Variable Day
 %13= [3] 11/23: Low Irradiance Day with Next Day High Irradiance

@@ -24,7 +24,7 @@ BESS(t).DR
 %%
 %Settings:
 P_TH=-1*0.0125;
-SOC_TH = 0.8; % a 1% difference will initiate change in CR to attempt to match
+SOC_TH = 0.2; % a 1% difference will initiate change in CR to attempt to match
 epison=1;
 dT = 5/3600;
 a_PV_CR=0.5;
@@ -73,7 +73,7 @@ if k > 1
     B_TRBL(k).P_diff_DR = P_diff_DR;
     B_TRBL(k).Sub_3P = Sub_3P;
     
-    if t > T_DR_ON && P_PV < 0.05*PV_pmpp && CR_ref(t,1) < 100
+    if t > T_DR_ON && P_PV < 0.05*PV_pmpp && CR_ref(t,1) < 100 && PEAK_COMPLETE == 0
         PK_SV_CTRL
     elseif CR_ref(t,1) ~=0 && BESS_M(t).SOC < 100
         

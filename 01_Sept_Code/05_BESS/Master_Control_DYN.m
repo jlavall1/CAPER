@@ -81,6 +81,8 @@ if BESS_ON == 1
 
         %7] Initialize needed variables for BESS controller.
         k = 1;
+        BESS_C1_ADJ = 0;
+        
         B_TRBL(k).P_PV = abs(SCADA(t).PV_P);
         B_TRBL(k).SOC = BESS_M(t).SOC;
         B_TRBL(k).CR = BESS_M(t).CR;
@@ -93,12 +95,13 @@ if BESS_ON == 1
         fprintf('>>>DoD_tar for NEXT DAY=%0.3f\n',DoD_tar);
         [peak,P_DR_ON,T_DR_ON,T_DR_OFF] = DR_INT(t_max,P_DAY1,DoD_tar,BESS,[BESS_M(t).SOC]/100);
     end
-    %{
-    if PEAK_COMPLETE == 1
+    
+    if PEAK_COMPLETE == 1 && BESS_C1_ADJ == 0 && t < 12*3600
         %The peak shaving has complete in the morning, now needs to update 
         %   Controller A reference;
+        
         [SOC_ref,CR_ref,t_CR]=SOCref_CR(BncI,CSI,CSI_TH,BESS,C,DoD_DAY_SRT);
-        PEAK_COMPLETE = 2;
+        BESS_C1_ADJ = 1;
         fprintf('updated SOC reference AFTER peak shaving complete.\n');
     end
     %}
