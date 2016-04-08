@@ -15,7 +15,25 @@ if SOC < SOC_tar
     %fprintf('Start of IDLE: %d\n',k);
 elseif T_DR_ON < 12*3600 
     %Special Case & when PV output is < 10% of rated
-    
+    if Sub_3P >= P_DR_ON+P_DR_ON*P_error
+        DR_k = DR(t,1)+abs(Sub_3P-P_DR_ON);
+
+        if DR_k > BESS.Prated
+            DR_k = BESS.Prated;
+        end
+        S_state='DISCHARGING';
+    elseif Sub_3P < P_DR_ON-P_DR_ON*P_error
+        %   -- Lower Bound --
+        %   change discharge rate:
+        DR_k = DR(t,1)-abs(Sub_3P-P_DR_ON);
+        if DR_k < 0
+            DR_k = 0;
+            S_state='IDLING';
+        else
+            S_state='DISCHARGING';
+        end
+    end
+    %{
     DOD = 100-SOC; %Depth of Discharge:
     E_tar = (SOC_tar/100)*BESS.Crated;
     E_act = (SOC/100)*BESS.Crated;
@@ -37,7 +55,7 @@ elseif T_DR_ON < 12*3600
     else
         S_state='DISCHARGING';
     end
-    
+    %}
     
 elseif Sub_3P >= P_DR_ON+P_DR_ON*P_error
     %-- Upper Bound Violation --

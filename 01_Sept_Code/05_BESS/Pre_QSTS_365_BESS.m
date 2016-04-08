@@ -16,7 +16,7 @@ timeseries_span = 2; %Simulates 1 day (24hr) at a time.
 int_select=1;   %1: 5s load, 1s sim 2:60s load, 60s sim
 QSTS_select     = 4;
 
-BESS_ON         = 1; %0 is no battery, 1 is a battery
+BESS_ON         = 0; %0 is no battery, 1 is a battery
 DYN             = 1; %0 for just trap follow; 1 for dP adjustment
 BESS_TYPE       = 2; %1=8000kWh 2=4000kWh 3=1000kWh
 

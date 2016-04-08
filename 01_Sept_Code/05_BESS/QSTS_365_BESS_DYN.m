@@ -191,7 +191,7 @@ for DAY_I=DOY:1:DAY_F
             end  
             %--------------------------------------------------------------
             % Voltage Reg. Equip. Controls:
-            Master_Control_DYN
+            Master_Control_DYN_2 %_2 (just added)
 
             if BESS_ON == 1 && mod(t,5) == 0
                 %BESS Controller updating CR/DR every 5 seconds.
