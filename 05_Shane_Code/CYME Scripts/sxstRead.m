@@ -30,12 +30,13 @@ if ~nargin
     %filename = 'Commonwealth 12-05-  9-14 loads (original).sxst';
     %filename = 'Kud1207 (original).sxst'
     %filename = 'Bellhaven 12-04 - 8-14 loads.xst (original).sxst'
-    filename = 'Commonwealth_ret_01311205.sxst';
+    %filename = 'Commonwealth_ret_01311205.sxst';
+    filename = 'Flay_ret_16271201.sxst';
     fullfilename = [filelocation,filename];
 end
 
 % Read SXST File
-FILE = fileread([filelocation,filename]);
+FILE = fileread(fullfilename);
 
 % Find Circuit Specs
 n = length(strfind(FILE,'<Node>'));
@@ -408,6 +409,12 @@ for l = 1:s
         Loads(ld).kWh = str2double(regexp(spotloadinfo{i},'(?<=<KWH>)(.*?)(?=</KWH>)','match'));
         Loads(ld).NumCust = str2double(regexp(spotloadinfo{i},'(?<=<NumberOfCustomer>)(.*?)(?=</NumberOfCustomer>)','match'));
         
+        % Place Load Values in Buses
+        Buses(index).kW   = Loads(ld).kW;
+        Buses(index).kVAR = Loads(ld).kVAR;
+        Buses(index).kVA  = Loads(ld).kVA;
+        Buses(index).pf   = Loads(ld).pf;
+        
         % Print Load
         % kW=#.###### yearly=YearlyP daily=DailyP kVAR=#.######
         Loads(ld).DSS = sprintf(['New Load.%s Bus1=%-10s Phases=%d kV=%.4f ',...
@@ -454,7 +461,7 @@ for l = 1:s
                 
                 Buses(index).CapCtrl = sprintf(['New Capcontrol.%s Element=Line.%s Capacitor=%s Terminal=1 ',...
                     'type=voltage ONsetting=122 OFFsetting=124 PTRatio=%d VoltOverride=N Vmax = 126 Vmin = 116 delay = 45',...
-                    Capacitors(cp).ID,Lines(l).ID,Capacitors(cp).ID,round(1000*Capacitors(cp).kv/(60*sqrt(3)))]);
+                    Capacitors(cp).ID,Lines(l).ID,Capacitors(cp).ID,round(1000*Capacitors(cp).kV/(60*sqrt(3)))]);
                 
             case 2
                 Capacitors(cp).Type = 'fixed';
