@@ -23,7 +23,7 @@ TO   = regexp([Lines.Bus2],'(?<ID>\w+)([.][123]{1})+','names');
 [~,~,index2] = unique([{Buses.ID},{TO.ID}],'stable');
 [check,index] = max([index1;index2]);
 if check>v
-    linERR = mod(index-1,e+v)+1;
+    linERR = mod(index-1,e+v)+1-v;
     busERR = floor((index-1)/(e+v))+1;
     error('Line %d bus%d not recognized',linERR,busERR)
 end
