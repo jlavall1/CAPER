@@ -66,7 +66,9 @@ for i = 1:length(Lines)
     DSSCircuit.Lines.name = Lines(i).ID;
     if DSSCircuit.Lines.Phases==3
         Lines(i).Bus1   = get(DSSCircuit.Lines,'Bus1');
+        Lines(i).FROM   = regexp(Lines(i).Bus1,'^\w*(?=[.])','match'); Lines(i).FROM = Lines(i).FROM{1};
         Lines(i).Bus2   = get(DSSCircuit.Lines,'Bus2');
+        Lines(i).TO     = regexp(Lines(i).Bus2,'^\w*(?=[.])','match'); Lines(i).TO = Lines(i).TO{1};
         Lines(i).Length = get(DSSCircuit.Lines,'Length');
         Lines(i).Z1     = get(DSSCircuit.Lines,'R1')+1i*get(DSSCircuit.Lines,'X1');
     else
@@ -179,7 +181,7 @@ DSSText.Command = sprintf(['New Loadshape.GSPV2Sim3 npts=%d sinterval=%d mult=('
 % Create PV Generator Elements
 for i = 1:2
     DSSText.Command = sprintf(['New Generator.PV%d Bus1=%s Phases=3 kV=%.2f ',...
-        'kW=%d pf=%.3f'],i,PV(i).Bus1,kVBase(1),PV(i).kW,PV(i).pf);
+        'kW=%d pf=%.3f Status=Fixed'],i,PV(i).Bus1,kVBase(1),PV(i).kW,PV(i).pf);
 end
         
 clear DATA DATA2 DATA3
@@ -189,13 +191,20 @@ disp('Finding BESS Locations...')
 
 SubLine = '259363665';
 SubBus = 'flay_ret_16271201';
-EndBus = {'259596204' '258126280' '255192292'};
-PCC = {};
-for i = 1:length(EndBus)
-    [~,Path] = findpath([SubBus,'_reg'],EndBus{i},Buses,Lines);
-    PCC = unique([PCC,Path]);
+%EndBus = {'259596204' '258126280' '255192292'};
+NPCC = {};
+for i = 1:length(PV)
+    [~,Path] = findpath([SubBus,'_reg'],PV(i).Bus1,Buses,Lines);
+    NPCC = unique([NPCC,Path]);
 end
 clear Path
+npcc = length(NPCC);
+
+% Find all Sections in PCC path
+[~,~,ic] = unique([NPCC,{Lines.FROM},{Lines.TO}],'stable');
+SPCC = Lines(ic(npcc+1:npcc+s)<=npcc & ic(npcc+s+1:npcc+2*s)<=npcc);
+
+spcc = length(SPCC);
 
 % Battery Specs
 BESS.kV = kVBase(1);
@@ -212,21 +221,20 @@ DSSText.Command = sprintf(['New Storage.BESS1 Bus1=%s Phases=3 kv=%.2f ',...
     BESS.Eff_CR,BESS.Eff_DR);
 
 % Initialize Loop and Collect Data for BESS Locations
-pcc = length(PCC);
-Results = struct('PCC',PCC);
+Results = struct('PCC',NPCC);
 
 % Collect Data for Study at each PCC
-for i = 1:pcc
-    %     
-    % Record Positiv Seq Resistance to each source
-    [Results(i).Data.Z1Sub,~] = findpath(Results(i).PCC,[SubBus,'_reg'],Buses,Lines,[Lines.Z1]);
-    [Results(i).Data.Z1PV1,~] = findpath(Results(i).PCC,PV(1).Bus1,Buses,Lines,[Lines.Z1]);
-    [Results(i).Data.Z1PV2,~] = findpath(Results(i).PCC,PV(2).Bus1,Buses,Lines,[Lines.Z1]);
-end
+% for i = 1:npcc
+%     %     
+%     % Record Positiv Seq Resistance to each source
+%     [Results(i).Data.Z1Sub,~] = findpath(Results(i).PCC,[SubBus,'_reg'],Buses,Lines,[Lines.Z1]);
+%     [Results(i).Data.Z1PV1,~] = findpath(Results(i).PCC,PV(1).Bus1,Buses,Lines,[Lines.Z1]);
+%     [Results(i).Data.Z1PV2,~] = findpath(Results(i).PCC,PV(2).Bus1,Buses,Lines,[Lines.Z1]);
+% end
 
 % % Set DSS to Fault study mode for Data Collection
-% DSSText.Command = 'Set Mode=FaultStudy';
 % DSSCircuit.Solution.Solve;
+% DSSText.Command = 'Set Mode=FaultStudy';
 % for i = 1:pcc
 %     % Record Zsc
 %     DSSCircuit.SetActiveBus(Results(i).PCC);
@@ -244,7 +252,7 @@ toc
 disp('Running BESS Simulations...')
 
 % Place Battery on Each Bus
-for i = 1:pcc
+for i = 1:npcc
     DSSText.Command = sprintf('Edit Storage.BESS1 Bus1=%s %%stored=80',Results(i).PCC);
     
     % Simulation 1: Static Power Flow at 4 different load levels
@@ -258,7 +266,7 @@ for i = 1:pcc
     DSSText.Command = 'BatchEdit Generator..* Status=Fixed';
     DSSText.Command = 'Set Mode=Snapshot';
     
-    for j = 1:4
+    for j = 2 % only used the winter minimum
         DSSCircuit.Solution.LoadMult = Results(i).Sim1(j).LoadMult;
         DSSText.Command = sprintf('Edit Storage.BESS1 State=Charge %%Charge=%d',...
             Results(i).Sim1(j).PctCharge);
@@ -301,6 +309,15 @@ for i = 1:pcc
         powers = DSSCircuit.ActiveElement.Powers;
         Results(i).Sim1(j).Ploss = sum([powers([1 3 5]),[PV.kW],-Results(i).Sim1(j).PctCharge/100*BESS.Prated])-...
             Results(i).Sim1(j).LoadMult*sum([LoadTotals.kWA,LoadTotals.kWB,LoadTotals.kWC]);
+        
+        % Power Flow weighted by Z
+        PlossIndex = 0;
+        for k = 1:spcc
+            DSSCircuit.SetActiveElement(['Line.',SPCC(k).ID]);
+            powers = DSSCircuit.ActiveElement.Powers;
+            PlossIndex = PlossIndex + real(SPCC(k).Z1)*abs(sum(powers([1 3 5])));
+        end
+        Results(i).Sim1(j).PlossIndex = PlossIndex/kVBase(2)^2;
         
 %         % Collect Data
 %         Results(i).Sim1 = struct('BusID',{Buses.ID});
@@ -397,7 +414,7 @@ for i = 1:pcc
     
     % Print progress to Command Window
     toc
-    fprintf('Completed PCC %d/%d\n',i,pcc)
+    fprintf('Completed PCC %d/%d\n',i,npcc)
 end
 
 %% Plot Results
@@ -406,16 +423,35 @@ disp('Plotting Results...')
 
 % Simulation 1 Results
 %  PlossMax vs |Z1Sub|
-magZ1Sub = zeros(pcc,1);
-PlossMax = zeros(pcc,1);
-for i = 1:pcc
-    magZ1Sub(i) = mean([abs(Results(i).Data.Z1Sub),6*abs(Results(i).Data.Z1PV1),abs(Results(i).Data.Z1PV2)]);
+PlossIndex = zeros(npcc,1);
+PlossMax = zeros(npcc,1);
+for i = 1:npcc
+    PlossIndex(i) = Results(i).Sim1(2).PlossIndex;
+    %PlossIndex(i) = mean([abs(Results(i).Data.Z1Sub),6*abs(Results(i).Data.Z1PV1),abs(Results(i).Data.Z1PV2)]);
     %PlossMax(i) = max([Results(i).Sim1.Ploss]);
-    PlossMax(i) = mean([Results(i).Sim1.Ploss]);
+    %PlossMax(i) = mean([Results(i).Sim1.Ploss]);
+    PlossMax(i) = Results(i).Sim1(2).Ploss;
 end
 figure;
-plot(magZ1Sub,PlossMax,'.')
-    
+[PlossIndex,index] = sort(PlossIndex);
+PlossMax = PlossMax(index);
+
+PlossMax(end) = []; PlossIndex(end) = [];
+
+plot(PlossIndex,PlossMax,'.k','MarkerSize',20)
+% hold on
+% % Line of best fit
+% X = linspace(min(PlossIndex),max(PlossIndex),200);
+% coeff = polyfit(PlossIndex,PlossMax,1);
+% Y = polyval(coeff,X);
+% plot(X,Y,'--k')
+
+axis([180 235 120 180])
+grid on;
+set(gca,'FontSize',10,'FontWeight','bold')
+xlabel(gca,'Power Loss Index [\SigmaP*Z_1]','FontSize',12,'FontWeight','bold')
+ylabel(gca,'Power Losses [kW]','FontSize',12,'FontWeight','bold')
+title('Locational Dependance of BESS','FontWeight','bold','FontSize',12);
     
     
     
