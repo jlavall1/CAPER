@@ -131,7 +131,7 @@ axis([1 365 0 35]);
 xlabel('Day of Year (DoY)','FontWeight','bold','FontSize',12);
 ylabel('Depth of Discharge Target ( DoD_{t} ) [ % ]','FontWeight','bold','FontSize',12);
 set(gca,'xtick',[1:31:372])
-set(gca,'FontWeight','bold');
+set(gca,'FontWeight','bold','FontSize',12);
 
 
 %%

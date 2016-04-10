@@ -124,7 +124,7 @@ elseif slt_DAY_RUN == 13
     DOY=calc_DOY(MNTH,DAY);
     DAY_F = DOY;
 elseif slt_DAY_RUN == 14
-    %14= [5] 2/2 to 2/4: Three Day Run showing MEC functionality
+    %14= [5] 2/3 to 2/5: Three Day Run showing MEC functionality
     DAY = 3;
     MNTH = 2;
     DOY=calc_DOY(MNTH,DAY);
