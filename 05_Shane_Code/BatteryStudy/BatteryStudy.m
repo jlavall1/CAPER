@@ -64,16 +64,16 @@ Lines = struct('ID',DSSCircuit.Lines.AllNames);
 rmv = [];
 for i = 1:length(Lines)
     DSSCircuit.Lines.name = Lines(i).ID;
-    if DSSCircuit.Lines.Phases==3
+    %if DSSCircuit.Lines.Phases==3
         Lines(i).Bus1   = get(DSSCircuit.Lines,'Bus1');
         Lines(i).FROM   = regexp(Lines(i).Bus1,'^\w*(?=[.])','match'); Lines(i).FROM = Lines(i).FROM{1};
         Lines(i).Bus2   = get(DSSCircuit.Lines,'Bus2');
         Lines(i).TO     = regexp(Lines(i).Bus2,'^\w*(?=[.])','match'); Lines(i).TO = Lines(i).TO{1};
         Lines(i).Length = get(DSSCircuit.Lines,'Length');
         Lines(i).Z1     = get(DSSCircuit.Lines,'R1')+1i*get(DSSCircuit.Lines,'X1');
-    else
-        rmv = [rmv,i]; % Remove all non-3phase Lines
-    end
+    %else
+    %    rmv = [rmv,i]; % Remove all non-3phase Lines
+    %end
 end
 Lines(rmv) = [];
 

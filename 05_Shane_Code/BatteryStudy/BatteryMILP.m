@@ -3,7 +3,7 @@ clear
 clc
 close all
 
-global NODE SECTION LOAD DER PARAM
+global NODE SECTION PV BESS PARAM
 
 tic
 disp('Reading in Historical Data...')
@@ -43,7 +43,7 @@ remove = (datenum('4/1/2014'):datenum('9/30/2014')) - datenum(start) + 1;
 WinDOY = unique([remove,1:364],'stable');
 WinDOY = WinDOY(length(remove)+1:end);
 WinAVG = sum([DATA(WinDOY).kW],2)/length(WinDOY);
-WinAVG = mean(reshape(WinAVG,30,[]),1)'; % 15 min average
+WinAVG = mean(reshape(WinAVG,30,[]),1)'; % 30 min average
 
 % Plot Loadshapes
 figure;
@@ -56,6 +56,9 @@ clear DATA
 
 % PV Data
 load('FlayPV.mat')
+PVShape = mean(reshape(DATA(106).PV1,30,[]),1)';
+figure;
+plot(PVShape)
 
 % PV Specifications
 PV(1).Bus1 = '260007367';
@@ -66,7 +69,12 @@ PV(2).Bus1 = '258406388';
 PV(2).kW = 500;
 PV(2).pf = 1;
 
-
+% BESS Data
+BESS.PR=1000;
+BESS.ER=12121; %4000kWh
+BESS.Er=0.67*BESS.ER;
+BESS.etad=.967;
+BESS.etac=.93;
 
 toc
 disp('Reading in Circuit Data...')
@@ -77,7 +85,7 @@ rootlocation = regexp(rootlocation{1}','C:[^.]*?CAPER\\','match','once');
 fclose(fid);
 fullfilename = [rootlocation,'07_CYME\Flay_ret_16271201.sxst'];
 
-[NODE,SECTION,LOAD,DER,PARAM,~] = sxstRead(fullfilename);
+[NODE,SECTION,~,~,PARAM,~] = sxstRead(fullfilename);
 % Removed Unnecessary Fields
 NODE = rmfield(NODE,{'DSS','Capacitors','CapCtrl'});
 SECTION = rmfield(SECTION,{'Recloser','Switch','Fuse','FuseCode',...
@@ -87,8 +95,15 @@ SECTION = SECTION([SECTION.NormalStatus]);
 % Remove End of feeder Nodes
 [~,~,ic] = unique([{'264487210','264487418'},{NODE.ID}],'stable');
 NODE(ic(3:end)<=2) = [];
+% Load in positive sequence impedance data
 
-SubBus = 'FLAY_RET_16271201';
+% Loadshapes
+PARAM.LoadTotal = sum([NODE.kW]);
+PARAM.beta = [SumAVG;WinAVG]/PARAM.LoadTotal;
+PARAM.gamma = PVShape;
+PARAM.dt = 0.5; % hours
+
+PARAM.SubBus = 'FLAY_RET_16271201';
 
 toc
 disp('Pre-Processing Data...')
@@ -102,7 +117,7 @@ MaxLoad = max([NODE.kW]);
 
 figure;
 % Substation
-index = ismember({NODE.ID},SubBus);
+index = ismember({NODE.ID},PARAM.SubBus);
 plot(NODE(index).XCoord,NODE(index).YCoord,'kh','MarkerSize',15,...
     'MarkerFaceColor',[0,0.5,1],'LineStyle','none');
 hold on
@@ -147,117 +162,43 @@ if exitflag==1
     toc
     disp('Parcing out Solution Data...')
     
-    N = length(NODE);       % Number of Nodes
-    S = length(SECTION);    % Number of Sections
-    D = length(DER);        % Number of DER
-    LD = length(LOAD);       % Number of Loads
-    LP = length(PARAM.Loop); % Number of Loops
+    % Let x = [a;c;d;E;P;Pbar;r]
     
-    % Let x = [a;alpha;b;bbar;beta1;beta2;c], then
-    % a     = x[    D*N    ]
-    % alpha = x[  D*(L+D)  ]
-    % b     = x[    D*S    ]
-    % bbar  = x[     S     ]
-    % beta1 = x[    D*S    ]
-    % beta2 = x[    D*S    ]
-    % c     = x[    D*LP   ]
-    % d     = x[     D     ]
-    
+    n = length(NODE);
+    s = length(SECTION);
+    pv = length(PV);
+    t = length(PARAM.beta);
     
     % Define starting indicies
     a       = 0;
-    alpha   = a+D*N;
-    b       = alpha+D*(LD+D);
-    bbar    = b+D*S;
-    beta1   = bbar+S;
-    beta2   = beta1+D*S;
-    c       = beta2+D*S;
-    d       = c+D*LP;
+    c       = a+n;
+    d       = c+n*t;
+    E       = d+n*t;
+    P       = E+n*(t+2);
+    Pbar    = P+(s+1)*t;
+    r       = Pbar+s*t;
     
-    
-    fprintf('Active Micro-grids: %s\n',sprintf(' %d ',find(X(d+1:d+D)>.5)))
-    
-    MG = cell(D,1);
-    for i = 1:D
-        MG{i} = sprintf('MG%d',i);
+    bat = find(logical(X(a+1:a+n)));
+    for i = 1:n
+        NODE(i).a = X(a+i);
+        NODE(i).c = X(c+t*(i-1)+(1:t));
+        NODE(i).d = X(d+t*(i-1)+(1:t));
+        NODE(i).E = X(E+(t+2)*(i-1)+(1:t+2));
     end
     
-    for i = 1:D
-        mg = find(X(alpha+LD+i+(LD+D)*(0:D-1)));
-        DER(i).MGNumber = mg;
-        for j = 1:D
-            DER(i).(['alpha_',MG{j}]) = X(alpha+LD+i+(j-1)*(LD+D));
-        end
+    for i = 1:s
+        SECTION(i).P = X(P+t*(i-1)+(1:t));
+        SECTION(i).Pbar = X(Pbar+t*(i-1)+(1:t));
+        SECTION(i).r = X(r+t*(i-1)+(1:t));
     end
     
-    for i = 1:N
-        mg = find(X(a+i+N*(0:D-1)));
-        NODE(i).MGNumber = mg;
-        for j = 1:D
-            NODE(i).(['a_',MG{j}]) = X(a+i+(j-1)*N);
-        end
-    end
-    
-    for i = 1:S
-        SECTION(i).bbar = X(bbar+i);
-        mg = find(X(b+i+S*(0:D-1)));
-        SECTION(i).MGNumber = mg;
-        for j = 1:D
-            SECTION(i).(['b_',MG{j}]) = X(b+i+(j-1)*S);
-            SECTION(i).(['beta1_',MG{j}]) = X(beta1+i+(j-1)*S);
-            SECTION(i).(['beta2_',MG{j}]) = X(beta2+i+(j-1)*S);
-        end
-    end
-    
-    %LOAD = NODE(logical([NODE.p]));
-    for i = 1:LD
-        mg = find(X(alpha+i+(LD+D)*(0:D-1)));
-        LOAD(i).MGNumber = mg;
-        for j = 1:D
-            LOAD(i).(['alpha_',MG{j}]) = X(alpha+i+(j-1)*(LD+D));
-        end
-    end
-    
-    [~,~,ic] = unique([{NODE.ID},{DER.ID}],'stable');
-    
-%     temp = DER;
-%     [~,~,ic] = unique([{NODE.ID},{DER.ID}],'stable');
-%     DER = NODE(ic(end-D+1:end));
-%     DER = rmfield(DER,{'w','p','q'});
-%     [DER.CAPACITY] = deal(temp.CAPACITY);
-%     clear temp
+    Pg = X(P+s*t+(1:t));
     
     toc
     disp('Plotting Results...')
-    % Plot Results
-    PlotResults
+    %% Plot Results
+    %PlotResults
     
-    toc
-    disp('Check for Violations...')
-    % Check for Violations
-%     for i = 1:D
-%         % Find Source in Micro-grid
-%         index = {logical([NODE.(['a_',MG{i}])]),logical([SECTION.(['b_',MG{i}])]),logical([LOAD.(['alpha_',MG{i}])])};
-%         if length(find(index{1}))>1 % Must Contain more than 1 node for simulation
-%             [DSSCircuit, DSSCircObj, DSSText, gridpvPath] = DSSDeclare(NODE(index{1}),SECTION(index{2}),LOAD(index{3}),DER([DER.MGNumber]==i),DSS);
-%             
-%             % Collect Data
-%             %Lines = getLineInfo(DSSCircObj);
-%             %Bus = getBusInfo(DSSCircObj);
-%             %Load = getLoadInfo(DSSCircObj);
-%             %figure; plotKWProfile(DSSCircObj);
-%             %figure; plotVoltageProfile(DSSCircObj);
-%             handles = plotCircuitLines(DSSCircObj,'Coloring','voltage120',...
-%                 'ContourScale',[112 120],'CapacitorMarker','off','SubstationMarker','off','LoadMarker','on');
-%             set(gca,'YTick',[])
-%             set(gca,'XTick',[])
-%             hold on
-%             [~,~,ic] = unique([{NODE.ID},{DER([DER.MGNumber]==i).ID}],'stable');
-%             hs = plot([NODE(ic(N+1:end)).XCoord],[NODE(ic(N+1:end)).YCoord],'kh','MarkerSize',15,'MarkerFaceColor',[0,0.5,1],'LineStyle','none');
-% 
-%         end
-%     end
-%     legend([hs,handles.legendHandles],'Source','Load')
 end    
 
 toc

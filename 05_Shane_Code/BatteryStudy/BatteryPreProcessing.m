@@ -70,6 +70,9 @@ end
 % Create New Nodes and Sections
 N = length(connected);
 
+% Add Z1 to SECTION struct
+load('FlayLines.mat');
+
 NODE = struct('Map',connected);
 for i = 1:N
     % Find PCC Node
@@ -104,6 +107,9 @@ for i = 1:S
     SECTION(i).TO   = oNODE(index{2}).MapID;
     SECTION(i).Bus1 = [SECTION(i).FROM,'.1.2.3'];
     SECTION(i).Bus2 = [SECTION(i).TO,'.1.2.3'];
+    
+    % Z1
+    SECTION(i).Z1 = Lines(ismember({Lines.ID},SECTION(i).ID)).Z1;
 end
 
 %disp('end')
