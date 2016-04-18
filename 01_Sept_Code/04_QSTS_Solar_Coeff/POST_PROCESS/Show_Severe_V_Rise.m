@@ -69,9 +69,11 @@ end
 
 h1=plot(FDR_3PH(:,1),FDR_3PH(:,2),'b-','LineWidth',5);
 hold on
-h2=plot(FDR_3PH(:,1),FDR_3PH(:,4),'g-','LineWidth',1.5);
+h3=plot(FDR_3PH(:,1),FDR_3PH(:,3),'g-','LineWidth',2);
 hold on
-h3=plot(FDR_3PH(:,1),FDR_3PH(:,3),'r-','LineWidth',2);
+h2=plot(FDR_3PH(:,1),FDR_3PH(:,4),'r-','LineWidth',1.5);
+
+
 hold on
 X_POS = 0.2;
 Y1_POS = -2.5;
