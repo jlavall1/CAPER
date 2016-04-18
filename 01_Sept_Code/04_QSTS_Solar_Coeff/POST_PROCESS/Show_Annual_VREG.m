@@ -76,6 +76,31 @@ for DOY=1:1:364
     end
 end
 clear YEAR_LTC YEAR_LTCSTATUS_1 YEAR_LTCSTATUS_2 YEAR_LTCSTATUS_3 YEAR_LTCSTATUS_4 YEAR_LTCSTATUS_5
+%---------------------------------
+%Voltage Averaging Controller:
+n=n+1;
+addpath(strcat(main_dir,'\VOLT_AVG_1YR'));
+load YR_SIM_OLTC_FLAY_00    %YEAR_LTC(DOY).OP(:,3)
+RUN(n).LTC = YEAR_LTC;
+load YR_SIM_LTC_PT_V_1.mat
+load YR_SIM_LTC_PT_V_2.mat
+load YR_SIM_LTC_PT_V_3.mat
+load YR_SIM_LTC_PT_V_4.mat
+load YR_SIM_LTC_PT_V_5.mat
+for DOY=1:1:364
+    if DOY <= 60
+        RUN(n).V(DOY).PT=[YEAR_LTCSTATUS_1(DOY).WDG_PT];
+    elseif DOY > 60 && DOY <= 120
+        RUN(n).V(DOY).PT=[YEAR_LTCSTATUS_2(DOY).WDG_PT];
+    elseif DOY > 120 && DOY <= 200
+        RUN(n).V(DOY).PT=[YEAR_LTCSTATUS_3(DOY).WDG_PT];
+    elseif DOY > 200 && DOY <= 280
+        RUN(n).V(DOY).PT=[YEAR_LTCSTATUS_4(DOY).WDG_PT];
+    else
+        RUN(n).V(DOY).PT=[YEAR_LTCSTATUS_5(DOY).WDG_PT];
+    end
+end
+clear YEAR_LTC YEAR_LTCSTATUS_1 YEAR_LTCSTATUS_2 YEAR_LTCSTATUS_3 YEAR_LTCSTATUS_4 YEAR_LTCSTATUS_5
 
 
 
@@ -88,6 +113,8 @@ i = 1;
 RUN(1).S_LTC = zeros(2096640,2);
 RUN(2).S_LTC = zeros(2096640,2);
 RUN(3).S_LTC = zeros(2096640,2);
+RUN(4).S_LTC = zeros(2096640,2);
+
 for DOY=DAY_T:1:DAY_F
     for t=15:15:length(RUN(1).LTC(DAY_T).OP(:,3))
         
@@ -97,6 +124,8 @@ for DOY=DAY_T:1:DAY_F
         RUN(2).S_LTC(i,2) = RUN(2).V(DOY).PT(t,1);      %PT VOLTAGE
         RUN(3).S_LTC(i,1) = RUN(3).LTC(DOY).OP(t,3);    %TAP POS
         RUN(3).S_LTC(i,2) = RUN(3).V(DOY).PT(t,1);      %PT VOLTAGE
+        RUN(4).S_LTC(i,1) = RUN(4).LTC(DOY).OP(t,3);    %TAP POS
+        RUN(4).S_LTC(i,2) = RUN(4).V(DOY).PT(t,1);      %PT VOLTAGE
 
         i = i + 1;
         %Add more...
@@ -133,6 +162,8 @@ hold on
 plot(X2,RUN(2).S_LTC(1:index_end,2),'b-','LineWidth',2);
 hold on
 plot(X2,RUN(1).S_LTC(1:index_end,2),'c-','LineWidth',1);
+hold on
+plot(X2,RUN(4).S_LTC(1:index_end,2),'g-','LineWidth',1.5);
 %   Settings:
 axis([0 183 123 125]);
 xlabel('Day of Year (DOY)','FontSize',12,'FontWeight','bold');
@@ -148,8 +179,10 @@ hold on
 h2=plot(X2,RUN(2).S_LTC(index_end+1:index_end2,2),'b-','LineWidth',2);
 hold on
 h1=plot(X2,RUN(1).S_LTC(index_end+1:index_end2,2),'c-','LineWidth',1);
+hold on
+h4=plot(X2,RUN(4).S_LTC(index_end+1:index_end2,2),'g-','LineWidth',1.5);
 %   Settings:
-legend([h1 h2 h3],'OpenDSS Controller','Time Sequential Controller','Time Integrating Controller');
+legend([h1 h2 h3 h4],'OpenDSS Controller','Time Sequential Controller','Time Integrating Controller','Volt Averaging');
 grid on
 axis([183 364 123 125]);
 xlabel('Day of Year (DOY)','FontSize',12,'FontWeight','bold');
@@ -162,14 +195,16 @@ figure(fig);
 plot(X,(RUN(1).S_LTC(:,1)-RUN(2).S_LTC(:,1))/0.00625,'b-','LineWidth',5);
 hold on
 plot(X,(RUN(1).S_LTC(:,1)-RUN(3).S_LTC(:,1))/0.00625,'r-','LineWidth',2);
+hold on
+plot(X,(RUN(1).S_LTC(:,1)-RUN(4).S_LTC(:,1))/0.00625,'g-','LineWidth',2);
 
 %axis([183 364 123 125]);
 xlabel('Day of Year (DOY)','FontSize',12,'FontWeight','bold');
 ylabel('Tap Position Differential','FontSize',12,'FontWeight','bold');
 set(gca,'FontWeight','bold','FontSize',12);
 
-legend('(DSS Tap Pos.) - (TIME SEQUENTIAL Tap Pos.)','(DSS Tap Pos.) - (TIME INTEGRATING Tap Pos.)');
-set(gca,'YTick',[-2:1:2]);
+legend('(DSS Tap Pos.) - (TIME SEQUENTIAL Tap Pos.)','(DSS Tap Pos.) - (TIME INTEGRATING Tap Pos.)','(DSS Tap Pos.) - (VOLT AVERAGING Tap Pos.)','Location','SouthEast');
+set(gca,'YTick',[-2:1:3]);
 axis([0 364 -2 2])
 set(gca,'XTick',[0:30:364]);
 set(gca,'FontWeight','bold','FontSize',12);
@@ -189,6 +224,8 @@ hold on
 h2=plot(X3,RUN(2).S_LTC(index_srt:index_fin,2),'Color',[0.6 0.0 0.8],'LineWidth',2); %purp
 hold on
 h1=plot(X3,RUN(1).S_LTC(index_srt:index_fin,2),'Color',[0.2 0.8 0.2],'LineWidth',2);
+hold on
+h4=plot(X3,RUN(4).S_LTC(index_srt:index_fin,2),'Color',[0.8 0 0.2],'LineWidth',2); 
 
 %   Settings:
 %legend([h1 h2 h3],'OpenDSS Controller','Time Sequential Controller','Time Integrating Controller');
@@ -205,8 +242,10 @@ hold on
 h2=plot(X3,RUN(2).S_LTC(index_srt:index_fin,1),'Color',[0.6 0.0 0.8],'LineWidth',2); %purp
 hold on
 h1=plot(X3,RUN(1).S_LTC(index_srt:index_fin,1),'Color',[0.2 0.8 0.2],'LineWidth',2);
+hold on
+h4=plot(X3,RUN(4).S_LTC(index_srt:index_fin,1),'Color',[0.8 0 0.2],'LineWidth',2); 
 %   Settings:
-legend([h1 h2 h3],'OpenDSS Controller','Time Sequential Controller','Time Integrating Controller');
+legend([h1 h2 h3 h4],'OpenDSS Controller','Time Sequential Controller','Time Integrating Controller','Volt. Averaging Controller');
 set(gca,'YTick',[0.99375:0.00625:1.00625]);
 ylabel('OLTC Tap Position','FontSize',12,'FontWeight','bold');
 set(gca,'FontWeight','bold','FontSize',12);
