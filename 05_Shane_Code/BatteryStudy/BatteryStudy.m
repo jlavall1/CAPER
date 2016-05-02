@@ -64,16 +64,16 @@ Lines = struct('ID',DSSCircuit.Lines.AllNames);
 rmv = [];
 for i = 1:length(Lines)
     DSSCircuit.Lines.name = Lines(i).ID;
-    %if DSSCircuit.Lines.Phases==3
+    if DSSCircuit.Lines.Phases==3
         Lines(i).Bus1   = get(DSSCircuit.Lines,'Bus1');
         Lines(i).FROM   = regexp(Lines(i).Bus1,'^\w*(?=[.])','match'); Lines(i).FROM = Lines(i).FROM{1};
         Lines(i).Bus2   = get(DSSCircuit.Lines,'Bus2');
         Lines(i).TO     = regexp(Lines(i).Bus2,'^\w*(?=[.])','match'); Lines(i).TO = Lines(i).TO{1};
         Lines(i).Length = get(DSSCircuit.Lines,'Length');
-        Lines(i).Z1     = get(DSSCircuit.Lines,'R1')+1i*get(DSSCircuit.Lines,'X1');
-    %else
-    %    rmv = [rmv,i]; % Remove all non-3phase Lines
-    %end
+        Lines(i).Z1     = Lines(i).Length*(get(DSSCircuit.Lines,'R1')+1i*get(DSSCircuit.Lines,'X1'))/1000;
+    else
+        rmv = [rmv,i]; % Remove all non-3phase Lines
+    end
 end
 Lines(rmv) = [];
 
@@ -316,8 +316,12 @@ for i = 1:npcc
             DSSCircuit.SetActiveElement(['Line.',SPCC(k).ID]);
             powers = DSSCircuit.ActiveElement.Powers;
             PlossIndex = PlossIndex + real(SPCC(k).Z1)*abs(sum(powers([1 3 5])));
+            
+            %PlossIndex = PlossIndex + real(SPCC(k).Z1)*abs(sum(powers([1 3 5])))^2;
         end
-        Results(i).Sim1(j).PlossIndex = PlossIndex/kVBase(2)^2;
+        Results(i).Sim1(j).PlossIndex = PlossIndex/kVBase(2);
+        
+        %Results(i).Sim1(j).PlossIndex = PlossIndex/(1000*kVBase(2)^2);
         
 %         % Collect Data
 %         Results(i).Sim1 = struct('BusID',{Buses.ID});
@@ -446,10 +450,10 @@ plot(PlossIndex,PlossMax,'.k','MarkerSize',20)
 % Y = polyval(coeff,X);
 % plot(X,Y,'--k')
 
-axis([180 235 120 180])
+%axis([180 235 120 180])
 grid on;
 set(gca,'FontSize',10,'FontWeight','bold')
-xlabel(gca,'Power Loss Index [\SigmaP*Z_1]','FontSize',12,'FontWeight','bold')
+xlabel(gca,'Power Loss Estimate [\SigmaP*Z_1 / V_B]','FontSize',12,'FontWeight','bold')
 ylabel(gca,'Power Losses [kW]','FontSize',12,'FontWeight','bold')
 title('Locational Dependance of BESS','FontWeight','bold','FontSize',12);
     

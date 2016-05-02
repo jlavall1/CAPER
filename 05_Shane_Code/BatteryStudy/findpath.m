@@ -5,14 +5,14 @@ function [param,BusNames] = findpath(bus1,bus2,Buses,Lines,Weight)
 %  Lines.Length will be used to find the path. Optionally, findpath.m can
 %  use another edge weight defined by Weight.
 
-v = length(Buses); % Number of Buses
-e = length(Lines); % Number of Lines
+V = length(Buses); % Number of Buses
+E = length(Lines); % Number of Lines
 
 % Verify that bus1 and bus2 exist
 [~,~,ic] = unique([{Buses.ID},bus1,bus2],'stable');
 [check,index] = max(ic);
-if check>v
-    error('bus%d not recognized',index-v)
+if check>V
+    error('bus%d not recognized',index-V)
 end
 
 % Create Graph Matrix
@@ -22,14 +22,14 @@ TO   = regexp([Lines.Bus2],'(?<ID>\w+)([.][123]{1})+','names');
 [~,~,index1] = unique([{Buses.ID},{FROM.ID}],'stable');
 [~,~,index2] = unique([{Buses.ID},{TO.ID}],'stable');
 [check,index] = max([index1;index2]);
-if check>v
-    linERR = mod(index-1,e+v)+1-v;
-    busERR = floor((index-1)/(e+v))+1;
+if check>V
+    linERR = mod(index-1,E+V)+1-V;
+    busERR = floor((index-1)/(E+V))+1;
     error('Line %d bus%d not recognized',linERR,busERR)
 end
 
-i = [index1(v+1:end);index2(v+1:end)];
-j = [index2(v+1:end);index1(v+1:end)];
+i = [index1(V+1:end);index2(V+1:end)];
+j = [index2(V+1:end);index1(V+1:end)];
 v = [[Lines.Length]';[Lines.Length]'];
 G = sparse(i,j,v);
 

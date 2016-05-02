@@ -1,4 +1,4 @@
-function [f,A,rl,ru,lb,ub,xint] = BatteryMILPForm()
+function [H,f,A,rl,ru,lb,ub,xint] = BatteryMILPForm()
 
 global NODE SECTION PV BESS PARAM
 
@@ -22,7 +22,8 @@ t = length(PARAM.beta);
 
 % Define starting indicies
 a       = 0;
-c       = a+n;
+b       = a+n;
+c       = b+n*t;
 d       = c+n*t;
 E       = d+n*t;
 P       = E+n*(t+2);
@@ -31,21 +32,33 @@ r       = Pbar+s*t;
 
 % Objective Function
 f_a     = zeros(n,1);
-f_c     = zeros(n*t,1);
-f_d     = zeros(n*t,1);
+f_b     = zeros(n*t,1);
+f_c     = (1-BESS.etac)*ones(n*t,1);
+f_d     = (1-BESS.etad)*ones(n*t,1);
 f_E     = zeros(n*(t+2),1);
 f_P     = zeros((s+1)*t,1);
 %f_Pbar  = repmat(abs([SECTION.Z1])',t,1);
-f_Pbar  = repmat(abs([SECTION.Length])',t,1);
+%f_Pbar  = repmat(abs([SECTION.Length])',t,1);
+f_Pbar  = zeros(s*t,1);
 f_r     = zeros(s*t,1);
 
-f = [f_a;f_c;f_d;f_E;f_P;f_Pbar;f_r];
+f = [f_a;f_b;f_c;f_d;f_E;f_P;f_Pbar;f_r];
 
 xlen = length(f);
+
+% min( (dt*Zij1/Vb^2)P_ij^2 )
+iH = Pbar+(1:s*t);
+jH = Pbar+(1:s*t);
+vH = 2*PARAM.dt*repmat(real([SECTION.Z1])',t,1)/PARAM.kV^2;
+H = sparse(iH,jH,vH,xlen,xlen);
+
+%H = [];
+
 
 %% Constraints
 % Variable Bounds
 lb = [zeros(size(f_a));
+    zeros(size(f_b));
     zeros(size(f_c));
     zeros(size(f_d));
     BESS.Er*ones(size(f_E));
@@ -54,6 +67,7 @@ lb = [zeros(size(f_a));
     zeros(size(f_r))];
 
 ub = [ones(size(f_a));
+    ones(size(f_b));
     Inf(size(f_c));
     Inf(size(f_d));
     BESS.ER*ones(size(f_E));
@@ -62,6 +76,7 @@ ub = [ones(size(f_a));
     ones(size(f_r))];
 
 xint = [repmat('B',size(f_a')),...
+    repmat('B',size(f_b')),...
     repmat('C',size(f_c')),...
     repmat('C',size(f_d')),...
     repmat('C',size(f_E')),...
@@ -79,7 +94,8 @@ j2 = a+(1:n)';
 v2 = ones(n,1);
 A2 = sparse(i2,j2,v2,1,xlen);
 
-% (3) c_i(t) - a_i*PR <= 0,  all i in N, t in T
+% (3)  c_i(t) - a_i*PR <= 0,  all i in N, t in T
+% (3a) c_i(t) - b_i(t)*PR <= 0,  all i in N, t in T
 
 rl3 = -Inf(n*t,1);
 ru3 = zeros(n*t,1);
@@ -88,7 +104,15 @@ j3 = reshape([c+(1:n*t);a+reshape(repmat(1:n,t,1),[],1)'],[],1);
 v3 = repmat([1;-BESS.PR],n*t,1);
 A3 = sparse(i3,j3,v3,n*t,xlen);
 
-% (4) d_i(t) - a_i*PR <= 0,  all i in N, t in T
+rl3a = -Inf(n*t,1);
+ru3a = zeros(n*t,1);
+i3a = reshape(repmat(1:n*t,2,1),[],1);
+j3a = reshape([c+(1:n*t);b+(1:n*t)],[],1);
+v3a = repmat([1;-BESS.PR],n*t,1);
+A3a = sparse(i3a,j3a,v3a,n*t,xlen);
+
+% (4)  d_i(t) - a_i*PR <= 0,  all i in N, t in T
+% (4a) d_i(t) + b_i*PR <= PR,  all i in N, t in T
 
 rl4 = -Inf(n*t,1);
 ru4 = zeros(n*t,1);
@@ -96,6 +120,13 @@ i4 = reshape(repmat(1:n*t,2,1),[],1);
 j4 = reshape([d+(1:n*t);a+reshape(repmat(1:n,t,1),[],1)'],[],1);
 v4 = repmat([1;-BESS.PR],n*t,1);
 A4 = sparse(i4,j4,v4,n*t,xlen);
+
+rl4a = -Inf(n*t,1);
+ru4a = BESS.PR*ones(n*t,1);
+i4a = reshape(repmat(1:n*t,2,1),[],1);
+j4a = reshape([d+(1:n*t);b+(1:n*t)],[],1);
+v4a = repmat([1;BESS.PR],n*t,1);
+A4a = sparse(i4a,j4a,v4a,n*t,xlen);
 
 % (6) E_i(t+1) - E_i(t) - dt*eta_c*c_i(t) + dt*d_i(t)/eta_d = 0,  all i in N, t in T
 
@@ -190,9 +221,9 @@ A13 = sparse(i13,j13,v13,n,xlen);
 %A11 = []; rl11 = []; ru11 = [];
 
 
-A  = [A2; A3; A4;A6;A7;A8; A10; A11;A12;A13];
-rl = [r2;rl3;rl4;r6;r7;r8;rl10;rl11;r12;r13];
-ru = [r2;ru3;ru4;r6;r7;r8;ru10;ru11;r12;r13];
+A  = [A2; A3; A3a; A4; A4a;A6;A7;A8; A10; A11;A12;A13];
+rl = [r2;rl3;rl3a;rl4;rl4a;r6;r7;r8;rl10;rl11;r12;r13];
+ru = [r2;ru3;ru3a;ru4;ru4a;r6;r7;r8;ru10;ru11;r12;r13];
 
 
 

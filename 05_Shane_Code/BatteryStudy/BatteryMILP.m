@@ -1,7 +1,7 @@
 % Driving Script for Battery MILP
 clear
 clc
-close all
+%close all
 
 global NODE SECTION PV BESS PARAM
 
@@ -22,14 +22,24 @@ cmap = colormap(hsv);
 for i = 1:11
     DOY = (datenum(sprintf('%d/1/2014',i)):datenum(sprintf('%d/30/2014',i+1))-1) - datenum(start) + 1;
     AVG = sum([DATA(DOY).kW],2)/length(DOY);
-    plot(AVG,'Color',cmap(round(64*(i-1)/12)+1,:))
+    plot(0:1/60:24-1/60,AVG,'Color',cmap(round(64*(i-1)/12)+1,:),'LineWidth',2.5)
     hold on
 end
 % December
 AVG = 3*mean([DATA(datenum('12/1/2014')-datenum(start)+1:end).kW],2);
-plot(AVG,'Color',cmap(60,:))
+plot(0:1/60:24-1/60,AVG,'Color',cmap(60,:),'LineWidth',2.5)
 colormap hsv
-legend('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec')
+
+grid on;
+xlim([0,24])
+set(gca,'FontSize',10,'FontWeight','bold')
+set(gca,'XTick',0:4:24)
+xlabel(gca,'One Day [hrs]','FontSize',12,'FontWeight','bold')
+ylabel(gca,'Load [kW]','FontSize',12,'FontWeight','bold')
+title('Monthly Loadshapes','FontWeight','bold','FontSize',12);
+
+legend('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec',...
+    'Location','eastoutside')
 hold off
 
 % Summer Average (May-Aug)
@@ -47,10 +57,18 @@ WinAVG = mean(reshape(WinAVG,30,[]),1)'; % 30 min average
 
 % Plot Loadshapes
 figure;
-plot(SumAVG)
+plot(0:.5:24-.5,SumAVG,'-k','LineWidth',2.5)
 hold on
-plot(WinAVG)
+plot(0:.5:24-.5,WinAVG,'--k','LineWidth',2.5)
 legend('Summer','Winter')
+
+grid on;
+xlim([0,24])
+set(gca,'FontSize',10,'FontWeight','bold')
+set(gca,'XTick',0:4:24)
+xlabel(gca,'One Day [hrs]','FontSize',12,'FontWeight','bold')
+ylabel(gca,'Load [kW]','FontSize',12,'FontWeight','bold')
+title('Seasonal Average Loadshapes','FontWeight','bold','FontSize',12);
 
 clear DATA
 
@@ -58,7 +76,14 @@ clear DATA
 load('FlayPV.mat')
 PVShape = mean(reshape(DATA(106).PV1,30,[]),1)';
 figure;
-plot(PVShape)
+plot(0:.5:24-.5,PVShape,'-k','LineWidth',2.5)
+grid on;
+xlim([0,24])
+set(gca,'FontSize',10,'FontWeight','bold')
+set(gca,'XTick',0:4:24)
+xlabel(gca,'One Day [hrs]','FontSize',12,'FontWeight','bold')
+ylabel(gca,'Load [pu]','FontSize',12,'FontWeight','bold')
+title('High Penetratino PV Shape','FontWeight','bold','FontSize',12);
 
 % PV Specifications
 PV(1).Bus1 = '260007367';
@@ -102,6 +127,7 @@ PARAM.LoadTotal = sum([NODE.kW]);
 PARAM.beta = [SumAVG;WinAVG]/PARAM.LoadTotal;
 PARAM.gamma = PVShape;
 PARAM.dt = 0.5; % hours
+PARAM.kV = 12.47;
 
 PARAM.SubBus = 'FLAY_RET_16271201';
 
@@ -115,28 +141,36 @@ N = length(NODE);
 S = length(SECTION);
 MaxLoad = max([NODE.kW]);
 
-figure;
-% Substation
-index = ismember({NODE.ID},PARAM.SubBus);
-plot(NODE(index).XCoord,NODE(index).YCoord,'kh','MarkerSize',15,...
-    'MarkerFaceColor',[0,0.5,1],'LineStyle','none');
+fig = figure;
 hold on
 
 for i = 1:S
     index = [find(ismember({NODE.ID},SECTION(i).FROM)),find(ismember({NODE.ID},SECTION(i).TO))];
-    plot([NODE(index).XCoord],[NODE(index).YCoord],'-k')
+    plot([NODE(index).XCoord],[NODE(index).YCoord],'-k','LineWidth',2.5)
     hold on
 end
 
 for i = 1:N
     if NODE(i).kW>0
-        plot(NODE(i).XCoord,NODE(i).YCoord,'ko','MarkerSize',5*10^(NODE(i).kW/MaxLoad),...
+        h(3) = plot(NODE(i).XCoord,NODE(i).YCoord,'ko','MarkerSize',5*10^(NODE(i).kW/MaxLoad),...
             'MarkerFaceColor','w','LineStyle','none');
     end
 end
 
+% PV
+[~,~,ic] = unique([{NODE.ID},{PV.Bus1}],'stable');
+h(2) = plot([NODE(ic(end-1:end)).XCoord],[NODE(ic(end-1:end)).YCoord],'-y*',...
+    'LineWidth',2,'MarkerSize',10,'MarkerEdgeColor',[1 0.55 0],'LineStyle','none');
 
+% Substation
+index = ismember({NODE.ID},PARAM.SubBus);
+h(1) = plot(NODE(index).XCoord,NODE(index).YCoord,'kh','MarkerSize',15,...
+    'MarkerFaceColor',[0,0.5,1],'LineStyle','none');
 
+set(gca,'YTick',[])
+set(gca,'XTick',[])
+
+legend(h,'Substation','PV','Loads')
 
 
 
@@ -147,13 +181,15 @@ end
 toc
 disp('Formulating Problem...')
 %% Formulate Problem
-[f,A,rl,ru,lb,ub,xint] = BatteryMILPForm();
+[H,f,A,rl,ru,lb,ub,xint] = BatteryMILPForm();
+%load('BaseCase.mat');
 
 toc
 disp('Solving LP...')
 %% Solve Problem
 
-[X,fval,exitflag,info] = opti_cplex([],f,A,rl,ru,lb,ub,xint);
+[X,fval,exitflag,info] = opti_cplex(H,f,A,rl,ru,lb,ub,xint);
+%load('BaseCase.mat')
 disp(info)
 disp(fval)
 
@@ -171,14 +207,15 @@ if exitflag==1
     
     % Define starting indicies
     a       = 0;
-    c       = a+n;
+    b       = a+n;
+    c       = b+n*t;
     d       = c+n*t;
     E       = d+n*t;
     P       = E+n*(t+2);
     Pbar    = P+(s+1)*t;
     r       = Pbar+s*t;
     
-    bat = find(logical(X(a+1:a+n)));
+    bat = find(X(a+1:a+n)>0.5);
     for i = 1:n
         NODE(i).a = X(a+i);
         NODE(i).c = X(c+t*(i-1)+(1:t));
@@ -198,6 +235,21 @@ if exitflag==1
     disp('Plotting Results...')
     %% Plot Results
     %PlotResults
+    plot([NODE(bat).XCoord],[NODE(bat).YCoord],'-ko','MarkerSize',10,'MarkerFaceColor','c','LineStyle','none');
+    
+    figure;
+    plot(0:.5:24,NODE(bat).E(1:t/2+1),'-k','LineWidth',2.5)
+    hold on
+    plot(0:.5:24,NODE(bat).E(t/2+2:end),'--k','LineWidth',2.5)
+    grid on;
+    xlim([0,24])
+    set(gca,'FontSize',10,'FontWeight','bold')
+    set(gca,'XTick',0:4:24)
+    xlabel(gca,'One Day [hrs]','FontSize',12,'FontWeight','bold')
+    ylabel(gca,'BESS State of Charge [kWh]','FontSize',12,'FontWeight','bold')
+    title('BESS State of Charge','FontWeight','bold','FontSize',12);
+    
+    legend('Summer','Winter')
     
 end    
 
