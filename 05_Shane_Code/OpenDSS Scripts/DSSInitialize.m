@@ -17,7 +17,8 @@ filename = 0;
 %filename = 'Master.dss'; filelocation = [rootlocation,'Commonwealth_ret_01311205.sxst_DSS\'];
 %filename = 'Master.dss'; filelocation = [rootlocation,'Test\'];
 %filename = 'Master.dss'; filelocation = [rootlocation,'Mocksville_Main_2401.sxst_DSS\'];
-filename = 'Master.dss'; filelocation = [rootlocation,'Flay_ret_16271201.sxst_DSS\'];
+%filename = 'Master.dss'; filelocation = [rootlocation,'Flay_ret_16271201.sxst_DSS\'];
+filename = 'Master.dss'; filelocation = 'C:\Users\SJKIMBL\Documents\MATLAB\CAPER\03_OpenDSS_Circuits\Mocksville_Main_Circuit_Opendss\';
 while ~filename
     [filename,filelocation] = uigetfile({'*.*','All Files'},'Select DSS Master File',...
         rootlocation);
