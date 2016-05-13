@@ -16,21 +16,59 @@ start = DATA(1).Date; % Date at which data starts
 [nstp,~] = size(DATA(1).kW); % Number of Data points per row in struct
 step = 24*60*60*(datenum(DATA(2).Date)-datenum(start))/nstp; % [s] - Resolution of data
 
-% Dates to Simulate
-%  2/3   - variable solar day, winter loadshape, light loading conditions
-date1 = '2/3/2014';
-DATA1 = DATA(datenum(date2)-datenum(start)+1);
-%  10/15 - variable solar day, winter loadshape, light loading conditions
-date3 = '10/15/2014';
-DATA3 = DATA(datenum(date2)-datenum(start)+1);
+% Average by Month
+figure;
+cmap = colormap(hsv);
+for i = 1:11
+    DOY = (datenum(sprintf('%d/1/2014',i)):datenum(sprintf('%d/30/2014',i+1))-1) - datenum(start) + 1;
+    AVG = sum([DATA(DOY).kW],2)/length(DOY);
+    plot(0:1/60:24-1/60,AVG,'Color',cmap(round(64*(i-1)/12)+1,:),'LineWidth',2.5)
+    hold on
+end
+% December
+AVG = 3*mean([DATA(datenum('12/1/2014')-datenum(start)+1:end).kW],2);
+plot(0:1/60:24-1/60,AVG,'Color',cmap(60,:),'LineWidth',2.5)
+colormap hsv
 
-%  5/24  - clear sky solar day, summer loadshape, light loading conditions
-date2 = '5/24/2014';
-DATA2 = DATA(datenum(date2)-datenum(start)+1);
+grid on;
+xlim([0,24])
+set(gca,'FontSize',10,'FontWeight','bold')
+set(gca,'XTick',0:4:24)
+xlabel(gca,'One Day [hrs]','FontSize',12,'FontWeight','bold')
+ylabel(gca,'Load [kW]','FontSize',12,'FontWeight','bold')
+title('Monthly Loadshapes','FontWeight','bold','FontSize',12);
 
-%  11/23 - low irradiance solar day, winter loadshape, heavy loading conditions
-date4 = '11/23/2014';
-DATA4 = DATA(datenum(date2)-datenum(start)+1);
+legend('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec',...
+    'Location','eastoutside')
+hold off
+
+% Summer Average (May-Aug)
+SumDOY = (datenum('5/1/2014'):datenum('8/31/2014')) - datenum(start) + 1;
+s = length(SumDOY);
+SumAVG = sum([DATA(SumDOY).kW],2)/s;
+SumAVG = mean(reshape(SumAVG,30,[]),1)'; % 15 min average
+
+% Winter Average (Jan-Mar & Oct-Dec)
+remove = (datenum('4/1/2014'):datenum('9/30/2014')) - datenum(start) + 1;
+WinDOY = unique([remove,1:364],'stable');
+WinDOY = WinDOY(length(remove)+1:end);
+WinAVG = sum([DATA(WinDOY).kW],2)/length(WinDOY);
+WinAVG = mean(reshape(WinAVG,30,[]),1)'; % 30 min average
+
+% Plot Loadshapes
+figure;
+plot(0:.5:24-.5,SumAVG,'-k','LineWidth',2.5)
+hold on
+plot(0:.5:24-.5,WinAVG,'--k','LineWidth',2.5)
+legend('Summer','Winter')
+
+grid on;
+xlim([0,24])
+set(gca,'FontSize',10,'FontWeight','bold')
+set(gca,'XTick',0:4:24)
+xlabel(gca,'One Day [hrs]','FontSize',12,'FontWeight','bold')
+ylabel(gca,'Load [kW]','FontSize',12,'FontWeight','bold')
+title('Seasonal Average Loadshapes','FontWeight','bold','FontSize',12);
 
 clear DATA
 

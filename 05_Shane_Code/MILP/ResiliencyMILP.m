@@ -7,8 +7,9 @@ disp('Reading in Circuit Data...')
 %% Read in Circuit Data
 %[NODE,SECTION,DER,PARAM] = DSSRead(filename);
 %[NODE,SECTION,DER,PARAM] = sxstRead_old2; %(fullfilename);
-global NODE SECTION LOAD DER PARAM DSS
-[NODE,SECTION,LOAD,DER,PARAM,DSS] = sxstRead;
+global NODE SECTION LOAD DER PARAM % DSS
+%[NODE,SECTION,LOAD,DER,PARAM,DSS] = sxstRead;
+load('IEEE69Bus.mat')
 
 toc
 disp('Pre-Processing Data...')
@@ -32,7 +33,10 @@ MILPPreProcessing();
 % PARAM.SO = {'258896319'}; % Voltage Violation
 
 %PARAM.SO =  {'699603854'}; % Current Violation
-PARAM.SO =  {'699603854','264256760'}; % Resolution
+%PARAM.SO =  {'699603854','264256760'}; % Resolution
+
+% IEEE 69 Bus System
+%PARAM.SO =  {'SubBreaker'};
 
 
 toc
@@ -45,10 +49,13 @@ disp('Formulating Problem...')
 toc
 disp('Solving LP...')
 %% Solve Problem
+% Find bfs
+
+
 %[X,fval,exitflag,output] = intlinprog(f,intcon,Aineq,bineq,Aeq,beq,lb,ub);
 %Opt = opti('f',f,'ineq',Aineq,full(bineq),'eq',Aeq,full(beq),'bounds',lb,ub,'xtype',intcon);
 %[X,fval,exitflag,info] = solve(Opt);
-[X,fval,exitflag,info] = opti_cplex([],f,A,rl,ru,lb,ub,xint);
+[X,fval,exitflag,info] = opti_cplex([],f,A,rl,ru,lb,ub,xint); %,[],[],x0);
 %[X,fval.exitflag,info] = opti-cplex([],f,A,rl,ru,lb,ub,xint);
 %load('BILP.mat');
 disp(info)
