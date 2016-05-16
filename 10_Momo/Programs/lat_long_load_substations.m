@@ -20,6 +20,7 @@ for i = 1:length(substation_types)
         dist(j).LAT = num(i-1,4);
         dist(j).LONG = num(i-1,5);
         dist(j).NAME = raw{i,1};
+        dist(j).CITY = raw{i,5};
         j = j + 1;
     end
 end
