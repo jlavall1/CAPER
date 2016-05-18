@@ -38,6 +38,14 @@ for i = 1:length(Open)
     ho = plot([NODE(index).XCoord],[NODE(index).YCoord],'-r','LineWidth',2);
 end
 
+% Faulted Sections
+[~,~,ic] = unique([{SECTION.ID},PARAM.SO],'stable');
+
+for i = S+1:length(ic)
+    index = [find(ismember({NODE.ID},SECTION(ic(i)).FROM)),find(ismember({NODE.ID},SECTION(ic(i)).TO))];
+    hf = plot(mean([NODE(index).XCoord]),mean([NODE(index).YCoord]),'xr','MarkerSize',20);
+end
+
 %legend([hs,hl,ho],'Source','Load','Normally Open Section')
 legend(h(2:end),MG)
 %legend([hs,hl,ho,h],'Source','Load','Normally Open Section',MG)

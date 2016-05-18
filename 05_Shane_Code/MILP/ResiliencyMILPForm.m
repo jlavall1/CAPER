@@ -54,7 +54,7 @@ d       = c+D*LP;
 f_a     = zeros(D*N,1);
 f_alpha = -repmat([[LOAD.w]'.*[LOAD.p]';zeros(D,1)],D,1);
 f_b     = zeros(D*S,1);
-f_bbar  = ones(S,1);
+f_bbar  = 10*ones(S,1);
 f_beta1 = zeros(D*S,1);
 f_beta2 = zeros(D*S,1);
 f_c     = zeros(D*LP,1);
@@ -229,18 +229,18 @@ i17 = [];
 j17 = [];
 v17 = [];
 for i = 1:LP
-    lp = length(PARAM.Loop(i).NODE);
+    lps = length(PARAM.Loop(i).NODE);
     [~,~,ic] = unique([{NODE.ID},PARAM.Loop(i).NODE],'stable');
-    i17 = [i17;reshape(repmat(j+1:j+D*lp,2,1),[],1)];
-    j17 = [j17;reshape([a+reshape(repmat(ic(N+1:end),1,D)+N*repmat(0:D-1,lp,1),1,[]);...
-               c+i+reshape(LP*repmat(0:D-1,lp,1),1,[])],[],1)];
-    v17 = [v17;repmat([1;-1],D*lp,1)];
+    i17 = [i17;reshape(repmat(j+1:j+D*lps,2,1),[],1)];
+    j17 = [j17;reshape([a+reshape(repmat(ic(N+1:end),1,D)+N*repmat(0:D-1,lps,1),1,[]);...
+               c+i+reshape(LP*repmat(0:D-1,lps,1),1,[])],[],1)];
+    v17 = [v17;repmat([1;-1],D*lps,1)];
     
-    j = j+D*lp;
+    j = j+D*lps;
     
-    i17 = [i17;reshape(repmat(j+1:j+D,lp+1,1),[],1)];
-    j17 = [j17;reshape([c+i+LP*(0:D-1);repmat(ic(N+1:end),1,D)+N*repmat(0:D-1,lp,1)],[],1)];
-    v17 = [v17;repmat([1;-ones(lp,1)],D,1)];
+    i17 = [i17;reshape(repmat(j+1:j+D,lps+1,1),[],1)];
+    j17 = [j17;reshape([c+i+LP*(0:D-1);repmat(ic(N+1:end),1,D)+N*repmat(0:D-1,lps,1)],[],1)];
+    v17 = [v17;repmat([1;-ones(lps,1)],D,1)];
     
     j = j+D;
 end
@@ -253,18 +253,56 @@ ru17 = zeros(j,1);
 % (18) (1/2)*sum(  sum( beta1_ijg ) ) + sum(  sum( beta2_ijg ) ) - sum( c_cg ) = N_c - 1  all c in C
 %          (i,j)<c g<G                (i,j)<c g<G                  g<G
 
-r18 = [PARAM.Loop.Num]'-ones(LP,1);
+% r18 = [PARAM.Loop.Num]'-ones(LP,1);
+% i18 = [];
+% j18 = [];
+% v18 = [];
+% for i = 1:LP
+%     lp = length(PARAM.Loop(i).SECTION);
+%     [~,~,ic] = unique([{SECTION.ID},PARAM.Loop(i).SECTION],'stable');
+%     i18 = [i18;i*ones(2*D*lp+D,1)];
+%     j18 = [j18;beta1+reshape(repmat(ic(S+1:end),1,D)+S*repmat(0:D-1,lp,1),[],1);...
+%                beta2+reshape(repmat(ic(S+1:end),1,D)+S*repmat(0:D-1,lp,1),[],1);...
+%                c+i+LP*(0:D-1)'];
+%     v18 = [v18;(1/2)*ones(D*lp,1);ones(D*lp,1);-ones(D,1)];
+% end
+% A18 = sparse(i18,j18,v18,LP,xlen);
+
+% -RSC-(18)----------------------------------------------------------------
+% (18) sum( sum( a_ig ) ) - sum(  sum( b_ijg ) ) - sum( c_cg ) = 0  all c in C
+%      i<c  g<G           (i,j)<c g<G              g<G
+
+% r18 = zeros(LP,1);
+% i18 = [];
+% j18 = [];
+% v18 = [];
+% for i = 1:LP
+%     lpn = length(PARAM.Loop(i).NODE);
+%     lps = length(PARAM.Loop(i).SECTION);
+%     [~,~,icn] = unique([{NODE.ID},PARAM.Loop(i).NODE],'stable');
+%     [~,~,ics] = unique([{SECTION.ID},PARAM.Loop(i).SECTION],'stable');
+%     i18 = [i18;i*ones(D*(lpn+lps+1),1)];
+%     j18 = [j18;a+reshape(repmat(icn(N+1:end),1,D)+N*repmat(0:D-1,lpn,1),[],1);...
+%                b+reshape(repmat(ics(S+1:end),1,D)+S*repmat(0:D-1,lps,1),[],1);...
+%                c+i+LP*(0:D-1)'];
+%     v18 = [v18;ones(D*lpn,1);-ones(D*lps,1);-ones(D,1)];
+% end
+% A18 = sparse(i18,j18,v18,LP,xlen);
+
+% -RSC-(18)----------------------------------------------------------------
+% (18)   sum(  sum( b_ijg ) ) <= |C|-1  all c in C
+%      (i,j)<c g<G
+
+rl18 = zeros(LP,1);
+ru18 = [PARAM.Loop.Num]'-1;
 i18 = [];
 j18 = [];
 v18 = [];
 for i = 1:LP
-    lp = length(PARAM.Loop(i).SECTION);
     [~,~,ic] = unique([{SECTION.ID},PARAM.Loop(i).SECTION],'stable');
-    i18 = [i18;i*ones(2*D*lp+D,1)];
-    j18 = [j18;beta1+reshape(repmat(ic(S+1:end),1,D)+S*repmat(0:D-1,lp,1),[],1);...
-               beta2+reshape(repmat(ic(S+1:end),1,D)+S*repmat(0:D-1,lp,1),[],1);...
-               c+i+LP*(0:D-1)'];
-    v18 = [v18;(1/2)*ones(D*lp,1);ones(D*lp,1);-ones(D,1)];
+    i18 = [i18;i*ones(D*PARAM.Loop(i).Num,1)];
+    j18 = [j18;b+reshape(repmat(ic(S+1:end),1,D)+S*repmat(0:D-1,PARAM.Loop(i).Num,1),[],1)];
+    v18 = [v18;ones(D*PARAM.Loop(i).Num,1)];
 end
 A18 = sparse(i18,j18,v18,LP,xlen);
 
@@ -293,10 +331,10 @@ A2 = []; r2 = [];
 %A14 = []; r14 = [];
 %A15 = []; r15 = [];
 %A16 = []; r16 = [];
-%A17 = []; rl17 = []; ru17 = [];
+A17 = []; rl17 = []; ru17 = [];
 %A18 = []; r18 = [];
 %A19 = []; r19 = [];
 
 A  = [A1; A2; A3; A4; A6; A8; A10; A11; A12; A13; A14; A15; A16; A17; A18; A19];
-rl = [r1; r2; r3; r4;rl6;rl8;rl10;rl11;rl12;rl13;rl14; r15; r16;rl17; r18; r19];
-ru = [r1; r2; r3; r4;ru6;ru8;ru10;ru11;ru12;ru13;ru14; r15; r16;ru17; r18; r19];
+rl = [r1; r2; r3; r4;rl6;rl8;rl10;rl11;rl12;rl13;rl14; r15; r16;rl17;rl18; r19];
+ru = [r1; r2; r3; r4;ru6;ru8;ru10;ru11;ru12;ru13;ru14; r15; r16;ru17;ru18; r19];
