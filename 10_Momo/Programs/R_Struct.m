@@ -34,8 +34,4 @@ for i = 1:length(dist)
         TOTSUB(j).NUM = k;
     end
 end
-filename = 'Matrix_for_R.xlsx';
-i = 1;
 
-for i = 1:
-    xlswrite(filename,
