@@ -17,7 +17,7 @@ for i = 1:r
             if ~(strcmpi(raw2(i,48),'Cancelled'))
            % if strncmpi(raw2(i,50), 'Car',3)
                 %if ~(num2(i-1,25) == 0) && ~(num2(i-1,24) == 0)
-                        conn(j).CITY = raw2(i,16);
+                        conn(j).COUNTY = raw2(i,37);
                         conn(j).LAT = num2(i-1,25);
                         conn(j).LONG = num2(i-1,24);
                         % check to see if we have a non zero value in
