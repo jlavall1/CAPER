@@ -1,0 +1,62 @@
+Dr. Randy Collins - What Does the Power Industry Need from University?
+- lower credit hours due to 4 year constraint
+- balanced between fundamental and specialized studies
+
+Russell Young - Outlook for the Electric Power Industry
+- triple investment in future transmission/distribution
+- factors contributing to growth: technology, sustainability goals, economics and financing
+- duck curve: overgeneration risk
+
+Nelson Peeler - Needs of Power Industry Now / Future
+- Current:
+	- EE graduates w/ good fundamentals
+	- infrastructure / new technology design
+	- system view
+- Future (10y - 20y):
+	- current, esp strong fundamentals
+	- analytics: frame problems -> develop solutions
+	- communication
+- Characteristics:
+	- power system fundamentals
+	- tech. savy
+	- project management / communication / experience in broad environment/team
+	- demonstration of work ethic
+	- ability/desire to work with others
+- Role of University
+	- strong power system fundamentals: classes, labs, research, forums
+	- incorporating human factors - successful human operation
+	- require team projects / opportunity for presentation
+	- promote coops/interns
+	- collab w/industry and partnership
+
+Rob Manning - Packing the Innovation Pipeline
+- industry looks toward universities to pack the pipeline
+- changing the dynamics of managing the business (i.e. controls within homes)
+- understand the fundamentals
+	- distributed intelligence / algorythms / digital solutions
+- unrestricted ideas - think about whats impossible
+	- "we need someone that knows nothing about pipeline engineering"
+- unrestricted access to funding
+	- find a way to do things that matter - don't waste funding; collaborative research
+- unbridal passion
+	- universities break people before they leave - people need passion
+
+Kaitlyn Haschke - Better Prep for Power
+- strong presence at job fairs
+- fundamentals...lol
+- more sponsors for research
+- increase interest in power
+
+Bill Turner - Preparing the Workforce of the Future
+- general expectations: fundamentals, computer skills, cyber security knowledge, decision making, interpersonal, social media
+- business, calculus, ethics, hobbies, motivational fit, work history
+
+Kevin Bevins - Unlimited EEs in Power
+- why do we bury copper wire
+- question everything / get to root cause / experiment / solve big problems
+- competence, character (initiative, diligence, flexibility), chemistry (get along, teamwork, respect, persuasiveness), communications(listening, writing, speaking, pwrpnt), computer (microsoft, networking, database, code, control theory, cyber security), cost, connection, compliance
+- FE / PE
+
+Michael Adamson - Better Prep for Power
+- substation components, protection systems, DC schematics
+- troubleshooting, networking, database

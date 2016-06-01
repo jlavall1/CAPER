@@ -1,0 +1,64 @@
+! This file is to declare each individual feeder Switch Voltage Regulator at the head of each circuit.
+!=============================================================================================================================================
+! Feeder #2401:
+New Transformer.MOCKS_2401 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[MOCKSVILLE_MN_03552401.1.2.3 MOCKSVILLE_MN_03552401_REG.1.2.3] 
+~ kvas=[40000.0 40000.0]
+~ kVs=[23.90   23.90]
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes
+New RegControl.MOCKS_2401 Transformer=MOCKS_2401 Winding=2 R= 0  X= 0 
+~ Vreg= 124 
+~ Band= 1 
+~ PTratio= 115  
+~ CTPrim= 100 
+~ Delay = 45
+~ PTphase=3
+!=============================================================================================================================================
+! Feeder #2402:
+New Transformer.MOCKS_2402 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[MOCKSVILLE_MN_03552402.1.2.3 MOCKSVILLE_MN_03552402_REG.1.2.3] 
+~ kvas=[40000.0 40000.0]
+~ kVs=[23.90   23.90]
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes
+
+New RegControl.MOCKS_2402 Transformer=MOCKS_2402 Winding=2 R= 0  X= 0 
+~ Vreg= 124 
+~ Band= 1 
+~ PTratio= 115  
+~ CTPrim= 100 
+~ Delay = 45
+~ PTphase=3
+!=============================================================================================================================================
+! Feeder #2403:
+New Transformer.MOCKS_2403 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[MOCKSVILLE_MN_03552403.1.2.3 MOCKSVILLE_MN_03552403_REG.1.2.3] 
+~ kvas=[40000.0 40000.0]
+~ kVs=[23.90   23.90]
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes
+
+New RegControl.MOCKS_2403 Transformer=MOCKS_2403 Winding=2 R= 0  X= 0 
+~ Vreg= 124 
+~ Band= 1 
+~ PTratio= 115  
+~ CTPrim= 100 
+~ Delay = 45
+~ PTphase=2
+!=============================================================================================================================================
+! Feeder #2404:
+New Transformer.MOCKS_2404 Phases=3 Windings=2 XHL=0.1 %LoadLoss=0.001 Buses=[MOCKSVILLE_MN_03552404.1.2.3 MOCKSVILLE_MN_03552404_REG.1.2.3] 
+~ kvas=[40000.0 40000.0]
+~ kVs=[23.90   23.90]
+~ mintap=0.9
+~ maxtap=1.1
+~ sub=yes
+
+New RegControl.MOCKS_2404 Transformer=MOCKS_2404 Winding=2 R= 0  X= 0 
+~ Vreg= 124 
+~ Band= 1 
+~ PTratio= 115  
+~ CTPrim= 100 
+~ Delay = 45
+~ PTphase=3
