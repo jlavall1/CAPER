@@ -1,6 +1,6 @@
-Run_code = menu('user choice','construct','show PV and substations','CAPER substations','show bell service area');
+Run_code = menu('user choice','construct','show PV and substations','CAPER substations','show bell service area','Matrix for R');
 while Run_code < 1
-    Run_code = menu('user choice','construct','show PV and substations','CAPER substations','show bell service area');
+    Run_code = menu('user choice','construct','show PV and substations','CAPER substations','show bell service area','Matrix for R');
 end
 
 if Run_code == 1
@@ -14,4 +14,6 @@ elseif Run_code == 3
     assigned_substations
 elseif Run_code == 4
     bellhaven_only
+elseif Run_code == 5
+    R_Struct
 end

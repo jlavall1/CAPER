@@ -2,7 +2,7 @@
 % lat_long_load_substation matches
 
 % read in lat_long_data.xls file
-[num2,~,raw2] = xlsread('Lat_Long_data.xls','Lat_Long_data');
+[num2,~,raw2] = xlsread('Lat_Long_data_allcounties.xls','Lat_Long_data');
 % incrementing variable
 i = 1;
 j = 1;
