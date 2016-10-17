@@ -130,7 +130,7 @@ DSSText.command = 'AllocateLoad';
 %DSSText.command = 'Dump AllocationFactors';
 DSSText.command = 'Enable Capacitor.*';
  
-if load_LVL < 3
+if load_LVL < 3 
     DSSText.command = sprintf('solve loadmult=%s',num2str(ratio));
 elseif load_LVL == 3
     DSSText.command = 'Solve mode=faultstudy';
