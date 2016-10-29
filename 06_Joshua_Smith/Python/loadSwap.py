@@ -1,6 +1,6 @@
-originBus = [306067, 306077, 306076]
-destinationBus = [306073, 306073, 306000]
-loadTransfer = [75, 45, 101]
+originBus = [101,102,103]
+destinationBus = [201,202,203]
+loadTransfer = [75, 45, 10]
 
 buses = originBus[:]
 for i in destinationBus:
