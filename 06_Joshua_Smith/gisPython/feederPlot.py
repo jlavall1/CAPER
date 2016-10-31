@@ -18,17 +18,18 @@ import arcpy
 def parseCoordinatesCSV():
     nodes = {}
 
-    fileLoc  = 'circuitCoordinates.csv'
+    fileLoc = 'bellhaven.csv'
     f = open(fileLoc, 'rb')
     reader = csv.reader(f)  # csv object
 
     next(reader, None)  # skip header
-    for row in reader:
+    for index, row in enumerate(reader):
         nodes[row[0]] = {}
         nodes[row[0]]['cymeX'] = row[1]
         nodes[row[0]]['cymeY'] = row[2]
         nodes[row[0]]['lat'] = row[3]
         nodes[row[0]]['long'] = row[4]
+        print index
 
     f.close()
 
@@ -41,34 +42,35 @@ def parseCoordinatesCSV():
 #   needs work  :
 def parseLines():
     lines = {}
-    fileLoc = ['Mocksville_Main_Circuit_Opendss/MOCKS_01/Elements/Lines.dss',
-               'Mocksville_Main_Circuit_Opendss/MOCKS_02/Elements/Lines.dss',
-               'Mocksville_Main_Circuit_Opendss/MOCKS_03/Elements/Lines.dss',
-               'Mocksville_Main_Circuit_Opendss/MOCKS_04/Elements/Lines.dss']
-    for path in fileLoc:
-        f = open(path, 'rb')
-        print path
+    path = 'bellhaven.dss'
+    #    fileLoc = ['Mocksville_Main_Circuit_Opendss/MOCKS_01/Elements/Lines.dss',
+    #               'Mocksville_Main_Circuit_Opendss/MOCKS_02/Elements/Lines.dss',
+    #               'Mocksville_Main_Circuit_Opendss/MOCKS_03/Elements/Lines.dss',
+    #               'Mocksville_Main_Circuit_Opendss/MOCKS_04/Elements/Lines.dss']
+    #  for path in fileLoc:
+    f = open(path, 'rb')
+    print path
 
-        reader = csv.reader(f)  # csv object
+    reader = csv.reader(f)  # csv object
 
-        # compile improves efficiency of loop
-        newLine = re.compile(r'New Line\.(\d+)', re.I|re.M)
-        b1 = re.compile(r'Bus1\=(\d+)', re.I|re.M)
-        b2 = re.compile(r'Bus2\=(\d+)', re.I|re.M)
+    # compile improves efficiency of loop
+    newLine = re.compile(r'New Line\.(\d+)', re.I|re.M)
+    b1 = re.compile(r'Bus1\=(\d+)', re.I|re.M)
+    b2 = re.compile(r'Bus2\=(\d+)', re.I|re.M)
 
-        for index, row in enumerate(reader):
-            lineID = re.search(newLine, row[0], flags=0)
-            bus1 = re.search(b1, row[0], flags=0)
-            bus2 = re.search(b2, row[0], flags=0)
-            if (newLine is not None and bus1 is not None and bus2 is not None):
-                lineID = lineID.group(1)
-                lines[lineID] = {}
-                lines[lineID]['bus1'] = bus1.group(1)
-                lines[lineID]['bus2'] = bus2.group(1)
-            else:
-                print '*****Check around line %d for an entry error*****' % index
-        print
-        f.close()
+    for index, row in enumerate(reader):
+        lineID = re.search(newLine, row[0], flags=0)
+        bus1 = re.search(b1, row[0], flags=0)
+        bus2 = re.search(b2, row[0], flags=0)
+        if (newLine is not None and bus1 is not None and bus2 is not None):
+            lineID = lineID.group(1)
+            lines[lineID] = {}
+            lines[lineID]['bus1'] = bus1.group(1)
+            lines[lineID]['bus2'] = bus2.group(1)
+        else:
+            print '*****Check around line %d for an entry error*****' % index
+    print
+    f.close()
 
     return lines
 
@@ -76,20 +78,40 @@ def parseLines():
 #   description :
 #   parameters  :
 #   return      :
-#   needs work  : https://www.youtube.com/watch?v=UtPKjYOv2mg
-def createLineFeatureClass():
-    outworkspace = arcpy.en.workspace # geodb container
-    arcpy.CreateFeatureclass_management(outworkspace, "TestLines","POLYLINE")
-    arcpy.AddField_management("TestLines","LineID","SHORT")
-    arcpy.AddField_management("TestLines","Name","TEXT","","", 16)
-    list_coords =
+#   needs work  :
+def createLineFeatureClass(coords, lines):
+    point = arcpy.Point()
     array = arcpy.Array()
-    point_obj = arcpy.Point()
-    for coords in list)coords:
-        point_obj.X = coords[0]
-        point_obj.Y = coords[1]
-        array.add(point_obj)
-    line_obj = arcpy.Polyline(array)
-    line_obj.length
-    edit_lines = arcpy.da.InsertCursor("TestLines",['Shape@','LineID','Name'])
-    edit_lines.fields
+
+    featureList = []
+    #  arcpy.CreateFeatureclass_management(r"C:\Users\jms6\Documents\GitHub\CAPER\06_Joshua_Smith\gisPython\GIS", 'bellhavenLines.shp', 'POLYLINE')
+    cursor = arcpy.InsertCursor(r"C:\Users\jms6\Documents\GitHub\CAPER\06_Joshua_Smith\gisPython\GIS\bellhavenLines.shp")
+
+    feat = cursor.newRow()
+
+    for newLine in lines:
+        # set x and y for start and end points
+        point.X = coords[lines[newLine]['bus1']]['long']
+        point.Y = coords[lines[newLine]['bus1']]['lat']
+        array.add(point)
+        point.X = coords[lines[newLine]['bus2']]['long']
+        point.Y = coords[lines[newLine]['bus2']]['lat']
+        array.add(point)
+        # create a polyline object based on the array of points
+        polyline = arcpy.Polyline(array)
+        # clear the array fro future use
+        array.removeAll()
+        # append to the list of Polyline objects
+        featureList.append(polyline)
+        # insert the feature
+        feat.shape = polyline
+        cursor.insertRow(feat)
+    del feat
+    del cursor
+    return
+
+coords = parseCoordinatesCSV()
+lines = parseLines()
+createLineFeatureClass(coords, lines)
+
+print 'successful build'

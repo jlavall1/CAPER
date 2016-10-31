@@ -1,0 +1,722 @@
+New Line.263361335 Bus1=263361332.2     Bus2=260651139.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=83.97  units=m enable=yes
+New Line.258282251 Phases= 3 Bus1=258282246.1.2.3 Bus2=258282253.1.2.3 Length=40.25  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.260650887 Bus1=260650888.2     Bus2=260650889.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=412.50 units=m enable=yes
+New Line.288589186 Phases= 3 Bus1=258281769.1.2.3 Bus2=258281784.1.2.3 Length=18.35  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281187 Phases= 1 Bus1=258281184.2     Bus2=258281189.2     Length=17.16  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281311 Phases= 1 Bus1=258281298.1     Bus2=258281313.1     Length=55.74  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278297 Phases= 3 Bus1=258278294.1.2.3 Bus2=258278299.1.2.3 Length=48.39  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-B-6X1']
+New Line.471061834 Phases= 3 Bus1=471061832.1.2.3 Bus2=385900614.1.2.3 Length=43.98  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.699789961 Phases= 1 Bus1=258287842.3     Bus2=258287847.3     Length=62.96  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263363012 Bus1=263363009.2     Bus2=260652081.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=65.36  units=m enable=yes
+New Line.260651097 Bus1=260651098.2     Bus2=260651099.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=76.53  units=m enable=yes
+New Line.258281488 Phases= 1 Bus1=258281485.2     Bus2=258281490.2     Length=21.52  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263846125 Bus1=263846122.2     Bus2=261119899.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=180.90 units=m enable=yes
+New Line.385900781 Bus1=385900552.1.2.3 Bus2=385900538.1.2.3 LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 3 Length=44.39  units=m enable=yes
+New Line.258287493 Phases= 1 Bus1=258287490.2     Bus2=258287495.2     Length=17.99  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.261315934 Bus1=261315935.1     Bus2=261315930.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=140.70 units=m enable=yes
+New Line.699048792 Bus1=699048794.1.2.3 Bus2=261459148.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=1.52   units=m enable=yes
+New Line.258287830 Phases= 1 Bus1=258287827.3     Bus2=258287832.3     Length=41.22  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260651122 Bus1=260651119.2     Bus2=260651124.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=120.10 units=m enable=yes
+New Line.258281777 Phases= 1 Bus1=258281774.1     Bus2=258281779.1     Length=274.60 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287448 Phases= 3 Bus1=258287443.1.2.3 Bus2=258287450.1.2.3 Length=97.05  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281259 Phases= 3 Bus1=258281256.1.2.3 Bus2=258281261.1.2.3 Length=40.59  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.260859587 Bus1=258281618.1     Bus2=260859589.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.00   units=m enable=yes
+New Line.258287498 Phases= 1 Bus1=258287495.2     Bus2=258287500.2     Length=26.39  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.259117404 Phases= 3 Bus1=258281157.1.2.3 Bus2=258281161.1.2.3 Length=67.88  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281838 Phases= 1 Bus1=258281835.3     Bus2=258281840.3     Length=51.29  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281993 Phases= 1 Bus1=258281965.3     Bus2=258281995.3     Length=39.28  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.865972477 Bus1=261264279.2     Bus2=865972479.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=58.31  units=m enable=yes
+New Line.428164408 Phases= 1 Bus1=428164405.2     Bus2=428164376.2     Length=36.00  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281249 Phases= 3 Bus1=258281241.1.2.3 Bus2=258281251.1.2.3 Length=47.22  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258287473 Phases= 3 Bus1=258287470.1.2.3 Bus2=258287475.1.2.3 Length=46.84  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.455203840 Phases= 1 Bus1=455203810.1     Bus2=455203842.1     Length=73.36  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281291 Phases= 1 Bus1=258281288.1     Bus2=258281293.1     Length=52.28  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287860 Phases= 1 Bus1=258287725.1     Bus2=258287862.1     Length=37.43  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.259452998 Phases= 3 Bus1=259452999.1.2.3 Bus2=258282166.1.2.3 Length=30.61  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.260019933 Phases= 3 Bus1=258281720.1.2.3 Bus2=258281729.1.2.3 Length=32.77  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.261264087 Bus1=261013274.2     Bus2=261187908.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=66.40  units=m enable=yes
+New Line.258281366 Phases= 3 Bus1=258281363.1.2.3 Bus2=258281368.1.2.3 Length=24.90  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258282214 Phases= 3 Bus1=258282206.1.2.3 Bus2=258282216.1.2.3 Length=25.41  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287523 Phases= 1 Bus1=258287520.2     Bus2=258287525.2     Length=65.37  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258287790 Phases= 1 Bus1=258287787.1     Bus2=258287792.1     Length=30.98  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278357 Phases= 3 Bus1=258278349.1.2.3 Bus2=258278359.1.2.3 Length=41.50  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.261315964 Bus1=261315961.3     Bus2=261315840.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=91.05  units=m enable=yes
+New Line.621098717 Phases= 3 Bus1=699730259.1.2.3 Bus2=699730216.1.2.3 Length=30.74  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.261264052 Bus1=261072647.2     Bus2=261013283.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=91.06  units=m enable=yes
+New Line.455203697 Phases= 3 Bus1=455203679.1.2.3 Bus2=455203694.1.2.3 Length=34.64  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258282204 Phases= 3 Bus1=258282201.1.2.3 Bus2=258282206.1.2.3 Length=85.08  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281699 Phases= 1 Bus1=258281696.2     Bus2=258281701.2     Length=132.90 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-CU-TBWP-7' '4-CU-TBWP-7']
+New Line.258281286 Phases= 1 Bus1=258281283.1     Bus2=258281288.1     Length=41.08  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260650897 Bus1=260650894.2     Bus2=260650899.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=200.50 units=m enable=yes
+New Line.258278536 Phases= 3 Bus1=258278528.1.2.3 Bus2=258278538.1.2.3 Length=53.19  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.261315864 Bus1=261315865.1     Bus2=261315860.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=185.70 units=m enable=yes
+New Line.263361465 Bus1=258282226.1.2.3 Bus2=263361467.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=1.53   units=m enable=yes
+New Line.260896130 Bus1=260896131.2     Bus2=260896132.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=97.61  units=m enable=yes
+New Line.263363029 Phases= 3 Bus1=258278354.1.2.3 Bus2=263363027.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258281689 Phases= 3 Bus1=258281686.1.2.3 Bus2=258281691.1.2.3 Length=101.00 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.260650872 Bus1=260650873.2     Bus2=260650874.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=75.00  units=m enable=yes
+New Line.263362998 Phases= 1 Bus1=258281189.2     Bus2=263363000.2     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281513 Phases= 1 Bus1=258281505.2     Bus2=258281515.2     Length=21.15  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278377 Phases= 1 Bus1=258278369.2     Bus2=258278379.2     Length=67.02  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258284397 Phases= 3 Bus1=258284394.1.2.3 Bus2=258284399.1.2.3 Length=38.09  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258287800 Phases= 1 Bus1=258287762.3     Bus2=258287802.3     Length=57.29  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261264072 Bus1=261060942.1     Bus2=261014260.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=43.15  units=m enable=yes
+New Line.263363047 Phases= 3 Bus1=258287757.1.2.3 Bus2=263363045.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261014254 Bus1=261014255.1     Bus2=261014256.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=589.80 units=m enable=yes
+New Line.261187932 Bus1=261187929.2     Bus2=261107370.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=85.05  units=m enable=yes
+New Line.260650902 Bus1=260650899.2     Bus2=260650904.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=138.50 units=m enable=yes
+New Line.258287553 Phases= 1 Bus1=258287550.2     Bus2=258287555.2     Length=61.25  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281863 Phases= 1 Bus1=258281855.3     Bus2=258281865.3     Length=55.19  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263828707 Phases= 1 Bus1=263828704.1     Bus2=258281624.1     Length=104.10 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261266520 Bus1=260651104.2     Bus2=260651108.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=60.87  units=m enable=yes
+New Line.621098763 Bus1=699730216.1.2.3 Bus2=699048688.1.2.3 LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 3 Length=1.51   units=m enable=yes
+New Line.263361474 Phases= 1 Bus1=258282260.3     Bus2=263361476.3     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.469609805 Phases= 3 Bus1=385900425.1.2.3 Bus2=469609804.1.2.3 Length=149.70 units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.258281563 Phases= 3 Bus1=258281428.1.2.3 Bus2=258281565.1.2.3 Length=98.73  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282174 Phases= 3 Bus1=258282170.1.2.3 Bus2=258282176.1.2.3 Length=73.57  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263846111 Bus1=259350253.3     Bus2=263846113.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.258287698 Phases= 1 Bus1=258287695.1     Bus2=258287700.1     Length=54.21  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.263828711 Phases= 1 Bus1=258281644.2     Bus2=263828713.2     Length=1.53   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263628562 Bus1=258281614.1     Bus2=263628564.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.627216472 Phases= 3 Bus1=627216469.1.2.3 Bus2=469609639.1.2.3 Length=357.40 units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.264244419 Bus1=260651133.2     Bus2=264244417.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=66.78  units=m enable=yes
+New Line.263362436 Bus1=263362433.1.2.3 Bus2=260651691.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=53.45  units=m enable=yes
+New Line.263361263 Phases= 1 Bus1=263361260.2     Bus2=258281125.2     Length=65.46  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361312 Phases= 1 Bus1=258281435.2     Bus2=263361314.2     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281578 Phases= 3 Bus1=258281373.1.2.3 Bus2=258281580.1.2.3 Length=24.74  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281160 Phases= 3 Bus1=258281161.1.2.3 Bus2=258281162.1.2.3 Length=22.53  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281351 Phases= 1 Bus1=258281348.2     Bus2=258281353.2     Length=62.81  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258278474 Phases= 2 Bus1=258278461.1.2   Bus2=258278476.1.2   Length=125.70 units=m  Spacing=8'-ARM-STANDARD-2PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.259572816 Phases= 3 Bus1=259572813.1.2.3 Bus2=258275661.1.2.3 Length=138.00 units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.700038859 Phases= 3 Bus1=258287730.1.2.3 Bus2=258287757.1.2.3 Length=96.03  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.704826206 Phases= 3 Bus1=RANKIN_AVE_RET_79291208.1.2.3 Bus2=704826203.1.2.3 Length=30.88  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.620481153 Phases= 3 Bus1=258287720.1.2.3 Bus2=620481152.1.2.3 Length=54.10  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261187927 Bus1=261187909.2     Bus2=261187929.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=275.50 units=m enable=yes
+New Line.264026883 Bus1=258281204.1     Bus2=264026885.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.52   units=m enable=yes
+New Line.258287548 Phases= 1 Bus1=258287545.2     Bus2=258287550.2     Length=63.38  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281356 Phases= 1 Bus1=258281353.2     Bus2=258281358.2     Length=42.62  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.263828738 Phases= 3 Bus1=258282265.1.2.3 Bus2=263828740.1.2.3 Length=1.52   units=m  Spacing=HORIZ-LINE-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287513 Phases= 1 Bus1=258287510.2     Bus2=258287515.2     Length=4.31   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.261266545 Bus1=260935769.2     Bus2=260896131.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=130.20 units=m enable=yes
+New Line.258278347 Phases= 3 Bus1=258278344.1.2.3 Bus2=258278349.1.2.3 Length=103.00 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-WP-6X1']
+New Line.700038887 Phases= 1 Bus1=700038884.3     Bus2=258287762.3     Length=36.15  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282244 Phases= 3 Bus1=258282241.1.2.3 Bus2=258282246.1.2.3 Length=38.64  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.263361285 Phases= 1 Bus1=258281273.1     Bus2=263361287.1     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281341 Phases= 1 Bus1=258281338.2     Bus2=258281343.2     Length=30.67  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258281533 Phases= 1 Bus1=258281530.2     Bus2=258281535.2     Length=34.42  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263628576 Bus1=263628573.1     Bus2=260935299.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=317.30 units=m enable=yes
+New Line.259395309 Phases= 3 Bus1=258282149.1.2.3 Bus2=258282153.1.2.3 Length=85.23  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.297114967 Phases= 3 Bus1=258281368.1.2.3 Bus2=297114969.1.2.3 Length=1.51   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '4-ACSR-B-6X1' '2-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258281938 Phases= 1 Bus1=258281930.3     Bus2=258281940.3     Length=39.98  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258278387 Phases= 1 Bus1=258278384.2     Bus2=258278389.2     Length=40.90  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281767 Phases= 3 Bus1=258281762.1.2.3 Bus2=258281769.1.2.3 Length=31.71  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.264417968 Phases= 3 Bus1=258282153.1.2.3 Bus2=264417966.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258282088 Phases= 1 Bus1=258282085.3     Bus2=258282090.3     Length=60.29  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287573 Phases= 1 Bus1=258287570.2     Bus2=258287575.2     Length=42.36  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287503 Phases= 1 Bus1=258287500.2     Bus2=258287505.2     Length=57.71  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.260650912 Bus1=260650909.2     Bus2=260650914.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=199.40 units=m enable=yes
+New Line.261297350 Bus1=261297347.2     Bus2=261297352.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=98.08  units=m enable=yes
+New Line.258281833 Phases= 1 Bus1=258281830.3     Bus2=258281835.3     Length=47.92  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.297114972 Phases= 3 Bus1=297114969.1.2.3 Bus2=258281378.1.2.3 Length=97.56  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '4-ACSR-B-6X1' '2-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.263361357 Phases= 3 Bus1=258281691.1.2.3 Bus2=263361359.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.263363007 Bus1=258287685.2     Bus2=263363009.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.258281523 Phases= 1 Bus1=258281520.2     Bus2=258281525.2     Length=99.60  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261107344 Bus1=261107345.1     Bus2=261107340.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=292.20 units=m enable=yes
+New Line.258287508 Phases= 1 Bus1=258287505.2     Bus2=258287510.2     Length=83.18  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.455203876 Phases= 1 Bus1=455203874.1     Bus2=455203873.1     Length=83.21  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.868883010 Bus1=261264284.2     Bus2=868883008.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=284.30 units=m enable=yes
+New Line.261297360 Bus1=261297357.2     Bus2=261264278.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=109.90 units=m enable=yes
+New Line.261297325 Bus1=261297326.3     Bus2=261297327.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=118.60 units=m enable=yes
+New Line.469779420 Phases= 3 Bus1=258282142.1.2.3 Bus2=469779417.1.2.3 Length=75.24  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.263628994 Bus1=258281445.2     Bus2=263628996.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.258287568 Phases= 1 Bus1=258287560.2     Bus2=258287570.2     Length=56.75  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261187917 Bus1=261187914.2     Bus2=261187919.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=192.00 units=m enable=yes
+New Line.258281306 Phases= 1 Bus1=258281303.1     Bus2=258281308.1     Length=62.68  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.792329041 Phases= 3 Bus1=792329039.1.2.3 Bus2=627216469.1.2.3 Length=73.31  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.264010481 Bus1=259571237.1.2.3 Bus2=264010483.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=1.53   units=m enable=yes
+New Line.264010553 Bus1=259571237.3     Bus2=264010555.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.263361375 Phases= 1 Bus1=258281762.1     Bus2=263361377.1     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261013282 Bus1=261013283.2     Bus2=261013284.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=202.00 units=m enable=yes
+New Line.258281426 Phases= 3 Bus1=258281423.1.2.3 Bus2=258281428.1.2.3 Length=61.15  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281612 Phases= 3 Bus1=258281613.1.2.3 Bus2=258281614.1.2.3 Length=51.02  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.263362994 Phases= 3 Bus1=263362991.1.2.3 Bus2=258287443.1.2.3 Length=75.24  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281214 Phases= 2 Bus1=258281209.2.3   Bus2=258281216.2.3   Length=73.58  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258278417 Phases= 3 Bus1=258278414.1.2.3 Bus2=258278419.1.2.3 Length=65.96  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258278444 Phases= 2 Bus1=258278441.1.2   Bus2=258278446.1.2   Length=86.92  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['6-CU-B-S' '6-CU-B-S' '6-CU-B-S']
+New Line.263360603 Phases= 1 Bus1=263360600.2     Bus2=258278369.2     Length=81.30  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.455203729 Phases= 3 Bus1=455203694.1.2.3 Bus2=455203731.1.2.3 Length=21.26  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.263361407 Phases= 1 Bus1=263361404.3     Bus2=258281830.3     Length=74.63  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281684 Phases= 3 Bus1=258281681.1.2.3 Bus2=258281686.1.2.3 Length=101.80 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258282159 Phases= 3 Bus1=258282154.1.2.3 Bus2=258282161.1.2.3 Length=30.93  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287528 Phases= 1 Bus1=258287525.2     Bus2=258287530.2     Length=35.90  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263362989 Phases= 3 Bus1=258287433.1.2.3 Bus2=263362991.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260863631 Bus1=258281161.3     Bus2=260863633.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=72.44  units=m enable=yes
+New Line.455203917 Phases= 1 Bus1=455203782.1     Bus2=455203804.1     Length=1.54   units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.260896140 Bus1=260859986.2     Bus2=260896137.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=138.90 units=m enable=yes
+New Line.428164370 Bus1=428164366.2     Bus2=260650869.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=72.42  units=m enable=yes
+New Line.264399835 Phases= 3 Bus1=264399832.1.2.3 Bus2=260031912.1.2.3 Length=5.61   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258282209 Phases= 3 Bus1=258282210.1.2.3 Bus2=258282211.1.2.3 Length=56.84  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281276 Phases= 3 Bus1=258281273.1.2.3 Bus2=258281278.1.2.3 Length=55.96  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.260959705 Bus1=260959702.2     Bus2=260959707.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=131.20 units=m enable=yes
+New Line.258282113 Phases= 1 Bus1=258282110.3     Bus2=258282115.3     Length=55.88  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278434 Phases= 3 Bus1=258278431.1.2.3 Bus2=258278436.1.2.3 Length=47.13  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.624971033 Phases= 1 Bus1=258282095.3     Bus2=258282050.3     Length=108.00 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.704826196 Phases= 3 Bus1=385900508.1.2.3 Bus2=704826198.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.455203748 Phases= 3 Bus1=455203731.1.2.3 Bus2=455203750.1.2.3 Length=91.14  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.263361425 Phases= 1 Bus1=263361422.3     Bus2=258282075.3     Length=28.87  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281728 Phases= 3 Bus1=258281729.1.2.3 Bus2=258281730.1.2.3 Length=51.23  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281458 Phases= 1 Bus1=258281455.2     Bus2=258281460.2     Length=128.80 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281326 Phases= 1 Bus1=258281323.2     Bus2=258281328.2     Length=40.03  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258287613 Phases= 1 Bus1=258287610.2     Bus2=258287615.2     Length=28.70  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261315874 Bus1=261315875.1     Bus2=261315870.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=209.20 units=m enable=yes
+New Line.263828702 Phases= 1 Bus1=258281619.1     Bus2=263828704.1     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261297315 Bus1=261297316.3     Bus2=261297311.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=102.40 units=m enable=yes
+New Line.258278504 Phases= 1 Bus1=258278501.2     Bus2=258278506.2     Length=57.27  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.264528617 Phases= 3 Bus1=258284414.1.2.3 Bus2=264528619.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.455203754 Phases= 3 Bus1=455203750.1.2.3 Bus2=455203756.1.2.3 Length=104.60 units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.261187902 Bus1=261187903.2     Bus2=261187904.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=172.30 units=m enable=yes
+New Line.258282234 Phases= 3 Bus1=258282235.1.2.3 Bus2=258282236.1.2.3 Length=33.64  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282184 Phases= 3 Bus1=258282176.1.2.3 Bus2=258282186.1.2.3 Length=71.96  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281175 Phases= 3 Bus1=258281137.1.2.3 Bus2=258281177.1.2.3 Length=48.84  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.264010567 Bus1=264010564.3     Bus2=261297326.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=253.20 units=m enable=yes
+New Line.258281111 Phases= 3 Bus1=258281108.1.2.3 Bus2=258281113.1.2.3 Length=32.42  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.263362440 Bus1=258285769.1.2.3 Bus2=263362442.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=1.53   units=m enable=yes
+New Line.258281813 Phases= 3 Bus1=258281808.1.2.3 Bus2=258281815.1.2.3 Length=75.97  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.264485801 Phases= 3 Bus1=264485798.1.2.3 Bus2=258285754.1.2.3 Length=50.10  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.298664899 Phases= 1 Bus1=298664897.3     Bus2=258281855.3     Length=83.66  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361393 Phases= 1 Bus1=258281820.3     Bus2=263361395.3     Length=1.53   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282239 Phases= 3 Bus1=258282226.1.2.3 Bus2=258282241.1.2.3 Length=41.26  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281508 Phases= 1 Bus1=258281505.2     Bus2=258281510.2     Length=54.36  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281411 Phases= 3 Bus1=258281403.1.2.3 Bus2=258281413.1.2.3 Length=25.95  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '4-ACSR-B-6X1' '2-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.455203882 Phases= 1 Bus1=455203868.1     Bus2=455203867.1     Length=79.24  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.263828725 Phases= 3 Bus1=263828722.1.2.3 Bus2=258282130.1.2.3 Length=44.05  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278397 Phases= 3 Bus1=258278398.1.2.3 Bus2=258278399.1.2.3 Length=82.71  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258278342 Phases= 3 Bus1=258278334.1.2.3 Bus2=258278344.1.2.3 Length=49.68  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '2-ACSR-B-6X1']
+New Line.621098682 Phases= 3 Bus1=699730248.1.2.3 Bus2=699730351.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281463 Phases= 1 Bus1=258281460.2     Bus2=258281465.2     Length=56.75  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287678 Phases= 1 Bus1=258287675.2     Bus2=258287680.2     Length=129.20 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.258287608 Phases= 1 Bus1=258287605.2     Bus2=258287610.2     Length=35.02  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281416 Phases= 3 Bus1=258281413.1.2.3 Bus2=258281423.1.2.3 Length=48.97  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '4-ACSR-B-6X1' '2-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.738976582 Phases= 3 Bus1=738976579.1.2.3 Bus2=259350248.1.2.3 Length=15.63  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.617270997 Bus1=261107355.1     Bus2=261107350.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=201.40 units=m enable=yes
+New Line.258281988 Phases= 1 Bus1=258281985.3     Bus2=258281990.3     Length=35.22  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287855 Phases= 1 Bus1=258287747.3     Bus2=258287857.3     Length=29.54  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.700038882 Phases= 1 Bus1=258287757.3     Bus2=700038884.3     Length=1.53   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281642 Phases= 3 Bus1=258281639.1.2.3 Bus2=258281644.1.2.3 Length=22.08  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.264026807 Bus1=264026804.3     Bus2=261315961.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=920.10 units=m enable=yes
+New Line.258281401 Phases= 3 Bus1=258281398.1.2.3 Bus2=258281403.1.2.3 Length=65.64  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '4-ACSR-B-6X1' '2-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258282133 Phases= 3 Bus1=258282125.1.2.3 Bus2=258282135.1.2.3 Length=163.90 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.260858007 Bus1=260858008.2     Bus2=260858009.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=60.74  units=m enable=yes
+New Line.258287518 Phases= 1 Bus1=258287515.2     Bus2=258287520.2     Length=53.61  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.700038854 Phases= 3 Bus1=700038850.1.2.3 Bus2=258278314.1.2.3 Length=22.05  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.259438550 Phases= 3 Bus1=258282231.1.2.3 Bus2=258282235.1.2.3 Length=34.71  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.621098749 Bus1=699048417.1.2.3 Bus2=699048426.1.2.3 LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 3 Length=13.28  units=m enable=yes
+New Line.260651107 Bus1=260651108.2     Bus2=260651109.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=87.43  units=m enable=yes
+New Line.263361281 Phases= 1 Bus1=263361278.2     Bus2=258281318.2     Length=22.00  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258281346 Phases= 1 Bus1=258281343.2     Bus2=258281348.2     Length=29.51  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258287633 Phases= 1 Bus1=258287630.2     Bus2=258287635.2     Length=49.69  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258284407 Phases= 3 Bus1=258284404.1.2.3 Bus2=258284409.1.2.3 Length=167.90 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281396 Phases= 3 Bus1=258281388.1.2.3 Bus2=258281398.1.2.3 Length=37.59  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '4-ACSR-B-6X1' '2-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258281888 Phases= 1 Bus1=258281885.3     Bus2=258281890.3     Length=72.54  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.264137372 Phases= 3 Bus1=264137369.1.2.3 Bus2=258281208.1.2.3 Length=7.54   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.621162039 Bus1=261187898.2     Bus2=621162013.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=311.20 units=m enable=yes
+New Line.258281664 Phases= 3 Bus1=258281659.1.2.3 Bus2=258281666.1.2.3 Length=48.85  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.263361321 Phases= 1 Bus1=258281530.2     Bus2=263361323.2     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282123 Phases= 3 Bus1=258281798.1.2.3 Bus2=258282125.1.2.3 Length=88.04  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281796 Phases= 3 Bus1=258281791.1.2.3 Bus2=258281798.1.2.3 Length=26.34  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.264485796 Phases= 3 Bus1=258285753.1.2.3 Bus2=264485798.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287416 Phases= 1 Bus1=258287413.1     Bus2=258287418.1     Length=91.38  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281928 Phases= 1 Bus1=258281925.3     Bus2=258281930.3     Length=63.44  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258278362 Phases= 3 Bus1=258278359.1.2.3 Bus2=258278364.1.2.3 Length=98.79  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258281913 Phases= 1 Bus1=258281910.3     Bus2=258281915.3     Length=59.05  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.868882885 Bus1=868882882.3     Bus2=868882793.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=199.80 units=m enable=yes
+New Line.264026825 Bus1=264026822.1     Bus2=261315875.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=536.70 units=m enable=yes
+New Line.258287628 Phases= 1 Bus1=258287625.2     Bus2=258287630.2     Length=95.73  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.621161981 Bus1=261107365.2     Bus2=621161977.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=83.71  units=m enable=yes
+New Line.258281386 Phases= 3 Bus1=258281378.1.2.3 Bus2=258281388.1.2.3 Length=45.42  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '4-ACSR-B-6X1' '2-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.259453018 Phases= 3 Bus1=455203679.1.2.3 Bus2=259453020.1.2.3 Length=5.91   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.264389073 Phases= 3 Bus1=258281628.1.2.3 Bus2=264389075.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258278429 Phases= 3 Bus1=258278426.1.2.3 Bus2=258278431.1.2.3 Length=51.07  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258281918 Phases= 1 Bus1=258281910.3     Bus2=258281920.3     Length=60.66  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.264310850 Bus1=264310852.3     Bus2=261119865.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.52   units=m enable=yes
+New Line.264272658 Bus1=260896136.2     Bus2=264272656.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=181.00 units=m enable=yes
+New Line.621161997 Bus1=621161994.2     Bus2=261107376.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=93.75  units=m enable=yes
+New Line.258281553 Phases= 1 Bus1=258281550.2     Bus2=258281555.2     Length=15.46  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287488 Phases= 1 Bus1=258287438.2     Bus2=258287490.2     Length=24.31  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.384119973 Phases= 1 Bus1=258278399.2     Bus2=384119975.2     Length=1.53   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.258287865 Phases= 3 Bus1=258278304.1.2.3 Bus2=258287867.1.2.3 Length=12.17  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263628589 Bus1=258281614.1.2.3 Bus2=263628591.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=1.53   units=m enable=yes
+New Line.868882857 Bus1=261297312.3     Bus2=868882855.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=48.53  units=m enable=yes
+New Line.259582592 Phases= 3 Bus1=258285769.1.2.3 Bus2=259582594.1.2.3 Length=90.67  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361344 Phases= 1 Bus1=263361341.1     Bus2=258281671.1     Length=178.60 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-CU-TBWP-7' '4-CU-TBWP-7']
+New Line.258281543 Phases= 1 Bus1=258281540.2     Bus2=258281545.2     Length=27.40  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282219 Phases= 3 Bus1=258282216.1.2.3 Bus2=258282221.1.2.3 Length=40.79  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287780 Phases= 1 Bus1=258287777.1     Bus2=258287782.1     Length=74.51  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281331 Phases= 1 Bus1=258281328.2     Bus2=258281333.2     Length=47.85  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.263628594 Bus1=263628591.1.2.3 Bus2=260859594.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=716.60 units=m enable=yes
+New Line.264010576 Bus1=264010573.2     Bus2=261297342.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=150.30 units=m enable=yes
+New Line.621098698 Phases= 3 Bus1=699730215.1.2.3 Bus2=699730237.1.2.3 Length=20.44  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.298664887 Phases= 1 Bus1=258281850.3     Bus2=298664889.3     Length=1.54   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.469779433 Phases= 3 Bus1=469779417.1.2.3 Bus2=469779435.1.2.3 Length=1.51   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287643 Phases= 1 Bus1=258287580.2     Bus2=258287645.2     Length=36.55  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287658 Phases= 1 Bus1=258287655.2     Bus2=258287660.2     Length=45.18  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281321 Phases= 1 Bus1=258281318.2     Bus2=258281323.2     Length=43.24  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258285757 Phases= 3 Bus1=258285754.1.2.3 Bus2=258285759.1.2.3 Length=62.22  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281848 Phases= 1 Bus1=258281845.3     Bus2=258281850.3     Length=73.62  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278469 Phases= 2 Bus1=258278466.1.2   Bus2=258278471.1.2   Length=30.82  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['6-CU-B-S' '6-CU-B-S' '6-CU-B-S']
+New Line.260859984 Bus1=260859985.2     Bus2=260859986.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=126.30 units=m enable=yes
+New Line.263360612 Phases= 2 Bus1=263360609.1.2   Bus2=258278441.1.2   Length=58.30  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['6-CU-B-S' '6-CU-B-S' '6-CU-B-S']
+New Line.261264282 Bus1=261264283.2     Bus2=261264284.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=242.30 units=m enable=yes
+New Line.258287648 Phases= 1 Bus1=258287649.2     Bus2=258287650.2     Length=30.27  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282058 Phases= 1 Bus1=258282020.3     Bus2=258282060.3     Length=67.02  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.738976565 Bus1=259350248.1.2.3 Bus2=738976567.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=1.51   units=m enable=yes
+New Line.263846102 Phases= 3 Bus1=258281659.1.2.3 Bus2=263846104.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.286774738 Phases= 1 Bus1=286774739.3     Bus2=258281860.3     Length=30.72  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.385900616 Phases= 3 Bus1=385900614.1.2.3 Bus2=385900425.1.2.3 Length=79.60  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.621098758 Bus1=699048688.1.2.3 Bus2=699048417.1.2.3 LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 3 Length=42.07  units=m enable=yes
+New Line.261013277 Bus1=260858009.2     Bus2=261013273.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=104.20 units=m enable=yes
+New Line.263361429 Phases= 3 Bus1=258282148.1.2.3 Bus2=263361431.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282048 Phases= 1 Bus1=258282050.3     Bus2=258282045.3     Length=12.24  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260935772 Bus1=260935773.2     Bus2=260859980.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=123.90 units=m enable=yes
+New Line.258281583 Phases= 3 Bus1=258281580.1.2.3 Bus2=258281585.1.2.3 Length=46.03  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.263846107 Phases= 3 Bus1=263846104.1.2.3 Bus2=259350253.1.2.3 Length=27.28  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.264010562 Bus1=258282148.3     Bus2=264010564.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.263828684 Phases= 3 Bus1=258278528.1.2.3 Bus2=263828686.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.261297210 Bus1=261297211.2     Bus2=261264283.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=102.80 units=m enable=yes
+New Line.704826201 Phases= 3 Bus1=704826198.1.2.3 Bus2=385900525.1.2.3 Length=20.10  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.621098706 Phases= 3 Bus1=699730237.1.2.3 Bus2=699730248.1.2.3 Length=7.74   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.298664898 Phases= 1 Bus1=286774779.3     Bus2=298664897.3     Length=89.52  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361317 Phases= 1 Bus1=263361314.2     Bus2=258281450.2     Length=49.35  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287673 Phases= 1 Bus1=258287670.2     Bus2=258287675.2     Length=30.14  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.258282108 Phases= 1 Bus1=258282105.3     Bus2=258282110.3     Length=102.70 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281239 Phases= 3 Bus1=258281240.1.2.3 Bus2=258281241.1.2.3 Length=52.13  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.259988397 Phases= 1 Bus1=258287767.1     Bus2=258287776.1     Length=19.47  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281197 Phases= 3 Bus1=258281194.1.2.3 Bus2=258281199.1.2.3 Length=47.20  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281903 Phases= 1 Bus1=258281900.3     Bus2=258281905.3     Length=67.04  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278402 Phases= 1 Bus1=258278399.1     Bus2=258278404.1     Length=22.55  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.261264277 Bus1=261264278.2     Bus2=261264279.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=34.88  units=m enable=yes
+New Line.258282063 Phases= 1 Bus1=258281825.3     Bus2=258282065.3     Length=84.98  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260651117 Bus1=260651114.2     Bus2=260651119.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=25.56  units=m enable=yes
+New Line.258281224 Phases= 1 Bus1=258281221.3     Bus2=258281226.3     Length=68.18  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['336-ACSR-B-18X1' '1/0-ACSR-B-6X1']
+New Line.258285772 Phases= 1 Bus1=258282211.3     Bus2=258285774.3     Length=35.36  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278479 Phases= 1 Bus1=258278476.2     Bus2=258278481.2     Length=89.94  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258284412 Phases= 3 Bus1=258284409.1.2.3 Bus2=258284414.1.2.3 Length=131.20 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.261119878 Bus1=261119875.3     Bus2=261119864.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=50.99  units=m enable=yes
+New Line.261315924 Bus1=261315925.1     Bus2=261315920.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=219.10 units=m enable=yes
+New Line.704826189 Bus1=704826186.2     Bus2=385900583.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=64.13  units=m enable=yes
+New Line.263361290 Phases= 1 Bus1=263361287.1     Bus2=258281283.1     Length=99.04  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361308 Phases= 1 Bus1=263361305.2     Bus2=258281455.2     Length=65.14  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281229 Phases= 2 Bus1=258281221.2.3   Bus2=258281231.2.3   Length=98.48  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258282018 Phases= 1 Bus1=258282015.3     Bus2=258282020.3     Length=105.40 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258281182 Phases= 3 Bus1=258281177.1.2.3 Bus2=258281184.1.2.3 Length=22.71  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.263828743 Phases= 3 Bus1=263828740.1.2.3 Bus2=258284389.1.2.3 Length=44.76  units=m  Spacing=HORIZ-LINE-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278292 Phases= 3 Bus1=258275662.1.2.3 Bus2=258278294.1.2.3 Length=40.67  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-B-18X1' '336-ACSR-B-18X1' '336-ACSR-B-18X1' '1/0-ACSR-B-6X1']
+New Line.471061833 Phases= 3 Bus1=385900508.1.2.3 Bus2=471061832.1.2.3 Length=31.40  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.258278307 Phases= 3 Bus1=258278299.1.2.3 Bus2=258278309.1.2.3 Length=51.99  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-B-6X1']
+New Line.263363016 Phases= 1 Bus1=258278404.1     Bus2=263363018.1     Length=1.53   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.264417969 Phases= 3 Bus1=264417966.1.2.3 Bus2=258282154.1.2.3 Length=45.72  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281406 Phases= 1 Bus1=258281403.3     Bus2=258281408.3     Length=99.25  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.259350256 Phases= 3 Bus1=258281619.1.2.3 Bus2=258281628.1.2.3 Length=12.44  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258284402 Phases= 3 Bus1=258284399.1.2.3 Bus2=258284404.1.2.3 Length=48.36  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258287411 Phases= 1 Bus1=258287393.1     Bus2=258287413.1     Length=24.39  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278332 Phases= 3 Bus1=258278329.1.2.3 Bus2=258278334.1.2.3 Length=69.56  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.699048535 Bus1=699048532.1.2.3 Bus2=260651144.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=37.78  units=m enable=yes
+New Line.263629008 Bus1=263629005.2     Bus2=260896147.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=103.20 units=m enable=yes
+New Line.258282263 Phases= 3 Bus1=258282260.1.2.3 Bus2=258282265.1.2.3 Length=41.29  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.263361326 Phases= 1 Bus1=263361323.2     Bus2=258281540.2     Length=85.04  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260034203 Phases= 3 Bus1=258278394.1.2.3 Bus2=258278398.1.2.3 Length=46.61  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258287578 Phases= 1 Bus1=258287575.2     Bus2=258287580.2     Length=51.66  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287588 Phases= 1 Bus1=258287585.2     Bus2=258287590.2     Length=53.40  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.384119979 Phases= 1 Bus1=384119975.2     Bus2=258278409.2     Length=33.41  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.868883011 Bus1=868883008.2     Bus2=868882967.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=91.23  units=m enable=yes
+New Line.699048796 Bus1=260031912.1.2.3 Bus2=699048794.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=78.44  units=m enable=yes
+New Line.260859979 Bus1=260859980.2     Bus2=260859981.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=173.10 units=m enable=yes
+New Line.868882884 Bus1=868882868.3     Bus2=868882882.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=105.70 units=m enable=yes
+New Line.261060941 Bus1=261060937.1     Bus2=261060942.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=257.50 units=m enable=yes
+New Line.259163023 Phases= 1 Bus1=258281720.2     Bus2=258281724.2     Length=47.89  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281433 Phases= 1 Bus1=258281423.2     Bus2=258281435.2     Length=79.78  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287401 Phases= 1 Bus1=258287398.1     Bus2=258287403.1     Length=41.75  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263362985 Phases= 3 Bus1=263362982.1.2.3 Bus2=258287428.1.2.3 Length=106.80 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281823 Phases= 1 Bus1=258281820.3     Bus2=258281825.3     Length=33.51  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.699048558 Bus1=258282191.1.2.3 Bus2=699048560.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=1.53   units=m enable=yes
+New Line.258281998 Phases= 1 Bus1=258281860.3     Bus2=258282000.3     Length=79.54  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263360598 Phases= 1 Bus1=258278359.2     Bus2=263360600.2     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263628999 Bus1=263628996.2     Bus2=260935769.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=165.20 units=m enable=yes
+New Line.258282023 Phases= 1 Bus1=258282015.3     Bus2=258282025.3     Length=79.24  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261187912 Bus1=261187904.2     Bus2=261187914.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=165.60 units=m enable=yes
+New Line.258287406 Phases= 1 Bus1=258287403.1     Bus2=258287408.1     Length=61.31  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281155 Phases= 3 Bus1=258281152.1.2.3 Bus2=258281157.1.2.3 Length=133.40 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.264389078 Phases= 3 Bus1=264389075.1.2.3 Bus2=258281629.1.2.3 Length=61.33  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.261315949 Bus1=261315950.1     Bus2=261315940.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=149.20 units=m enable=yes
+New Line.261119898 Bus1=261119899.2     Bus2=261119895.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=60.53  units=m enable=yes
+New Line.259483799 Phases= 3 Bus1=258282130.1.2.3 Bus2=259483801.1.2.3 Length=4.56   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281679 Phases= 3 Bus1=258281666.1.2.3 Bus2=258281681.1.2.3 Length=82.30  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.264308318 Bus1=261107330.1     Bus2=264308316.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=152.30 units=m enable=yes
+New Line.258287653 Phases= 1 Bus1=258287565.2     Bus2=258287655.2     Length=45.03  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281145 Phases= 3 Bus1=258281142.1.2.3 Bus2=258281147.1.2.3 Length=39.66  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281219 Phases= 2 Bus1=258281216.2.3   Bus2=258281221.2.3   Length=63.31  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258281948 Phases= 1 Bus1=258281945.3     Bus2=258281950.3     Length=33.18  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281978 Phases= 1 Bus1=258281970.3     Bus2=258281980.3     Length=61.68  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.260651694 Bus1=258285749.1.2.3 Bus2=258285753.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=96.39  units=m enable=yes
+New Line.428164431 Phases= 1 Bus1=258278521.2     Bus2=428164433.2     Length=1.51   units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361348 Phases= 1 Bus1=258281686.2     Bus2=263361350.2     Length=1.53   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-CU-TBWP-7' '4-CU-TBWP-7']
+New Line.258281607 Phases= 3 Bus1=258281602.1.2.3 Bus2=258281609.1.2.3 Length=56.15  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.259371073 Phases= 1 Bus1=259329532.1     Bus2=259371075.1     Length=303.60 units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.259453003 Phases= 3 Bus1=259452995.1.2.3 Bus2=259452999.1.2.3 Length=166.30 units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.738976577 Phases= 3 Bus1=258281666.1.2.3 Bus2=738976579.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258278372 Phases= 1 Bus1=258278369.2     Bus2=258278374.2     Length=56.18  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261315869 Bus1=261315870.1     Bus2=261315865.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=110.80 units=m enable=yes
+New Line.263360621 Bus1=263360618.2     Bus2=260650864.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=68.34  units=m enable=yes
+New Line.868882847 Bus1=261297327.3     Bus2=868882845.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=22.17  units=m enable=yes
+New Line.469779438 Phases= 3 Bus1=469779435.1.2.3 Bus2=259571237.1.2.3 Length=68.43  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281264 Phases= 3 Bus1=258281261.1.2.3 Bus2=258281266.1.2.3 Length=50.97  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.260935777 Bus1=260896147.2     Bus2=260935773.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=160.30 units=m enable=yes
+New Line.258285742 Phases= 3 Bus1=258284389.1.2.3 Bus2=258285744.1.2.3 Length=90.89  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258282194 Phases= 3 Bus1=258282161.1.2.3 Bus2=258282196.1.2.3 Length=27.17  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.699048563 Bus1=699048560.1.2.3 Bus2=260651154.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=22.83  units=m enable=yes
+New Line.260858017 Bus1=260858018.1     Bus2=260858019.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=123.30 units=m enable=yes
+New Line.621162109 Bus1=621162013.2     Bus2=621162106.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=80.58  units=m enable=yes
+New Line.260896150 Bus1=260896151.2     Bus2=260651133.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=254.00 units=m enable=yes
+New Line.868882837 Bus1=868882825.3     Bus2=868882835.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=47.02  units=m enable=yes
+New Line.261187907 Bus1=261187908.2     Bus2=261187909.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=62.78  units=m enable=yes
+New Line.258281632 Phases= 3 Bus1=258281629.1.2.3 Bus2=258281634.1.2.3 Length=6.43   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281503 Phases= 1 Bus1=258281500.2     Bus2=258281505.2     Length=50.14  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281170 Phases= 3 Bus1=258281167.1.2.3 Bus2=258281172.1.2.3 Length=91.64  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278459 Phases= 2 Bus1=258278456.1.2   Bus2=258278461.1.2   Length=35.69  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263828729 Phases= 3 Bus1=258282206.1.2.3 Bus2=263828731.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.700038837 Phases= 3 Bus1=258278299.1.2.3 Bus2=700038839.1.2.3 Length=1.51   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261315884 Bus1=261315885.1     Bus2=261315851.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=200.90 units=m enable=yes
+New Line.264341859 Bus1=261315850.1     Bus2=264341857.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=68.02  units=m enable=yes
+New Line.264310863 Bus1=261119894.2     Bus2=264310861.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=65.77  units=m enable=yes
+New Line.258281568 Phases= 3 Bus1=258281565.1.2.3 Bus2=258281570.1.2.3 Length=23.32  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361384 Phases= 3 Bus1=258281791.1.2.3 Bus2=263361386.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282189 Phases= 3 Bus1=258282166.1.2.3 Bus2=258282191.1.2.3 Length=31.26  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261107324 Bus1=261107325.1     Bus2=261107326.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=206.00 units=m enable=yes
+New Line.455203881 Phases= 1 Bus1=455203869.1     Bus2=455203868.1     Length=91.80  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.263828720 Phases= 3 Bus1=258282125.1.2.3 Bus2=263828722.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287825 Phases= 1 Bus1=258287822.3     Bus2=258287827.3     Length=19.62  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287850 Phases= 1 Bus1=258287847.3     Bus2=258287852.3     Length=49.17  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261264272 Bus1=261264273.1.2.3 Bus2=261264274.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=340.70 units=m enable=yes
+New Line.263361398 Phases= 1 Bus1=263361395.3     Bus2=258282005.3     Length=34.40  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361303 Phases= 1 Bus1=258281435.2     Bus2=263361305.2     Length=1.53   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263830152 Phases= 1 Bus1=258287465.1     Bus2=263830154.1     Length=1.53   units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281493 Phases= 1 Bus1=258281485.2     Bus2=258281495.2     Length=104.10 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287386 Phases= 1 Bus1=258281624.1     Bus2=258287388.1     Length=137.50 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260935292 Bus1=260935289.1     Bus2=260858018.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=556.90 units=m enable=yes
+New Line.620481164 Phases= 3 Bus1=263363036.1.2.3 Bus2=620481161.1.2.3 Length=30.97  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281818 Phases= 1 Bus1=258281808.3     Bus2=258281820.3     Length=56.50  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.259418255 Phases= 3 Bus1=259418256.1.2.3 Bus2=258282170.1.2.3 Length=44.06  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261187922 Bus1=261187919.2     Bus2=261187898.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=104.20 units=m enable=yes
+New Line.263361389 Phases= 3 Bus1=263361386.1.2.3 Bus2=258281803.1.2.3 Length=209.20 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287723 Phases= 1 Bus1=258287720.1     Bus2=258287725.1     Length=7.40   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.288589188 Phases= 3 Bus1=264485694.1.2.3 Bus2=258281791.1.2.3 Length=118.60 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281101 Phases= 3 Bus1=258278538.1.2.3 Bus2=258281103.1.2.3 Length=35.08  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258287598 Phases= 1 Bus1=258287595.2     Bus2=258287600.2     Length=45.27  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.621162122 Bus1=621162119.2     Bus2=621161994.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=58.58  units=m enable=yes
+New Line.258278489 Phases= 1 Bus1=258278486.2     Bus2=258278491.2     Length=66.24  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-CU-B-7' '4-CU-B-7']
+New Line.258287815 Phases= 1 Bus1=258287812.3     Bus2=258287817.3     Length=44.39  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361330 Bus1=258281490.2     Bus2=263361332.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.258281652 Phases= 3 Bus1=258281644.1.2.3 Bus2=258281654.1.2.3 Length=27.88  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258285762 Phases= 3 Bus1=258285759.1.2.3 Bus2=258285764.1.2.3 Length=99.21  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.288589187 Phases= 3 Bus1=258281784.1.2.3 Bus2=264485694.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.699730220 Phases= 3 Bus1=699730215.1.2.3 Bus2=259453009.1.2.3 Length=126.20 units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.260959710 Bus1=260959707.2     Bus2=260896136.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=147.90 units=m enable=yes
+New Line.258281806 Phases= 3 Bus1=258281803.1.2.3 Bus2=258281808.1.2.3 Length=23.28  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261315929 Bus1=261315930.1     Bus2=261315925.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=74.17  units=m enable=yes
+New Line.263629003 Bus1=258281445.2     Bus2=263629005.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.52   units=m enable=yes
+New Line.868882983 Bus1=865972503.2     Bus2=868882980.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=91.10  units=m enable=yes
+New Line.258282258 Phases= 3 Bus1=258282253.1.2.3 Bus2=258282260.1.2.3 Length=43.50  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.288745280 Phases= 3 Bus1=288745278.1.2.3 Bus2=258281755.1.2.3 Length=42.60  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258287638 Phases= 1 Bus1=258287635.2     Bus2=258287640.2     Length=42.05  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.384695304 Phases= 3 Bus1=258278309.1.2.3 Bus2=258278319.1.2.3 Length=26.42  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.455203877 Phases= 1 Bus1=455203873.1     Bus2=455203872.1     Length=85.73  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.261297355 Bus1=261297352.2     Bus2=261297357.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=106.80 units=m enable=yes
+New Line.259240976 Phases= 3 Bus1=258278419.1.2.3 Bus2=258278425.1.2.3 Length=11.02  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258278327 Phases= 3 Bus1=258278324.1.2.3 Bus2=258278329.1.2.3 Length=103.20 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.263363030 Phases= 3 Bus1=263363027.1.2.3 Bus2=258287710.1.2.3 Length=91.97  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.263363003 Phases= 1 Bus1=263363000.2     Bus2=258287545.2     Length=52.11  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281528 Phases= 1 Bus1=258281525.2     Bus2=258281530.2     Length=49.59  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282033 Phases= 1 Bus1=258282035.3     Bus2=258282030.3     Length=32.53  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281381 Phases= 1 Bus1=258281378.2     Bus2=258281383.2     Length=33.36  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287533 Phases= 1 Bus1=258287525.2     Bus2=258287535.2     Length=55.98  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.259111208 Phases= 3 Bus1=258281614.1.2.3 Bus2=258281618.1.2.3 Length=46.52  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281953 Phases= 1 Bus1=258281945.3     Bus2=258281955.3     Length=62.04  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.261119868 Bus1=261119869.3     Bus2=261119865.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=18.57  units=m enable=yes
+New Line.264310854 Bus1=261119864.3     Bus2=264310852.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=60.62  units=m enable=yes
+New Line.868882912 Bus1=868882835.3     Bus2=868882910.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=33.58  units=m enable=yes
+New Line.258287745 Phases= 1 Bus1=258287730.3     Bus2=258287747.3     Length=14.61  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260034253 Phases= 3 Bus1=258281236.1.2.3 Bus2=258281240.1.2.3 Length=56.44  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.738976541 Bus1=259350248.3     Bus2=738976543.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.52   units=m enable=yes
+New Line.263362980 Phases= 3 Bus1=258281590.1.2.3 Bus2=263362982.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.264010486 Bus1=264010483.1.2.3 Bus2=261297186.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=418.70 units=m enable=yes
+New Line.263628585 Bus1=263628582.2     Bus2=261264058.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=621.20 units=m enable=yes
+New Line.263360607 Phases= 2 Bus1=258278431.1.2   Bus2=263360609.1.2   Length=1.52   units=m  Spacing=8'-ARM-STANDARD-2PH wires=['6-CU-B-S' '6-CU-B-S' '6-CU-B-S']
+New Line.263361258 Phases= 1 Bus1=258281113.2     Bus2=263361260.2     Length=1.53   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.868882899 Bus1=868882896.3     Bus2=868882825.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=34.45  units=m enable=yes
+New Line.258281600 Phases= 3 Bus1=258281595.1.2.3 Bus2=258281602.1.2.3 Length=33.13  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281617 Phases= 3 Bus1=258281618.1.2.3 Bus2=258281619.1.2.3 Length=31.85  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281202 Phases= 3 Bus1=258281199.1.2.3 Bus2=258281204.1.2.3 Length=79.72  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.260650892 Bus1=260650889.2     Bus2=260650894.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=138.40 units=m enable=yes
+New Line.258278499 Phases= 1 Bus1=258278496.2     Bus2=258278501.2     Length=12.88  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278449 Phases= 2 Bus1=258278446.1.2   Bus2=258278451.1.2   Length=77.83  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['6-CU-B-S' '6-CU-B-S' '6-CU-B-S']
+New Line.264528608 Phases= 3 Bus1=258278515.1.2.3 Bus2=264528610.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.263361276 Phases= 1 Bus1=258281273.2     Bus2=263361278.2     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.868882813 Bus1=868882815.3     Bus2=868882793.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.258282147 Phases= 3 Bus1=258282148.1.2.3 Bus2=258282149.1.2.3 Length=181.90 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281733 Phases= 3 Bus1=258281730.1.2.3 Bus2=258281735.1.2.3 Length=130.60 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287703 Phases= 1 Bus1=258287700.1     Bus2=258287705.1     Length=12.78  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.258281336 Phases= 1 Bus1=258281333.2     Bus2=258281338.2     Length=36.97  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258281843 Phases= 1 Bus1=258281840.3     Bus2=258281845.3     Length=59.88  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.704826568 Phases= 3 Bus1=258275661.1.2.3 Bus2=258275662.1.2.3 Length=828.00 units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.868882870 Bus1=868882855.3     Bus2=868882868.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=102.40 units=m enable=yes
+New Line.263360616 Bus1=258278481.2     Bus2=263360618.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.264399830 Phases= 3 Bus1=260031911.1.2.3 Bus2=264399832.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281723 Phases= 1 Bus1=258281724.2     Bus2=258281725.2     Length=38.04  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282053 Phases= 1 Bus1=258282050.3     Bus2=258282055.3     Length=72.50  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287421 Phases= 1 Bus1=258287418.1     Bus2=258287423.1     Length=15.96  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287436 Phases= 1 Bus1=258287433.2     Bus2=258287438.2     Length=69.23  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-ACSR-B-6X1' '4-ACSR-B-6X1']
+New Line.258281968 Phases= 1 Bus1=258281960.3     Bus2=258281970.3     Length=135.40 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.260858012 Bus1=260858013.2     Bus2=260858014.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=175.40 units=m enable=yes
+New Line.260923777 Bus1=260651129.2     Bus2=260896151.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=352.90 units=m enable=yes
+New Line.261013272 Bus1=261013273.2     Bus2=261013274.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=105.10 units=m enable=yes
+New Line.385900801 Bus1=385900525.1.2.3 Bus2=385900552.1.2.3 LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 3 Length=1.52   units=m enable=yes
+New Line.258281443 Phases= 1 Bus1=258281440.2     Bus2=258281445.2     Length=18.05  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.428164380 Bus1=428164376.2     Bus2=260651094.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=78.33  units=m enable=yes
+New Line.258282103 Phases= 1 Bus1=258282100.3     Bus2=258282105.3     Length=19.30  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281518 Phases= 1 Bus1=258281515.2     Bus2=258281520.2     Length=64.22  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258284382 Phases= 1 Bus1=258284379.3     Bus2=258284384.3     Length=128.60 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287396 Phases= 1 Bus1=258287388.1     Bus2=258287398.1     Length=8.60   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263362445 Bus1=263362442.1.2.3 Bus2=260651701.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=88.85  units=m enable=yes
+New Line.700038843 Phases= 3 Bus1=700038839.1.2.3 Bus2=258278304.1.2.3 Length=19.90  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361479 Phases= 1 Bus1=263361476.3     Bus2=258284379.3     Length=166.10 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.263361267 Phases= 3 Bus1=258281130.1.2.3 Bus2=263361269.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282169 Phases= 3 Bus1=258282170.1.2.3 Bus2=258282171.1.2.3 Length=35.29  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.264026888 Bus1=264026885.1     Bus2=261315950.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=166.10 units=m enable=yes
+New Line.258287683 Phases= 1 Bus1=258287680.2     Bus2=258287685.2     Length=147.40 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287558 Phases= 1 Bus1=258287550.2     Bus2=258287560.2     Length=74.05  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.455203880 Phases= 1 Bus1=455203870.1     Bus2=455203869.1     Length=72.92  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.259327473 Phases= 3 Bus1=258278511.1.2.3 Bus2=258278515.1.2.3 Length=7.00   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.261315914 Bus1=261315915.1     Bus2=261315910.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=239.30 units=m enable=yes
+New Line.704826207 Phases= 3 Bus1=704826203.1.2.3 Bus2=385900508.1.2.3 Length=55.62  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.261297185 Bus1=261297186.1.2.3 Bus2=261264273.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=386.00 units=m enable=yes
+New Line.261014274 Bus1=261014256.1     Bus2=261014270.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=93.75  units=m enable=yes
+New Line.259997625 Phases= 3 Bus1=258281609.1.2.3 Bus2=258281613.1.2.3 Length=74.76  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281165 Phases= 3 Bus1=258281162.1.2.3 Bus2=258281167.1.2.3 Length=83.11  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282093 Phases= 1 Bus1=258282090.3     Bus2=258282095.3     Length=66.98  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.624971027 Phases= 1 Bus1=258282025.3     Bus2=624971024.3     Length=42.32  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.621802988 Phases= 3 Bus1=621802984.1.2.3 Bus2=258278354.1.2.3 Length=34.80  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.261266540 Bus1=260650904.2     Bus2=260650908.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=211.10 units=m enable=yes
+New Line.258278484 Phases= 1 Bus1=258278476.2     Bus2=258278486.2     Length=71.34  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261266535 Bus1=260651094.2     Bus2=260651098.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=112.00 units=m enable=yes
+New Line.258281468 Phases= 1 Bus1=258281465.2     Bus2=258281470.2     Length=61.70  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281473 Phases= 1 Bus1=258281470.2     Bus2=258281475.2     Length=38.21  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263830157 Phases= 1 Bus1=263830154.1     Bus2=259329532.1     Length=105.20 units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281498 Phases= 1 Bus1=258281495.2     Bus2=258281500.2     Length=31.52  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.624971022 Phases= 1 Bus1=624971024.3     Bus2=258282030.3     Length=1.51   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281135 Phases= 3 Bus1=258281130.1.2.3 Bus2=258281137.1.2.3 Length=11.78  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.261315919 Bus1=261315920.1     Bus2=261315915.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=82.91  units=m enable=yes
+New Line.261315889 Bus1=261315890.1     Bus2=261315885.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=116.70 units=m enable=yes
+New Line.258287810 Phases= 1 Bus1=258287802.3     Bus2=258287812.3     Length=21.68  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260651102 Bus1=260651099.2     Bus2=260651104.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=228.90 units=m enable=yes
+New Line.258281478 Phases= 1 Bus1=258281475.2     Bus2=258281480.2     Length=53.86  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281483 Phases= 1 Bus1=258281480.2     Bus2=258281485.2     Length=70.42  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287458 Phases= 3 Bus1=258287455.1.2.3 Bus2=258287460.1.2.3 Length=85.67  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263828734 Phases= 3 Bus1=263828731.1.2.3 Bus2=258282210.1.2.3 Length=78.57  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.738976558 Bus1=738976555.2     Bus2=261119905.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=207.70 units=m enable=yes
+New Line.258287840 Phases= 1 Bus1=258287837.3     Bus2=258287842.3     Length=41.67  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278526 Phases= 3 Bus1=258278521.1.2.3 Bus2=258278528.1.2.3 Length=45.26  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.261266550 Bus1=260859981.2     Bus2=260859985.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=86.32  units=m enable=yes
+New Line.261264092 Bus1=261013284.2     Bus2=261187903.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=118.30 units=m enable=yes
+New Line.288745279 Phases= 3 Bus1=258281691.1.2.3 Bus2=288745278.1.2.3 Length=38.69  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258282008 Phases= 1 Bus1=258282005.3     Bus2=258282010.3     Length=66.80  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281254 Phases= 3 Bus1=258281251.1.2.3 Bus2=258281256.1.2.3 Length=31.36  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.260858022 Bus1=260858019.1     Bus2=260858023.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=259.20 units=m enable=yes
+New Line.738976553 Bus1=259350248.2     Bus2=738976555.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.51   units=m enable=yes
+New Line.258281923 Phases= 1 Bus1=258281920.3     Bus2=258281925.3     Length=83.40  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.264010558 Bus1=264010555.3     Bus2=261297316.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=63.29  units=m enable=yes
+New Line.258287835 Phases= 1 Bus1=258287832.3     Bus2=258287837.3     Length=78.26  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260651127 Bus1=260651124.2     Bus2=260651129.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=112.60 units=m enable=yes
+New Line.264026820 Bus1=258281208.1     Bus2=264026822.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.52   units=m enable=yes
+New Line.258287563 Phases= 1 Bus1=258287560.2     Bus2=258287565.2     Length=60.98  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281371 Phases= 3 Bus1=258281368.1.2.3 Bus2=258281373.1.2.3 Length=94.54  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281128 Phases= 3 Bus1=258281120.1.2.3 Bus2=258281130.1.2.3 Length=43.68  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.455203878 Phases= 1 Bus1=455203872.1     Bus2=455203871.1     Length=82.91  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258278519 Phases= 3 Bus1=258278516.1.2.3 Bus2=258278521.1.2.3 Length=24.53  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.261315944 Bus1=261315941.1     Bus2=261315935.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=141.50 units=m enable=yes
+New Line.621162032 Bus1=261107370.2     Bus2=621162010.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=266.50 units=m enable=yes
+New Line.263652032 Bus1=263652029.2     Bus2=260858008.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=646.40 units=m enable=yes
+New Line.868882913 Bus1=868882910.3     Bus2=868882815.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=82.40  units=m enable=yes
+New Line.258281361 Phases= 3 Bus1=258281278.1.2.3 Bus2=258281363.1.2.3 Length=38.15  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281438 Phases= 1 Bus1=258281435.2     Bus2=258281440.2     Length=16.83  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.738976546 Bus1=738976543.3     Bus2=261119875.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=39.79  units=m enable=yes
+New Line.792329040 Phases= 3 Bus1=469609804.1.2.3 Bus2=792329039.1.2.3 Length=172.60 units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.258278494 Phases= 1 Bus1=258278491.2     Bus2=258278496.2     Length=86.08  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281958 Phases= 1 Bus1=258281950.3     Bus2=258281960.3     Length=136.00 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.263361434 Phases= 3 Bus1=263361431.1.2.3 Bus2=259452995.1.2.3 Length=54.23  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.868882898 Bus1=868882845.3     Bus2=868882896.3     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=152.80 units=m enable=yes
+New Line.258282140 Phases= 3 Bus1=258282135.1.2.3 Bus2=258282142.1.2.3 Length=69.24  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287478 Phases= 3 Bus1=258287475.1.2.3 Bus2=258287480.1.2.3 Length=64.89  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261072645 Bus1=260858014.2     Bus2=261072647.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=118.70 units=m enable=yes
+New Line.258281296 Phases= 1 Bus1=258281293.1     Bus2=258281298.1     Length=125.60 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261315839 Bus1=261315840.3     Bus2=261315841.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=44.67  units=m enable=yes
+New Line.264010571 Bus1=258282148.2     Bus2=264010573.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.261264067 Bus1=260935299.1     Bus2=261014255.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=275.80 units=m enable=yes
+New Line.428164436 Phases= 1 Bus1=428164433.2     Bus2=428164333.2     Length=26.06  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361402 Phases= 1 Bus1=258281820.3     Bus2=263361404.3     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287468 Phases= 3 Bus1=258287465.1.2.3 Bus2=258287470.1.2.3 Length=59.20  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281271 Phases= 3 Bus1=258281266.1.2.3 Bus2=258281273.1.2.3 Length=39.87  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.469609641 Phases= 3 Bus1=469609639.1.2.3 Bus2=259572813.1.2.3 Length=525.00 units=m  Spacing=8'-ARM-STANDARD-3PH wires=['556-AAC-B-19' '556-AAC-B-19' '556-AAC-B-19' '336-AAC-B-19']
+New Line.258287431 Phases= 3 Bus1=258287428.1.2.3 Bus2=258287433.1.2.3 Length=64.42  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261315854 Bus1=261315855.1     Bus2=261315850.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=303.20 units=m enable=yes
+New Line.258284392 Phases= 3 Bus1=258282265.1.2.3 Bus2=258284394.1.2.3 Length=39.79  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.616805110 Phases= 3 Bus1=616805112.1.2.3 Bus2=258277816.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.263361456 Phases= 3 Bus1=258282221.1.2.3 Bus2=263361458.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.428164364 Bus1=428164333.2     Bus2=428164366.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.261107379 Bus1=261107376.2     Bus2=261107365.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=220.10 units=m enable=yes
+New Line.260650877 Bus1=260650874.2     Bus2=260650879.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=98.19  units=m enable=yes
+New Line.260959700 Bus1=260896132.2     Bus2=260959702.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=121.60 units=m enable=yes
+New Line.258281593 Phases= 3 Bus1=258281585.1.2.3 Bus2=258281595.1.2.3 Length=92.20  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.261315859 Bus1=261315860.1     Bus2=261315855.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=104.80 units=m enable=yes
+New Line.286774742 Phases= 1 Bus1=258281865.3     Bus2=286774739.3     Length=94.66  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287805 Phases= 1 Bus1=258287802.3     Bus2=258287807.3     Length=61.90  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261119908 Bus1=261119905.2     Bus2=261119910.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=61.98  units=m enable=yes
+New Line.263361362 Phases= 3 Bus1=263361359.1.2.3 Bus2=258281713.1.2.3 Length=56.65  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258282043 Phases= 1 Bus1=258282045.3     Bus2=258282040.3     Length=141.80 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281573 Phases= 1 Bus1=258281408.3     Bus2=258281575.3     Length=59.88  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260650907 Bus1=260650908.2     Bus2=260650909.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=136.00 units=m enable=yes
+New Line.258282199 Phases= 3 Bus1=258282196.1.2.3 Bus2=258282201.1.2.3 Length=12.76  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258278454 Phases= 2 Bus1=258278451.1.2   Bus2=258278456.1.2   Length=94.80  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['6-CU-B-S' '6-CU-B-S' '6-CU-B-S']
+New Line.699730219 Phases= 3 Bus1=259452999.1.2.3 Bus2=699730215.1.2.3 Length=16.93  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.261266525 Bus1=260650884.2     Bus2=260650888.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=129.50 units=m enable=yes
+New Line.258278509 Phases= 3 Bus1=258278436.1.2.3 Bus2=258278511.1.2.3 Length=16.74  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.263361470 Bus1=263361467.1.2.3 Bus2=260651164.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=107.50 units=m enable=yes
+New Line.298664892 Phases= 1 Bus1=298664889.3     Bus2=286774779.3     Length=117.80 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287663 Phases= 1 Bus1=258287555.2     Bus2=258287665.2     Length=52.19  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281637 Phases= 3 Bus1=258281634.1.2.3 Bus2=258281639.1.2.3 Length=6.16   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258281588 Phases= 3 Bus1=258281585.1.2.3 Bus2=258281590.1.2.3 Length=19.59  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287618 Phases= 1 Bus1=258287615.2     Bus2=258287620.2     Length=38.59  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263828698 Phases= 1 Bus1=263828695.3     Bus2=258281246.3     Length=46.92  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263628567 Bus1=263628564.1     Bus2=260935289.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=147.50 units=m enable=yes
+New Line.258287820 Phases= 1 Bus1=258287817.3     Bus2=258287822.3     Length=22.27  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281893 Phases= 1 Bus1=258281885.3     Bus2=258281895.3     Length=84.58  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263362431 Bus1=258284389.1.2.3 Bus2=263362433.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=1.52   units=m enable=yes
+New Line.258281748 Phases= 1 Bus1=455203842.1     Bus2=258281750.1     Length=67.40  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361380 Phases= 1 Bus1=263361377.1     Bus2=258281774.1     Length=30.54  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263846116 Bus1=263846113.3     Bus2=261119884.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=66.04  units=m enable=yes
+New Line.258282013 Phases= 1 Bus1=258282010.3     Bus2=258282015.3     Length=56.83  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.455203884 Phases= 1 Bus1=455203864.1     Bus2=455203810.1     Length=64.84  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.617270991 Bus1=261014266.1     Bus2=261107355.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=230.60 units=m enable=yes
+New Line.620481165 Phases= 3 Bus1=620481161.1.2.3 Bus2=258287715.1.2.3 Length=33.62  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281898 Phases= 1 Bus1=258281885.3     Bus2=258281900.3     Length=62.42  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.620481154 Phases= 3 Bus1=620481152.1.2.3 Bus2=258287730.1.2.3 Length=19.66  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282068 Phases= 1 Bus1=258282065.3     Bus2=258282070.3     Length=33.73  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261014264 Bus1=261014265.1     Bus2=261014266.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=116.20 units=m enable=yes
+New Line.260650882 Bus1=260650879.2     Bus2=260650884.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=249.20 units=m enable=yes
+New Line.258282098 Phases= 1 Bus1=258282090.3     Bus2=258282100.3     Length=58.24  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263628571 Bus1=260859589.1     Bus2=263628573.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.621802982 Phases= 3 Bus1=258278349.1.2.3 Bus2=621802984.1.2.3 Length=1.52   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.621162121 Bus1=621162010.2     Bus2=621162119.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=58.39  units=m enable=yes
+New Line.261297345 Bus1=261297342.2     Bus2=261297347.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=117.00 units=m enable=yes
+New Line.258278382 Phases= 1 Bus1=258278379.2     Bus2=258278384.2     Length=41.56  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281760 Phases= 3 Bus1=258281755.1.2.3 Bus2=258281762.1.2.3 Length=52.16  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258282078 Phases= 1 Bus1=258282075.3     Bus2=258282080.3     Length=80.43  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282083 Phases= 1 Bus1=258282080.3     Bus2=258282085.3     Length=55.23  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263846120 Bus1=259350253.2     Bus2=263846122.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.258281106 Phases= 3 Bus1=258281103.1.2.3 Bus2=258281108.1.2.3 Length=30.05  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258281391 Phases= 1 Bus1=258281388.2     Bus2=258281393.2     Length=90.80  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281883 Phases= 1 Bus1=258281870.3     Bus2=258281885.3     Length=61.24  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.699048530 Bus1=258282166.1.2.3 Bus2=699048532.1.2.3 LineCode=1/0-AL-HMWPECN-15KV Phases= 3 Length=1.51   units=m enable=yes
+New Line.620481173 Phases= 3 Bus1=258278339.1.2.3 Bus2=263363036.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361339 Phases= 1 Bus1=258281659.1     Bus2=263361341.1     Length=1.53   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-CU-TBWP-7' '4-CU-TBWP-7']
+New Line.258281657 Phases= 3 Bus1=258281654.1.2.3 Bus2=258281659.1.2.3 Length=50.77  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258285767 Phases= 3 Bus1=258285764.1.2.3 Bus2=258285769.1.2.3 Length=54.56  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.261107349 Bus1=261107350.1     Bus2=261107345.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=160.20 units=m enable=yes
+New Line.258287583 Phases= 1 Bus1=258287575.2     Bus2=258287585.2     Length=40.45  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.455203875 Phases= 1 Bus1=455203804.1     Bus2=455203874.1     Length=87.80  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258278337 Phases= 3 Bus1=258278334.1.2.3 Bus2=258278339.1.2.3 Length=25.60  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.621162078 Bus1=621161977.2     Bus2=621162076.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=39.20  units=m enable=yes
+New Line.258278322 Phases= 3 Bus1=258278319.1.2.3 Bus2=258278324.1.2.3 Length=64.68  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.263361353 Phases= 1 Bus1=263361350.2     Bus2=258281696.2     Length=63.98  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['4-CU-TBWP-7' '4-CU-TBWP-7']
+New Line.455203791 Bus1=455203788.1.2.3 Bus2=455203782.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=64.38  units=m enable=yes
+New Line.258287623 Phases= 1 Bus1=258287620.2     Bus2=258287625.2     Length=54.40  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281718 Phases= 3 Bus1=258281713.1.2.3 Bus2=258281720.1.2.3 Length=45.08  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281301 Phases= 1 Bus1=258281293.1     Bus2=258281303.1     Length=27.49  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.455203879 Phases= 1 Bus1=455203871.1     Bus2=455203870.1     Length=70.58  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.261315939 Bus1=261315940.1     Bus2=261315941.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=287.20 units=m enable=yes
+New Line.258278424 Phases= 3 Bus1=258278425.1.2.3 Bus2=258278426.1.2.3 Length=24.09  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.700038848 Phases= 3 Bus1=258278309.1.2.3 Bus2=700038850.1.2.3 Length=1.51   units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.455203786 Bus1=259453020.1.2.3 Bus2=455203788.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=1.54   units=m enable=yes
+New Line.261264082 Bus1=261107336.1     Bus2=261107330.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=97.24  units=m enable=yes
+New Line.259571280 Phases= 3 Bus1=259571237.1.2.3 Bus2=258282148.1.2.3 Length=29.93  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258282038 Phases= 1 Bus1=258282040.3     Bus2=258282035.3     Length=57.97  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287483 Phases= 1 Bus1=258287480.3     Bus2=258287485.3     Length=55.50  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281150 Phases= 3 Bus1=258281147.1.2.3 Bus2=258281152.1.2.3 Length=79.33  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278412 Phases= 3 Bus1=258278399.1.2.3 Bus2=258278414.1.2.3 Length=43.20  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.263628580 Bus1=258281618.2     Bus2=263628582.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.52   units=m enable=yes
+New Line.455203682 Phases= 3 Bus1=259453009.1.2.3 Bus2=455203679.1.2.3 Length=307.10 units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.428164403 Phases= 1 Bus1=258278528.2     Bus2=428164405.2     Length=1.54   units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287463 Phases= 3 Bus1=258287460.1.2.3 Bus2=258287465.1.2.3 Length=140.30 units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.865972501 Bus1=865972479.2     Bus2=865972503.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=73.88  units=m enable=yes
+New Line.259453008 Phases= 3 Bus1=259453009.1.2.3 Bus2=259418256.1.2.3 Length=22.33  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287538 Phases= 1 Bus1=258281246.3     Bus2=258287540.3     Length=30.37  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281943 Phases= 1 Bus1=258281940.3     Bus2=258281945.3     Length=119.00 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281973 Phases= 1 Bus1=258281970.3     Bus2=258281975.3     Length=34.25  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.621098716 Phases= 3 Bus1=699730351.1.2.3 Bus2=699730259.1.2.3 Length=6.22   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.261264057 Bus1=261264058.2     Bus2=260858013.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=55.11  units=m enable=yes
+New Line.263363021 Phases= 1 Bus1=263363018.1     Bus2=258287690.1     Length=38.17  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.261014259 Bus1=261014260.1     Bus2=261014261.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=346.00 units=m enable=yes
+New Line.258281558 Phases= 1 Bus1=258281555.2     Bus2=258281560.2     Length=63.30  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281207 Phases= 2 Bus1=258281208.2.3   Bus2=258281209.2.3   Length=82.51  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258287718 Phases= 3 Bus1=258287715.1.2.3 Bus2=258287720.1.2.3 Length=38.61  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.264137367 Phases= 3 Bus1=258281199.1.2.3 Bus2=264137369.1.2.3 Length=1.53   units=m  Spacing=8'-ARM-STANDARD-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258278464 Phases= 2 Bus1=258278456.1.2   Bus2=258278466.1.2   Length=82.67  units=m  Spacing=8'-ARM-STANDARD-2PH wires=['6-CU-B-S' '6-CU-B-S' '6-CU-B-S']
+New Line.263361461 Phases= 3 Bus1=263361458.1.2.3 Bus2=258282231.1.2.3 Length=97.90  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263361272 Phases= 3 Bus1=263361269.1.2.3 Bus2=258281142.1.2.3 Length=51.29  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263652027 Bus1=258281614.2     Bus2=263652029.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.52   units=m enable=yes
+New Line.258281548 Phases= 1 Bus1=258281545.2     Bus2=258281550.2     Length=143.40 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287775 Phases= 1 Bus1=258287776.1     Bus2=258287777.1     Length=54.40  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287785 Phases= 1 Bus1=258287782.1     Bus2=258287787.1     Length=45.83  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.738976570 Bus1=738976567.1.2.3 Bus2=261119925.1.2.3 LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 3 Length=334.90 units=m enable=yes
+New Line.258281963 Phases= 1 Bus1=258281960.3     Bus2=258281965.3     Length=21.82  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.286774743 Phases= 1 Bus1=286774739.3     Bus2=258281870.3     Length=46.78  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.261297310 Bus1=261297311.3     Bus2=261297312.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=114.30 units=m enable=yes
+New Line.261264077 Bus1=261014261.1     Bus2=261107335.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=18.27  units=m enable=yes
+New Line.263361420 Phases= 1 Bus1=258282070.3     Bus2=263361422.3     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.260034248 Phases= 1 Bus1=258287645.2     Bus2=258287649.2     Length=48.16  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.259382121 Phases= 1 Bus1=258287690.1     Bus2=258287694.1     Length=24.28  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.258285747 Phases= 3 Bus1=258285744.1.2.3 Bus2=258285749.1.2.3 Length=71.80  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287693 Phases= 1 Bus1=258287694.1     Bus2=258287695.1     Length=17.52  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.260037828 Phases= 3 Bus1=258282186.1.2.3 Bus2=260031911.1.2.3 Length=55.98  units=m  Spacing=8'-ARM-STANDARD-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258287391 Phases= 1 Bus1=258287388.1     Bus2=258287393.1     Length=115.60 units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.616805137 Phases= 3 Bus1=263828686.1.2.3 Bus2=616805112.1.2.3 Length=87.19  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.261315909 Bus1=261315910.1     Bus2=261315890.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=178.20 units=m enable=yes
+New Line.264528613 Phases= 3 Bus1=264528610.1.2.3 Bus2=258278516.1.2.3 Length=13.56  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.263363048 Phases= 3 Bus1=263363045.1.2.3 Bus2=258287767.1.2.3 Length=45.97  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258282224 Phases= 3 Bus1=258282221.1.2.3 Bus2=258282226.1.2.3 Length=67.26  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.261014269 Bus1=261014270.1     Bus2=261014265.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=90.85  units=m enable=yes
+New Line.258287603 Phases= 1 Bus1=258287600.2     Bus2=258287605.2     Length=41.11  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281234 Phases= 3 Bus1=258281204.1.2.3 Bus2=258281236.1.2.3 Length=27.99  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.263828716 Phases= 1 Bus1=263828713.2     Bus2=258281649.2     Length=44.12  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281192 Phases= 3 Bus1=258281184.1.2.3 Bus2=258281194.1.2.3 Length=26.87  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-AAC-B-19' '336-AAC-B-19' '336-AAC-B-19' '1/0-ACSR-B-6X1']
+New Line.258278392 Phases= 3 Bus1=258278364.1.2.3 Bus2=258278394.1.2.3 Length=47.99  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.264010490 Bus1=259571237.2     Bus2=264010492.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.53   units=m enable=yes
+New Line.261119883 Bus1=261119884.3     Bus2=261119869.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=56.87  units=m enable=yes
+New Line.261119913 Bus1=261119910.2     Bus2=261119894.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=46.76  units=m enable=yes
+New Line.258287668 Phases= 1 Bus1=258278409.2     Bus2=258287670.2     Length=54.74  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['6-CU-B-S' '6-CU-B-S']
+New Line.260651112 Bus1=260651109.2     Bus2=260651114.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=213.90 units=m enable=yes
+New Line.261107339 Bus1=261107340.1     Bus2=261107325.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=92.97  units=m enable=yes
+New Line.258287735 Phases= 3 Bus1=258287720.1.2.3 Bus2=258287737.1.2.3 Length=36.47  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.455203883 Phases= 1 Bus1=455203867.1     Bus2=455203864.1     Length=99.81  units=m  Spacing=VERTICAL-1-PH-104-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.258281118 Phases= 3 Bus1=258281113.1.2.3 Bus2=258281120.1.2.3 Length=28.29  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '336-ACSR-WP-18X1' '1/0-ACSR-WP-6X1']
+New Line.258281983 Phases= 1 Bus1=258281975.3     Bus2=258281985.3     Length=31.41  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.264010495 Bus1=264010492.2     Bus2=261297211.2     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=356.70 units=m enable=yes
+New Line.261266530 Bus1=260650869.2     Bus2=260650873.2     LineCode=1/0-AL-HMWPECN-15KV Phases= 1 Length=91.57  units=m enable=yes
+New Line.261060936 Bus1=260858023.1     Bus2=261060937.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=111.90 units=m enable=yes
+New Line.264026802 Bus1=258281208.3     Bus2=264026804.3     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=1.52   units=m enable=yes
+New Line.261107334 Bus1=261107335.1     Bus2=261107336.1     LineCode=1/0-AL-TRXLPELCJ-15KV Phases= 1 Length=81.92  units=m enable=yes
+New Line.258287453 Phases= 3 Bus1=258287450.1.2.3 Bus2=258287455.1.2.3 Length=49.41  units=m  Spacing=8'-ARM-NON-CENTER-POST-3PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.263828693 Phases= 1 Bus1=258281241.3     Bus2=263828695.3     Length=1.52   units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258287593 Phases= 1 Bus1=258287590.2     Bus2=258287595.2     Length=58.37  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281908 Phases= 1 Bus1=258281905.3     Bus2=258281910.3     Length=62.43  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['2-ACSR-B-6X1' '2-ACSR-B-6X1']
+New Line.258281933 Phases= 1 Bus1=258281930.3     Bus2=258281935.3     Length=57.71  units=m  Spacing=VERTICAL-1-PH-60-1PH wires=['1/0-ACSR-B-6X1' '1/0-ACSR-B-6X1']
+New Line.704826184 Bus1=385900508.2     Bus2=704826186.2     LineCode=1/0-AL-TRXLPELCJ-25KV Phases= 1 Length=1.54   units=m enable=yes
