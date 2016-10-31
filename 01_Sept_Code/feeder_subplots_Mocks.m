@@ -15,7 +15,7 @@ while load_LVL<1
     load_LVL=menu('What kind of simulation?','100%','Min. Load Level','Fault Study');
 end
 %---------------------------
-base_dir='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits';
+base_dir='C:\Users\jms6\Documents\GitHub\CAPER\CAPER\03_OpenDSS_Circuits';
 if feeder_NUM == 1
     fileloc =strcat(base_dir,'\Mocksville_1_Circuit_Opendss');
     peak_current = [478,466.728,440];
