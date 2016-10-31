@@ -7,6 +7,7 @@
 # preprocessors
 import csv
 import re
+import arcpy
 
 #   function    : parseCoordinatesCSV()
 #   description : parse coordinates CSV into a dictionary whose keys are the node IDs
@@ -46,6 +47,7 @@ def parseLines():
                'Mocksville_Main_Circuit_Opendss/MOCKS_04/Elements/Lines.dss']
     for path in fileLoc:
         f = open(path, 'rb')
+        print path
 
         reader = csv.reader(f)  # csv object
 
@@ -54,21 +56,40 @@ def parseLines():
         b1 = re.compile(r'Bus1\=(\d+)', re.I|re.M)
         b2 = re.compile(r'Bus2\=(\d+)', re.I|re.M)
 
-
         for index, row in enumerate(reader):
             lineID = re.search(newLine, row[0], flags=0)
             bus1 = re.search(b1, row[0], flags=0)
             bus2 = re.search(b2, row[0], flags=0)
-            if (lineID.group(1) and bus1.group(1) and bus2.group(1)):
-                lines[lineID.group(1)] = {}
-                lines[lineID.group(1)]['bus1'] = bus1.group(1)
-                lines[lineID.group(1)]['bus2'] = bus2.group(1)
+            if (newLine is not None and bus1 is not None and bus2 is not None):
+                lineID = lineID.group(1)
+                lines[lineID] = {}
+                lines[lineID]['bus1'] = bus1.group(1)
+                lines[lineID]['bus2'] = bus2.group(1)
             else:
-                print('\n\n*****\nCheck around line %i for an entry error\n*****\n', index)
-
+                print '*****Check around line %d for an entry error*****' % index
+        print
         f.close()
-        print path
 
-    return 0
+    return lines
 
-parseLines()
+#   function    :
+#   description :
+#   parameters  :
+#   return      :
+#   needs work  : https://www.youtube.com/watch?v=UtPKjYOv2mg
+def createLineFeatureClass():
+    outworkspace = arcpy.en.workspace # geodb container
+    arcpy.CreateFeatureclass_management(outworkspace, "TestLines","POLYLINE")
+    arcpy.AddField_management("TestLines","LineID","SHORT")
+    arcpy.AddField_management("TestLines","Name","TEXT","","", 16)
+    list_coords =
+    array = arcpy.Array()
+    point_obj = arcpy.Point()
+    for coords in list)coords:
+        point_obj.X = coords[0]
+        point_obj.Y = coords[1]
+        array.add(point_obj)
+    line_obj = arcpy.Polyline(array)
+    line_obj.length
+    edit_lines = arcpy.da.InsertCursor("TestLines",['Shape@','LineID','Name'])
+    edit_lines.fields
