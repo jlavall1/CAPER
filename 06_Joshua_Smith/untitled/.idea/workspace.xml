@@ -20,12 +20,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="loadSwap.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="loadSwap.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../Python/loadSwap.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="646">
               <caret line="38" column="46" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="feederPlot.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../gisPython/feederPlot.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="421">
+              <caret line="93" column="20" selection-start-line="93" selection-start-column="19" selection-end-line="93" selection-end-column="20" />
+              <folding>
+                <element signature="e#171#181#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -94,7 +106,7 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Python/loadSwap.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../gisPython/feederPlot.py" />
   </component>
   <component name="RunManager" selected="Python.feederPlot">
     <configuration default="false" name="loadSwap" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -566,21 +578,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../gisPython/feederPlot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="624">
-          <caret line="86" column="29" selection-start-line="86" selection-start-column="29" selection-end-line="86" selection-end-column="29" />
-          <folding>
-            <element signature="e#171#181#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../Python/loadSwap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
           <caret line="38" column="46" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../gisPython/feederPlot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="421">
+          <caret line="93" column="20" selection-start-line="93" selection-start-column="19" selection-end-line="93" selection-end-column="20" />
+          <folding>
+            <element signature="e#171#181#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
