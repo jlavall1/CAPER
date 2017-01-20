@@ -1,0 +1,15 @@
+Open Github Terminal Window
+Before starting to code, check to see if you are up-to-date using:
+git status
+git pull
+
+To contribute:
+git add -A
+git commit -m "Type description here"
+git pull (To get up-to-date)
+git push
+
+Worst Case:
+git fetch --all
+git reset --hard origin/master
+git pull origin ma

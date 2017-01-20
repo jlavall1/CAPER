@@ -46,6 +46,7 @@ RUN(1).SUB_Q.DIFF = RUN(1).SUB_Q.DSS_SUB - RUN(1).SUB_Q.REF;
 
 %%
 %Show 3-phase & 1-phase(faint) of three cases.
+%{
 fig=1;
 figure(fig)
 n=1;
@@ -75,76 +76,82 @@ set(gca,'XTick',[0:1:24])
 grid on
 set(gca,'FontWeight','bold');
 legend('DSS(ph_A)','DSS(ph_B)','DSS(ph_C)','SCADA(ph_A)','SCADA(ph_B)','SCADA(ph_C)','location','northwest');
+%}
 %%
 fig=2;
 figure(fig)
+set(gcf,'Position', [1 1 1280 1024]);
+subplot(2,1,1)
 n=1;
 X=[1/60:1/60:24]';
 M=RUN(n).SUB_Q.DSS_SUB(:,1);
-plot(X,M,'b-','LineWidth',1.5);
+plot(X,M,'b-','LineWidth',1.0);
 hold on
 M=RUN(n).SUB_Q.DSS_SUB(:,2);
-plot(X,M,'g-','LineWidth',1.5);
+plot(X,M,'g-','LineWidth',1.0);
 hold on
 M=RUN(n).SUB_Q.DSS_SUB(:,3);
-plot(X,M,'r-','LineWidth',1.5);
+plot(X,M,'r-','LineWidth',1.0);
 hold on
 M=RUN(n).SUB_Q.REF(:,1);
-plot(X,M,'b:','LineWidth',1.5);
+plot(X,M,'b:','LineWidth',1.0);
 hold on
 M=RUN(n).SUB_Q.REF(:,2);
-plot(X,M,'g:','LineWidth',1.5);
+plot(X,M,'g:','LineWidth',1.0);
 hold on
 M=RUN(n).SUB_Q.REF(:,3);
-plot(X,M,'r:','LineWidth',1.5);
+plot(X,M,'r:','LineWidth',1.0);
 hold on
 M=RUN(1).SUB_Q.DER(:,1);
-plot(X,M,'b--','LineWidth',1.5);
+plot(X,M,'b--','LineWidth',1.0);
 hold on
 M=RUN(1).SUB_Q.DER(:,2);
-plot(X,M,'g--','LineWidth',1.5);
+plot(X,M,'g--','LineWidth',1.0);
 hold on
 M=RUN(1).SUB_Q.DER(:,3);
-plot(X,M,'r--','LineWidth',1.5);
+plot(X,M,'r--','LineWidth',1.0);
 hold on
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
 ylabel('OLTC 3-ph Reactive Power (Q) [kVAR]','FontSize',12,'FontWeight','bold');
-axis([0 24 -500 2000]);
+axis([0 24 -500 1500]);
 set(gca,'XTick',[0:1:24])
 grid on
 set(gca,'FontWeight','bold');
-legend('DSS(ph_A)','DSS(ph_B)','DSS(ph_C)','SCADA(ph_A)','SCADA(ph_B)','SCADA(ph_C)','DER(ph_A)','DER(ph_B)','DER(ph_C)','location','northwest');
+legend('DSS(ph_A)','DSS(ph_B)','DSS(ph_C)','SCADA(ph_A)','SCADA(ph_B)','SCADA(ph_C)','Load(ph_A)','Load(ph_B)','Load(ph_C)','location','northeastoutside');
+
 %%
 fig=3;
-figure(fig)
+%figure(fig)
+subplot(2,1,2)
 n=1;
 X=[1/60:1/60:24]';
 M=RUN(n).SUB_P.DIFF(:,1);
-plot(X,M,'b-','LineWidth',1.5);
+plot(X,M,'b-','LineWidth',1.0);
 hold on
 M=RUN(n).SUB_P.DIFF(:,2);
-plot(X,M,'g-','LineWidth',1.5);
+plot(X,M,'g-','LineWidth',1.0);
 hold on
 M=RUN(n).SUB_P.DIFF(:,3);
-plot(X,M,'r-','LineWidth',1.5);
+plot(X,M,'r-','LineWidth',1.0);
 hold on
 M=RUN(n).SUB_Q.DIFF(:,1);
-plot(X,M,'b:','LineWidth',1.5);
+plot(X,M,'b:','LineWidth',1.0);
 hold on
 M=RUN(n).SUB_Q.DIFF(:,2);
-plot(X,M,'g:','LineWidth',1.5);
+plot(X,M,'g:','LineWidth',1.0);
 hold on
 M=RUN(n).SUB_Q.DIFF(:,3);
-plot(X,M,'r:','LineWidth',1.5);
+plot(X,M,'r:','LineWidth',1.0);
 hold on
 
 xlabel('Hour of Day (HoD)','FontSize',12,'FontWeight','bold');
-ylabel('Error','FontSize',12,'FontWeight','bold');
+ylabel('Reactive Power Error (kVar)','FontSize',12,'FontWeight','bold');
 axis([0 24 -500 500]);
 set(gca,'XTick',[0:1:24])
 grid on
 set(gca,'FontWeight','bold');
-legend('P(ph_A)','P(ph_B)','P(ph_C)','Q(ph_A)','Q(ph_B)','Q(ph_C)','location','northwest');
+legend('P(ph_A)____','P(ph_B)____','P(ph_C)____','Q(ph_A)____','Q(ph_B)____','Q(ph_C)____','location','northeastoutside');
+
 
 %%
 slt_DAY_RUN=2;
@@ -178,6 +185,7 @@ RUN(1).CAP_OPS(1:n,3) = -600 + 50.*[capPos(:,3)];
 
 
 %%
+%{
 fig=4;
 figure(fig)
 n=1;
@@ -209,3 +217,4 @@ set(gca,'XTick',[0:1:7])
 grid on
 set(gca,'FontWeight','bold');
 legend('P(ph_A)','P(ph_B)','P(ph_C)','CAP OP(ph_A)','CAP OP(ph_B)','CAP OP(ph_C)','location','northwest');
+%}
