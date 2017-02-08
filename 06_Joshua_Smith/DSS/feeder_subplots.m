@@ -24,7 +24,7 @@ end
 %fileloc ='C:\Users\jlavall\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Flay_Circuit_Opendss';
 if feeder_NUM == 1
     fileloc ='C:\Users\atow\Documents\GitHub\CAPER\03_OpenDSS_Circuits\Bellhaven_Circuit_Opendss';
-    peak_current = [424.489787369243,385.714277946091,446.938766508963];
+    peak_current = [424.489787369243,385.714277946091,446.938766508963]; %only matters if using allocate,allocate,allocate
     peak_kW = 2940.857+2699.883+3092.130;
     min_kW = 1937.500;
     if load_LVL == 1
